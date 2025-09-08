@@ -1,0 +1,59 @@
+site_name: Compiladores - Grupo 2 
+site_url: https://github.com/CaioDuart3/G2_compiladores
+
+repo_url: https://github.com/CaioDuart3/G2_compiladores
+repo_name: G2_compiladores
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/CaioDuart3/G2_compiladores
+
+theme:
+  name: material
+  palette:
+
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      primary: deep purple    
+      accent: pink        
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+  features:
+    - navigation.tabs
+    - content.code.copy
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.top
+
+nav:
+  - Apresentação: index.md
+  # - Entrega 1: 
+  #   - Artefatos Generalistas: 
+  #       - Entrega1/ArtefatosGeneralistas
+  #  - Design Sprint:
+  #      -Entrega1/DesignSprint
+  #   - Modelagem BPMN:
+  #       - Entrega1/ModelagemBPMN
+  - Planejamento: 
+    - Cronograma: Planejamento/Cronograma/Cronograma.md
+    - Ferramentas: Planejamento/Ferramentas/Ferramentas.md
+    - Metodologia: Planejamento/Metodologia/Metodologia.md
+  # - Reuniões:
