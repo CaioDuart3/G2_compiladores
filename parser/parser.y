@@ -1,3 +1,4 @@
+/* ANALISADOR SINTÁTICO */
 %{
 #include <stdio.h>
 #include <stdlib.h>
