@@ -45,15 +45,4 @@ theme:
 
 nav:
   - Apresentação: index.md
-  # - Entrega 1: 
-  #   - Artefatos Generalistas: 
-  #       - Entrega1/ArtefatosGeneralistas
-  #  - Design Sprint:
-  #      -Entrega1/DesignSprint
-  #   - Modelagem BPMN:
-  #       - Entrega1/ModelagemBPMN
   - Planejamento: 
-    - Cronograma: Planejamento/Cronograma/Cronograma.md
-    - Ferramentas: Planejamento/Ferramentas/Ferramentas.md
-    - Metodologia: Planejamento/Metodologia/Metodologia.md
-  # - Reuniões:
