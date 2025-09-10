@@ -3,7 +3,10 @@ name: Deploy MkDocs
 on:
   push:
     branches:
-      - main 
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   build-deploy:
@@ -20,9 +23,8 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          pip install mkdocs-material
+          pip install mkdocs-material==9.*
 
       - name: Build e Deploy
         run: |
           mkdocs gh-deploy --force
-
