@@ -23,8 +23,8 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          pip install mkdocs-material==9.*
-
+          pip install -r requirements.txt
+          
       - name: Build e Deploy no GitHub Pages
         run: |
           mkdocs gh-deploy --force --clean
