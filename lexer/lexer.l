@@ -2,6 +2,7 @@
 #include <stdio.h>
 %}
 
+
 DIGITO      [0-9]
 LETRA       [a-zA-Z_]
 ID          {LETRA}({LETRA}|{DIGITO})*
@@ -10,6 +11,7 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 %%
 "if"        { printf("PALAVRA-CHAVE IF\n"); }
 "else"      { printf("PALAVRA-CHAVE ELSE\n"); }
+"elif"      { printf("PALAVRA-CHAVE ELIF\n"); }
 "while"     { printf("PALAVRA-CHAVE WHILE\n"); }
 "for"       { printf("PALAVRA-CHAVE FOR\n"); }
 "def"       { printf("PALAVRA-CHAVE DEF\n"); }
