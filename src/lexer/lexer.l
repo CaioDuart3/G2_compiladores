@@ -9,13 +9,14 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 
 
 %%
-"if"        { printf("PALAVRA-CHAVE IF\n"); }
+"if"        { printf("PALAVRA-CHAVE IF\n");  }
 "else"      { printf("PALAVRA-CHAVE ELSE\n"); }
 "elif"      { printf("PALAVRA-CHAVE ELIF\n"); }
-"while"     { printf("PALAVRA-CHAVE WHILE\n"); }
-"for"       { printf("PALAVRA-CHAVE FOR\n"); }
-"def"       { printf("PALAVRA-CHAVE DEF\n"); }
+"while"     { printf("PALAVRA-CHAVE WHILE\n");  }
+"for"       { printf("PALAVRA-CHAVE FOR\n");  }
+"def"       { printf("PALAVRA-CHAVE DEF\n");  }
 "return"    { printf("PALAVRA-CHAVE RETURN\n"); }
+"in"        { printf("PALAVRA-CHAVE IN\n");  }
 
 {ID}        { printf("IDENTIFICADOR: %s\n", yytext); }
 
