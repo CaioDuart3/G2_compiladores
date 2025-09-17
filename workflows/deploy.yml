@@ -3,7 +3,7 @@ name: Deploy MkDocs
 on:
   push:
     branches:
-      - main
+      - main 
 
 permissions:
   contents: write
@@ -25,6 +25,6 @@ jobs:
         run: |
           pip install mkdocs-material==9.*
 
-      - name: Build e Deploy
+      - name: Build e Deploy no GitHub Pages
         run: |
-          mkdocs gh-deploy --force
+          mkdocs gh-deploy --force --clean
