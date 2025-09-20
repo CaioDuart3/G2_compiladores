@@ -1,5 +1,6 @@
+#line 2 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
 
-#line 3 "lex.yy.c"
+#line 4 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -485,11 +486,11 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexer.l"
-#line 2 "lexer.l"
+#line 1 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 2 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 #include <stdio.h>
-#line 492 "lex.yy.c"
-#line 493 "lex.yy.c"
+#line 493 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
+#line 494 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
 
 #define INITIAL 0
 
@@ -706,9 +707,9 @@ YY_DECL
 		}
 
 	{
-#line 11 "lexer.l"
+#line 11 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 
-#line 712 "lex.yy.c"
+#line 713 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -767,188 +768,188 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "lexer.l"
+#line 12 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE IF\n");  }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "lexer.l"
+#line 13 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE ELSE\n"); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "lexer.l"
+#line 14 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE ELIF\n"); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "lexer.l"
+#line 15 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE WHILE\n");  }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 16 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE FOR\n");  }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "lexer.l"
+#line 17 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE DEF\n");  }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "lexer.l"
+#line 18 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE RETURN\n"); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 19 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("PALAVRA-CHAVE IN\n");  }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 21 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("IDENTIFICADOR: %s\n", yytext); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "lexer.l"
+#line 23 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("NUMERO-INTEIRO: %s\n", yytext); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "lexer.l"
+#line 24 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("NUMERO-FLOAT: %s\n", yytext); }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 26 "lexer.l"
+#line 26 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("STRING: %s\n", yytext); }
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 27 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("STRING: %s\n", yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 29 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: ==\n"); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 30 "lexer.l"
+#line 30 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: !=\n"); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 31 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: <=\n"); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 32 "lexer.l"
+#line 32 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: >=\n"); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 33 "lexer.l"
+#line 33 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: <\n"); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 34 "lexer.l"
+#line 34 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: >\n"); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "lexer.l"
+#line 35 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: =\n"); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "lexer.l"
+#line 36 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: +\n"); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "lexer.l"
+#line 37 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: -\n"); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 38 "lexer.l"
+#line 38 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: *\n"); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 39 "lexer.l"
+#line 39 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("OPERADOR: /\n"); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "lexer.l"
+#line 41 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: :\n"); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "lexer.l"
+#line 42 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: ,\n"); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "lexer.l"
+#line 43 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: (\n"); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 44 "lexer.l"
+#line 44 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: )\n"); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 45 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: [\n"); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 46 "lexer.l"
+#line 46 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: ]\n"); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 47 "lexer.l"
+#line 47 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: {\n"); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "lexer.l"
+#line 48 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("DELIMITADOR: }\n"); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 50 "lexer.l"
+#line 50 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { /* comentário, ignora */ }
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 52 "lexer.l"
+#line 52 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { /* ignora espaços e quebras de linha */ }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 54 "lexer.l"
+#line 54 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 { printf("CARACTERE DESCONHECIDO: %s\n", yytext); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 55 "lexer.l"
+#line 55 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 ECHO;
 	YY_BREAK
-#line 952 "lex.yy.c"
+#line 953 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1953,11 +1954,10 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 55 "lexer.l"
+#line 55 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
 
 
 int main(int argc, char **argv) {
     yylex();
     return 0;
 }
-
