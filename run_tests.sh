@@ -26,12 +26,19 @@ for tipo in lexico sintatico semantico; do
     TIPO_DIR="$TESTS_DIR/$tipo"
     [ -d "$TIPO_DIR" ] || continue
 
+    # Garante pasta de saída para cada tipo
+    mkdir -p "$OUTPUTS_DIR/$tipo"
+
     for f in "$TIPO_DIR"/*.py; do
         base=$(basename "$f" .py)
         echo "----- Rodando $tipo -> $base -----"
+        
+        # Executa o analisador e redireciona a saída para o arquivo .out correspondente
+        "$ANALISADOR" < "$f" > "$OUTPUTS_DIR/$tipo/$base.out" 2>&1
     done
 done
 
+# Desativa nullglob
 shopt -u nullglob
 
 echo "✔ Todos os testes executados."
