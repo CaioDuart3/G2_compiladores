@@ -1,6 +1,6 @@
-#line 2 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
+#line 2 "/home/rafaelschadt/G2_compiladores/src/lexer/lex.yy.c"
 
-#line 4 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
+#line 4 "/home/rafaelschadt/G2_compiladores/src/lexer/lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -486,11 +486,54 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-#line 2 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 1 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+#line 2 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
 #include <stdio.h>
-#line 493 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
-#line 494 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
+#include <string.h>
+
+/* Enumeração para os tipos de tokens */
+typedef enum {
+    TOKEN_EOF = 0,
+    TOKEN_IDENTIFICADOR,
+    TOKEN_INTEIRO,
+    TOKEN_FLOAT,
+    TOKEN_STRING,
+    TOKEN_PALAVRA_CHAVE_IF,
+    TOKEN_PALAVRA_CHAVE_ELSE,
+    TOKEN_PALAVRA_CHAVE_ELIF,
+    TOKEN_PALAVRA_CHAVE_WHILE,
+    TOKEN_PALAVRA_CHAVE_FOR,
+    TOKEN_PALAVRA_CHAVE_DEF,
+    TOKEN_PALAVRA_CHAVE_RETURN,
+    TOKEN_PALAVRA_CHAVE_IN,
+    TOKEN_OPERADOR_IGUAL,
+    TOKEN_OPERADOR_DIFERENTE,
+    TOKEN_OPERADOR_MENOR_IGUAL,
+    TOKEN_OPERADOR_MAIOR_IGUAL,
+    TOKEN_OPERADOR_MENOR,
+    TOKEN_OPERADOR_MAIOR,
+    TOKEN_OPERADOR_ATRIBUICAO,
+    TOKEN_OPERADOR_MAIS,
+    TOKEN_OPERADOR_MENOS,
+    TOKEN_OPERADOR_MULTIPLICACAO,
+    TOKEN_OPERADOR_DIVISAO,
+    TOKEN_DELIMITADOR_DOIS_PONTOS,
+    TOKEN_DELIMITADOR_VIRGULA,
+    TOKEN_DELIMITADOR_ABRE_PARENTESES,
+    TOKEN_DELIMITADOR_FECHA_PARENTESES,
+    TOKEN_DELIMITADOR_ABRE_COLCHETES,
+    TOKEN_DELIMITADOR_FECHA_COLCHETES,
+    TOKEN_DELIMITADOR_ABRE_CHAVES,
+    TOKEN_DELIMITADOR_FECHA_CHAVES,
+    TOKEN_DESCONHECIDO
+} TokenType;
+
+/* Variável global para armazenar o valor do token, se necessário */
+/* Para este exemplo, vamos armazenar o yytext. Em um analisador real, você pode ter uma 'union' */
+char *yytoken_value;
+
+#line 536 "/home/rafaelschadt/G2_compiladores/src/lexer/lex.yy.c"
+#line 537 "/home/rafaelschadt/G2_compiladores/src/lexer/lex.yy.c"
 
 #define INITIAL 0
 
@@ -707,9 +750,9 @@ YY_DECL
 		}
 
 	{
-#line 11 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 54 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
 
-#line 713 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
+#line 756 "/home/rafaelschadt/G2_compiladores/src/lexer/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -768,188 +811,188 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE IF\n");  }
+#line 55 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_IF; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE ELSE\n"); }
+#line 56 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_ELSE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE ELIF\n"); }
+#line 57 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_ELIF; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE WHILE\n");  }
+#line 58 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_WHILE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE FOR\n");  }
+#line 59 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_FOR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE DEF\n");  }
+#line 60 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_DEF; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE RETURN\n"); }
+#line 61 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_RETURN; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("PALAVRA-CHAVE IN\n");  }
+#line 62 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_PALAVRA_CHAVE_IN; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("IDENTIFICADOR: %s\n", yytext); }
+#line 64 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ yytoken_value = strdup(yytext); return TOKEN_IDENTIFICADOR; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("NUMERO-INTEIRO: %s\n", yytext); }
+#line 66 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ yytoken_value = strdup(yytext); return TOKEN_INTEIRO; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("NUMERO-FLOAT: %s\n", yytext); }
+#line 67 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ yytoken_value = strdup(yytext); return TOKEN_FLOAT; }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 26 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("STRING: %s\n", yytext); }
+#line 69 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ yytoken_value = strdup(yytext); return TOKEN_STRING; }
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 27 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("STRING: %s\n", yytext); }
+#line 70 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ yytoken_value = strdup(yytext); return TOKEN_STRING; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 29 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: ==\n"); }
+#line 72 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_IGUAL; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 30 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: !=\n"); }
+#line 73 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_DIFERENTE; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 31 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: <=\n"); }
+#line 74 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MENOR_IGUAL; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 32 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: >=\n"); }
+#line 75 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MAIOR_IGUAL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 33 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: <\n"); }
+#line 76 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MENOR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 34 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: >\n"); }
+#line 77 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MAIOR; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: =\n"); }
+#line 78 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_ATRIBUICAO; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: +\n"); }
+#line 79 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MAIS; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: -\n"); }
+#line 80 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MENOS; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 38 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: *\n"); }
+#line 81 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_MULTIPLICACAO; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 39 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("OPERADOR: /\n"); }
+#line 82 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_OPERADOR_DIVISAO; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: :\n"); }
+#line 84 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_DOIS_PONTOS; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: ,\n"); }
+#line 85 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_VIRGULA; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: (\n"); }
+#line 86 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 44 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: )\n"); }
+#line 87 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: [\n"); }
+#line 88 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_ABRE_COLCHETES; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 46 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: ]\n"); }
+#line 89 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_FECHA_COLCHETES; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 47 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: {\n"); }
+#line 90 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_ABRE_CHAVES; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("DELIMITADOR: }\n"); }
+#line 91 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ return TOKEN_DELIMITADOR_FECHA_CHAVES; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 50 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 93 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
 { /* comentário, ignora */ }
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 52 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 95 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
 { /* ignora espaços e quebras de linha */ }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 54 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
-{ printf("CARACTERE DESCONHECIDO: %s\n", yytext); }
+#line 97 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
+{ printf("ERROR: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 55 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 98 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
 ECHO;
 	YY_BREAK
-#line 953 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lex.yy.c"
+#line 996 "/home/rafaelschadt/G2_compiladores/src/lexer/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1954,10 +1997,56 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 55 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/lexer/lexer.l"
+#line 98 "/home/rafaelschadt/G2_compiladores/src/lexer/lexer.l"
 
+
+const char *token_to_string(TokenType token) {
+    switch(token) {
+        case TOKEN_PALAVRA_CHAVE_IF: return "PALAVRA-CHAVE IF";
+        case TOKEN_PALAVRA_CHAVE_ELSE: return "PALAVRA-CHAVE ELSE";
+        case TOKEN_PALAVRA_CHAVE_ELIF: return "PALAVRA-CHAVE ELIF";
+        case TOKEN_PALAVRA_CHAVE_WHILE: return "PALAVRA-CHAVE WHILE";
+        case TOKEN_PALAVRA_CHAVE_FOR: return "PALAVRA-CHAVE FOR";
+        case TOKEN_PALAVRA_CHAVE_DEF: return "PALAVRA-CHAVE DEF";
+        case TOKEN_PALAVRA_CHAVE_RETURN: return "PALAVRA-CHAVE RETURN";
+        case TOKEN_PALAVRA_CHAVE_IN: return "PALAVRA-CHAVE IN";
+        case TOKEN_IDENTIFICADOR: return "IDENTIFICADOR";
+        case TOKEN_INTEIRO: return "NUMERO-INTEIRO";
+        case TOKEN_FLOAT: return "NUMERO-FLOAT";
+        case TOKEN_STRING: return "STRING";
+        case TOKEN_OPERADOR_IGUAL: return "OPERADOR: ==";
+        case TOKEN_OPERADOR_DIFERENTE: return "OPERADOR: !=";
+        case TOKEN_OPERADOR_MENOR_IGUAL: return "OPERADOR: <=";
+        case TOKEN_OPERADOR_MAIOR_IGUAL: return "OPERADOR: >=";
+        case TOKEN_OPERADOR_MENOR: return "OPERADOR: <";
+        case TOKEN_OPERADOR_MAIOR: return "OPERADOR: >";
+        case TOKEN_OPERADOR_ATRIBUICAO: return "OPERADOR: =";
+        case TOKEN_OPERADOR_MAIS: return "OPERADOR: +";
+        case TOKEN_OPERADOR_MENOS: return "OPERADOR: -";
+        case TOKEN_OPERADOR_MULTIPLICACAO: return "OPERADOR: *";
+        case TOKEN_OPERADOR_DIVISAO: return "OPERADOR: /";
+        case TOKEN_DELIMITADOR_DOIS_PONTOS: return "DELIMITADOR: :";
+        case TOKEN_DELIMITADOR_VIRGULA: return "DELIMITADOR: ,";
+        case TOKEN_DELIMITADOR_ABRE_PARENTESES: return "DELIMITADOR: (";
+        case TOKEN_DELIMITADOR_FECHA_PARENTESES: return "DELIMITADOR: )";
+        case TOKEN_DELIMITADOR_ABRE_COLCHETES: return "DELIMITADOR: [";
+        case TOKEN_DELIMITADOR_FECHA_COLCHETES: return "DELIMITADOR: ]";
+        case TOKEN_DELIMITADOR_ABRE_CHAVES: return "DELIMITADOR: {";
+        case TOKEN_DELIMITADOR_FECHA_CHAVES: return "DELIMITADOR: }";
+        case TOKEN_DESCONHECIDO: return "CARACTERE DESCONHECIDO";
+        default: return "EOF";
+    }
+}
 
 int main(int argc, char **argv) {
-    yylex();
+    TokenType token;
+    while ((token = yylex()) != TOKEN_EOF) {
+        printf("TOKEN: %s", token_to_string(token));
+        if (token == TOKEN_IDENTIFICADOR || token == TOKEN_INTEIRO || token == TOKEN_FLOAT || token == TOKEN_STRING) {
+            printf(": %s", yytoken_value);
+            free(yytoken_value); /* Libera a memória alocada */
+        }
+        printf("\n");
+    }
     return 0;
 }
