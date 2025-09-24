@@ -1,0 +1,865 @@
+Terminals unused in grammar
+
+    TOKEN_PALAVRA_CHAVE_ELIF
+    TOKEN_PALAVRA_CHAVE_FOR
+    TOKEN_PALAVRA_CHAVE_IN
+    TOKEN_OPERADOR_IGUAL
+    TOKEN_OPERADOR_DIFERENTE
+    TOKEN_OPERADOR_MENOR_IGUAL
+    TOKEN_OPERADOR_MAIOR_IGUAL
+    TOKEN_OPERADOR_MENOR
+    TOKEN_OPERADOR_MAIOR
+    TOKEN_DELIMITADOR_ABRE_COLCHETES
+    TOKEN_DELIMITADOR_FECHA_COLCHETES
+    TOKEN_DELIMITADOR_ABRE_CHAVES
+    TOKEN_DELIMITADOR_FECHA_CHAVES
+
+
+State 44 conflicts: 5 shift/reduce
+State 55 conflicts: 5 shift/reduce
+State 56 conflicts: 5 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 $@1: ε
+
+    2 program: $@1 stmt_list
+
+    3 stmt_list: stmt_list stmt
+    4          | stmt
+
+    5 stmt: simple_stmt
+    6     | compound_stmt
+
+    7 simple_stmt: expr_stmt
+    8            | return_stmt
+
+    9 expr_stmt: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expr
+
+   10 return_stmt: TOKEN_PALAVRA_CHAVE_RETURN expr
+
+   11 compound_stmt: if_stmt
+   12              | while_stmt
+   13              | func_def
+
+   14 $@2: ε
+
+   15 $@3: ε
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+
+   17 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+   19 opt_params: ε
+   20           | param_list
+
+   21 param_list: TOKEN_IDENTIFICADOR
+   22           | param_list TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+
+   23 expr: expr TOKEN_OPERADOR_MAIS expr
+   24     | expr TOKEN_OPERADOR_MENOS expr
+   25     | expr TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr TOKEN_OPERADOR_DIVISAO expr
+   27     | TOKEN_DELIMITADOR_ABRE_PARENTESES expr TOKEN_DELIMITADOR_FECHA_PARENTESES
+   28     | TOKEN_INTEIRO
+   29     | TOKEN_FLOAT
+   30     | TOKEN_STRING
+   31     | TOKEN_IDENTIFICADOR
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    TOKEN_IDENTIFICADOR <str> (258) 9 18 21 22 31
+    TOKEN_STRING <str> (259) 30
+    TOKEN_INTEIRO <inteiro> (260) 28
+    TOKEN_FLOAT <flutuante> (261) 29
+    TOKEN_PALAVRA_CHAVE_IF (262) 16
+    TOKEN_PALAVRA_CHAVE_ELSE (263) 16
+    TOKEN_PALAVRA_CHAVE_ELIF (264)
+    TOKEN_PALAVRA_CHAVE_WHILE (265) 17
+    TOKEN_PALAVRA_CHAVE_FOR (266)
+    TOKEN_PALAVRA_CHAVE_DEF (267) 18
+    TOKEN_PALAVRA_CHAVE_RETURN (268) 10
+    TOKEN_PALAVRA_CHAVE_IN (269)
+    TOKEN_OPERADOR_IGUAL (270)
+    TOKEN_OPERADOR_DIFERENTE (271)
+    TOKEN_OPERADOR_MENOR_IGUAL (272)
+    TOKEN_OPERADOR_MAIOR_IGUAL (273)
+    TOKEN_OPERADOR_MENOR (274)
+    TOKEN_OPERADOR_MAIOR (275)
+    TOKEN_OPERADOR_ATRIBUICAO (276) 9
+    TOKEN_OPERADOR_MAIS (277) 23
+    TOKEN_OPERADOR_MENOS (278) 24
+    TOKEN_OPERADOR_MULTIPLICACAO (279) 25
+    TOKEN_OPERADOR_DIVISAO (280) 26
+    TOKEN_DELIMITADOR_DOIS_PONTOS (281) 16 17 18
+    TOKEN_DELIMITADOR_VIRGULA (282) 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES (283) 18 27
+    TOKEN_DELIMITADOR_FECHA_PARENTESES (284) 18 27
+    TOKEN_DELIMITADOR_ABRE_COLCHETES (285)
+    TOKEN_DELIMITADOR_FECHA_COLCHETES (286)
+    TOKEN_DELIMITADOR_ABRE_CHAVES (287)
+    TOKEN_DELIMITADOR_FECHA_CHAVES (288)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (34)
+        on left: 0
+    program (35)
+        on left: 2
+        on right: 0
+    $@1 (36)
+        on left: 1
+        on right: 2
+    stmt_list (37)
+        on left: 3 4
+        on right: 2 3 16 17 18
+    stmt (38)
+        on left: 5 6
+        on right: 3 4
+    simple_stmt (39)
+        on left: 7 8
+        on right: 5
+    expr_stmt (40)
+        on left: 9
+        on right: 7
+    return_stmt (41)
+        on left: 10
+        on right: 8
+    compound_stmt (42)
+        on left: 11 12 13
+        on right: 6
+    if_stmt (43)
+        on left: 16
+        on right: 11
+    $@2 (44)
+        on left: 14
+        on right: 16
+    $@3 (45)
+        on left: 15
+        on right: 16
+    while_stmt (46)
+        on left: 17
+        on right: 12
+    func_def (47)
+        on left: 18
+        on right: 13
+    opt_params (48)
+        on left: 19 20
+        on right: 18
+    param_list (49)
+        on left: 21 22
+        on right: 20 22
+    expr <str> (50)
+        on left: 23 24 25 26 27 28 29 30 31
+        on right: 9 10 16 17 23 24 25 26 27
+
+
+State 0
+
+    0 $accept: • program $end
+
+    $default  reduce using rule 1 ($@1)
+
+    program  go to state 1
+    $@1      go to state 2
+
+
+State 1
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    2 program: $@1 • stmt_list
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    stmt_list      go to state 9
+    stmt           go to state 10
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 3
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 4
+
+    9 expr_stmt: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expr
+
+    TOKEN_OPERADOR_ATRIBUICAO  shift, and go to state 18
+
+
+State 5
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF • expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 24
+
+
+State 6
+
+   17 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE • expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 25
+
+
+State 7
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF • TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+    TOKEN_IDENTIFICADOR  shift, and go to state 26
+
+
+State 8
+
+   10 return_stmt: TOKEN_PALAVRA_CHAVE_RETURN • expr
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 27
+
+
+State 9
+
+    2 program: $@1 stmt_list •
+    3 stmt_list: stmt_list • stmt
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    $default  reduce using rule 2 (program)
+
+    stmt           go to state 28
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 10
+
+    4 stmt_list: stmt •
+
+    $default  reduce using rule 4 (stmt_list)
+
+
+State 11
+
+    5 stmt: simple_stmt •
+
+    $default  reduce using rule 5 (stmt)
+
+
+State 12
+
+    7 simple_stmt: expr_stmt •
+
+    $default  reduce using rule 7 (simple_stmt)
+
+
+State 13
+
+    8 simple_stmt: return_stmt •
+
+    $default  reduce using rule 8 (simple_stmt)
+
+
+State 14
+
+    6 stmt: compound_stmt •
+
+    $default  reduce using rule 6 (stmt)
+
+
+State 15
+
+   11 compound_stmt: if_stmt •
+
+    $default  reduce using rule 11 (compound_stmt)
+
+
+State 16
+
+   12 compound_stmt: while_stmt •
+
+    $default  reduce using rule 12 (compound_stmt)
+
+
+State 17
+
+   13 compound_stmt: func_def •
+
+    $default  reduce using rule 13 (compound_stmt)
+
+
+State 18
+
+    9 expr_stmt: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO • expr
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 29
+
+
+State 19
+
+   31 expr: TOKEN_IDENTIFICADOR •
+
+    $default  reduce using rule 31 (expr)
+
+
+State 20
+
+   30 expr: TOKEN_STRING •
+
+    $default  reduce using rule 30 (expr)
+
+
+State 21
+
+   28 expr: TOKEN_INTEIRO •
+
+    $default  reduce using rule 28 (expr)
+
+
+State 22
+
+   29 expr: TOKEN_FLOAT •
+
+    $default  reduce using rule 29 (expr)
+
+
+State 23
+
+   27 expr: TOKEN_DELIMITADOR_ABRE_PARENTESES • expr TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 30
+
+
+State 24
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr • TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    TOKEN_OPERADOR_MAIS            shift, and go to state 31
+    TOKEN_OPERADOR_MENOS           shift, and go to state 32
+    TOKEN_OPERADOR_MULTIPLICACAO   shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO         shift, and go to state 34
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 35
+
+
+State 25
+
+   17 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expr • TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    TOKEN_OPERADOR_MAIS            shift, and go to state 31
+    TOKEN_OPERADOR_MENOS           shift, and go to state 32
+    TOKEN_OPERADOR_MULTIPLICACAO   shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO         shift, and go to state 34
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 36
+
+
+State 26
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 37
+
+
+State 27
+
+   10 return_stmt: TOKEN_PALAVRA_CHAVE_RETURN expr •
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 31
+    TOKEN_OPERADOR_MENOS          shift, and go to state 32
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 34
+
+    $default  reduce using rule 10 (return_stmt)
+
+
+State 28
+
+    3 stmt_list: stmt_list stmt •
+
+    $default  reduce using rule 3 (stmt_list)
+
+
+State 29
+
+    9 expr_stmt: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expr •
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 31
+    TOKEN_OPERADOR_MENOS          shift, and go to state 32
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 34
+
+    $default  reduce using rule 9 (expr_stmt)
+
+
+State 30
+
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+   27     | TOKEN_DELIMITADOR_ABRE_PARENTESES expr • TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_OPERADOR_MAIS                 shift, and go to state 31
+    TOKEN_OPERADOR_MENOS                shift, and go to state 32
+    TOKEN_OPERADOR_MULTIPLICACAO        shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO              shift, and go to state 34
+    TOKEN_DELIMITADOR_FECHA_PARENTESES  shift, and go to state 38
+
+
+State 31
+
+   23 expr: expr TOKEN_OPERADOR_MAIS • expr
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 39
+
+
+State 32
+
+   24 expr: expr TOKEN_OPERADOR_MENOS • expr
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 40
+
+
+State 33
+
+   25 expr: expr TOKEN_OPERADOR_MULTIPLICACAO • expr
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 41
+
+
+State 34
+
+   26 expr: expr TOKEN_OPERADOR_DIVISAO • expr
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_STRING                       shift, and go to state 20
+    TOKEN_INTEIRO                      shift, and go to state 21
+    TOKEN_FLOAT                        shift, and go to state 22
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 23
+
+    expr  go to state 42
+
+
+State 35
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS • stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    stmt_list      go to state 43
+    stmt           go to state 10
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 36
+
+   17 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expr TOKEN_DELIMITADOR_DOIS_PONTOS • stmt_list
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    stmt_list      go to state 44
+    stmt           go to state 10
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 37
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES • opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+    TOKEN_IDENTIFICADOR  shift, and go to state 45
+
+    $default  reduce using rule 19 (opt_params)
+
+    opt_params  go to state 46
+    param_list  go to state 47
+
+
+State 38
+
+   27 expr: TOKEN_DELIMITADOR_ABRE_PARENTESES expr TOKEN_DELIMITADOR_FECHA_PARENTESES •
+
+    $default  reduce using rule 27 (expr)
+
+
+State 39
+
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   23     | expr TOKEN_OPERADOR_MAIS expr •
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 34
+
+    $default  reduce using rule 23 (expr)
+
+
+State 40
+
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   24     | expr TOKEN_OPERADOR_MENOS expr •
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 33
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 34
+
+    $default  reduce using rule 24 (expr)
+
+
+State 41
+
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   25     | expr TOKEN_OPERADOR_MULTIPLICACAO expr •
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+
+    $default  reduce using rule 25 (expr)
+
+
+State 42
+
+   23 expr: expr • TOKEN_OPERADOR_MAIS expr
+   24     | expr • TOKEN_OPERADOR_MENOS expr
+   25     | expr • TOKEN_OPERADOR_MULTIPLICACAO expr
+   26     | expr • TOKEN_OPERADOR_DIVISAO expr
+   26     | expr TOKEN_OPERADOR_DIVISAO expr •
+
+    $default  reduce using rule 26 (expr)
+
+
+State 43
+
+    3 stmt_list: stmt_list • stmt
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list • $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    $default  reduce using rule 14 ($@2)
+
+    stmt           go to state 28
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    $@2            go to state 48
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 44
+
+    3 stmt_list: stmt_list • stmt
+   17 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list •
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    TOKEN_IDENTIFICADOR         [reduce using rule 17 (while_stmt)]
+    TOKEN_PALAVRA_CHAVE_IF      [reduce using rule 17 (while_stmt)]
+    TOKEN_PALAVRA_CHAVE_WHILE   [reduce using rule 17 (while_stmt)]
+    TOKEN_PALAVRA_CHAVE_DEF     [reduce using rule 17 (while_stmt)]
+    TOKEN_PALAVRA_CHAVE_RETURN  [reduce using rule 17 (while_stmt)]
+    $default                    reduce using rule 17 (while_stmt)
+
+    stmt           go to state 28
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 45
+
+   21 param_list: TOKEN_IDENTIFICADOR •
+
+    $default  reduce using rule 21 (param_list)
+
+
+State 46
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params • TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+    TOKEN_DELIMITADOR_FECHA_PARENTESES  shift, and go to state 49
+
+
+State 47
+
+   20 opt_params: param_list •
+   22 param_list: param_list • TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+
+    TOKEN_DELIMITADOR_VIRGULA  shift, and go to state 50
+
+    $default  reduce using rule 20 (opt_params)
+
+
+State 48
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 • TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+
+    TOKEN_PALAVRA_CHAVE_ELSE  shift, and go to state 51
+
+
+State 49
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES • TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list
+
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 52
+
+
+State 50
+
+   22 param_list: param_list TOKEN_DELIMITADOR_VIRGULA • TOKEN_IDENTIFICADOR
+
+    TOKEN_IDENTIFICADOR  shift, and go to state 53
+
+
+State 51
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE • TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3
+
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 54
+
+
+State 52
+
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS • stmt_list
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    stmt_list      go to state 55
+    stmt           go to state 10
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 53
+
+   22 param_list: param_list TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR •
+
+    $default  reduce using rule 22 (param_list)
+
+
+State 54
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS • stmt_list $@3
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    stmt_list      go to state 56
+    stmt           go to state 10
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 55
+
+    3 stmt_list: stmt_list • stmt
+   18 func_def: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES opt_params TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list •
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    TOKEN_IDENTIFICADOR         [reduce using rule 18 (func_def)]
+    TOKEN_PALAVRA_CHAVE_IF      [reduce using rule 18 (func_def)]
+    TOKEN_PALAVRA_CHAVE_WHILE   [reduce using rule 18 (func_def)]
+    TOKEN_PALAVRA_CHAVE_DEF     [reduce using rule 18 (func_def)]
+    TOKEN_PALAVRA_CHAVE_RETURN  [reduce using rule 18 (func_def)]
+    $default                    reduce using rule 18 (func_def)
+
+    stmt           go to state 28
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 56
+
+    3 stmt_list: stmt_list • stmt
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list • $@3
+
+    TOKEN_IDENTIFICADOR         shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_IF      shift, and go to state 5
+    TOKEN_PALAVRA_CHAVE_WHILE   shift, and go to state 6
+    TOKEN_PALAVRA_CHAVE_DEF     shift, and go to state 7
+    TOKEN_PALAVRA_CHAVE_RETURN  shift, and go to state 8
+
+    TOKEN_IDENTIFICADOR         [reduce using rule 15 ($@3)]
+    TOKEN_PALAVRA_CHAVE_IF      [reduce using rule 15 ($@3)]
+    TOKEN_PALAVRA_CHAVE_WHILE   [reduce using rule 15 ($@3)]
+    TOKEN_PALAVRA_CHAVE_DEF     [reduce using rule 15 ($@3)]
+    TOKEN_PALAVRA_CHAVE_RETURN  [reduce using rule 15 ($@3)]
+    $default                    reduce using rule 15 ($@3)
+
+    stmt           go to state 28
+    simple_stmt    go to state 11
+    expr_stmt      go to state 12
+    return_stmt    go to state 13
+    compound_stmt  go to state 14
+    if_stmt        go to state 15
+    $@3            go to state 57
+    while_stmt     go to state 16
+    func_def       go to state 17
+
+
+State 57
+
+   16 if_stmt: TOKEN_PALAVRA_CHAVE_IF expr TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@2 TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS stmt_list $@3 •
+
+    $default  reduce using rule 16 (if_stmt)
