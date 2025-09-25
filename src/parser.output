@@ -1,0 +1,470 @@
+Terminals unused in grammar
+
+    TOKEN_PALAVRA_CHAVE_IF
+    TOKEN_PALAVRA_CHAVE_ELSE
+    TOKEN_PALAVRA_CHAVE_ELIF
+    TOKEN_PALAVRA_CHAVE_WHILE
+    TOKEN_PALAVRA_CHAVE_FOR
+    TOKEN_PALAVRA_CHAVE_DEF
+    TOKEN_PALAVRA_CHAVE_RETURN
+    TOKEN_PALAVRA_CHAVE_IN
+    TOKEN_OPERADOR_IGUAL
+    TOKEN_OPERADOR_DIFERENTE
+    TOKEN_OPERADOR_MENOR_IGUAL
+    TOKEN_OPERADOR_MAIOR_IGUAL
+    TOKEN_OPERADOR_MENOR
+    TOKEN_OPERADOR_MAIOR
+    TOKEN_DELIMITADOR_DOIS_PONTOS
+    TOKEN_DELIMITADOR_ABRE_CHAVES
+    TOKEN_DELIMITADOR_FECHA_CHAVES
+    TOKEN_DELIMITADOR_ABRE_COLCHETES
+    TOKEN_DELIMITADOR_FECHA_COLCHETES
+    TOKEN_DESCONHECIDO
+
+
+State 3 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: ε
+    2         | programa comando
+
+    3 comando: atribuicao
+    4        | expressao
+    5        | TOKEN_NEWLINE
+
+    6 atribuicao: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+    7           | lista_identificadores TOKEN_OPERADOR_ATRIBUICAO atribuicao
+
+    8 lista_identificadores: TOKEN_IDENTIFICADOR
+    9                      | lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+
+   10 lista_expressoes: expressao
+   11                 | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
+
+   12 expressao: TOKEN_INTEIRO
+   13          | TOKEN_FLOAT
+   14          | TOKEN_STRING
+   15          | TOKEN_IDENTIFICADOR
+   16          | expressao TOKEN_OPERADOR_MAIS expressao
+   17          | expressao TOKEN_OPERADOR_MENOS expressao
+   18          | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao TOKEN_OPERADOR_DIVISAO expressao
+   20          | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    TOKEN_IDENTIFICADOR (258) 8 9 15
+    TOKEN_INTEIRO (259) 12
+    TOKEN_FLOAT (260) 13
+    TOKEN_STRING (261) 14
+    TOKEN_PALAVRA_CHAVE_IF (262)
+    TOKEN_PALAVRA_CHAVE_ELSE (263)
+    TOKEN_PALAVRA_CHAVE_ELIF (264)
+    TOKEN_PALAVRA_CHAVE_WHILE (265)
+    TOKEN_PALAVRA_CHAVE_FOR (266)
+    TOKEN_PALAVRA_CHAVE_DEF (267)
+    TOKEN_PALAVRA_CHAVE_RETURN (268)
+    TOKEN_PALAVRA_CHAVE_IN (269)
+    TOKEN_OPERADOR_IGUAL (270)
+    TOKEN_OPERADOR_DIFERENTE (271)
+    TOKEN_OPERADOR_MENOR_IGUAL (272)
+    TOKEN_OPERADOR_MAIOR_IGUAL (273)
+    TOKEN_OPERADOR_MENOR (274)
+    TOKEN_OPERADOR_MAIOR (275)
+    TOKEN_OPERADOR_ATRIBUICAO (276) 6 7
+    TOKEN_OPERADOR_MAIS (277) 16
+    TOKEN_OPERADOR_MENOS (278) 17
+    TOKEN_OPERADOR_MULTIPLICACAO (279) 18
+    TOKEN_OPERADOR_DIVISAO (280) 19
+    TOKEN_DELIMITADOR_DOIS_PONTOS (281)
+    TOKEN_DELIMITADOR_VIRGULA (282) 9 11
+    TOKEN_DELIMITADOR_ABRE_PARENTESES (283) 20
+    TOKEN_DELIMITADOR_FECHA_PARENTESES (284) 20
+    TOKEN_DELIMITADOR_ABRE_CHAVES (285)
+    TOKEN_DELIMITADOR_FECHA_CHAVES (286)
+    TOKEN_DELIMITADOR_ABRE_COLCHETES (287)
+    TOKEN_DELIMITADOR_FECHA_COLCHETES (288)
+    TOKEN_DESCONHECIDO (289)
+    TOKEN_NEWLINE (290) 5
+
+
+Nonterminals, with rules where they appear
+
+    $accept (36)
+        on left: 0
+    programa (37)
+        on left: 1 2
+        on right: 0 2
+    comando (38)
+        on left: 3 4 5
+        on right: 2
+    atribuicao (39)
+        on left: 6 7
+        on right: 3 7
+    lista_identificadores (40)
+        on left: 8 9
+        on right: 6 7 9
+    lista_expressoes (41)
+        on left: 10 11
+        on right: 6 11
+    expressao (42)
+        on left: 12 13 14 15 16 17 18 19 20
+        on right: 4 10 11 16 17 18 19 20
+
+
+State 0
+
+    0 $accept: • programa $end
+
+    $default  reduce using rule 1 (programa)
+
+    programa  go to state 1
+
+
+State 1
+
+    0 $accept: programa • $end
+    2 programa: programa • comando
+
+    $end                               shift, and go to state 2
+    TOKEN_IDENTIFICADOR                shift, and go to state 3
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+    TOKEN_NEWLINE                      shift, and go to state 8
+
+    comando                go to state 9
+    atribuicao             go to state 10
+    lista_identificadores  go to state 11
+    expressao              go to state 12
+
+
+State 2
+
+    0 $accept: programa $end •
+
+    $default  accept
+
+
+State 3
+
+    8 lista_identificadores: TOKEN_IDENTIFICADOR •
+   15 expressao: TOKEN_IDENTIFICADOR •
+
+    TOKEN_OPERADOR_ATRIBUICAO  reduce using rule 8 (lista_identificadores)
+    TOKEN_DELIMITADOR_VIRGULA  reduce using rule 8 (lista_identificadores)
+    TOKEN_DELIMITADOR_VIRGULA  [reduce using rule 15 (expressao)]
+    $default                   reduce using rule 15 (expressao)
+
+
+State 4
+
+   12 expressao: TOKEN_INTEIRO •
+
+    $default  reduce using rule 12 (expressao)
+
+
+State 5
+
+   13 expressao: TOKEN_FLOAT •
+
+    $default  reduce using rule 13 (expressao)
+
+
+State 6
+
+   14 expressao: TOKEN_STRING •
+
+    $default  reduce using rule 14 (expressao)
+
+
+State 7
+
+   20 expressao: TOKEN_DELIMITADOR_ABRE_PARENTESES • expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 13
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 14
+
+
+State 8
+
+    5 comando: TOKEN_NEWLINE •
+
+    $default  reduce using rule 5 (comando)
+
+
+State 9
+
+    2 programa: programa comando •
+
+    $default  reduce using rule 2 (programa)
+
+
+State 10
+
+    3 comando: atribuicao •
+
+    $default  reduce using rule 3 (comando)
+
+
+State 11
+
+    6 atribuicao: lista_identificadores • TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+    7           | lista_identificadores • TOKEN_OPERADOR_ATRIBUICAO atribuicao
+    9 lista_identificadores: lista_identificadores • TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+
+    TOKEN_OPERADOR_ATRIBUICAO  shift, and go to state 15
+    TOKEN_DELIMITADOR_VIRGULA  shift, and go to state 16
+
+
+State 12
+
+    4 comando: expressao •
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 17
+    TOKEN_OPERADOR_MENOS          shift, and go to state 18
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 19
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 20
+
+    $default  reduce using rule 4 (comando)
+
+
+State 13
+
+   15 expressao: TOKEN_IDENTIFICADOR •
+
+    $default  reduce using rule 15 (expressao)
+
+
+State 14
+
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   20          | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao • TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_OPERADOR_MAIS                 shift, and go to state 17
+    TOKEN_OPERADOR_MENOS                shift, and go to state 18
+    TOKEN_OPERADOR_MULTIPLICACAO        shift, and go to state 19
+    TOKEN_OPERADOR_DIVISAO              shift, and go to state 20
+    TOKEN_DELIMITADOR_FECHA_PARENTESES  shift, and go to state 21
+
+
+State 15
+
+    6 atribuicao: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO • lista_expressoes
+    7           | lista_identificadores TOKEN_OPERADOR_ATRIBUICAO • atribuicao
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 3
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    atribuicao             go to state 22
+    lista_identificadores  go to state 11
+    lista_expressoes       go to state 23
+    expressao              go to state 24
+
+
+State 16
+
+    9 lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA • TOKEN_IDENTIFICADOR
+
+    TOKEN_IDENTIFICADOR  shift, and go to state 25
+
+
+State 17
+
+   16 expressao: expressao TOKEN_OPERADOR_MAIS • expressao
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 13
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 26
+
+
+State 18
+
+   17 expressao: expressao TOKEN_OPERADOR_MENOS • expressao
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 13
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 27
+
+
+State 19
+
+   18 expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO • expressao
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 13
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 28
+
+
+State 20
+
+   19 expressao: expressao TOKEN_OPERADOR_DIVISAO • expressao
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 13
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 29
+
+
+State 21
+
+   20 expressao: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES •
+
+    $default  reduce using rule 20 (expressao)
+
+
+State 22
+
+    7 atribuicao: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO atribuicao •
+
+    $default  reduce using rule 7 (atribuicao)
+
+
+State 23
+
+    6 atribuicao: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes •
+   11 lista_expressoes: lista_expressoes • TOKEN_DELIMITADOR_VIRGULA expressao
+
+    TOKEN_DELIMITADOR_VIRGULA  shift, and go to state 30
+
+    $default  reduce using rule 6 (atribuicao)
+
+
+State 24
+
+   10 lista_expressoes: expressao •
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 17
+    TOKEN_OPERADOR_MENOS          shift, and go to state 18
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 19
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 20
+
+    $default  reduce using rule 10 (lista_expressoes)
+
+
+State 25
+
+    9 lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR •
+
+    $default  reduce using rule 9 (lista_identificadores)
+
+
+State 26
+
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   16          | expressao TOKEN_OPERADOR_MAIS expressao •
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 19
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 20
+
+    $default  reduce using rule 16 (expressao)
+
+
+State 27
+
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   17          | expressao TOKEN_OPERADOR_MENOS expressao •
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 19
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 20
+
+    $default  reduce using rule 17 (expressao)
+
+
+State 28
+
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   18          | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao •
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    $default  reduce using rule 18 (expressao)
+
+
+State 29
+
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   19          | expressao TOKEN_OPERADOR_DIVISAO expressao •
+
+    $default  reduce using rule 19 (expressao)
+
+
+State 30
+
+   11 lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA • expressao
+
+    TOKEN_IDENTIFICADOR                shift, and go to state 13
+    TOKEN_INTEIRO                      shift, and go to state 4
+    TOKEN_FLOAT                        shift, and go to state 5
+    TOKEN_STRING                       shift, and go to state 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 31
+
+
+State 31
+
+   11 lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao •
+   16 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   17          | expressao • TOKEN_OPERADOR_MENOS expressao
+   18          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   19          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 17
+    TOKEN_OPERADOR_MENOS          shift, and go to state 18
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 19
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 20
+
+    $default  reduce using rule 11 (lista_expressoes)
