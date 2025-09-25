@@ -39,16 +39,16 @@
 
 %%
 programa:
-      /* vazio */
-    | programa comando
-    ;
+    /* vazio */
+  | programa comando
+  ;
 
 
 comando:
-      atribuicao
-    | expressao
-    | TOKEN_NEWLINE 
-    ;
+    atribuicao
+  | expressao
+  | TOKEN_NEWLINE 
+  ;
 
 
 atribuicao:
@@ -66,27 +66,42 @@ lista_expressoes:
   | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
   ;
 
+lista_argumentos:
+    /* vazio */
+  | lista_expressoes
+  ;
+
+fator:
+    TOKEN_INTEIRO
+  | TOKEN_FLOAT
+  | TOKEN_STRING
+  | TOKEN_IDENTIFICADOR
+  | chamada_funcao
+  | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+  ;
+
 expressao:
-      TOKEN_INTEIRO
-    | TOKEN_FLOAT
-    | TOKEN_STRING
-    | TOKEN_IDENTIFICADOR
-    | expressao TOKEN_OPERADOR_MAIS expressao
-    | expressao TOKEN_OPERADOR_MENOS expressao
-    | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
-    | expressao TOKEN_OPERADOR_DIVISAO expressao
-    | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-    ;
+    fator
+  | expressao TOKEN_OPERADOR_MAIS expressao
+  | expressao TOKEN_OPERADOR_MENOS expressao
+  | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
+  | expressao TOKEN_OPERADOR_DIVISAO expressao
+  ;
+
+chamada_funcao:
+    TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+  ;
+
 
 %%
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Erro de sintaxe: %s próximo de '%s'\n", s, yytext);
+  fprintf(stderr, "Erro de sintaxe: %s próximo de '%s'\n", s, yytext);
 }
 
 int main(void) {
-    printf("Iniciando parser...\n");
-    yyparse();
-    printf("Parsing concluído com sucesso!\n");
-    return 0;
+  printf("Iniciando parser...\n");
+  yyparse();
+  printf("Parsing concluído com sucesso!\n");
+  return 0;
 }

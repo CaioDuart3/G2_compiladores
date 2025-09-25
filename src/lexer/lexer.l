@@ -45,20 +45,20 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 "<"         { return TOKEN_OPERADOR_MENOR; }
 ">"         { return TOKEN_OPERADOR_MAIOR; }
 "="         { printf("LEXER: Token IGUAL (%s)\n", yytext); return TOKEN_OPERADOR_ATRIBUICAO; }
-"+"         { return TOKEN_OPERADOR_MAIS; }
-"-"         { return TOKEN_OPERADOR_MENOS; }
-"*"         { return TOKEN_OPERADOR_MULTIPLICACAO; }
-"/"         { return TOKEN_OPERADOR_DIVISAO; }
+"+"         { printf("LEXER: Token MAIS (%s)\n", yytext); return TOKEN_OPERADOR_MAIS; }
+"-"         { printf("LEXER: Token MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
+"*"         { printf("LEXER: Token VEZES (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
+"/"         { printf("LEXER: Token DIVISÃO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
 
 ":"         { return TOKEN_DELIMITADOR_DOIS_PONTOS; }
-","         { return TOKEN_DELIMITADOR_VIRGULA; }
-"("         { return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
-")"         { return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
+","         { printf("LEXER: Token VIRGULA (%s)\n", yytext); return TOKEN_DELIMITADOR_VIRGULA; }
+"("         { printf("LEXER: Token ABRE PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
+")"         { printf("LEXER: Token FECHA PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
 "["         { return TOKEN_DELIMITADOR_ABRE_COLCHETES; }
 "]"         { return TOKEN_DELIMITADOR_FECHA_COLCHETES; }
 "{"         { return TOKEN_DELIMITADOR_ABRE_CHAVES; }
 "}"         { return TOKEN_DELIMITADOR_FECHA_CHAVES; }
-\n          { printf("LEXER: Token QUEBRA LINHA (%s)\n", yytext); return TOKEN_NEWLINE; }
+\n          { printf("LEXER: Token QUEBRA LINHA (/n)\n"); return TOKEN_NEWLINE; }
 
 
 [ \t]+      { /* ignora espaços e tabs */ }
