@@ -3,11 +3,14 @@
 #include <string.h>
 #include "parser.tab.h"
 
-/* Enumeração para os tipos de tokens */
+#define MAX_INDENT 100
+int indent_stack[MAX_INDENT];
+int indent_top = 0;
 
+void push_indent(int n) { indent_stack[++indent_top] = n; }
+void pop_indent() { if (indent_top > 0) indent_top--; }
+int top_indent() { return indent_stack[indent_top]; }
 
-/* Variável global para armazenar o valor do token, se necessário */
-/* Para este exemplo, vamos armazenar o yytext. Em um analisador real, você pode ter uma 'union' */
 char *yytoken_value;
 
 %}
@@ -61,7 +64,24 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 \n          { printf("LEXER: Token QUEBRA LINHA (/n)\n"); return TOKEN_NEWLINE; }
 
 
-[ \t]+      { /* ignora espaços e tabs */ }
+^[ \t]*    { // tratamento de identação
+    int n = yyleng;  // número de espaços/tabs
+    if (n > top_indent()) {
+        push_indent(n);
+        printf("LEXER: Token INDENT\n");
+        return TOKEN_INDENT;
+    } else if (n < top_indent()) {
+        while (n < top_indent()) {
+            pop_indent();
+            printf("LEXER: Token DEDENT\n");
+            return TOKEN_DEDENT;
+        }
+    }
+}
+
+[ \t]+      { /* ignora espaços dentro da linha */ }
+
+
 "#".*       { /* ignora comentário */ }
 
 

@@ -86,7 +86,9 @@ extern int yydebug;
     TOKEN_DELIMITADOR_ABRE_COLCHETES = 287, /* TOKEN_DELIMITADOR_ABRE_COLCHETES  */
     TOKEN_DELIMITADOR_FECHA_COLCHETES = 288, /* TOKEN_DELIMITADOR_FECHA_COLCHETES  */
     TOKEN_DESCONHECIDO = 289,      /* TOKEN_DESCONHECIDO  */
-    TOKEN_NEWLINE = 290            /* TOKEN_NEWLINE  */
+    TOKEN_NEWLINE = 290,           /* TOKEN_NEWLINE  */
+    TOKEN_INDENT = 291,            /* TOKEN_INDENT  */
+    TOKEN_DEDENT = 292             /* TOKEN_DEDENT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

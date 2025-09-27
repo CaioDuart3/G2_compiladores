@@ -27,7 +27,7 @@
 %token TOKEN_DELIMITADOR_ABRE_CHAVES TOKEN_DELIMITADOR_FECHA_CHAVES
 %token TOKEN_DELIMITADOR_ABRE_COLCHETES TOKEN_DELIMITADOR_FECHA_COLCHETES
 %token TOKEN_DESCONHECIDO
-%token TOKEN_NEWLINE
+%token TOKEN_NEWLINE TOKEN_INDENT TOKEN_DEDENT
 
 /* Precedência dos operadores */
 %left TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS
@@ -43,13 +43,17 @@ programa:
   | programa comando
   ;
 
-
 comando:
     atribuicao
-  | expressao
-  | TOKEN_NEWLINE 
-  ;
+  | chamada_funcao
+  | TOKEN_NEWLINE
+  | bloco
+;
 
+lista_comandos:
+    comando
+  | lista_comandos comando
+  ;
 
 atribuicao:
     lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
@@ -68,30 +72,32 @@ lista_expressoes:
 
 lista_argumentos:
     /* vazio */
-  | lista_expressoes
-  ;
+  | expressao
+  | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
+;
 
-fator:
+
+chamada_funcao:
     TOKEN_INTEIRO
   | TOKEN_FLOAT
   | TOKEN_STRING
   | TOKEN_IDENTIFICADOR
-  | chamada_funcao
+  | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
   | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-  ;
+;
 
 expressao:
-    fator
+    chamada_funcao
   | expressao TOKEN_OPERADOR_MAIS expressao
   | expressao TOKEN_OPERADOR_MENOS expressao
   | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
   | expressao TOKEN_OPERADOR_DIVISAO expressao
   ;
 
-chamada_funcao:
-    TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
-  ;
 
+bloco:
+      TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+    ;
 
 %%
 
