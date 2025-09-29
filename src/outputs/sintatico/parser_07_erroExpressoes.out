@@ -1,0 +1,6 @@
+ERRO (linha 1): syntax error próximo de '*'
+Iniciando parser...
+LEXER: Token identificador (a)
+LEXER: Token MENOS (-)
+LEXER: Token VEZES (*)
+Parsing interrompido por erro.

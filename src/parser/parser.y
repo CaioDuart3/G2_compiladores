@@ -1,17 +1,19 @@
 %{
-    #include <stdio.h>
-    #include <stdlib.h>
+  #include <stdio.h>
+  #include <stdlib.h>
 
-    #define YYERROR_VERBOSE 1
+  #define YYERROR_VERBOSE 1
 
-    /* Definindo yylex e yyerror */
-    int yylex(void);
-    void yyerror(const char *s);
+  /* Definindo yylex e yyerror */
+  int yylex(void);
+  void yyerror(const char *s);
 
-    extern char *yytext;
+  extern char *yytext;
+  extern int yylineno;
 %}
 
 %define parse.trace
+%locations
 
 
 /* Tokens vindos do lexer */
@@ -46,9 +48,10 @@ programa:
 comando:
     atribuicao
   | chamada_funcao
+  | expressao
   | TOKEN_NEWLINE
   | bloco
-;
+  ;
 
 lista_comandos:
     comando
@@ -74,7 +77,7 @@ lista_argumentos:
     /* vazio */
   | expressao
   | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
-;
+  ;
 
 
 chamada_funcao:
@@ -84,7 +87,7 @@ chamada_funcao:
   | TOKEN_IDENTIFICADOR
   | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
   | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-;
+  ;
 
 expressao:
     chamada_funcao
@@ -96,18 +99,23 @@ expressao:
 
 
 bloco:
-      TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
-    ;
+    TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+  ;
 
 %%
 
 void yyerror(const char *s) {
-  fprintf(stderr, "Erro de sintaxe: %s próximo de '%s'\n", s, yytext);
+  fprintf(stderr, "ERRO (linha %d): %s próximo de '%s'\n", yylineno, s, yytext);
 }
 
 int main(void) {
   printf("Iniciando parser...\n");
-  yyparse();
-  printf("Parsing concluído com sucesso!\n");
-  return 0;
+  int result = yyparse();
+  if (result == 0) {
+      printf("Parsing concluído com sucesso!\n");
+  } else {
+      printf("Parsing interrompido por erro.\n");
+  }
+  return result;
 }
+

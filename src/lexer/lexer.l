@@ -1,20 +1,22 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "parser.tab.h"
+#include "../parser/parser.tab.h"
 
 #define MAX_INDENT 100
+
 int indent_stack[MAX_INDENT];
 int indent_top = 0;
+char *yytoken_value;
 
 void push_indent(int n) { indent_stack[++indent_top] = n; }
 void pop_indent() { if (indent_top > 0) indent_top--; }
 int top_indent() { return indent_stack[indent_top]; }
 
-char *yytoken_value;
-
 %}
 
+%option noyywrap
+%option yylineno
 
 DIGITO      [0-9]
 LETRA       [a-zA-Z_]
@@ -85,7 +87,7 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 "#".*       { /* ignora comentário */ }
 
 
-.           { printf("ERROR: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
+.           { printf("ERRO: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
 %%
 
 const char *token_to_string(int token) {
