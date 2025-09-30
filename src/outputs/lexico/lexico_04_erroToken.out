@@ -1,10 +1,12 @@
-TOKEN: IDENTIFICADOR: x
-TOKEN: OPERADOR: =
-TOKEN: NUMERO-INTEIRO: 10
-ERROR: Caractere invalido '@'
-TOKEN: CARACTERE DESCONHECIDO
-TOKEN: IDENTIFICADOR: y
-TOKEN: OPERADOR: =
-TOKEN: IDENTIFICADOR: x
-TOKEN: OPERADOR: +
-TOKEN: NUMERO-INTEIRO: 5
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token identificador (x)
+LEXER: Token IGUAL (=)
+LEXER: Token INTEIRO (10)
+ERRO: Caractere invalido '@'
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token identificador (y)
+LEXER: Token IGUAL (=)
+LEXER: Token identificador (x)
+LEXER: Token MAIS (+)
+LEXER: Token INTEIRO (5)

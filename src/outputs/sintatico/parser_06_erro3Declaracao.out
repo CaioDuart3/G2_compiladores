@@ -1,0 +1,5 @@
+ERRO (linha 1): syntax error próximo de '='
+Iniciando parser...
+LEXER: Token INTEIRO (2)
+LEXER: Token IGUAL (=)
+Parsing interrompido por erro.

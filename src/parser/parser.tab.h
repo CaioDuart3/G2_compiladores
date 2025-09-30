@@ -35,11 +35,11 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSER_TAB_H_INCLUDED
-# define YY_YY_PARSER_TAB_H_INCLUDED
+#ifndef YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
+# define YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -55,9 +55,9 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     TOKEN_IDENTIFICADOR = 258,     /* TOKEN_IDENTIFICADOR  */
-    TOKEN_STRING = 259,            /* TOKEN_STRING  */
-    TOKEN_INTEIRO = 260,           /* TOKEN_INTEIRO  */
-    TOKEN_FLOAT = 261,             /* TOKEN_FLOAT  */
+    TOKEN_INTEIRO = 259,           /* TOKEN_INTEIRO  */
+    TOKEN_FLOAT = 260,             /* TOKEN_FLOAT  */
+    TOKEN_STRING = 261,            /* TOKEN_STRING  */
     TOKEN_PALAVRA_CHAVE_IF = 262,  /* TOKEN_PALAVRA_CHAVE_IF  */
     TOKEN_PALAVRA_CHAVE_ELSE = 263, /* TOKEN_PALAVRA_CHAVE_ELSE  */
     TOKEN_PALAVRA_CHAVE_ELIF = 264, /* TOKEN_PALAVRA_CHAVE_ELIF  */
@@ -81,37 +81,44 @@ extern int yydebug;
     TOKEN_DELIMITADOR_VIRGULA = 282, /* TOKEN_DELIMITADOR_VIRGULA  */
     TOKEN_DELIMITADOR_ABRE_PARENTESES = 283, /* TOKEN_DELIMITADOR_ABRE_PARENTESES  */
     TOKEN_DELIMITADOR_FECHA_PARENTESES = 284, /* TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-    TOKEN_DELIMITADOR_ABRE_COLCHETES = 285, /* TOKEN_DELIMITADOR_ABRE_COLCHETES  */
-    TOKEN_DELIMITADOR_FECHA_COLCHETES = 286, /* TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-    TOKEN_DELIMITADOR_ABRE_CHAVES = 287, /* TOKEN_DELIMITADOR_ABRE_CHAVES  */
-    TOKEN_DELIMITADOR_FECHA_CHAVES = 288 /* TOKEN_DELIMITADOR_FECHA_CHAVES  */
+    TOKEN_DELIMITADOR_ABRE_CHAVES = 285, /* TOKEN_DELIMITADOR_ABRE_CHAVES  */
+    TOKEN_DELIMITADOR_FECHA_CHAVES = 286, /* TOKEN_DELIMITADOR_FECHA_CHAVES  */
+    TOKEN_DELIMITADOR_ABRE_COLCHETES = 287, /* TOKEN_DELIMITADOR_ABRE_COLCHETES  */
+    TOKEN_DELIMITADOR_FECHA_COLCHETES = 288, /* TOKEN_DELIMITADOR_FECHA_COLCHETES  */
+    TOKEN_DESCONHECIDO = 289,      /* TOKEN_DESCONHECIDO  */
+    TOKEN_NEWLINE = 290,           /* TOKEN_NEWLINE  */
+    TOKEN_INDENT = 291,            /* TOKEN_INDENT  */
+    TOKEN_DEDENT = 292             /* TOKEN_DEDENT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 12 "parser.y"
-
-    char* str;
-    int inteiro;
-    float flutuante;
-
-#line 103 "parser.tab.h"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
+{
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
+};
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
+#endif
+
 
 extern YYSTYPE yylval;
-
+extern YYLTYPE yylloc;
 
 int yyparse (void);
 
 
-#endif /* !YY_YY_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED  */

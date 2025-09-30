@@ -1,0 +1,16 @@
+Iniciando parser...
+LEXER: Token identificador (print)
+LEXER: Token ABRE PARENTESES (()
+LEXER: Token FECHA PARENTESES ())
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token identificador (funcao_qualquer)
+LEXER: Token ABRE PARENTESES (()
+LEXER: Token FECHA PARENTESES ())
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token identificador (minha_funcao)
+LEXER: Token ABRE PARENTESES (()
+LEXER: Token identificador (param1)
+LEXER: Token VIRGULA (,)
+LEXER: Token identificador (param2)
+LEXER: Token FECHA PARENTESES ())
+Parsing concluído com sucesso!

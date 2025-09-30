@@ -1,2 +1,6 @@
 .venv
+venv
 node_modules
+..venv
+env
+.env

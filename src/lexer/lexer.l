@@ -1,50 +1,22 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include "../parser/parser.tab.h"
 
-/* Enumeração para os tipos de tokens */
-typedef enum {
-    TOKEN_EOF = 0,
-    TOKEN_IDENTIFICADOR,
-    TOKEN_INTEIRO,
-    TOKEN_FLOAT,
-    TOKEN_STRING,
-    TOKEN_PALAVRA_CHAVE_IF,
-    TOKEN_PALAVRA_CHAVE_ELSE,
-    TOKEN_PALAVRA_CHAVE_ELIF,
-    TOKEN_PALAVRA_CHAVE_WHILE,
-    TOKEN_PALAVRA_CHAVE_FOR,
-    TOKEN_PALAVRA_CHAVE_DEF,
-    TOKEN_PALAVRA_CHAVE_RETURN,
-    TOKEN_PALAVRA_CHAVE_IN,
-    TOKEN_OPERADOR_IGUAL,
-    TOKEN_OPERADOR_DIFERENTE,
-    TOKEN_OPERADOR_MENOR_IGUAL,
-    TOKEN_OPERADOR_MAIOR_IGUAL,
-    TOKEN_OPERADOR_MENOR,
-    TOKEN_OPERADOR_MAIOR,
-    TOKEN_OPERADOR_ATRIBUICAO,
-    TOKEN_OPERADOR_MAIS,
-    TOKEN_OPERADOR_MENOS,
-    TOKEN_OPERADOR_MULTIPLICACAO,
-    TOKEN_OPERADOR_DIVISAO,
-    TOKEN_DELIMITADOR_DOIS_PONTOS,
-    TOKEN_DELIMITADOR_VIRGULA,
-    TOKEN_DELIMITADOR_ABRE_PARENTESES,
-    TOKEN_DELIMITADOR_FECHA_PARENTESES,
-    TOKEN_DELIMITADOR_ABRE_COLCHETES,
-    TOKEN_DELIMITADOR_FECHA_COLCHETES,
-    TOKEN_DELIMITADOR_ABRE_CHAVES,
-    TOKEN_DELIMITADOR_FECHA_CHAVES,
-    TOKEN_DESCONHECIDO
-} TokenType;
+#define MAX_INDENT 100
 
-/* Variável global para armazenar o valor do token, se necessário */
-/* Para este exemplo, vamos armazenar o yytext. Em um analisador real, você pode ter uma 'union' */
+int indent_stack[MAX_INDENT];
+int indent_top = 0;
 char *yytoken_value;
+
+void push_indent(int n) { indent_stack[++indent_top] = n; }
+void pop_indent() { if (indent_top > 0) indent_top--; }
+int top_indent() { return indent_stack[indent_top]; }
 
 %}
 
+%option noyywrap
+%option yylineno
 
 DIGITO      [0-9]
 LETRA       [a-zA-Z_]
@@ -52,6 +24,8 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 
 
 %%
+
+
 "if"        { return TOKEN_PALAVRA_CHAVE_IF; }
 "else"      { return TOKEN_PALAVRA_CHAVE_ELSE; }
 "elif"      { return TOKEN_PALAVRA_CHAVE_ELIF; }
@@ -61,10 +35,10 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 "return"    { return TOKEN_PALAVRA_CHAVE_RETURN; }
 "in"        { return TOKEN_PALAVRA_CHAVE_IN; }
 
-{ID}        { yytoken_value = strdup(yytext); return TOKEN_IDENTIFICADOR; }
+{ID}        { yytoken_value = strdup(yytext); printf("LEXER: Token identificador (%s)\n", yytext); return TOKEN_IDENTIFICADOR; }
 
-{DIGITO}+   { yytoken_value = strdup(yytext); return TOKEN_INTEIRO; }
-{DIGITO}+"."{DIGITO}+ { yytoken_value = strdup(yytext); return TOKEN_FLOAT; }
+{DIGITO}+   { yytoken_value = strdup(yytext); printf("LEXER: Token INTEIRO (%s)\n", yytext); return TOKEN_INTEIRO; }
+{DIGITO}+("."{DIGITO}+)?   { yytoken_value = strdup(yytext); printf("LEXER: Token FLOAT (%s)\n", yytext); return TOKEN_FLOAT; }
 
 \"[^\"]*\"  { yytoken_value = strdup(yytext); return TOKEN_STRING; }
 \'[^\']*\'  { yytoken_value = strdup(yytext); return TOKEN_STRING; }
@@ -75,29 +49,48 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 ">="        { return TOKEN_OPERADOR_MAIOR_IGUAL; }
 "<"         { return TOKEN_OPERADOR_MENOR; }
 ">"         { return TOKEN_OPERADOR_MAIOR; }
-"="         { return TOKEN_OPERADOR_ATRIBUICAO; }
-"+"         { return TOKEN_OPERADOR_MAIS; }
-"-"         { return TOKEN_OPERADOR_MENOS; }
-"*"         { return TOKEN_OPERADOR_MULTIPLICACAO; }
-"/"         { return TOKEN_OPERADOR_DIVISAO; }
+"="         { printf("LEXER: Token IGUAL (%s)\n", yytext); return TOKEN_OPERADOR_ATRIBUICAO; }
+"+"         { printf("LEXER: Token MAIS (%s)\n", yytext); return TOKEN_OPERADOR_MAIS; }
+"-"         { printf("LEXER: Token MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
+"*"         { printf("LEXER: Token VEZES (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
+"/"         { printf("LEXER: Token DIVISÃO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
 
 ":"         { return TOKEN_DELIMITADOR_DOIS_PONTOS; }
-","         { return TOKEN_DELIMITADOR_VIRGULA; }
-"("         { return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
-")"         { return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
+","         { printf("LEXER: Token VIRGULA (%s)\n", yytext); return TOKEN_DELIMITADOR_VIRGULA; }
+"("         { printf("LEXER: Token ABRE PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
+")"         { printf("LEXER: Token FECHA PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
 "["         { return TOKEN_DELIMITADOR_ABRE_COLCHETES; }
 "]"         { return TOKEN_DELIMITADOR_FECHA_COLCHETES; }
 "{"         { return TOKEN_DELIMITADOR_ABRE_CHAVES; }
 "}"         { return TOKEN_DELIMITADOR_FECHA_CHAVES; }
+\n          { printf("LEXER: Token QUEBRA LINHA (/n)\n"); return TOKEN_NEWLINE; }
 
-"#".* { /* comentário, ignora */ }
 
-[ \t\n]+    { /* ignora espaços e quebras de linha */ }
+^[ \t]*    { // tratamento de identação
+    int n = yyleng;  // número de espaços/tabs
+    if (n > top_indent()) {
+        push_indent(n);
+        printf("LEXER: Token INDENT\n");
+        return TOKEN_INDENT;
+    } else if (n < top_indent()) {
+        while (n < top_indent()) {
+            pop_indent();
+            printf("LEXER: Token DEDENT\n");
+            return TOKEN_DEDENT;
+        }
+    }
+}
 
-.           { printf("ERROR: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
+[ \t]+      { /* ignora espaços dentro da linha */ }
+
+
+"#".*       { /* ignora comentário */ }
+
+
+.           { printf("ERRO: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
 %%
 
-const char *token_to_string(TokenType token) {
+const char *token_to_string(int token) {
     switch(token) {
         case TOKEN_PALAVRA_CHAVE_IF: return "PALAVRA-CHAVE IF";
         case TOKEN_PALAVRA_CHAVE_ELSE: return "PALAVRA-CHAVE ELSE";
@@ -130,20 +123,8 @@ const char *token_to_string(TokenType token) {
         case TOKEN_DELIMITADOR_FECHA_COLCHETES: return "DELIMITADOR: ]";
         case TOKEN_DELIMITADOR_ABRE_CHAVES: return "DELIMITADOR: {";
         case TOKEN_DELIMITADOR_FECHA_CHAVES: return "DELIMITADOR: }";
+        case TOKEN_NEWLINE: return "DELIMITADOR: \n";
         case TOKEN_DESCONHECIDO: return "CARACTERE DESCONHECIDO";
         default: return "EOF";
     }
-}
-
-int main(int argc, char **argv) {
-    TokenType token;
-    while ((token = yylex()) != TOKEN_EOF) {
-        printf("TOKEN: %s", token_to_string(token));
-        if (token == TOKEN_IDENTIFICADOR || token == TOKEN_INTEIRO || token == TOKEN_FLOAT || token == TOKEN_STRING) {
-            printf(": %s", yytoken_value);
-            free(yytoken_value); /* Libera a memória alocada */
-        }
-        printf("\n");
-    }
-    return 0;
 }
