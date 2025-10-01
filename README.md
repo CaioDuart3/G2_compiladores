@@ -19,9 +19,49 @@ This is a repository for a Python-to-C compiler built using **Flex** and **Bison
 │   ├─ ST/            # Symbol Table for syntax analysis
 │   └─ main.py        # Compiler entry point
 ```
-## How to Run the Tests
+## How to Run the Project
 
-Run the following in your terminal:
+This section will guide you through setting up and running the Python-to-C compiler.
+
+### Prerequisites
+
+Before running the project, make sure you have the following installed:
+
+- Python 3.8+
+
+- Flex (lexical analyzer generator)
+
+- Bison (parser generator)
+
+- GCC or another C compiler
+
+- Make (optional, but helpful)
+
+You can install Flex and Bison via:
+````
+# On Ubuntu/Debian:
+sudo apt update
+sudo apt install flex bison build-essential
+
+# On macOS (using Homebrew):
+brew install flex bison
+````
+### Running the Compiler
+
+To run the compiler manually:
+
+Navigate to the src/ directory:
+```
+cd src
+```
+### How to Run the Tests
+To automatically run all test cases:
 ```
 chmod +x run_tests.sh && ./run_tests.sh
 ```
+
+This script will:
+
+- Run all Python test files in src/tests/
+- Process them through the compiler
+S- ave the output C code in src/outputs/
