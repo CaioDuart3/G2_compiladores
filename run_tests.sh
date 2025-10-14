@@ -10,10 +10,11 @@ ANALISADOR_LEX="$LEXER_DIR/analisador_lexico"
 PARSER_DIR="$ROOT_DIR/src/parser"
 PARSER_SRC="$PARSER_DIR/parser.y"
 PARSER_C="$PARSER_DIR/parser.tab.c"
+PARSER_H="$PARSER_DIR/parser.tab.h"
 COMPILADOR="$PARSER_DIR/compilador"
 
-TESTS_DIR="$ROOT_DIR/src/tests"
-OUTPUTS_DIR="$ROOT_DIR/src/outputs"
+TESTS_DIR="$ROOT_DIR/src/tests/inputs"
+OUTPUTS_DIR="$ROOT_DIR/src/tests/outputs"
 
 # Função para compilar lexer
 compile_lexer() {
@@ -59,7 +60,7 @@ for tipo in lexico sintatico semantico; do
             EXEC="$COMPILADOR"
             ERRO="Erro de sintaxe"
         else
-            EXEC="$SEMANTICO"
+            EXEC="$COMPILADOR"
             ERRO="Erro semântico"
         fi
 
@@ -78,3 +79,8 @@ done
 
 shopt -u nullglob
 echo "✔ Todos os testes executados."
+
+# --- LIMPEZA FINAL ---
+echo "🧹 Limpando arquivos gerados pelo Flex/Bison..."
+rm -f "$LEXER_C" "$PARSER_C" "$PARSER_H" "$ANALISADOR_LEX" "$COMPILADOR"
+echo "✅ Limpeza concluída."

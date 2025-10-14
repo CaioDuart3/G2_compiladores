@@ -1,0 +1,12 @@
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token identificador (x)
+LEXER: Token IGUAL (=)
+LEXER: Token INTEIRO (10)
+ERRO: Caractere invalido '@'
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token identificador (y)
+LEXER: Token IGUAL (=)
+LEXER: Token identificador (x)
+LEXER: Token MAIS (+)
+LEXER: Token INTEIRO (5)

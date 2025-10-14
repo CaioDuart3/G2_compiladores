@@ -4,7 +4,6 @@
 
   #define YYERROR_VERBOSE 1
 
-  /* Definindo yylex e yyerror */
   int yylex(void);
   void yyerror(const char *s);
 
@@ -14,7 +13,6 @@
 
 %define parse.trace
 %locations
-
 
 /* Tokens vindos do lexer */
 %token TOKEN_IDENTIFICADOR TOKEN_INTEIRO TOKEN_FLOAT TOKEN_STRING
@@ -34,73 +32,73 @@
 /* Precedência dos operadores */
 %left TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS
 %left TOKEN_OPERADOR_MULTIPLICACAO TOKEN_OPERADOR_DIVISAO
-
 %right TOKEN_OPERADOR_ATRIBUICAO
-
 %nonassoc TOKEN_PALAVRA_CHAVE_ELSE TOKEN_PALAVRA_CHAVE_ELIF
 
 %%
+
 programa:
-    /* vazio */
-  | programa comando
-  ;
+      /* vazio */
+    | programa comando
+    ;
 
 comando:
-    atribuicao
-  | chamada_funcao
-  | expressao
-  | TOKEN_NEWLINE
-  | bloco
-  ;
+      atribuicao
+    | chamada_funcao_stmt
+    | TOKEN_NEWLINE
+    | bloco
+    ;
 
 lista_comandos:
-    comando
-  | lista_comandos comando
-  ;
+      comando
+    | lista_comandos comando
+    ;
 
 atribuicao:
-    lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
-  | lista_identificadores TOKEN_OPERADOR_ATRIBUICAO atribuicao
-  ;
+      lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+    ;
 
 lista_identificadores:
-    TOKEN_IDENTIFICADOR
-  | lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
-  ;
+      TOKEN_IDENTIFICADOR
+    | lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+    ;
 
 lista_expressoes:
-    expressao
-  | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
-  ;
+      expressao
+    | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
+    ;
 
 lista_argumentos:
-    /* vazio */
-  | expressao
-  | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
-  ;
+      /* vazio */
+    | expressao
+    | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
+    ;
 
+chamada_funcao_stmt:
+      TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+    ;
 
 chamada_funcao:
-    TOKEN_INTEIRO
-  | TOKEN_FLOAT
-  | TOKEN_STRING
-  | TOKEN_IDENTIFICADOR
-  | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
-  | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-  ;
+      TOKEN_INTEIRO
+    | TOKEN_FLOAT
+    | TOKEN_STRING
+    | TOKEN_IDENTIFICADOR
+    | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+    | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+    ;
 
 expressao:
-    chamada_funcao
-  | expressao TOKEN_OPERADOR_MAIS expressao
-  | expressao TOKEN_OPERADOR_MENOS expressao
-  | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
-  | expressao TOKEN_OPERADOR_DIVISAO expressao
-  ;
-
+      expressao TOKEN_OPERADOR_MAIS expressao
+    | expressao TOKEN_OPERADOR_MENOS expressao
+    | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
+    | expressao TOKEN_OPERADOR_DIVISAO expressao
+    | '-' expressao %prec TOKEN_OPERADOR_MENOS
+    | chamada_funcao
+    ;
 
 bloco:
-    TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
-  ;
+      TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+    ;
 
 %%
 
@@ -118,4 +116,3 @@ int main(void) {
   }
   return result;
 }
-
