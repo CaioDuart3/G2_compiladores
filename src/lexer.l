@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "../parser/parser.tab.h"
+#include "./parser.tab.h"
 
 #define MAX_INDENT 100
 
