@@ -1,25 +1,6 @@
+ERRO (linha 1): syntax error próximo de '1'
 Iniciando parser...
 LEXER: Token identificador (a)
 LEXER: Token IGUAL (=)
 LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token identificador (a)
-LEXER: Token VIRGULA (,)
-LEXER: Token identificador (b)
-LEXER: Token VIRGULA (,)
-LEXER: Token identificador (c)
-LEXER: Token IGUAL (=)
-LEXER: Token INTEIRO (2)
-LEXER: Token VIRGULA (,)
-LEXER: Token INTEIRO (3)
-LEXER: Token VIRGULA (,)
-LEXER: Token INTEIRO (4)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token identificador (d)
-LEXER: Token IGUAL (=)
-LEXER: Token identificador (e)
-LEXER: Token IGUAL (=)
-LEXER: Token identificador (f)
-LEXER: Token IGUAL (=)
-LEXER: Token INTEIRO (5)
-Parsing concluído com sucesso!
+Parsing interrompido por erro.

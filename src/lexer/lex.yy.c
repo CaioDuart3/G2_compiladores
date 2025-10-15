@@ -1,6 +1,6 @@
-#line 2 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lex.yy.c"
+#line 2 "lexer/lex.yy.c"
 
-#line 4 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lex.yy.c"
+#line 4 "lexer/lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -514,8 +514,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
-#line 2 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 1 "lexer/lexer.l"
+#line 2 "lexer/lexer.l"
 #include <stdio.h>
 #include <string.h>
 #include "../parser/parser.tab.h"
@@ -530,8 +530,8 @@ void push_indent(int n) { indent_stack[++indent_top] = n; }
 void pop_indent() { if (indent_top > 0) indent_top--; }
 int top_indent() { return indent_stack[indent_top]; }
 
-#line 534 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lex.yy.c"
-#line 535 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lex.yy.c"
+#line 534 "lexer/lex.yy.c"
+#line 535 "lexer/lex.yy.c"
 
 #define INITIAL 0
 
@@ -751,11 +751,11 @@ YY_DECL
 		}
 
 	{
-#line 26 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 26 "lexer/lexer.l"
 
 
 
-#line 759 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lex.yy.c"
+#line 759 "lexer/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -825,175 +825,175 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 29 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 29 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_IF; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 30 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 30 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_ELSE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 31 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 31 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_ELIF; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 32 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 32 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_WHILE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 33 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 33 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_FOR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 34 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 34 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_DEF; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 35 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 35 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_RETURN; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 36 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 36 "lexer/lexer.l"
 { return TOKEN_PALAVRA_CHAVE_IN; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 38 "lexer/lexer.l"
 { yytoken_value = strdup(yytext); printf("LEXER: Token identificador (%s)\n", yytext); return TOKEN_IDENTIFICADOR; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 40 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 40 "lexer/lexer.l"
 { yytoken_value = strdup(yytext); printf("LEXER: Token INTEIRO (%s)\n", yytext); return TOKEN_INTEIRO; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 41 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 41 "lexer/lexer.l"
 { yytoken_value = strdup(yytext); printf("LEXER: Token FLOAT (%s)\n", yytext); return TOKEN_FLOAT; }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 43 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 43 "lexer/lexer.l"
 { yytoken_value = strdup(yytext); return TOKEN_STRING; }
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 44 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 44 "lexer/lexer.l"
 { yytoken_value = strdup(yytext); return TOKEN_STRING; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 46 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 46 "lexer/lexer.l"
 { return TOKEN_OPERADOR_IGUAL; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 47 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 47 "lexer/lexer.l"
 { return TOKEN_OPERADOR_DIFERENTE; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 48 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 48 "lexer/lexer.l"
 { return TOKEN_OPERADOR_MENOR_IGUAL; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 49 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 49 "lexer/lexer.l"
 { return TOKEN_OPERADOR_MAIOR_IGUAL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 50 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 50 "lexer/lexer.l"
 { return TOKEN_OPERADOR_MENOR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 51 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 51 "lexer/lexer.l"
 { return TOKEN_OPERADOR_MAIOR; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 52 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 52 "lexer/lexer.l"
 { printf("LEXER: Token IGUAL (%s)\n", yytext); return TOKEN_OPERADOR_ATRIBUICAO; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 53 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 53 "lexer/lexer.l"
 { printf("LEXER: Token MAIS (%s)\n", yytext); return TOKEN_OPERADOR_MAIS; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 54 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 54 "lexer/lexer.l"
 { printf("LEXER: Token MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 55 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 55 "lexer/lexer.l"
 { printf("LEXER: Token VEZES (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 56 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 56 "lexer/lexer.l"
 { printf("LEXER: Token DIVISÃO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 58 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 58 "lexer/lexer.l"
 { return TOKEN_DELIMITADOR_DOIS_PONTOS; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 59 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 59 "lexer/lexer.l"
 { printf("LEXER: Token VIRGULA (%s)\n", yytext); return TOKEN_DELIMITADOR_VIRGULA; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 60 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 60 "lexer/lexer.l"
 { printf("LEXER: Token ABRE PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 61 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 61 "lexer/lexer.l"
 { printf("LEXER: Token FECHA PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 62 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 62 "lexer/lexer.l"
 { return TOKEN_DELIMITADOR_ABRE_COLCHETES; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 63 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 63 "lexer/lexer.l"
 { return TOKEN_DELIMITADOR_FECHA_COLCHETES; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 64 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 64 "lexer/lexer.l"
 { return TOKEN_DELIMITADOR_ABRE_CHAVES; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 65 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 65 "lexer/lexer.l"
 { return TOKEN_DELIMITADOR_FECHA_CHAVES; }
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 66 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 66 "lexer/lexer.l"
 { printf("LEXER: Token QUEBRA LINHA (/n)\n"); return TOKEN_NEWLINE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 69 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 69 "lexer/lexer.l"
 { // tratamento de identação
     int n = yyleng;  // número de espaços/tabs
     if (n > top_indent()) {
@@ -1011,25 +1011,25 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 84 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 84 "lexer/lexer.l"
 { /* ignora espaços dentro da linha */ }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 87 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 87 "lexer/lexer.l"
 { /* ignora comentário */ }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 90 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 90 "lexer/lexer.l"
 { printf("ERRO: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 91 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 91 "lexer/lexer.l"
 ECHO;
 	YY_BREAK
-#line 1033 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lex.yy.c"
+#line 1033 "lexer/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2048,7 +2048,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 91 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/lexer/lexer.l"
+#line 91 "lexer/lexer.l"
 
 
 const char *token_to_string(int token) {

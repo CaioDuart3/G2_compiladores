@@ -65,12 +65,12 @@ atribuicao:
 
 lista_identificadores:
     TOKEN_IDENTIFICADOR
-  | lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+  | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_VIRGULA lista_identificadores
   ;
 
 lista_expressoes:
     expressao
-  | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
+  | expressao TOKEN_DELIMITADOR_VIRGULA lista_expressoes
   ;
 
 lista_argumentos:
@@ -79,22 +79,16 @@ lista_argumentos:
   | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
   ;
 
-
 chamada_funcao:
-    TOKEN_INTEIRO
-  | TOKEN_FLOAT
-  | TOKEN_STRING
-  | TOKEN_IDENTIFICADOR
-  | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
-  | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+    TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
   ;
 
 expressao:
-    chamada_funcao
-  | expressao TOKEN_OPERADOR_MAIS expressao
+    expressao TOKEN_OPERADOR_MAIS expressao
   | expressao TOKEN_OPERADOR_MENOS expressao
   | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
   | expressao TOKEN_OPERADOR_DIVISAO expressao
+  | TOKEN_INTEIRO
   ;
 
 
@@ -110,6 +104,7 @@ void yyerror(const char *s) {
 
 int main(void) {
   printf("Iniciando parser...\n");
+  yylineno = 1;
   int result = yyparse();
   if (result == 0) {
       printf("Parsing concluído com sucesso!\n");

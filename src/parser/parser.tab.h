@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
-# define YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_PARSER_TAB_H_INCLUDED
+# define YY_YY_PARSER_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -121,4 +121,4 @@ extern YYLTYPE yylloc;
 int yyparse (void);
 
 
-#endif /* !YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_PARSER_TAB_H_INCLUDED  */
