@@ -1,20 +1,20 @@
 %{
-  #include <stdio.h>
-  #include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-  #define YYERROR_VERBOSE 1
+#define YYERROR_VERBOSE 1
 
-  int yylex(void);
-  void yyerror(const char *s);
+int yylex(void);
+void yyerror(const char *s);
 
-  extern char *yytext;
-  extern int yylineno;
+extern char *yytoken_value;
+extern int yylineno;
+void inicializa_pilha(void);
 %}
 
 %define parse.trace
 %locations
 
-/* Tokens vindos do lexer */
 %token TOKEN_IDENTIFICADOR TOKEN_INTEIRO TOKEN_FLOAT TOKEN_STRING
 %token TOKEN_PALAVRA_CHAVE_IF TOKEN_PALAVRA_CHAVE_ELSE TOKEN_PALAVRA_CHAVE_ELIF
 %token TOKEN_PALAVRA_CHAVE_WHILE TOKEN_PALAVRA_CHAVE_FOR TOKEN_PALAVRA_CHAVE_DEF TOKEN_PALAVRA_CHAVE_RETURN TOKEN_PALAVRA_CHAVE_IN
@@ -29,7 +29,6 @@
 %token TOKEN_DESCONHECIDO
 %token TOKEN_NEWLINE TOKEN_INDENT TOKEN_DEDENT
 
-/* Precedência dos operadores */
 %left TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS
 %left TOKEN_OPERADOR_MULTIPLICACAO TOKEN_OPERADOR_DIVISAO
 %right TOKEN_OPERADOR_ATRIBUICAO
@@ -43,10 +42,13 @@ programa:
     ;
 
 comando:
-      atribuicao
-    | chamada_funcao_stmt
+      atribuicao TOKEN_NEWLINE
+    | chamada_funcao_stmt TOKEN_NEWLINE
+    | return_stmt TOKEN_NEWLINE
+    | if_stmt
+    | while_stmt
+    | funcao
     | TOKEN_NEWLINE
-    | bloco
     ;
 
 lista_comandos:
@@ -100,14 +102,38 @@ bloco:
       TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
     ;
 
+funcao:
+      TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    ;
+
+return_stmt:
+      TOKEN_PALAVRA_CHAVE_RETURN lista_expressoes_opt
+    ;
+
+lista_expressoes_opt:
+      /* vazio */
+    | lista_expressoes
+    ;
+
+if_stmt:
+      TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    ;
+
+while_stmt:
+      TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    ;
+
 %%
 
 void yyerror(const char *s) {
-  fprintf(stderr, "ERRO (linha %d): %s próximo de '%s'\n", yylineno, s, yytext);
+  fprintf(stderr, "ERRO (linha %d): %s próximo de '%s'\n",
+          yylineno, s, yytoken_value ? yytoken_value : "");
 }
 
 int main(void) {
   printf("Iniciando parser...\n");
+  inicializa_pilha(); // Inicializa a pilha de indentação do lexer
   int result = yyparse();
   if (result == 0) {
       printf("Parsing concluído com sucesso!\n");

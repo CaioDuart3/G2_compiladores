@@ -1,5 +1,9 @@
+%option noyywrap
+%option yylineno
+
 %{
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "./parser.tab.h"
 
@@ -13,18 +17,23 @@ void push_indent(int n) { indent_stack[++indent_top] = n; }
 void pop_indent() { if (indent_top > 0) indent_top--; }
 int top_indent() { return indent_stack[indent_top]; }
 
+int convert_to_int(char *text) { return atoi(text); }
+
+void inicializa_pilha() {
+    indent_stack[0] = 0;
+    indent_top = 0;
+}
 %}
 
-%option noyywrap
-%option yylineno
+
+%option noyywrap nomain
+%x IDENT
 
 DIGITO      [0-9]
 LETRA       [a-zA-Z_]
 ID          {LETRA}({LETRA}|{DIGITO})*
 
-
 %%
-
 
 "if"        { return TOKEN_PALAVRA_CHAVE_IF; }
 "else"      { return TOKEN_PALAVRA_CHAVE_ELSE; }
@@ -35,13 +44,13 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 "return"    { return TOKEN_PALAVRA_CHAVE_RETURN; }
 "in"        { return TOKEN_PALAVRA_CHAVE_IN; }
 
-{ID}        { yytoken_value = strdup(yytext); printf("LEXER: Token identificador (%s)\n", yytext); return TOKEN_IDENTIFICADOR; }
+{ID}        { yytoken_value = strdup(yytext); return TOKEN_IDENTIFICADOR; }
 
-{DIGITO}+   { yytoken_value = strdup(yytext); printf("LEXER: Token INTEIRO (%s)\n", yytext); return TOKEN_INTEIRO; }
-{DIGITO}+("."{DIGITO}+)?   { yytoken_value = strdup(yytext); printf("LEXER: Token FLOAT (%s)\n", yytext); return TOKEN_FLOAT; }
+{DIGITO}+   { yytoken_value = strdup(yytext); return TOKEN_INTEIRO; }
+{DIGITO}+("."{DIGITO}+)? { yytoken_value = strdup(yytext); return TOKEN_FLOAT; }
 
-\"[^\"]*\"  { yytoken_value = strdup(yytext); return TOKEN_STRING; }
-\'[^\']*\'  { yytoken_value = strdup(yytext); return TOKEN_STRING; }
+\"([^\"\n\\]|\\.)*\"  { yytoken_value = strdup(yytext); return TOKEN_STRING; }
+\'([^\'\n\\]|\\.)*\'  { yytoken_value = strdup(yytext); return TOKEN_STRING; }
 
 "=="        { return TOKEN_OPERADOR_IGUAL; }
 "!="        { return TOKEN_OPERADOR_DIFERENTE; }
@@ -49,82 +58,111 @@ ID          {LETRA}({LETRA}|{DIGITO})*
 ">="        { return TOKEN_OPERADOR_MAIOR_IGUAL; }
 "<"         { return TOKEN_OPERADOR_MENOR; }
 ">"         { return TOKEN_OPERADOR_MAIOR; }
-"="         { printf("LEXER: Token IGUAL (%s)\n", yytext); return TOKEN_OPERADOR_ATRIBUICAO; }
-"+"         { printf("LEXER: Token MAIS (%s)\n", yytext); return TOKEN_OPERADOR_MAIS; }
-"-"         { printf("LEXER: Token MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
-"*"         { printf("LEXER: Token VEZES (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
-"/"         { printf("LEXER: Token DIVISÃO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
+"="         { return TOKEN_OPERADOR_ATRIBUICAO; }
+"+"         { return TOKEN_OPERADOR_MAIS; }
+"-"         { return TOKEN_OPERADOR_MENOS; }
+"*"         { return TOKEN_OPERADOR_MULTIPLICACAO; }
+"/"         { return TOKEN_OPERADOR_DIVISAO; }
 
 ":"         { return TOKEN_DELIMITADOR_DOIS_PONTOS; }
-","         { printf("LEXER: Token VIRGULA (%s)\n", yytext); return TOKEN_DELIMITADOR_VIRGULA; }
-"("         { printf("LEXER: Token ABRE PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
-")"         { printf("LEXER: Token FECHA PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
+","         { return TOKEN_DELIMITADOR_VIRGULA; }
+"("         { return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
+")"         { return TOKEN_DELIMITADOR_FECHA_PARENTESES; }
 "["         { return TOKEN_DELIMITADOR_ABRE_COLCHETES; }
 "]"         { return TOKEN_DELIMITADOR_FECHA_COLCHETES; }
 "{"         { return TOKEN_DELIMITADOR_ABRE_CHAVES; }
 "}"         { return TOKEN_DELIMITADOR_FECHA_CHAVES; }
-\n          { printf("LEXER: Token QUEBRA LINHA (/n)\n"); return TOKEN_NEWLINE; }
+
+"#".*       { /* Ignorar */ }
+
+\n  { return TOKEN_NEWLINE; }
 
 
-^[ \t]*    { // tratamento de identação
-    int n = yyleng;  // número de espaços/tabs
-    if (n > top_indent()) {
-        push_indent(n);
-        printf("LEXER: Token INDENT\n");
+
+<IDENT>^[ \t]+ {
+    int espacos = 0;
+    for (int i = 0; i < yyleng; i++) {
+        if (yytext[i] == ' ') espacos++;
+        else if (yytext[i] == '\t') espacos += 4; 
+    }
+
+    if (espacos > top_indent()) {
+        push_indent(espacos);
+        BEGIN(INITIAL);
         return TOKEN_INDENT;
-    } else if (n < top_indent()) {
-        while (n < top_indent()) {
+    } else if (espacos < top_indent()) {
+        while (indent_top > 0 && espacos < top_indent()) {
             pop_indent();
-            printf("LEXER: Token DEDENT\n");
+        
+            BEGIN(INITIAL);
             return TOKEN_DEDENT;
         }
     }
+    BEGIN(INITIAL);
 }
 
-[ \t]+      { /* ignora espaços dentro da linha */ }
+
+<IDENT>^[^ \t\n] {
+    unput(yytext[0]); 
+    while (indent_top > 0) {
+        pop_indent();
+        return TOKEN_DEDENT;
+    }
+    BEGIN(INITIAL);
+}
+
+[ \t]+    { /* ignorar */ }
+
+. { fprintf(stderr, "ERRO LÉXICO linha %d: '%s'\n", yylineno, yytext); return TOKEN_DESCONHECIDO; }
 
 
-"#".*       { /* ignora comentário */ }
+<<EOF>> {
+    while (indent_top > 0) {
+        pop_indent();
+        return TOKEN_DEDENT;
+    }
+    yyterminate();
+}
 
-
-.           { printf("ERRO: Caractere invalido '%s'\n", yytext); return TOKEN_DESCONHECIDO; }
 %%
 
 const char *token_to_string(int token) {
     switch(token) {
-        case TOKEN_PALAVRA_CHAVE_IF: return "PALAVRA-CHAVE IF";
-        case TOKEN_PALAVRA_CHAVE_ELSE: return "PALAVRA-CHAVE ELSE";
-        case TOKEN_PALAVRA_CHAVE_ELIF: return "PALAVRA-CHAVE ELIF";
-        case TOKEN_PALAVRA_CHAVE_WHILE: return "PALAVRA-CHAVE WHILE";
-        case TOKEN_PALAVRA_CHAVE_FOR: return "PALAVRA-CHAVE FOR";
-        case TOKEN_PALAVRA_CHAVE_DEF: return "PALAVRA-CHAVE DEF";
-        case TOKEN_PALAVRA_CHAVE_RETURN: return "PALAVRA-CHAVE RETURN";
-        case TOKEN_PALAVRA_CHAVE_IN: return "PALAVRA-CHAVE IN";
+        case TOKEN_PALAVRA_CHAVE_IF: return "IF";
+        case TOKEN_PALAVRA_CHAVE_ELSE: return "ELSE";
+        case TOKEN_PALAVRA_CHAVE_ELIF: return "ELIF";
+        case TOKEN_PALAVRA_CHAVE_WHILE: return "WHILE";
+        case TOKEN_PALAVRA_CHAVE_FOR: return "FOR";
+        case TOKEN_PALAVRA_CHAVE_DEF: return "DEF";
+        case TOKEN_PALAVRA_CHAVE_RETURN: return "RETURN";
+        case TOKEN_PALAVRA_CHAVE_IN: return "IN";
         case TOKEN_IDENTIFICADOR: return "IDENTIFICADOR";
         case TOKEN_INTEIRO: return "NUMERO-INTEIRO";
         case TOKEN_FLOAT: return "NUMERO-FLOAT";
         case TOKEN_STRING: return "STRING";
-        case TOKEN_OPERADOR_IGUAL: return "OPERADOR: ==";
-        case TOKEN_OPERADOR_DIFERENTE: return "OPERADOR: !=";
-        case TOKEN_OPERADOR_MENOR_IGUAL: return "OPERADOR: <=";
-        case TOKEN_OPERADOR_MAIOR_IGUAL: return "OPERADOR: >=";
-        case TOKEN_OPERADOR_MENOR: return "OPERADOR: <";
-        case TOKEN_OPERADOR_MAIOR: return "OPERADOR: >";
-        case TOKEN_OPERADOR_ATRIBUICAO: return "OPERADOR: =";
-        case TOKEN_OPERADOR_MAIS: return "OPERADOR: +";
-        case TOKEN_OPERADOR_MENOS: return "OPERADOR: -";
-        case TOKEN_OPERADOR_MULTIPLICACAO: return "OPERADOR: *";
-        case TOKEN_OPERADOR_DIVISAO: return "OPERADOR: /";
-        case TOKEN_DELIMITADOR_DOIS_PONTOS: return "DELIMITADOR: :";
-        case TOKEN_DELIMITADOR_VIRGULA: return "DELIMITADOR: ,";
-        case TOKEN_DELIMITADOR_ABRE_PARENTESES: return "DELIMITADOR: (";
-        case TOKEN_DELIMITADOR_FECHA_PARENTESES: return "DELIMITADOR: )";
-        case TOKEN_DELIMITADOR_ABRE_COLCHETES: return "DELIMITADOR: [";
-        case TOKEN_DELIMITADOR_FECHA_COLCHETES: return "DELIMITADOR: ]";
-        case TOKEN_DELIMITADOR_ABRE_CHAVES: return "DELIMITADOR: {";
-        case TOKEN_DELIMITADOR_FECHA_CHAVES: return "DELIMITADOR: }";
-        case TOKEN_NEWLINE: return "DELIMITADOR: \n";
-        case TOKEN_DESCONHECIDO: return "CARACTERE DESCONHECIDO";
+        case TOKEN_OPERADOR_IGUAL: return "==";
+        case TOKEN_OPERADOR_DIFERENTE: return "!=";
+        case TOKEN_OPERADOR_MENOR_IGUAL: return "<=";
+        case TOKEN_OPERADOR_MAIOR_IGUAL: return ">=";
+        case TOKEN_OPERADOR_MENOR: return "<";
+        case TOKEN_OPERADOR_MAIOR: return ">";
+        case TOKEN_OPERADOR_ATRIBUICAO: return "=";
+        case TOKEN_OPERADOR_MAIS: return "+";
+        case TOKEN_OPERADOR_MENOS: return "-";
+        case TOKEN_OPERADOR_MULTIPLICACAO: return "*";
+        case TOKEN_OPERADOR_DIVISAO: return "/";
+        case TOKEN_DELIMITADOR_DOIS_PONTOS: return ":";
+        case TOKEN_DELIMITADOR_VIRGULA: return ",";
+        case TOKEN_DELIMITADOR_ABRE_PARENTESES: return "(";
+        case TOKEN_DELIMITADOR_FECHA_PARENTESES: return ")";
+        case TOKEN_DELIMITADOR_ABRE_COLCHETES: return "[";
+        case TOKEN_DELIMITADOR_FECHA_COLCHETES: return "]";
+        case TOKEN_DELIMITADOR_ABRE_CHAVES: return "{";
+        case TOKEN_DELIMITADOR_FECHA_CHAVES: return "}";
+        case TOKEN_NEWLINE: return "NEWLINE";
+        case TOKEN_INDENT: return "INDENT";
+        case TOKEN_DEDENT: return "DEDENT";
+        case TOKEN_DESCONHECIDO: return "DESCONHECIDO";
         default: return "EOF";
     }
 }
