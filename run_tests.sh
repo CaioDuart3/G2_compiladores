@@ -20,26 +20,22 @@ OUTPUTS_DIR="$ROOT_DIR/src/tests/outputs"
 compile() {
     local target="$1"
 
-    echo "Compilando Bison..."
     if ! bison -d -o "$PARSER_C" "$PARSER_SRC"; then
         echo "Falha na compilação do parser"
         exit 1
     fi
 
-    echo "Compilando Flex..."
     if ! flex -o "$LEXER_C" "$LEXER_SRC"; then
         echo "Falha na compilação do lexer"
         exit 1
     fi
 
     if [ "$target" = "lexer" ]; then
-        echo "Compilando executável do lexer..."
         if ! gcc "$LEXER_C" -o "$ANALISADOR_LEX" -lfl; then
             echo "Falha na compilação do analisador léxico"
             exit 1
         fi
     else
-        echo "Compilando compilador..."
         if ! gcc "$PARSER_C" "$LEXER_C" -o "$COMPILADOR" -lfl; then
             echo "Falha na compilação do compilador"
             exit 1
