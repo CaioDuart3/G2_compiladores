@@ -9,6 +9,7 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/CaioDuart3/G2_compiladores
 
+
 theme:
   name: material
   palette:
@@ -47,6 +48,7 @@ nav:
   - Planejamento: Planejamento/planejamento.md
   - Escopo: Escopo/escopo.md
   - Dificuldades: Dificuldades/dificuldades.md
+  - Desenvolvimento Técnico:
+    - Parser: Desenvolvimento_tecnico/parser.md
   # - Lexer: lexer.md
-  # - Parser: parser.md
   # - Testes: tests.md
