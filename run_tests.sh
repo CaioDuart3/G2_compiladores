@@ -66,22 +66,23 @@ for tipo in lexico sintatico semantico; do
         base=$(basename "$f" .py)
         total=$((total+1))
 
-        # Escolhe executável e mensagem de erro
+        # Escolhe executável e padrão de erro
         case "$tipo" in
-            lexico) EXEC="$ANALISADOR_LEX"; ERRO="Token desconhecido ou inválido";;
-            sintatico) EXEC="$COMPILADOR"; ERRO="Erro de sintaxe no parser";;
-            semantico) EXEC="$COMPILADOR"; ERRO="Erro semântico detectado";;
+            lexico) EXEC="$ANALISADOR_LEX";;
+            sintatico|semantico) EXEC="$COMPILADOR";;
         esac
 
         # Executa e captura saída
         OUTPUT=$("$EXEC" < "$f" 2>&1)
         echo "$OUTPUT" > "$OUTPUTS_DIR/$tipo/$base.out"
 
-        # Verifica erro
-        if echo "$OUTPUT" | grep -q "ERRO"; then
+        # Verifica se há erros e extrai detalhes
+        ERRO_DETALHADO=$(echo "$OUTPUT" | grep "ERRO")
+        if [ -n "$ERRO_DETALHADO" ]; then
             echo -n "E"
             failures=$((failures+1))
-            erros+=("[$tipo] $base: $ERRO")
+            # Adiciona tipo, nome do arquivo e mensagem completa do erro
+            erros+=("[$tipo] $base: $ERRO_DETALHADO")
         else
             echo -n "."
         fi
@@ -94,11 +95,11 @@ shopt -u nullglob
 echo
 echo
 if [ $failures -gt 0 ]; then
-    echo "===================="
+    echo "==================== ERROS DETECTADOS ===================="
     for e in "${erros[@]}"; do
-        echo "E: $e"
+        echo "$e"
     done
-    echo "===================="
+    echo "=========================================================="
     echo "$total casos de testes, $failures teste(s) falharam."
 else
     echo "Todos os testes passaram ($total casos)."
