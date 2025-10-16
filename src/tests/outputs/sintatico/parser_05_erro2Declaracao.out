@@ -1,5 +1,7 @@
-ERRO (linha 1): syntax error próximo de '1'
+ERRO (linha 3): syntax error próximo de '1'
 Iniciando parser...
+LEXER: Token QUEBRA LINHA (/n)
+LEXER: Token QUEBRA LINHA (/n)
 LEXER: Token identificador (a)
 LEXER: Token VIRGULA (,)
 LEXER: Token INTEIRO (1)
