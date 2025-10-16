@@ -6,51 +6,70 @@ LEXER_DIR="$ROOT_DIR/src/lexer"
 LEXER_SRC="$LEXER_DIR/lexer.l"
 LEXER_C="$LEXER_DIR/lex.yy.c"
 ANALISADOR="$LEXER_DIR/analisador_lexico"
-TESTS_DIR="$ROOT_DIR/src/tests"
-OUTPUTS_DIR="$ROOT_DIR/src/outputs"
 
-# Função para compilar o lexer
+TESTS_DIR="$ROOT_DIR/src/tests/inputs"
+OUTPUTS_DIR="$ROOT_DIR/src/tests/outputs"
+
+# --- Função para compilar o lexer ---
 compile_lexer() {
     echo "⚙️ Compilando lexer..."
-    flex -o "$LEXER_C" "$LEXER_SRC" || { echo "❌ Falha no flex"; exit 1; }
-    gcc "$LEXER_C" -o "$ANALISADOR" -lfl || { echo "❌ Falha na compilação"; exit 1; }
+    flex -o "$LEXER_C" "$LEXER_SRC" >/dev/null 2>&1 || { echo "❌ Erro no flex"; exit 1; }
+    gcc "$LEXER_C" -o "$ANALISADOR" -lfl >/dev/null 2>&1 || { echo "❌ Erro na compilação com gcc"; exit 1; }
     echo "✅ Lexer compilado com sucesso."
 }
 
-# Recompila se o analisador não existir ou se lexer.l for mais novo que o analisador
-if [ ! -x "$ANALISADOR" ] || [ "$LEXER_SRC" -nt "$ANALISADOR" ]; then
-    echo "⚠️ Necessário compilar o analisador."
-    compile_lexer
-fi
+# --- Recompila se necessário ---
+[ ! -x "$ANALISADOR" ] || [ "$LEXER_SRC" -nt "$ANALISADOR" ] && compile_lexer
 
-# Garante a pasta de saídas
+# --- Cria diretório de saídas ---
 mkdir -p "$OUTPUTS_DIR"
-
 shopt -s nullglob
 
-for tipo in lexico sintatico semantico; do
-    TIPO_DIR="$TESTS_DIR/$tipo"
-    [ -d "$TIPO_DIR" ] || continue
+# --- Arrays para erros ---
+declare -a erros
+total=0
+failures=0
 
-    mkdir -p "$OUTPUTS_DIR/$tipo"
+# --- Executa apenas testes léxicos ---
+tipo="lexico"
+TIPO_DIR="$TESTS_DIR/$tipo"
+[ -d "$TIPO_DIR" ] || { echo "Nenhum diretório de testes encontrado em $TIPO_DIR."; exit 0; }
 
-    for f in "$TIPO_DIR"/*.py; do
-        base=$(basename "$f" .py)
-        echo "----- Rodando $tipo -> $base -----"
+mkdir -p "$OUTPUTS_DIR/$tipo"
 
-        # Executa o analisador e captura a saída
-        OUTPUT=$("$ANALISADOR" < "$f" 2>&1)
+for f in "$TIPO_DIR"/*.py; do
+    base=$(basename "$f" .py)
+    total=$((total+1))
 
-        # Sobrescreve a saída anterior
-        echo "$OUTPUT" > "$OUTPUTS_DIR/$tipo/$base.out"
+    # Executa o analisador e captura a saída
+    OUTPUT=$("$ANALISADOR" < "$f" 2>&1)
+    echo "$OUTPUT" > "$OUTPUTS_DIR/$tipo/$base.out"
 
-        # Verifica se há ERROR na saída
-        if echo "$OUTPUT" | grep -q "ERROR:"; then
-            echo "⚠️ Erro detectado em $base: token desconhecido encontrado."
-        fi
-    done
+    # Verifica erros na saída (palavra 'ERRO')
+    if echo "$OUTPUT" | grep -q "ERRO"; then
+        echo -n "E"
+        failures=$((failures+1))
+        erros+=("[$tipo] $base: Token desconhecido ou inválido")
+    else
+        echo -n "."
+    fi
 done
 
 shopt -u nullglob
+echo
+echo
 
-echo "✔ Todos os testes executados."
+# --- Relatório final ---
+if [ $failures -gt 0 ]; then
+    echo "===================="
+    for e in "${erros[@]}"; do
+        echo "E: $e"
+    done
+    echo "===================="
+    echo "$total casos de testes, $failures teste(s) falharam."
+else
+    echo "Todos os testes passaram ($total casos)."
+fi
+
+# --- Limpeza final ---
+rm -f "$LEXER_C" "$ANALISADOR"

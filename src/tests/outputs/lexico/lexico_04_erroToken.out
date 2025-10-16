@@ -1,12 +1,44 @@
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token identificador (x)
-LEXER: Token IGUAL (=)
+ERRO LÃ‰XICO linha 1: '#'
+ERRO LÃ‰XICO linha 1: 'Ã'
+ERRO LÃ‰XICO linha 1: '©'
+ERRO LÃ‰XICO linha 1: 'Ã'
+ERRO LÃ‰XICO linha 1: '¡'
+ERRO LÃ‰XICO linha 1: 'Ã'
+ERRO LÃ‰XICO linha 1: '©'
+ERRO LÃ‰XICO linha 1: '.'
+ERRO LÃ‰XICO linha 2: '#'
+ERRO LÃ‰XICO linha 2: '@'
+ERRO LÃ‰XICO linha 2: 'Ã'
+ERRO LÃ‰XICO linha 2: '©'
+ERRO LÃ‰XICO linha 3: '@'
+LEXER: Token IDENTIFICADOR (Este)
+LEXER: Token IDENTIFICADOR (arquivo)
+LEXER: Token IDENTIFICADOR (cont)
+LEXER: Token IDENTIFICADOR (m)
+LEXER: Token IDENTIFICADOR (um)
+LEXER: Token IDENTIFICADOR (caractere)
+LEXER: Token IDENTIFICADOR (inv)
+LEXER: Token IDENTIFICADOR (lido)
+LEXER: Token IDENTIFICADOR (para)
+LEXER: Token IDENTIFICADOR (o)
+LEXER: Token IDENTIFICADOR (analisador)
+LEXER: Token IDENTIFICADOR (l)
+LEXER: Token IDENTIFICADOR (xico)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (A)
+LEXER: Token IDENTIFICADOR (um)
+LEXER: Token IDENTIFICADOR (token)
+LEXER: Token IDENTIFICADOR (desconhecido)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (x)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (10)
-ERRO: Caractere invalido '@'
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token identificador (y)
-LEXER: Token IGUAL (=)
-LEXER: Token identificador (x)
-LEXER: Token MAIS (+)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (y)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (x)
+LEXER: Token OPERADOR_MAIS (+)
 LEXER: Token INTEIRO (5)

@@ -1,12 +1,12 @@
-ERRO (linha 5): syntax error próximo de '*'
-Iniciando parser...
-LEXER: Token identificador (a)
-LEXER: Token IGUAL (=)
+ERRO (linha 1): syntax error próximo de '*'
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (20)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token identificador (a)
-LEXER: Token VEZES (*)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+
+
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_MULTIPLICACAO (*)
 Parsing interrompido por erro.

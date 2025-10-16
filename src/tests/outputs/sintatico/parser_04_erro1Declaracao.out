@@ -1,7 +1,6 @@
 ERRO (linha 1): syntax error próximo de '='
-Iniciando parser...
-LEXER: Token identificador (a)
-LEXER: Token IGUAL (=)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (1)
-LEXER: Token IGUAL (=)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
 Parsing interrompido por erro.

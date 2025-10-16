@@ -1,8 +1,8 @@
-ERRO (linha 3): syntax error próximo de '1'
-Iniciando parser...
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token QUEBRA LINHA (/n)
-LEXER: Token identificador (a)
-LEXER: Token VIRGULA (,)
+ERRO (linha 1): syntax error próximo de '1'
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token DELIMITADOR_VIRGULA (,)
 LEXER: Token INTEIRO (1)
 Parsing interrompido por erro.
