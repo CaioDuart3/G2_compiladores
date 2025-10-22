@@ -9,6 +9,7 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/CaioDuart3/G2_compiladores
 
+
 theme:
   name: material
   palette:

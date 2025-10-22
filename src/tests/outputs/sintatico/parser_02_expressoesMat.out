@@ -1,0 +1,5 @@
+ERRO (linha 1): syntax error próximo de '('
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+Parsing interrompido por erro.

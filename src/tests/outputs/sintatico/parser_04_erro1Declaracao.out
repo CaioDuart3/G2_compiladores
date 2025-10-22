@@ -1,0 +1,6 @@
+ERRO (linha 1): syntax error próximo de '='
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (1)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+Parsing interrompido por erro.
