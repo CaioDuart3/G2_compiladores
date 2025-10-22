@@ -47,6 +47,6 @@ nav:
   - Planejamento: Planejamento/planejamento.md
   - Escopo: Escopo/escopo.md
   - Dificuldades: Dificuldades/dificuldades.md
-  # - Lexer: lexer.md
-  # - Parser: parser.md
-  # - Testes: tests.md
+  - Desenvolvimento Técnico:
+    - Parser: Desenvolvimento/parser.md
+    - Lexer: Desenvolvimento/lexer.md
