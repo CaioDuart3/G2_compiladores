@@ -66,6 +66,7 @@ atribuicao:
   | lista_identificadores TOKEN_OPERADOR_ATRIBUICAO atribuicao
   ;
 
+
 lista_identificadores:
     TOKEN_IDENTIFICADOR
   | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_VIRGULA lista_identificadores
@@ -84,6 +85,7 @@ lista_argumentos:
 
 chamada_funcao:
     TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+  | TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES
   ;
 
 expressao:
@@ -91,9 +93,11 @@ expressao:
   | expressao TOKEN_OPERADOR_MENOS expressao
   | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
   | expressao TOKEN_OPERADOR_DIVISAO expressao
+  | TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
   | TOKEN_INTEIRO
   | TOKEN_PALAVRA_CHAVE_TRUE
-  | TOKEN_PALAVRA_CHAVE_FALSE
+  | TOKEN_PALAVRA_CHAVE_FALSE   
+  | TOKEN_STRING
   ;
 
 
@@ -119,4 +123,3 @@ int main(void) {
   }
   return result;
 }
-
