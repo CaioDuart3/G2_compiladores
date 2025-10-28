@@ -1,4 +1,0 @@
-ERRO (linha 1): syntax error próximo de '"Olá, mundo!"'
-LEXER: Token IDENTIFICADOR (print)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-Parsing interrompido por erro.

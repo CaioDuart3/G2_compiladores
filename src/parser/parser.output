@@ -1,0 +1,632 @@
+Terminais sem uso na gramática
+
+    TOKEN_FLOAT
+    TOKEN_PALAVRA_CHAVE_ELIF
+    TOKEN_PALAVRA_CHAVE_WHILE
+    TOKEN_PALAVRA_CHAVE_FOR
+    TOKEN_PALAVRA_CHAVE_DEF
+    TOKEN_PALAVRA_CHAVE_RETURN
+    TOKEN_PALAVRA_CHAVE_IN
+    TOKEN_OPERADOR_IGUAL
+    TOKEN_OPERADOR_DIFERENTE
+    TOKEN_OPERADOR_MENOR_IGUAL
+    TOKEN_OPERADOR_MAIOR_IGUAL
+    TOKEN_OPERADOR_MENOR
+    TOKEN_OPERADOR_MAIOR
+    TOKEN_DELIMITADOR_VIRGULA
+    TOKEN_DELIMITADOR_ABRE_CHAVES
+    TOKEN_DELIMITADOR_FECHA_CHAVES
+    TOKEN_DELIMITADOR_ABRE_COLCHETES
+    TOKEN_DELIMITADOR_FECHA_COLCHETES
+    TOKEN_DESCONHECIDO
+
+
+Gramática
+
+    0 $accept: programa $end
+
+    1 programa: lista_comandos_opt
+
+    2 lista_comandos_opt: ε
+    3                   | lista_comandos
+
+    4 lista_comandos: comando
+    5               | lista_comandos comando
+
+    6 comando: atribuicao
+    7        | expressao
+    8        | if_stmt
+    9        | bloco
+   10        | TOKEN_NEWLINE
+
+   11 atribuicao: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
+
+   12 expressao: expressao TOKEN_OPERADOR_MAIS expressao
+   13          | expressao TOKEN_OPERADOR_MENOS expressao
+   14          | expressao TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao TOKEN_OPERADOR_DIVISAO expressao
+   16          | atomo
+
+   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+   18      | TOKEN_INTEIRO
+   19      | TOKEN_IDENTIFICADOR
+   20      | TOKEN_STRING
+   21      | TOKEN_PALAVRA_CHAVE_TRUE
+   22      | TOKEN_PALAVRA_CHAVE_FALSE
+
+   23 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+
+   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   25        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+
+Terminais, com as regras onde eles aparecem
+
+    $end (0) 0
+    error (256)
+    TOKEN_INTEIRO <ival> (258) 18
+    TOKEN_IDENTIFICADOR <sval> (259) 11 19
+    TOKEN_STRING <sval> (260) 20
+    TOKEN_PALAVRA_CHAVE_TRUE <ival> (261) 21
+    TOKEN_PALAVRA_CHAVE_FALSE <ival> (262) 22
+    TOKEN_FLOAT (263)
+    TOKEN_PALAVRA_CHAVE_IF (264) 24 25
+    TOKEN_PALAVRA_CHAVE_ELSE (265) 25
+    TOKEN_PALAVRA_CHAVE_ELIF (266)
+    TOKEN_PALAVRA_CHAVE_WHILE (267)
+    TOKEN_PALAVRA_CHAVE_FOR (268)
+    TOKEN_PALAVRA_CHAVE_DEF (269)
+    TOKEN_PALAVRA_CHAVE_RETURN (270)
+    TOKEN_PALAVRA_CHAVE_IN (271)
+    TOKEN_OPERADOR_IGUAL (272)
+    TOKEN_OPERADOR_DIFERENTE (273)
+    TOKEN_OPERADOR_MENOR_IGUAL (274)
+    TOKEN_OPERADOR_MAIOR_IGUAL (275)
+    TOKEN_OPERADOR_MENOR (276)
+    TOKEN_OPERADOR_MAIOR (277)
+    TOKEN_OPERADOR_ATRIBUICAO (278) 11
+    TOKEN_OPERADOR_MAIS (279) 12
+    TOKEN_OPERADOR_MENOS (280) 13
+    TOKEN_OPERADOR_MULTIPLICAACAO (281) 14
+    TOKEN_OPERADOR_DIVISAO (282) 15
+    TOKEN_DELIMITADOR_DOIS_PONTOS (283) 24 25
+    TOKEN_DELIMITADOR_VIRGULA (284)
+    TOKEN_DELIMITADOR_ABRE_PARENTESES (285) 17
+    TOKEN_DELIMITADOR_FECHA_PARENTESES (286) 17
+    TOKEN_DELIMITADOR_ABRE_CHAVES (287)
+    TOKEN_DELIMITADOR_FECHA_CHAVES (288)
+    TOKEN_DELIMITADOR_ABRE_COLCHETES (289)
+    TOKEN_DELIMITADOR_FECHA_COLCHETES (290)
+    TOKEN_DESCONHECIDO (291)
+    TOKEN_NEWLINE (292) 10 23
+    TOKEN_INDENT (293) 23
+    TOKEN_DEDENT (294) 23
+
+
+Não terminais com as regras onde eles aparecem
+
+    $accept (40)
+        à esquerda: 0
+    programa <no> (41)
+        à esquerda: 1
+        à direita: 0
+    lista_comandos_opt <no> (42)
+        à esquerda: 2 3
+        à direita: 1
+    lista_comandos <no> (43)
+        à esquerda: 4 5
+        à direita: 3 5 23
+    comando <no> (44)
+        à esquerda: 6 7 8 9 10
+        à direita: 4 5
+    atribuicao <no> (45)
+        à esquerda: 11
+        à direita: 6
+    expressao <no> (46)
+        à esquerda: 12 13 14 15 16
+        à direita: 7 11 12 13 14 15 17 24 25
+    atomo <no> (47)
+        à esquerda: 17 18 19 20 21 22
+        à direita: 16
+    bloco <no> (48)
+        à esquerda: 23
+        à direita: 9 24 25
+    if_stmt <no> (49)
+        à esquerda: 24 25
+        à direita: 8
+
+
+Estado 0
+
+    0 $accept: • programa $end
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 2
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_PALAVRA_CHAVE_IF             deslocar, e ir ao estado 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+    TOKEN_NEWLINE                      deslocar, e ir ao estado 8
+
+    $padrão  reduzir usando a regra 2 (lista_comandos_opt)
+
+    programa            ir ao estado 9
+    lista_comandos_opt  ir ao estado 10
+    lista_comandos      ir ao estado 11
+    comando             ir ao estado 12
+    atribuicao          ir ao estado 13
+    expressao           ir ao estado 14
+    atomo               ir ao estado 15
+    bloco               ir ao estado 16
+    if_stmt             ir ao estado 17
+
+
+Estado 1
+
+   18 atomo: TOKEN_INTEIRO •
+
+    $padrão  reduzir usando a regra 18 (atomo)
+
+
+Estado 2
+
+   11 atribuicao: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
+   19 atomo: TOKEN_IDENTIFICADOR •
+
+    TOKEN_OPERADOR_ATRIBUICAO  deslocar, e ir ao estado 18
+
+    $padrão  reduzir usando a regra 19 (atomo)
+
+
+Estado 3
+
+   20 atomo: TOKEN_STRING •
+
+    $padrão  reduzir usando a regra 20 (atomo)
+
+
+Estado 4
+
+   21 atomo: TOKEN_PALAVRA_CHAVE_TRUE •
+
+    $padrão  reduzir usando a regra 21 (atomo)
+
+
+Estado 5
+
+   22 atomo: TOKEN_PALAVRA_CHAVE_FALSE •
+
+    $padrão  reduzir usando a regra 22 (atomo)
+
+
+Estado 6
+
+   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   25        | TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 20
+    atomo      ir ao estado 15
+
+
+Estado 7
+
+   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES • expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 21
+    atomo      ir ao estado 15
+
+
+Estado 8
+
+   10 comando: TOKEN_NEWLINE •
+   23 bloco: TOKEN_NEWLINE • TOKEN_INDENT lista_comandos TOKEN_DEDENT
+
+    TOKEN_INDENT  deslocar, e ir ao estado 22
+
+    $padrão  reduzir usando a regra 10 (comando)
+
+
+Estado 9
+
+    0 $accept: programa • $end
+
+    $end  deslocar, e ir ao estado 23
+
+
+Estado 10
+
+    1 programa: lista_comandos_opt •
+
+    $padrão  reduzir usando a regra 1 (programa)
+
+
+Estado 11
+
+    3 lista_comandos_opt: lista_comandos •
+    5 lista_comandos: lista_comandos • comando
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 2
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_PALAVRA_CHAVE_IF             deslocar, e ir ao estado 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+    TOKEN_NEWLINE                      deslocar, e ir ao estado 8
+
+    $padrão  reduzir usando a regra 3 (lista_comandos_opt)
+
+    comando     ir ao estado 24
+    atribuicao  ir ao estado 13
+    expressao   ir ao estado 14
+    atomo       ir ao estado 15
+    bloco       ir ao estado 16
+    if_stmt     ir ao estado 17
+
+
+Estado 12
+
+    4 lista_comandos: comando •
+
+    $padrão  reduzir usando a regra 4 (lista_comandos)
+
+
+Estado 13
+
+    6 comando: atribuicao •
+
+    $padrão  reduzir usando a regra 6 (comando)
+
+
+Estado 14
+
+    7 comando: expressao •
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS            deslocar, e ir ao estado 25
+    TOKEN_OPERADOR_MENOS           deslocar, e ir ao estado 26
+    TOKEN_OPERADOR_MULTIPLICAACAO  deslocar, e ir ao estado 27
+    TOKEN_OPERADOR_DIVISAO         deslocar, e ir ao estado 28
+
+    $padrão  reduzir usando a regra 7 (comando)
+
+
+Estado 15
+
+   16 expressao: atomo •
+
+    $padrão  reduzir usando a regra 16 (expressao)
+
+
+Estado 16
+
+    9 comando: bloco •
+
+    $padrão  reduzir usando a regra 9 (comando)
+
+
+Estado 17
+
+    8 comando: if_stmt •
+
+    $padrão  reduzir usando a regra 8 (comando)
+
+
+Estado 18
+
+   11 atribuicao: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO • expressao
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 29
+    atomo      ir ao estado 15
+
+
+Estado 19
+
+   19 atomo: TOKEN_IDENTIFICADOR •
+
+    $padrão  reduzir usando a regra 19 (atomo)
+
+
+Estado 20
+
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   25        | TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_OPERADOR_MAIS            deslocar, e ir ao estado 25
+    TOKEN_OPERADOR_MENOS           deslocar, e ir ao estado 26
+    TOKEN_OPERADOR_MULTIPLICAACAO  deslocar, e ir ao estado 27
+    TOKEN_OPERADOR_DIVISAO         deslocar, e ir ao estado 28
+    TOKEN_DELIMITADOR_DOIS_PONTOS  deslocar, e ir ao estado 30
+
+
+Estado 21
+
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao • TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_OPERADOR_MAIS                 deslocar, e ir ao estado 25
+    TOKEN_OPERADOR_MENOS                deslocar, e ir ao estado 26
+    TOKEN_OPERADOR_MULTIPLICAACAO       deslocar, e ir ao estado 27
+    TOKEN_OPERADOR_DIVISAO              deslocar, e ir ao estado 28
+    TOKEN_DELIMITADOR_FECHA_PARENTESES  deslocar, e ir ao estado 31
+
+
+Estado 22
+
+   23 bloco: TOKEN_NEWLINE TOKEN_INDENT • lista_comandos TOKEN_DEDENT
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 2
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_PALAVRA_CHAVE_IF             deslocar, e ir ao estado 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+    TOKEN_NEWLINE                      deslocar, e ir ao estado 8
+
+    lista_comandos  ir ao estado 32
+    comando         ir ao estado 12
+    atribuicao      ir ao estado 13
+    expressao       ir ao estado 14
+    atomo           ir ao estado 15
+    bloco           ir ao estado 16
+    if_stmt         ir ao estado 17
+
+
+Estado 23
+
+    0 $accept: programa $end •
+
+    $padrão  aceitar
+
+
+Estado 24
+
+    5 lista_comandos: lista_comandos comando •
+
+    $padrão  reduzir usando a regra 5 (lista_comandos)
+
+
+Estado 25
+
+   12 expressao: expressao TOKEN_OPERADOR_MAIS • expressao
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 33
+    atomo      ir ao estado 15
+
+
+Estado 26
+
+   13 expressao: expressao TOKEN_OPERADOR_MENOS • expressao
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 34
+    atomo      ir ao estado 15
+
+
+Estado 27
+
+   14 expressao: expressao TOKEN_OPERADOR_MULTIPLICAACAO • expressao
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 35
+    atomo      ir ao estado 15
+
+
+Estado 28
+
+   15 expressao: expressao TOKEN_OPERADOR_DIVISAO • expressao
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 19
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+
+    expressao  ir ao estado 36
+    atomo      ir ao estado 15
+
+
+Estado 29
+
+   11 atribuicao: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao •
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS            deslocar, e ir ao estado 25
+    TOKEN_OPERADOR_MENOS           deslocar, e ir ao estado 26
+    TOKEN_OPERADOR_MULTIPLICAACAO  deslocar, e ir ao estado 27
+    TOKEN_OPERADOR_DIVISAO         deslocar, e ir ao estado 28
+
+    $padrão  reduzir usando a regra 11 (atribuicao)
+
+
+Estado 30
+
+   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+   25        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_NEWLINE  deslocar, e ir ao estado 37
+
+    bloco  ir ao estado 38
+
+
+Estado 31
+
+   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES •
+
+    $padrão  reduzir usando a regra 17 (atomo)
+
+
+Estado 32
+
+    5 lista_comandos: lista_comandos • comando
+   23 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos • TOKEN_DEDENT
+
+    TOKEN_INTEIRO                      deslocar, e ir ao estado 1
+    TOKEN_IDENTIFICADOR                deslocar, e ir ao estado 2
+    TOKEN_STRING                       deslocar, e ir ao estado 3
+    TOKEN_PALAVRA_CHAVE_TRUE           deslocar, e ir ao estado 4
+    TOKEN_PALAVRA_CHAVE_FALSE          deslocar, e ir ao estado 5
+    TOKEN_PALAVRA_CHAVE_IF             deslocar, e ir ao estado 6
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  deslocar, e ir ao estado 7
+    TOKEN_NEWLINE                      deslocar, e ir ao estado 8
+    TOKEN_DEDENT                       deslocar, e ir ao estado 39
+
+    comando     ir ao estado 24
+    atribuicao  ir ao estado 13
+    expressao   ir ao estado 14
+    atomo       ir ao estado 15
+    bloco       ir ao estado 16
+    if_stmt     ir ao estado 17
+
+
+Estado 33
+
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   12          | expressao TOKEN_OPERADOR_MAIS expressao •
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MULTIPLICAACAO  deslocar, e ir ao estado 27
+    TOKEN_OPERADOR_DIVISAO         deslocar, e ir ao estado 28
+
+    $padrão  reduzir usando a regra 12 (expressao)
+
+
+Estado 34
+
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   13          | expressao TOKEN_OPERADOR_MENOS expressao •
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MULTIPLICAACAO  deslocar, e ir ao estado 27
+    TOKEN_OPERADOR_DIVISAO         deslocar, e ir ao estado 28
+
+    $padrão  reduzir usando a regra 13 (expressao)
+
+
+Estado 35
+
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   14          | expressao TOKEN_OPERADOR_MULTIPLICAACAO expressao •
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    $padrão  reduzir usando a regra 14 (expressao)
+
+
+Estado 36
+
+   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   13          | expressao • TOKEN_OPERADOR_MENOS expressao
+   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
+   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   15          | expressao TOKEN_OPERADOR_DIVISAO expressao •
+
+    $padrão  reduzir usando a regra 15 (expressao)
+
+
+Estado 37
+
+   23 bloco: TOKEN_NEWLINE • TOKEN_INDENT lista_comandos TOKEN_DEDENT
+
+    TOKEN_INDENT  deslocar, e ir ao estado 22
+
+
+Estado 38
+
+   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+   25        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco • TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_PALAVRA_CHAVE_ELSE  deslocar, e ir ao estado 40
+
+    $padrão  reduzir usando a regra 24 (if_stmt)
+
+
+Estado 39
+
+   23 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT •
+
+    $padrão  reduzir usando a regra 23 (bloco)
+
+
+Estado 40
+
+   25 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_DELIMITADOR_DOIS_PONTOS  deslocar, e ir ao estado 41
+
+
+Estado 41
+
+   25 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+
+    TOKEN_NEWLINE  deslocar, e ir ao estado 37
+
+    bloco  ir ao estado 42
+
+
+Estado 42
+
+   25 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+
+    $padrão  reduzir usando a regra 25 (if_stmt)

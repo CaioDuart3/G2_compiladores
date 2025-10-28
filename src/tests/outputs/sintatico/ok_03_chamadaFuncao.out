@@ -1,0 +1,11 @@
+ERRO SINTÁTICO (linha 1): syntax error
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token STRING ("Olá, mundo!")
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (funcao_qualquer)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+Parsing interrompido por erro.

@@ -1,4 +1,4 @@
-ERRO (linha 1): syntax error próximo de '*'
+ERRO SINTÁTICO (linha 1): syntax error
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (20)
@@ -8,5 +8,6 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 
 
 LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_MULTIPLICACAO (*)
+LEXER: Token OPERADOR_MULTIPLICAACAO (*)
+LEXER: Token OPERADOR_DIVISAO (/)
 Parsing interrompido por erro.

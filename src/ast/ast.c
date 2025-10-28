@@ -3,122 +3,178 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Cria um nó numérico
+// Função auxiliar interna para alocar e inicializar um nó
+static NoAST *alocarNo(TipoNo tipo) {
+    NoAST *novo = malloc(sizeof(NoAST));
+    if (!novo) {
+        fprintf(stderr, "Erro: falha ao alocar memória para nó.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    novo->tipo = tipo;
+    novo->valor_int = 0;
+    novo->valor_string = NULL;
+    novo->operador = '\0';
+    novo->filho1 = NULL;
+    novo->filho2 = NULL;
+    novo->filho3 = NULL;
+    novo->proximo = NULL;
+    
+    return novo;
+}
+
+// --- Funções de Criação de Nós ("Fábricas") ---
+
 NoAST *criarNoNum(int valor) {
-    NoAST *novo = malloc(sizeof(NoAST));
-    if (!novo) {
-        fprintf(stderr, "Erro: falha ao alocar memória para nó numérico.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    novo->tipo = NO_NUM;
-    novo->valor = valor;
-    novo->nome[0] = '\0';
-    novo->operador = '\0';
-    novo->esquerda = novo->direita = NULL;
+    NoAST *novo = alocarNo(NO_NUM);
+    novo->valor_int = valor;
     return novo;
 }
 
-// Cria um nó identificador (variável)
-NoAST *criarNoId(const char *nome) {
-    NoAST *novo = malloc(sizeof(NoAST));
-    if (!novo) {
-        fprintf(stderr, "Erro: falha ao alocar memória para nó identificador.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    novo->tipo = NO_ID;
-    strncpy(novo->nome, nome, sizeof(novo->nome) - 1);
-    novo->nome[sizeof(novo->nome) - 1] = '\0';
-    novo->operador = '\0';
-    novo->esquerda = novo->direita = NULL;
+NoAST *criarNoId(char *nome) {
+    NoAST *novo = alocarNo(NO_ID);
+    novo->valor_string = strdup(nome); // Copia a string
     return novo;
 }
 
-// Cria um nó operador (+, -, *, /, etc.)
+NoAST *criarNoString(char *texto) {
+    NoAST *novo = alocarNo(NO_STRING);
+    // Remove as aspas (simples ou duplas)
+    int len = strlen(texto);
+    if (len >= 2) {
+        novo->valor_string = strndup(texto + 1, len - 2);
+    } else {
+        novo->valor_string = strdup(""); // String vazia se algo der errado
+    }
+    return novo;
+}
+
+NoAST *criarNoBool(int valor) {
+    NoAST *novo = alocarNo(NO_BOOL);
+    novo->valor_int = (valor != 0); // Garante 0 ou 1
+    return novo;
+}
+
+NoAST *criarNoVazio() {
+    return alocarNo(NO_VAZIO);
+}
+
 NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir) {
-    NoAST *novo = malloc(sizeof(NoAST));
-    if (!novo) {
-        fprintf(stderr, "Erro: falha ao alocar memória para nó operador.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    novo->tipo = NO_OP;
+    NoAST *novo = alocarNo(NO_OP_BINARIA);
     novo->operador = operador;
-    novo->nome[0] = '\0';
-    novo->valor = 0;
-    novo->esquerda = esq;
-    novo->direita = dir;
+    novo->filho1 = esq;
+    novo->filho2 = dir;
     return novo;
 }
 
-// Imprime a árvore em notação infixa
-void imprimirAST(const NoAST *raiz) {
+NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr) {
+    NoAST *novo = alocarNo(NO_ATRIBUICAO);
+    novo->filho1 = id;
+    novo->filho2 = expr;
+    return novo;
+}
+
+NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse) {
+    NoAST *novo = alocarNo(NO_IF);
+    novo->filho1 = cond;
+    novo->filho2 = blocoThen;
+    novo->filho3 = blocoElse; // Pode ser NULL
+    return novo;
+}
+
+NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
+    NoAST *novo = alocarNo(NO_LISTA_COMANDOS);
+    novo->filho1 = comando;
+    novo->proximo = proximaLista;
+    return novo;
+}
+
+// --- Funções de Gerenciamento ---
+
+// Função auxiliar para imprimir indentação
+static void printIndent(int indent) {
+    for (int i = 0; i < indent; i++) {
+        printf("  ");
+    }
+}
+
+void imprimirAST(const NoAST *raiz, int indent) {
     if (!raiz) return;
+
+    // Nós que são parte de uma lista de comandos
+    if (raiz->tipo == NO_LISTA_COMANDOS) {
+        imprimirAST(raiz->filho1, indent); // Imprime o comando atual
+        imprimirAST(raiz->proximo, indent); // Imprime o resto da lista
+        return;
+    }
+
+    // Para todos os outros nós, imprime a indentação
+    printIndent(indent);
 
     switch (raiz->tipo) {
         case NO_NUM:
-            printf("%d", raiz->valor);
+            printf("NUM: %d\n", raiz->valor_int);
             break;
         case NO_ID:
-            printf("%s", raiz->nome);
+            printf("ID: %s\n", raiz->valor_string);
             break;
-        case NO_OP:
-            printf("(");
-            imprimirAST(raiz->esquerda);
-            printf(" %c ", raiz->operador);
-            imprimirAST(raiz->direita);
-            printf(")");
+        case NO_STRING:
+            printf("STRING: \"%s\"\n", raiz->valor_string);
             break;
+        case NO_BOOL:
+            printf("BOOL: %s\n", raiz->valor_int ? "True" : "False");
+            break;
+        case NO_VAZIO:
+            printf("(Comando Vazio)\n");
+            break;
+
+        case NO_OP_BINARIA:
+            printf("OP: %c\n", raiz->operador);
+            imprimirAST(raiz->filho1, indent + 1);
+            imprimirAST(raiz->filho2, indent + 1);
+            break;
+            
+        case NO_ATRIBUICAO:
+            printf("ATTR:\n");
+            imprimirAST(raiz->filho1, indent + 1); // ID
+            imprimirAST(raiz->filho2, indent + 1); // Expressão
+            break;
+
+        case NO_IF:
+            printf("IF:\n");
+            printIndent(indent + 1); printf("COND:\n");
+            imprimirAST(raiz->filho1, indent + 2); // Condição
+            
+            printIndent(indent + 1); printf("THEN:\n");
+            imprimirAST(raiz->filho2, indent + 2); // Bloco Then
+            
+            if (raiz->filho3) {
+                printIndent(indent + 1); printf("ELSE:\n");
+                imprimirAST(raiz->filho3, indent + 2); // Bloco Else
+            }
+            break;
+            
         default:
-            fprintf(stderr, "Erro: tipo de nó desconhecido.\n");
+            fprintf(stderr, "Erro: tipo de nó desconhecido para impressão.\n");
     }
 }
 
-// Libera toda a memória da AST
 void liberarAST(NoAST *raiz) {
     if (!raiz) return;
-    liberarAST(raiz->esquerda);
-    liberarAST(raiz->direita);
+    
+    // Libera filhos
+    liberarAST(raiz->filho1);
+    liberarAST(raiz->filho2);
+    liberarAST(raiz->filho3);
+    
+    // Libera o próximo da lista
+    liberarAST(raiz->proximo);
+    
+    // Libera strings alocadas
+    if (raiz->tipo == NO_ID || raiz->tipo == NO_STRING) {
+        free(raiz->valor_string);
+    }
+    
+    // Libera o próprio nó
     free(raiz);
-}
-
-// Avalia a AST (somente números e operadores aritméticos básicos)
-int avaliarAST(const NoAST *raiz) {
-    if (!raiz) {
-        fprintf(stderr, "Erro: AST nula.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    switch (raiz->tipo) {
-        case NO_NUM:
-            return raiz->valor;
-
-        case NO_OP: {
-            int esq = avaliarAST(raiz->esquerda);
-            int dir = avaliarAST(raiz->direita);
-            switch (raiz->operador) {
-                case '+': return esq + dir;
-                case '-': return esq - dir;
-                case '*': return esq * dir;
-                case '/':
-                    if (dir == 0) {
-                        fprintf(stderr, "Erro: divisão por zero.\n");
-                        exit(EXIT_FAILURE);
-                    }
-                    return esq / dir;
-                default:
-                    fprintf(stderr, "Erro: operador desconhecido '%c'.\n", raiz->operador);
-                    exit(EXIT_FAILURE);
-            }
-        }
-
-        case NO_ID:
-            fprintf(stderr, "Erro: tentativa de avaliar identificador '%s' sem valor.\n", raiz->nome);
-            exit(EXIT_FAILURE);
-
-        default:
-            fprintf(stderr, "Erro: tipo de nó inválido.\n");
-            exit(EXIT_FAILURE);
-    }
 }

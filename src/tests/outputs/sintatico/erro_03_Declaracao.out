@@ -1,4 +1,4 @@
-ERRO (linha 1): syntax error próximo de '='
+ERRO SINTÁTICO (linha 1): syntax error
 LEXER: Token INTEIRO (2)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 Parsing interrompido por erro.

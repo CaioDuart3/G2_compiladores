@@ -1,3 +1,3 @@
-ERRO (linha 1): syntax error próximo de 'while'
+ERRO SINTÁTICO (linha 1): syntax error
 LEXER: Token PALAVRA_CHAVE_WHILE (while)
 Parsing interrompido por erro.
