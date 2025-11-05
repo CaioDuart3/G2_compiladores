@@ -1,6 +1,6 @@
 #ifndef TABELA_H
 #define TABELA_H
-#define TAM 1000
+#define TAM 227 // tamanho da tabela hash
 
 #include <stdbool.h>
 
