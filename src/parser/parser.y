@@ -2,9 +2,10 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h>
-
-  /* Inclui a definição da nossa Árvore Sintática Abstrata */
-  #include "../ast/ast.h" // <-- Ajuste este caminho se necessário
+  #include "../st/st.h"
+  // #include "../st/st.c"
+  #include "../ast/ast.h"
+  // #include "../ast/ast.c"
 
   #define YYERROR_VERBOSE 1
 
@@ -116,10 +117,16 @@ comando:
 atribuicao:
     TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao 
     { 
+        // Se o identificador não está na tabela, insere
+        Simbolo *s = searchST($1);
+        if (s == NULL) {
+            insertST($1, NONE);
+        }
+
         $$ = criarNoAtribuicao(criarNoId($1), $3); 
-        free($1); /* Libera a string duplicada pelo lexer */
+        free($1);
     }
-  ;
+;
 
 expressao:
     expressao TOKEN_OPERADOR_MAIS expressao
@@ -137,11 +144,24 @@ expressao:
 /* 'atomo' são os elementos básicos de uma expressão */
 atomo:
     TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-        { $$ = $2; } /* Apenas repassa o nó interno */
+        {
+            $$ = $2; /* Apenas repassa o nó interno */
+        }
   | TOKEN_INTEIRO
         { $$ = criarNoNum($1); }
   | TOKEN_IDENTIFICADOR
-        { $$ = criarNoId($1); free($1); }
+        {
+            $$ = criarNoId($1);
+
+            // Verifica se o identificador já existe
+            Simbolo *s = searchST($1);
+            if (s == NULL) {
+                // Se não existe, insere com tipo NONE
+                insertST($1, NONE);
+            }
+
+            free($1); // libera memória duplicada pelo lexer
+        }
   | TOKEN_STRING
         { $$ = criarNoString($1); free($1); }
   | TOKEN_PALAVRA_CHAVE_TRUE
@@ -149,6 +169,7 @@ atomo:
   | TOKEN_PALAVRA_CHAVE_FALSE
         { $$ = criarNoBool($1); }
   ;
+
 
 /* Um bloco é o que está dentro de um INDENT/DEDENT */
 bloco:
@@ -176,6 +197,7 @@ void yyerror(const char *s) {
 
 int main(void) {
   inicializa_pilha();
+  initST();
   yylineno = 1;
   int result = yyparse();
   
@@ -189,8 +211,12 @@ int main(void) {
           printf("(AST está vazia)\n");
       }
       printf("---------------------------------------\n");
+      printf("\n--- TABELA DE SÍMBOLOS ---\n");
+      showST();
+      freeST();
   } else {
       printf("Parsing interrompido por erro.\n");
   }
+
   return result;
 }

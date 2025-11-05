@@ -39,12 +39,12 @@ compile_all() {
         exit 1
     fi
 
-    echo "Compilando o COMPILADOR completo (parser+lexer+ast)..."
+    echo "Compilando o COMPILADOR completo (parser+lexer+ast+st)..."
     if ! gcc -g -Wall \
-             "$PARSER_C" "$LEXER_C" "$AST_C" \
-             -I"$AST_DIR" -I"$PARSER_DIR" \
-             -o "$COMPILADOR" -lfl; then
-        echo "Falha na compilação final do COMPILADOR"
+            "$PARSER_C" "$LEXER_C" "$AST_C" "$SRC_DIR/st/st.c" \
+            -I"$AST_DIR" -I"$PARSER_DIR" -I"$SRC_DIR/st" \
+            -o "$COMPILADOR" -lfl; then
+        echo "Falha na compilação do COMPILADOR"
         exit 1
     fi
 
