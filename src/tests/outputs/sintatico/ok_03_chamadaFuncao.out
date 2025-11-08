@@ -1,4 +1,3 @@
-ERRO SINTÁTICO (linha 1): syntax error
 LEXER: Token IDENTIFICADOR (print)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
 LEXER: Token STRING ("Olá, mundo!")
@@ -8,4 +7,36 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: Token IDENTIFICADOR (funcao_qualquer)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
-Parsing interrompido por erro.
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (minha_funcao)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (param1)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (param2)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+CALL:
+  FUNC:
+    ID: print
+  ARGS:
+    STRING: "Olá, mundo!"
+CALL:
+  FUNC:
+    ID: funcao_qualquer
+CALL:
+  FUNC:
+    ID: minha_funcao
+  ARGS:
+    ID: param1
+    ID: param2
+---------------------------------------
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: param1     | Tipo: NONE    | Escopo: 0
+Nome: param2     | Tipo: NONE    | Escopo: 0
+===============================

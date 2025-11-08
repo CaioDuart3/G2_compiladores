@@ -48,7 +48,7 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 "="       { printf("LEXER: Token OPERADOR_ATRIBUICAO (%s)\n", yytext); return TOKEN_OPERADOR_ATRIBUICAO; }
 "+"       { printf("LEXER: Token OPERADOR_MAIS (%s)\n", yytext); return TOKEN_OPERADOR_MAIS; }
 "-"       { printf("LEXER: Token OPERADOR_MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
-"*"       { printf("LEXER: Token OPERADOR_MULTIPLICAACAO (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICAACAO; }
+"*"       { printf("LEXER: Token OPERADOR_MULTIPLICACAO (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
 "/"       { printf("LEXER: Token OPERADOR_DIVISAO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
 
     /* Delimitadores */

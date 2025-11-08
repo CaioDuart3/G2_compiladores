@@ -89,6 +89,55 @@ NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
     return novo;
 }
 
+// Nós de atribuição múltipla
+NoAST* criarListaIds(char* nome) {
+    NoAST* no = criarNoId(nome);
+    no->proximo = NULL;
+    return no;
+}
+
+NoAST* adicionaIdNaLista(NoAST* lista, char* nome) {
+    NoAST* novo = criarNoId(nome);
+    novo->proximo = NULL;
+
+    NoAST* temp = lista;
+    while (temp->proximo != NULL)
+        temp = temp->proximo;
+
+    temp->proximo = novo;
+    return lista;
+}
+
+NoAST* criarListaExp(NoAST* exp) {
+    exp->proximo = NULL;
+    return exp;
+}
+
+NoAST* adicionaExpNaLista(NoAST* lista, NoAST* exp) {
+    NoAST* temp = lista;
+    while (temp->proximo != NULL)
+        temp = temp->proximo;
+
+    temp->proximo = exp;
+    return lista;
+}
+
+NoAST* criarNoAtribuicaoMultipla(NoAST* ids, NoAST* exps) {
+    NoAST* no = malloc(sizeof(NoAST));
+    no->tipo = NO_ATRIBUICAO_MULTIPLA;
+    no->listaIds = ids;
+    no->listaExps = exps;
+    no->proximo = NULL;
+    return no;
+}
+
+NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args) {
+    NoAST *novo = alocarNo(NO_CHAMADA_FUNCAO);
+    novo->filho1 = id;
+    novo->filho2 = args;
+    return novo;
+}
+
 // --- Funções de Gerenciamento ---
 
 // Função auxiliar para imprimir indentação
@@ -153,6 +202,23 @@ void imprimirAST(const NoAST *raiz, int indent) {
                 imprimirAST(raiz->filho3, indent + 2); // Bloco Else
             }
             break;
+
+        case NO_CHAMADA_FUNCAO:
+            printf("CALL:\n");
+            printIndent(indent + 1);
+            printf("FUNC:\n");
+            imprimirAST(raiz->filho1, indent + 2);
+            if (raiz->filho2) {
+                printIndent(indent + 1);
+                printf("ARGS:\n");
+                NoAST *arg = raiz->filho2;
+                while (arg) {
+                    imprimirAST(arg, indent + 2);
+                    arg = arg->proximo; // percorre a lista de argumentos
+                }
+            }
+            break;
+
             
         default:
             fprintf(stderr, "Erro: tipo de nó desconhecido para impressão.\n");

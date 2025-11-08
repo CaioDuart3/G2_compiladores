@@ -1,4 +1,4 @@
-ERRO SINTÁTICO (linha 1): syntax error
+Erro: tipo de nó desconhecido para impressão.
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (1)
@@ -6,4 +6,40 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_VIRGULA (,)
-Parsing interrompido por erro.
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (c)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (2)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (3)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (4)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (d)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (e)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (f)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (5)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: a
+  NUM: 1
+ATTR:
+  ID: d
+  ATTR:
+    ID: e
+    ATTR:
+      ID: f
+      NUM: 5
+---------------------------------------
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+===============================

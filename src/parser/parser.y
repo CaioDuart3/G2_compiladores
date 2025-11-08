@@ -42,7 +42,7 @@
 %token TOKEN_OPERADOR_IGUAL TOKEN_OPERADOR_DIFERENTE TOKEN_OPERADOR_MENOR_IGUAL TOKEN_OPERADOR_MAIOR_IGUAL
 %token TOKEN_OPERADOR_MENOR TOKEN_OPERADOR_MAIOR
 %token TOKEN_OPERADOR_ATRIBUICAO
-%token TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS TOKEN_OPERADOR_MULTIPLICAACAO TOKEN_OPERADOR_DIVISAO
+%token TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS TOKEN_OPERADOR_MULTIPLICACAO TOKEN_OPERADOR_DIVISAO
 %token TOKEN_DELIMITADOR_DOIS_PONTOS TOKEN_DELIMITADOR_VIRGULA
 %token TOKEN_DELIMITADOR_ABRE_PARENTESES TOKEN_DELIMITADOR_FECHA_PARENTESES
 %token TOKEN_DELIMITADOR_ABRE_CHAVES TOKEN_DELIMITADOR_FECHA_CHAVES
@@ -55,10 +55,12 @@
 %type <no> programa
 %type <no> lista_comandos_opt lista_comandos comando
 %type <no> atribuicao expressao atomo bloco if_stmt
+%type <no> lista_identificadores lista_expressoes atribuicao_simples atribuicao_multipla atribuicao_encadeada
+%type <no> chamada_funcao lista_argumentos
 
 /* --- Precedência dos operadores --- */
 %left TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS
-%left TOKEN_OPERADOR_MULTIPLICAACAO TOKEN_OPERADOR_DIVISAO
+%left TOKEN_OPERADOR_MULTIPLICACAO TOKEN_OPERADOR_DIVISAO
 %right TOKEN_OPERADOR_ATRIBUICAO
 
 /* Para resolver ambiguidade "dangling else" */
@@ -84,56 +86,102 @@ lista_comandos_opt:
  * Esta regra constrói a lista na ordem correta (cmd1 -> cmd2 -> ...).
  */
 lista_comandos:
-    comando { $$ = $1; }
-  | lista_comandos comando 
-    {
-        if ($2 != NULL) { // Ignora comandos nulos (ex: newlines)
-            if ($1 == NULL) {
-                $$ = $2; // A lista estava vazia (só tinha nulos), começa com este
-            } else {
-                // Anexa $2 no final da lista $1
-                NoAST *temp = $1;
-                while (temp->proximo != NULL) {
-                    temp = temp->proximo;
-                }
-                temp->proximo = $2;
+    comando
+        { $$ = criarNoLista($1, NULL); }
+  | lista_comandos comando
+        {
+            if ($2 != NULL)
+                $$ = criarNoLista($1, $2);
+            else
                 $$ = $1;
-            }
-        } else {
-            $$ = $1; // Ignora o comando nulo
         }
-    }
   ;
 
 comando:
     atribuicao           { $$ = $1; }
+  | chamada_funcao       { $$ = $1; }
   | expressao            { $$ = $1; }
   | if_stmt              { $$ = $1; }
-  | bloco                { $$ = $1; }
   | TOKEN_NEWLINE        { $$ = NULL; } /* Newline não gera nó */
+  | bloco                { $$ = $1; }
   ;
 
-/* Simplifiquei 'atribuicao' para um ID = expressao */
 atribuicao:
-    TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao 
-    { 
-        // Se o identificador não está na tabela, insere
-        Simbolo *s = searchST($1);
-        if (s == NULL) {
-            insertST($1, NONE);
-        }
+      atribuicao_simples
+    | atribuicao_multipla
+    | atribuicao_encadeada
+    ;
 
-        $$ = criarNoAtribuicao(criarNoId($1), $3); 
-        free($1);
-    }
-;
+atribuicao_simples:
+      TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
+      {
+          $$ = criarNoAtribuicao(criarNoId($1), $3);
+      }
+    ;
+
+atribuicao_multipla:
+      lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+      {
+          $$ = criarNoAtribuicaoMultipla($1, $3);
+      }
+    ;
+
+atribuicao_encadeada:
+      TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao
+      {
+          $$ = criarNoAtribuicao(criarNoId($1), $3);
+      }
+    ;
+
+lista_identificadores:
+      TOKEN_IDENTIFICADOR
+      {
+          $$ = criarListaIds($1);
+      }
+    | lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+      {
+          $$ = adicionaIdNaLista($1, $3);
+      }
+    ;
+
+lista_expressoes:
+      expressao
+      {
+          $$ = criarListaExp($1);
+      }
+    | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
+      {
+          $$ = adicionaExpNaLista($1, $3);
+      }
+    ;
+
+/* --- CHAMADAS DE FUNÇÃO --- */
+
+lista_argumentos:
+      /* vazio */                        
+        { $$ = NULL; }
+    | expressao                          
+        { $$ = criarListaExp($1); }
+    | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
+        { $$ = adicionaExpNaLista($1, $3); }
+    ;
+
+chamada_funcao:
+      TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+        {
+            NoAST *id = criarNoId($1);
+            $$ = criarNoChamadaFuncao(id, $3);
+            free($1);
+        }
+    ;
+
 
 expressao:
     expressao TOKEN_OPERADOR_MAIS expressao
         { $$ = criarNoOp('+', $1, $3); }
   | expressao TOKEN_OPERADOR_MENOS expressao
         { $$ = criarNoOp('-', $1, $3); }
-  | expressao TOKEN_OPERADOR_MULTIPLICAACAO expressao
+  | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
         { $$ = criarNoOp('*', $1, $3); }
   | expressao TOKEN_OPERADOR_DIVISAO expressao
         { $$ = criarNoOp('/', $1, $3); }

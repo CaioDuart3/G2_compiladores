@@ -1,8 +1,5 @@
 ERRO SINTÁTICO (linha 1): syntax error
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-
+LEXER: Token PALAVRA_CHAVE_IF (if)
 LEXER: Token IDENTIFICADOR (a)
-LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token INTEIRO (1)
+LEXER: Token OPERADOR_DIFERENTE (!=)
 Parsing interrompido por erro.

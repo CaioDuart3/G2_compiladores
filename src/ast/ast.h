@@ -9,9 +9,11 @@ typedef enum {
     NO_BOOL,                // Nó para um booleano (True, False)
     NO_OP_BINARIA,          // Nó para uma operação binária (ex: +, -, *, /)
     NO_ATRIBUICAO,          // Nó para uma atribuição (ex: x = 5)
+    NO_ATRIBUICAO_MULTIPLA, // Nó para atribuição múltipla (ex: a, b = 1, 2)
     NO_IF,                  // Nó para um comando 'if' (com 'else' opcional)
     NO_LISTA_COMANDOS,      // Nó que representa um comando em uma lista (um 'bloco')
-    NO_VAZIO                // Nó especial para comandos que não fazem nada (ex: uma linha em branco)
+    NO_VAZIO,                // Nó especial para comandos que não fazem nada (ex: uma linha em branco)
+    NO_CHAMADA_FUNCAO       // Nó para chamada de função (ex: foo())
 } TipoNo;
 
 typedef struct NoAST {
@@ -36,6 +38,9 @@ typedef struct NoAST {
     // Ponteiro para encadear comandos em um bloco
     struct NoAST *proximo;
 
+    struct NoAST *listaIds;
+    struct NoAST *listaExps;
+
 } NoAST;
 
 // --- Funções de Criação de Nós ("Fábricas") ---
@@ -54,6 +59,19 @@ NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir);
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr);
 NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse);
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista);
+
+// Nós de atribuição múltipla
+NoAST* criarListaIds(char* nome);
+NoAST* adicionaIdNaLista(NoAST* lista, char* nome);
+
+NoAST* criarListaExp(NoAST* exp);
+NoAST* adicionaExpNaLista(NoAST* lista, NoAST* exp);
+
+NoAST* criarNoAtribuicaoMultipla(NoAST* listaIds, NoAST* listaExp);
+
+NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args);
+
+
 
 // --- Funções de Gerenciamento ---
 

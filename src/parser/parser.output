@@ -13,12 +13,15 @@ Terminals unused in grammar
     TOKEN_OPERADOR_MAIOR_IGUAL
     TOKEN_OPERADOR_MENOR
     TOKEN_OPERADOR_MAIOR
-    TOKEN_DELIMITADOR_VIRGULA
     TOKEN_DELIMITADOR_ABRE_CHAVES
     TOKEN_DELIMITADOR_FECHA_CHAVES
     TOKEN_DELIMITADOR_ABRE_COLCHETES
     TOKEN_DELIMITADOR_FECHA_COLCHETES
     TOKEN_DESCONHECIDO
+
+
+State 2 conflicts: 2 shift/reduce
+State 37 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -34,44 +37,65 @@ Grammar
     5               | lista_comandos comando
 
     6 comando: atribuicao
-    7        | expressao
-    8        | if_stmt
-    9        | bloco
+    7        | chamada_funcao
+    8        | expressao
+    9        | if_stmt
    10        | TOKEN_NEWLINE
+   11        | bloco
 
-   11 atribuicao: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
+   12 atribuicao: atribuicao_simples
+   13           | atribuicao_multipla
+   14           | atribuicao_encadeada
 
-   12 expressao: expressao TOKEN_OPERADOR_MAIS expressao
-   13          | expressao TOKEN_OPERADOR_MENOS expressao
-   14          | expressao TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao TOKEN_OPERADOR_DIVISAO expressao
-   16          | atomo
+   15 atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
 
-   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-   18      | TOKEN_INTEIRO
-   19      | TOKEN_IDENTIFICADOR
-   20      | TOKEN_STRING
-   21      | TOKEN_PALAVRA_CHAVE_TRUE
-   22      | TOKEN_PALAVRA_CHAVE_FALSE
+   16 atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
 
-   23 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+   17 atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao
 
-   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-   25        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   18 lista_identificadores: TOKEN_IDENTIFICADOR
+   19                      | lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
+
+   20 lista_expressoes: expressao
+   21                 | lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao
+
+   22 lista_argumentos: ε
+   23                 | expressao
+   24                 | lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao
+
+   25 chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+   26 expressao: expressao TOKEN_OPERADOR_MAIS expressao
+   27          | expressao TOKEN_OPERADOR_MENOS expressao
+   28          | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao TOKEN_OPERADOR_DIVISAO expressao
+   30          | atomo
+
+   31 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+   32      | TOKEN_INTEIRO
+   33      | TOKEN_IDENTIFICADOR
+   34      | TOKEN_STRING
+   35      | TOKEN_PALAVRA_CHAVE_TRUE
+   36      | TOKEN_PALAVRA_CHAVE_FALSE
+
+   37 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+
+   38 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   39        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    TOKEN_INTEIRO <ival> (258) 18
-    TOKEN_IDENTIFICADOR <sval> (259) 11 19
-    TOKEN_STRING <sval> (260) 20
-    TOKEN_PALAVRA_CHAVE_TRUE <ival> (261) 21
-    TOKEN_PALAVRA_CHAVE_FALSE <ival> (262) 22
+    TOKEN_INTEIRO <ival> (258) 32
+    TOKEN_IDENTIFICADOR <sval> (259) 15 17 18 19 25 33
+    TOKEN_STRING <sval> (260) 34
+    TOKEN_PALAVRA_CHAVE_TRUE <ival> (261) 35
+    TOKEN_PALAVRA_CHAVE_FALSE <ival> (262) 36
     TOKEN_FLOAT (263)
-    TOKEN_PALAVRA_CHAVE_IF (264) 24 25
-    TOKEN_PALAVRA_CHAVE_ELSE (265) 25
+    TOKEN_PALAVRA_CHAVE_IF (264) 38 39
+    TOKEN_PALAVRA_CHAVE_ELSE (265) 39
     TOKEN_PALAVRA_CHAVE_ELIF (266)
     TOKEN_PALAVRA_CHAVE_WHILE (267)
     TOKEN_PALAVRA_CHAVE_FOR (268)
@@ -84,23 +108,23 @@ Terminals, with rules where they appear
     TOKEN_OPERADOR_MAIOR_IGUAL (275)
     TOKEN_OPERADOR_MENOR (276)
     TOKEN_OPERADOR_MAIOR (277)
-    TOKEN_OPERADOR_ATRIBUICAO (278) 11
-    TOKEN_OPERADOR_MAIS (279) 12
-    TOKEN_OPERADOR_MENOS (280) 13
-    TOKEN_OPERADOR_MULTIPLICAACAO (281) 14
-    TOKEN_OPERADOR_DIVISAO (282) 15
-    TOKEN_DELIMITADOR_DOIS_PONTOS (283) 24 25
-    TOKEN_DELIMITADOR_VIRGULA (284)
-    TOKEN_DELIMITADOR_ABRE_PARENTESES (285) 17
-    TOKEN_DELIMITADOR_FECHA_PARENTESES (286) 17
+    TOKEN_OPERADOR_ATRIBUICAO (278) 15 16 17
+    TOKEN_OPERADOR_MAIS (279) 26
+    TOKEN_OPERADOR_MENOS (280) 27
+    TOKEN_OPERADOR_MULTIPLICACAO (281) 28
+    TOKEN_OPERADOR_DIVISAO (282) 29
+    TOKEN_DELIMITADOR_DOIS_PONTOS (283) 38 39
+    TOKEN_DELIMITADOR_VIRGULA (284) 19 21 24
+    TOKEN_DELIMITADOR_ABRE_PARENTESES (285) 25 31
+    TOKEN_DELIMITADOR_FECHA_PARENTESES (286) 25 31
     TOKEN_DELIMITADOR_ABRE_CHAVES (287)
     TOKEN_DELIMITADOR_FECHA_CHAVES (288)
     TOKEN_DELIMITADOR_ABRE_COLCHETES (289)
     TOKEN_DELIMITADOR_FECHA_COLCHETES (290)
     TOKEN_DESCONHECIDO (291)
-    TOKEN_NEWLINE (292) 10 23
-    TOKEN_INDENT (293) 23
-    TOKEN_DEDENT (294) 23
+    TOKEN_NEWLINE (292) 10 37
+    TOKEN_INDENT (293) 37
+    TOKEN_DEDENT (294) 37
 
 
 Nonterminals, with rules where they appear
@@ -115,25 +139,46 @@ Nonterminals, with rules where they appear
         on right: 1
     lista_comandos <no> (43)
         on left: 4 5
-        on right: 3 5 23
+        on right: 3 5 37
     comando <no> (44)
-        on left: 6 7 8 9 10
+        on left: 6 7 8 9 10 11
         on right: 4 5
     atribuicao <no> (45)
-        on left: 11
-        on right: 6
-    expressao <no> (46)
-        on left: 12 13 14 15 16
-        on right: 7 11 12 13 14 15 17 24 25
-    atomo <no> (47)
-        on left: 17 18 19 20 21 22
-        on right: 16
-    bloco <no> (48)
-        on left: 23
-        on right: 9 24 25
-    if_stmt <no> (49)
-        on left: 24 25
-        on right: 8
+        on left: 12 13 14
+        on right: 6 17
+    atribuicao_simples <no> (46)
+        on left: 15
+        on right: 12
+    atribuicao_multipla <no> (47)
+        on left: 16
+        on right: 13
+    atribuicao_encadeada <no> (48)
+        on left: 17
+        on right: 14
+    lista_identificadores <no> (49)
+        on left: 18 19
+        on right: 16 19
+    lista_expressoes <no> (50)
+        on left: 20 21
+        on right: 16 21
+    lista_argumentos <no> (51)
+        on left: 22 23 24
+        on right: 24 25
+    chamada_funcao <no> (52)
+        on left: 25
+        on right: 7
+    expressao <no> (53)
+        on left: 26 27 28 29 30
+        on right: 8 15 20 21 23 24 26 27 28 29 31 38 39
+    atomo <no> (54)
+        on left: 31 32 33 34 35 36
+        on right: 30
+    bloco <no> (55)
+        on left: 37
+        on right: 11 38 39
+    if_stmt <no> (56)
+        on left: 38 39
+        on right: 9
 
 
 State 0
@@ -151,92 +196,104 @@ State 0
 
     $default  reduce using rule 2 (lista_comandos_opt)
 
-    programa            go to state 9
-    lista_comandos_opt  go to state 10
-    lista_comandos      go to state 11
-    comando             go to state 12
-    atribuicao          go to state 13
-    expressao           go to state 14
-    atomo               go to state 15
-    bloco               go to state 16
-    if_stmt             go to state 17
+    programa               go to state 9
+    lista_comandos_opt     go to state 10
+    lista_comandos         go to state 11
+    comando                go to state 12
+    atribuicao             go to state 13
+    atribuicao_simples     go to state 14
+    atribuicao_multipla    go to state 15
+    atribuicao_encadeada   go to state 16
+    lista_identificadores  go to state 17
+    chamada_funcao         go to state 18
+    expressao              go to state 19
+    atomo                  go to state 20
+    bloco                  go to state 21
+    if_stmt                go to state 22
 
 
 State 1
 
-   18 atomo: TOKEN_INTEIRO •
+   32 atomo: TOKEN_INTEIRO •
 
-    $default  reduce using rule 18 (atomo)
+    $default  reduce using rule 32 (atomo)
 
 
 State 2
 
-   11 atribuicao: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
-   19 atomo: TOKEN_IDENTIFICADOR •
+   15 atribuicao_simples: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
+   17 atribuicao_encadeada: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO atribuicao
+   18 lista_identificadores: TOKEN_IDENTIFICADOR •
+   25 chamada_funcao: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+   33 atomo: TOKEN_IDENTIFICADOR •
 
-    TOKEN_OPERADOR_ATRIBUICAO  shift, and go to state 18
+    TOKEN_OPERADOR_ATRIBUICAO          shift, and go to state 23
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 24
 
-    $default  reduce using rule 19 (atomo)
+    TOKEN_OPERADOR_ATRIBUICAO          [reduce using rule 18 (lista_identificadores)]
+    TOKEN_DELIMITADOR_VIRGULA          reduce using rule 18 (lista_identificadores)
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  [reduce using rule 33 (atomo)]
+    $default                           reduce using rule 33 (atomo)
 
 
 State 3
 
-   20 atomo: TOKEN_STRING •
+   34 atomo: TOKEN_STRING •
 
-    $default  reduce using rule 20 (atomo)
+    $default  reduce using rule 34 (atomo)
 
 
 State 4
 
-   21 atomo: TOKEN_PALAVRA_CHAVE_TRUE •
+   35 atomo: TOKEN_PALAVRA_CHAVE_TRUE •
 
-    $default  reduce using rule 21 (atomo)
+    $default  reduce using rule 35 (atomo)
 
 
 State 5
 
-   22 atomo: TOKEN_PALAVRA_CHAVE_FALSE •
+   36 atomo: TOKEN_PALAVRA_CHAVE_FALSE •
 
-    $default  reduce using rule 22 (atomo)
+    $default  reduce using rule 36 (atomo)
 
 
 State 6
 
-   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-   25        | TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   38 if_stmt: TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   39        | TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
     TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
     TOKEN_STRING                       shift, and go to state 3
     TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
     TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
     TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
 
-    expressao  go to state 20
-    atomo      go to state 15
+    expressao  go to state 26
+    atomo      go to state 20
 
 
 State 7
 
-   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES • expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+   31 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES • expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
 
     TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
     TOKEN_STRING                       shift, and go to state 3
     TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
     TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
     TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
 
-    expressao  go to state 21
-    atomo      go to state 15
+    expressao  go to state 27
+    atomo      go to state 20
 
 
 State 8
 
    10 comando: TOKEN_NEWLINE •
-   23 bloco: TOKEN_NEWLINE • TOKEN_INDENT lista_comandos TOKEN_DEDENT
+   37 bloco: TOKEN_NEWLINE • TOKEN_INDENT lista_comandos TOKEN_DEDENT
 
-    TOKEN_INDENT  shift, and go to state 22
+    TOKEN_INDENT  shift, and go to state 28
 
     $default  reduce using rule 10 (comando)
 
@@ -245,7 +302,7 @@ State 9
 
     0 $accept: programa • $end
 
-    $end  shift, and go to state 23
+    $end  shift, and go to state 29
 
 
 State 10
@@ -271,12 +328,17 @@ State 11
 
     $default  reduce using rule 3 (lista_comandos_opt)
 
-    comando     go to state 24
-    atribuicao  go to state 13
-    expressao   go to state 14
-    atomo       go to state 15
-    bloco       go to state 16
-    if_stmt     go to state 17
+    comando                go to state 30
+    atribuicao             go to state 13
+    atribuicao_simples     go to state 14
+    atribuicao_multipla    go to state 15
+    atribuicao_encadeada   go to state 16
+    lista_identificadores  go to state 17
+    chamada_funcao         go to state 18
+    expressao              go to state 19
+    atomo                  go to state 20
+    bloco                  go to state 21
+    if_stmt                go to state 22
 
 
 State 12
@@ -295,97 +357,158 @@ State 13
 
 State 14
 
-    7 comando: expressao •
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   12 atribuicao: atribuicao_simples •
 
-    TOKEN_OPERADOR_MAIS            shift, and go to state 25
-    TOKEN_OPERADOR_MENOS           shift, and go to state 26
-    TOKEN_OPERADOR_MULTIPLICAACAO  shift, and go to state 27
-    TOKEN_OPERADOR_DIVISAO         shift, and go to state 28
-
-    $default  reduce using rule 7 (comando)
+    $default  reduce using rule 12 (atribuicao)
 
 
 State 15
 
-   16 expressao: atomo •
+   13 atribuicao: atribuicao_multipla •
 
-    $default  reduce using rule 16 (expressao)
+    $default  reduce using rule 13 (atribuicao)
 
 
 State 16
 
-    9 comando: bloco •
+   14 atribuicao: atribuicao_encadeada •
 
-    $default  reduce using rule 9 (comando)
+    $default  reduce using rule 14 (atribuicao)
 
 
 State 17
 
-    8 comando: if_stmt •
+   16 atribuicao_multipla: lista_identificadores • TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+   19 lista_identificadores: lista_identificadores • TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR
 
-    $default  reduce using rule 8 (comando)
+    TOKEN_OPERADOR_ATRIBUICAO  shift, and go to state 31
+    TOKEN_DELIMITADOR_VIRGULA  shift, and go to state 32
 
 
 State 18
 
-   11 atribuicao: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO • expressao
+    7 comando: chamada_funcao •
+
+    $default  reduce using rule 7 (comando)
+
+
+State 19
+
+    8 comando: expressao •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 33
+    TOKEN_OPERADOR_MENOS          shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
+
+    $default  reduce using rule 8 (comando)
+
+
+State 20
+
+   30 expressao: atomo •
+
+    $default  reduce using rule 30 (expressao)
+
+
+State 21
+
+   11 comando: bloco •
+
+    $default  reduce using rule 11 (comando)
+
+
+State 22
+
+    9 comando: if_stmt •
+
+    $default  reduce using rule 9 (comando)
+
+
+State 23
+
+   15 atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO • expressao
+   17 atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO • atribuicao
 
     TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
+    TOKEN_IDENTIFICADOR                shift, and go to state 37
     TOKEN_STRING                       shift, and go to state 3
     TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
     TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
     TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
 
-    expressao  go to state 29
-    atomo      go to state 15
+    atribuicao             go to state 38
+    atribuicao_simples     go to state 14
+    atribuicao_multipla    go to state 15
+    atribuicao_encadeada   go to state 16
+    lista_identificadores  go to state 17
+    expressao              go to state 39
+    atomo                  go to state 20
 
 
-State 19
+State 24
 
-   19 atomo: TOKEN_IDENTIFICADOR •
+   25 chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES • lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
 
-    $default  reduce using rule 19 (atomo)
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
 
+    $default  reduce using rule 22 (lista_argumentos)
 
-State 20
-
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
-   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-   25        | TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-    TOKEN_OPERADOR_MAIS            shift, and go to state 25
-    TOKEN_OPERADOR_MENOS           shift, and go to state 26
-    TOKEN_OPERADOR_MULTIPLICAACAO  shift, and go to state 27
-    TOKEN_OPERADOR_DIVISAO         shift, and go to state 28
-    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 30
+    lista_argumentos  go to state 40
+    expressao         go to state 41
+    atomo             go to state 20
 
 
-State 21
+State 25
 
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
-   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao • TOKEN_DELIMITADOR_FECHA_PARENTESES
+   33 atomo: TOKEN_IDENTIFICADOR •
 
-    TOKEN_OPERADOR_MAIS                 shift, and go to state 25
-    TOKEN_OPERADOR_MENOS                shift, and go to state 26
-    TOKEN_OPERADOR_MULTIPLICAACAO       shift, and go to state 27
-    TOKEN_OPERADOR_DIVISAO              shift, and go to state 28
-    TOKEN_DELIMITADOR_FECHA_PARENTESES  shift, and go to state 31
+    $default  reduce using rule 33 (atomo)
 
 
-State 22
+State 26
 
-   23 bloco: TOKEN_NEWLINE TOKEN_INDENT • lista_comandos TOKEN_DEDENT
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   38 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   39        | TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_OPERADOR_MAIS            shift, and go to state 33
+    TOKEN_OPERADOR_MENOS           shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO   shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO         shift, and go to state 36
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 42
+
+
+State 27
+
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   31 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao • TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_OPERADOR_MAIS                 shift, and go to state 33
+    TOKEN_OPERADOR_MENOS                shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO        shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO              shift, and go to state 36
+    TOKEN_DELIMITADOR_FECHA_PARENTESES  shift, and go to state 43
+
+
+State 28
+
+   37 bloco: TOKEN_NEWLINE TOKEN_INDENT • lista_comandos TOKEN_DEDENT
 
     TOKEN_INTEIRO                      shift, and go to state 1
     TOKEN_IDENTIFICADOR                shift, and go to state 2
@@ -396,126 +519,200 @@ State 22
     TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
     TOKEN_NEWLINE                      shift, and go to state 8
 
-    lista_comandos  go to state 32
-    comando         go to state 12
-    atribuicao      go to state 13
-    expressao       go to state 14
-    atomo           go to state 15
-    bloco           go to state 16
-    if_stmt         go to state 17
+    lista_comandos         go to state 44
+    comando                go to state 12
+    atribuicao             go to state 13
+    atribuicao_simples     go to state 14
+    atribuicao_multipla    go to state 15
+    atribuicao_encadeada   go to state 16
+    lista_identificadores  go to state 17
+    chamada_funcao         go to state 18
+    expressao              go to state 19
+    atomo                  go to state 20
+    bloco                  go to state 21
+    if_stmt                go to state 22
 
 
-State 23
+State 29
 
     0 $accept: programa $end •
 
     $default  accept
 
 
-State 24
+State 30
 
     5 lista_comandos: lista_comandos comando •
 
     $default  reduce using rule 5 (lista_comandos)
 
 
-State 25
-
-   12 expressao: expressao TOKEN_OPERADOR_MAIS • expressao
-
-    TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
-    TOKEN_STRING                       shift, and go to state 3
-    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
-    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
-    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
-
-    expressao  go to state 33
-    atomo      go to state 15
-
-
-State 26
-
-   13 expressao: expressao TOKEN_OPERADOR_MENOS • expressao
-
-    TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
-    TOKEN_STRING                       shift, and go to state 3
-    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
-    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
-    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
-
-    expressao  go to state 34
-    atomo      go to state 15
-
-
-State 27
-
-   14 expressao: expressao TOKEN_OPERADOR_MULTIPLICAACAO • expressao
-
-    TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
-    TOKEN_STRING                       shift, and go to state 3
-    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
-    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
-    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
-
-    expressao  go to state 35
-    atomo      go to state 15
-
-
-State 28
-
-   15 expressao: expressao TOKEN_OPERADOR_DIVISAO • expressao
-
-    TOKEN_INTEIRO                      shift, and go to state 1
-    TOKEN_IDENTIFICADOR                shift, and go to state 19
-    TOKEN_STRING                       shift, and go to state 3
-    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
-    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
-    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
-
-    expressao  go to state 36
-    atomo      go to state 15
-
-
-State 29
-
-   11 atribuicao: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao •
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
-
-    TOKEN_OPERADOR_MAIS            shift, and go to state 25
-    TOKEN_OPERADOR_MENOS           shift, and go to state 26
-    TOKEN_OPERADOR_MULTIPLICAACAO  shift, and go to state 27
-    TOKEN_OPERADOR_DIVISAO         shift, and go to state 28
-
-    $default  reduce using rule 11 (atribuicao)
-
-
-State 30
-
-   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
-   25        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-    TOKEN_NEWLINE  shift, and go to state 37
-
-    bloco  go to state 38
-
-
 State 31
 
-   17 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES •
+   16 atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO • lista_expressoes
 
-    $default  reduce using rule 17 (atomo)
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    lista_expressoes  go to state 45
+    expressao         go to state 46
+    atomo             go to state 20
 
 
 State 32
 
+   19 lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA • TOKEN_IDENTIFICADOR
+
+    TOKEN_IDENTIFICADOR  shift, and go to state 47
+
+
+State 33
+
+   26 expressao: expressao TOKEN_OPERADOR_MAIS • expressao
+
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 48
+    atomo      go to state 20
+
+
+State 34
+
+   27 expressao: expressao TOKEN_OPERADOR_MENOS • expressao
+
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 49
+    atomo      go to state 20
+
+
+State 35
+
+   28 expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO • expressao
+
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 50
+    atomo      go to state 20
+
+
+State 36
+
+   29 expressao: expressao TOKEN_OPERADOR_DIVISAO • expressao
+
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 51
+    atomo      go to state 20
+
+
+State 37
+
+   15 atribuicao_simples: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
+   17 atribuicao_encadeada: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO atribuicao
+   18 lista_identificadores: TOKEN_IDENTIFICADOR •
+   33 atomo: TOKEN_IDENTIFICADOR •
+
+    TOKEN_OPERADOR_ATRIBUICAO  shift, and go to state 23
+
+    TOKEN_OPERADOR_ATRIBUICAO  [reduce using rule 18 (lista_identificadores)]
+    TOKEN_DELIMITADOR_VIRGULA  reduce using rule 18 (lista_identificadores)
+    $default                   reduce using rule 33 (atomo)
+
+
+State 38
+
+   17 atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao •
+
+    $default  reduce using rule 17 (atribuicao_encadeada)
+
+
+State 39
+
+   15 atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 33
+    TOKEN_OPERADOR_MENOS          shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
+
+    $default  reduce using rule 15 (atribuicao_simples)
+
+
+State 40
+
+   24 lista_argumentos: lista_argumentos • TOKEN_DELIMITADOR_VIRGULA expressao
+   25 chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos • TOKEN_DELIMITADOR_FECHA_PARENTESES
+
+    TOKEN_DELIMITADOR_VIRGULA           shift, and go to state 52
+    TOKEN_DELIMITADOR_FECHA_PARENTESES  shift, and go to state 53
+
+
+State 41
+
+   23 lista_argumentos: expressao •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 33
+    TOKEN_OPERADOR_MENOS          shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
+
+    $default  reduce using rule 23 (lista_argumentos)
+
+
+State 42
+
+   38 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+   39        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_NEWLINE  shift, and go to state 54
+
+    bloco  go to state 55
+
+
+State 43
+
+   31 atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES •
+
+    $default  reduce using rule 31 (atomo)
+
+
+State 44
+
     5 lista_comandos: lista_comandos • comando
-   23 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos • TOKEN_DEDENT
+   37 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos • TOKEN_DEDENT
 
     TOKEN_INTEIRO                      shift, and go to state 1
     TOKEN_IDENTIFICADOR                shift, and go to state 2
@@ -525,108 +722,215 @@ State 32
     TOKEN_PALAVRA_CHAVE_IF             shift, and go to state 6
     TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
     TOKEN_NEWLINE                      shift, and go to state 8
-    TOKEN_DEDENT                       shift, and go to state 39
+    TOKEN_DEDENT                       shift, and go to state 56
 
-    comando     go to state 24
-    atribuicao  go to state 13
-    expressao   go to state 14
-    atomo       go to state 15
-    bloco       go to state 16
-    if_stmt     go to state 17
-
-
-State 33
-
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   12          | expressao TOKEN_OPERADOR_MAIS expressao •
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
-
-    TOKEN_OPERADOR_MULTIPLICAACAO  shift, and go to state 27
-    TOKEN_OPERADOR_DIVISAO         shift, and go to state 28
-
-    $default  reduce using rule 12 (expressao)
+    comando                go to state 30
+    atribuicao             go to state 13
+    atribuicao_simples     go to state 14
+    atribuicao_multipla    go to state 15
+    atribuicao_encadeada   go to state 16
+    lista_identificadores  go to state 17
+    chamada_funcao         go to state 18
+    expressao              go to state 19
+    atomo                  go to state 20
+    bloco                  go to state 21
+    if_stmt                go to state 22
 
 
-State 34
+State 45
 
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   13          | expressao TOKEN_OPERADOR_MENOS expressao •
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   16 atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes •
+   21 lista_expressoes: lista_expressoes • TOKEN_DELIMITADOR_VIRGULA expressao
 
-    TOKEN_OPERADOR_MULTIPLICAACAO  shift, and go to state 27
-    TOKEN_OPERADOR_DIVISAO         shift, and go to state 28
+    TOKEN_DELIMITADOR_VIRGULA  shift, and go to state 57
 
-    $default  reduce using rule 13 (expressao)
+    $default  reduce using rule 16 (atribuicao_multipla)
 
 
-State 35
+State 46
 
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   14          | expressao TOKEN_OPERADOR_MULTIPLICAACAO expressao •
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   20 lista_expressoes: expressao •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
 
-    $default  reduce using rule 14 (expressao)
+    TOKEN_OPERADOR_MAIS           shift, and go to state 33
+    TOKEN_OPERADOR_MENOS          shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
 
-
-State 36
-
-   12 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   13          | expressao • TOKEN_OPERADOR_MENOS expressao
-   14          | expressao • TOKEN_OPERADOR_MULTIPLICAACAO expressao
-   15          | expressao • TOKEN_OPERADOR_DIVISAO expressao
-   15          | expressao TOKEN_OPERADOR_DIVISAO expressao •
-
-    $default  reduce using rule 15 (expressao)
+    $default  reduce using rule 20 (lista_expressoes)
 
 
-State 37
+State 47
 
-   23 bloco: TOKEN_NEWLINE • TOKEN_INDENT lista_comandos TOKEN_DEDENT
+   19 lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR •
 
-    TOKEN_INDENT  shift, and go to state 22
-
-
-State 38
-
-   24 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
-   25        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco • TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-    TOKEN_PALAVRA_CHAVE_ELSE  shift, and go to state 40
-
-    $default  reduce using rule 24 (if_stmt)
+    $default  reduce using rule 19 (lista_identificadores)
 
 
-State 39
+State 48
 
-   23 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   26          | expressao TOKEN_OPERADOR_MAIS expressao •
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
 
-    $default  reduce using rule 23 (bloco)
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
 
-
-State 40
-
-   25 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 41
-
-
-State 41
-
-   25 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
-
-    TOKEN_NEWLINE  shift, and go to state 37
-
-    bloco  go to state 42
+    $default  reduce using rule 26 (expressao)
 
 
-State 42
+State 49
 
-   25 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   27          | expressao TOKEN_OPERADOR_MENOS expressao •
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
 
-    $default  reduce using rule 25 (if_stmt)
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
+
+    $default  reduce using rule 27 (expressao)
+
+
+State 50
+
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   28          | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao •
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    $default  reduce using rule 28 (expressao)
+
+
+State 51
+
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+   29          | expressao TOKEN_OPERADOR_DIVISAO expressao •
+
+    $default  reduce using rule 29 (expressao)
+
+
+State 52
+
+   24 lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA • expressao
+
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 58
+    atomo      go to state 20
+
+
+State 53
+
+   25 chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES •
+
+    $default  reduce using rule 25 (chamada_funcao)
+
+
+State 54
+
+   37 bloco: TOKEN_NEWLINE • TOKEN_INDENT lista_comandos TOKEN_DEDENT
+
+    TOKEN_INDENT  shift, and go to state 28
+
+
+State 55
+
+   38 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+   39        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco • TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_PALAVRA_CHAVE_ELSE  shift, and go to state 59
+
+    $default  reduce using rule 38 (if_stmt)
+
+
+State 56
+
+   37 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT •
+
+    $default  reduce using rule 37 (bloco)
+
+
+State 57
+
+   21 lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA • expressao
+
+    TOKEN_INTEIRO                      shift, and go to state 1
+    TOKEN_IDENTIFICADOR                shift, and go to state 25
+    TOKEN_STRING                       shift, and go to state 3
+    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
+    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
+    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 7
+
+    expressao  go to state 60
+    atomo      go to state 20
+
+
+State 58
+
+   24 lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 33
+    TOKEN_OPERADOR_MENOS          shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
+
+    $default  reduce using rule 24 (lista_argumentos)
+
+
+State 59
+
+   39 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 61
+
+
+State 60
+
+   21 lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao •
+   26 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
+   27          | expressao • TOKEN_OPERADOR_MENOS expressao
+   28          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
+   29          | expressao • TOKEN_OPERADOR_DIVISAO expressao
+
+    TOKEN_OPERADOR_MAIS           shift, and go to state 33
+    TOKEN_OPERADOR_MENOS          shift, and go to state 34
+    TOKEN_OPERADOR_MULTIPLICACAO  shift, and go to state 35
+    TOKEN_OPERADOR_DIVISAO        shift, and go to state 36
+
+    $default  reduce using rule 21 (lista_expressoes)
+
+
+State 61
+
+   39 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+
+    TOKEN_NEWLINE  shift, and go to state 54
+
+    bloco  go to state 62
+
+
+State 62
+
+   39 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+
+    $default  reduce using rule 39 (if_stmt)
