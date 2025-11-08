@@ -1,9 +1,115 @@
-ERRO SINTÁTICO (linha 1): syntax error
+Starting parse
+Entering state 0
+Stack now 0
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token TOKEN_OPERADOR_ATRIBUICAO (1.1: )
+Shifting token TOKEN_OPERADOR_ATRIBUICAO (1.1: )
+Entering state 18
+Stack now 0 2 18
+Reading a token
+Next token is token TOKEN_INTEIRO (1.1: )
+Shifting token TOKEN_INTEIRO (1.1: )
+Entering state 1
+Stack now 0 2 18 1
+Reducing stack by rule 18 (line 119):
+   $1 = token TOKEN_INTEIRO (1.1: )
+-> $$ = nterm atomo (1.1: )
+Entering state 15
+Stack now 0 2 18 15
+Reducing stack by rule 16 (line 112):
+   $1 = nterm atomo (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 29
+Stack now 0 2 18 29
+Reading a token
+Next token is token TOKEN_NEWLINE (1.1: )
+Reducing stack by rule 11 (line 93):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+   $2 = token TOKEN_OPERADOR_ATRIBUICAO (1.1: )
+   $3 = nterm expressao (1.1: )
+-> $$ = nterm atribuicao (1.1: )
+Entering state 13
+Stack now 0 13
+Reducing stack by rule 6 (line 85):
+   $1 = nterm atribuicao (1.1: )
+-> $$ = nterm comando (1.1: )
+Entering state 12
+Stack now 0 12
+Reducing stack by rule 4 (line 68):
+   $1 = nterm comando (1.1: )
+-> $$ = nterm lista_comandos (1.1: )
+Entering state 11
+Stack now 0 11
+Next token is token TOKEN_NEWLINE (1.1: )
+Shifting token TOKEN_NEWLINE (1.1: )
+Entering state 8
+Stack now 0 11 8
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Reducing stack by rule 10 (line 89):
+   $1 = token TOKEN_NEWLINE (1.1: )
+-> $$ = nterm comando (1.1: )
+Entering state 24
+Stack now 0 11 24
+Reducing stack by rule 5 (line 69):
+   $1 = nterm lista_comandos (1.1: )
+   $2 = nterm comando (1.1: )
+-> $$ = nterm lista_comandos (1.1: )
+Entering state 11
+Stack now 0 11
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 2
+Stack now 0 11 2
+Reading a token
+Next token is token TOKEN_DELIMITADOR_VIRGULA (1.1: )
+Reducing stack by rule 19 (line 121):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+-> $$ = nterm atomo (1.1: )
+Entering state 15
+Stack now 0 11 15
+Reducing stack by rule 16 (line 112):
+   $1 = nterm atomo (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 14
+Stack now 0 11 14
+Next token is token TOKEN_DELIMITADOR_VIRGULA (1.1: )
+Reducing stack by rule 7 (line 86):
+   $1 = nterm expressao (1.1: )
+-> $$ = nterm comando (1.1: )
+Entering state 24
+Stack now 0 11 24
+Reducing stack by rule 5 (line 69):
+   $1 = nterm lista_comandos (1.1: )
+   $2 = nterm comando (1.1: )
+-> $$ = nterm lista_comandos (1.1: )
+Entering state 11
+Stack now 0 11
+Next token is token TOKEN_DELIMITADOR_VIRGULA (1.1: )
+Reducing stack by rule 3 (line 64):
+   $1 = nterm lista_comandos (1.1: )
+-> $$ = nterm lista_comandos_opt (1.1: )
+Entering state 10
+Stack now 0 10
+Reducing stack by rule 1 (line 55):
+   $1 = nterm lista_comandos_opt (1.1: )
+-> $$ = nterm programa (1.1: )
+Entering state 9
+Stack now 0 9
+Next token is token TOKEN_DELIMITADOR_VIRGULA (1.1: )
+ERRO SINTÁTICO (linha 2): syntax error
+Error: popping nterm programa (1.1: )
+Stack now 0
+Cleanup: discarding lookahead token TOKEN_DELIMITADOR_VIRGULA (1.1: )
+Stack now 0
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token IDENTIFICADOR (a)
+LEXER: Token QUEBRA-DE-LINHA (\n)\n\nLEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_VIRGULA (,)
 Parsing interrompido por erro.

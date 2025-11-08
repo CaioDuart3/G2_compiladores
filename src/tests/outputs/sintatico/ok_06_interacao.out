@@ -1,3 +1,22 @@
+Starting parse
+Entering state 0
+Stack now 0
+Reading a token
+Next token is token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+Reducing stack by rule 2 (line 63):
+-> $$ = nterm lista_comandos_opt (1.1: )
+Entering state 10
+Stack now 0 10
+Reducing stack by rule 1 (line 55):
+   $1 = nterm lista_comandos_opt (1.1: )
+-> $$ = nterm programa (1.1: )
+Entering state 9
+Stack now 0 9
+Next token is token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
 ERRO SINTÁTICO (linha 1): syntax error
+Error: popping nterm programa (1.1: )
+Stack now 0
+Cleanup: discarding lookahead token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+Stack now 0
 LEXER: Token PALAVRA_CHAVE_FOR (for)
 Parsing interrompido por erro.
