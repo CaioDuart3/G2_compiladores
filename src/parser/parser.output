@@ -1,6 +1,7 @@
 Terminals unused in grammar
 
     TOKEN_FLOAT
+    TOKEN_PALAVRA_CHAVE_ELIF
     TOKEN_PALAVRA_CHAVE_FOR
     TOKEN_PALAVRA_CHAVE_IN
     TOKEN_DELIMITADOR_ABRE_CHAVES
@@ -97,15 +98,10 @@ Grammar
 
    57 bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
 
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco elif_list_opt else_opt
+   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   59        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
-   59 elif_list_opt: ε
-   60              | elif_list_opt TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-   61 else_opt: ε
-   62         | TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-   63 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   60 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
 
 Terminals, with rules where they appear
@@ -118,10 +114,10 @@ Terminals, with rules where they appear
     TOKEN_PALAVRA_CHAVE_TRUE <ival> (261) 49
     TOKEN_PALAVRA_CHAVE_FALSE <ival> (262) 50
     TOKEN_FLOAT (263)
-    TOKEN_PALAVRA_CHAVE_IF (264) 58
-    TOKEN_PALAVRA_CHAVE_ELSE (265) 62
-    TOKEN_PALAVRA_CHAVE_ELIF (266) 60
-    TOKEN_PALAVRA_CHAVE_WHILE (267) 63
+    TOKEN_PALAVRA_CHAVE_IF (264) 58 59
+    TOKEN_PALAVRA_CHAVE_ELSE (265) 59
+    TOKEN_PALAVRA_CHAVE_ELIF (266)
+    TOKEN_PALAVRA_CHAVE_WHILE (267) 60
     TOKEN_PALAVRA_CHAVE_FOR (268)
     TOKEN_PALAVRA_CHAVE_RETURN (269) 17
     TOKEN_PALAVRA_CHAVE_IN (270)
@@ -136,7 +132,7 @@ Terminals, with rules where they appear
     TOKEN_OPERADOR_MENOS (279) 35
     TOKEN_OPERADOR_MULTIPLICACAO (280) 36
     TOKEN_OPERADOR_DIVISAO (281) 37
-    TOKEN_DELIMITADOR_DOIS_PONTOS (282) 16 58 60 62 63
+    TOKEN_DELIMITADOR_DOIS_PONTOS (282) 16 58 59 60
     TOKEN_DELIMITADOR_VIRGULA (283) 27 29 32
     TOKEN_DELIMITADOR_ABRE_PARENTESES (284) 16 33 45
     TOKEN_DELIMITADOR_FECHA_PARENTESES (285) 16 33 45
@@ -205,7 +201,7 @@ Nonterminals, with rules where they appear
         on right: 53
     expressao <no> (57)
         on left: 34 35 36 37 38 39 40 41 42 43 44
-        on right: 9 17 22 23 28 29 31 32 34 35 36 37 38 39 40 41 42 43 45 56 58 60 63
+        on right: 9 17 22 23 28 29 31 32 34 35 36 37 38 39 40 41 42 43 45 56 58 59 60
     atomo <no> (58)
         on left: 45 46 47 48 49 50 51 52 53
         on right: 44 56
@@ -217,18 +213,12 @@ Nonterminals, with rules where they appear
         on right: 52
     bloco <no> (61)
         on left: 57
-        on right: 13 16 58 60 62 63
+        on right: 13 16 58 59 60
     if_stmt <no> (62)
-        on left: 58
+        on left: 58 59
         on right: 10
-    elif_list_opt <no> (63)
-        on left: 59 60
-        on right: 58 60
-    else_opt <no> (64)
-        on left: 61 62
-        on right: 58
-    while_stmt <no> (65)
-        on left: 63
+    while_stmt <no> (63)
+        on left: 60
         on right: 11
 
 
@@ -323,7 +313,8 @@ State 5
 
 State 6
 
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco elif_list_opt else_opt
+   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   59        | TOKEN_PALAVRA_CHAVE_IF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
     TOKEN_IDENTIFICADOR                shift, and go to state 35
     TOKEN_STRING                       shift, and go to state 2
@@ -341,7 +332,7 @@ State 6
 
 State 7
 
-   63 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   60 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
     TOKEN_IDENTIFICADOR                shift, and go to state 35
     TOKEN_STRING                       shift, and go to state 2
@@ -713,7 +704,8 @@ State 36
    41          | expressao • TOKEN_OPERADOR_MENOR_IGUAL expressao
    42          | expressao • TOKEN_OPERADOR_MAIOR expressao
    43          | expressao • TOKEN_OPERADOR_MAIOR_IGUAL expressao
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco elif_list_opt else_opt
+   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   59        | TOKEN_PALAVRA_CHAVE_IF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
     TOKEN_OPERADOR_IGUAL           shift, and go to state 50
     TOKEN_OPERADOR_DIFERENTE       shift, and go to state 51
@@ -740,7 +732,7 @@ State 37
    41          | expressao • TOKEN_OPERADOR_MENOR_IGUAL expressao
    42          | expressao • TOKEN_OPERADOR_MAIOR expressao
    43          | expressao • TOKEN_OPERADOR_MAIOR_IGUAL expressao
-   63 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   60 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
     TOKEN_OPERADOR_IGUAL           shift, and go to state 50
     TOKEN_OPERADOR_DIFERENTE       shift, and go to state 51
@@ -1247,7 +1239,8 @@ State 65
 
 State 66
 
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco elif_list_opt else_opt
+   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+   59        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
     TOKEN_NEWLINE  shift, and go to state 90
 
@@ -1256,7 +1249,7 @@ State 66
 
 State 67
 
-   63 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+   60 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
 
     TOKEN_NEWLINE  shift, and go to state 90
 
@@ -1651,18 +1644,19 @@ State 90
 
 State 91
 
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco • elif_list_opt else_opt
+   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+   59        | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco • TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
-    $default  reduce using rule 59 (elif_list_opt)
+    TOKEN_PALAVRA_CHAVE_ELSE  shift, and go to state 100
 
-    elif_list_opt  go to state 100
+    $default  reduce using rule 58 (if_stmt)
 
 
 State 92
 
-   63 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
+   60 while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
 
-    $default  reduce using rule 63 (while_stmt)
+    $default  reduce using rule 60 (while_stmt)
 
 
 State 93
@@ -1771,22 +1765,16 @@ State 99
 
 State 100
 
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco elif_list_opt • else_opt
-   60 elif_list_opt: elif_list_opt • TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   59 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
-    TOKEN_PALAVRA_CHAVE_ELSE  shift, and go to state 103
-    TOKEN_PALAVRA_CHAVE_ELIF  shift, and go to state 104
-
-    $default  reduce using rule 61 (else_opt)
-
-    else_opt  go to state 105
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 103
 
 
 State 101
 
    16 declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
 
-    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 106
+    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 104
 
 
 State 102
@@ -1819,106 +1807,31 @@ State 102
 
 State 103
 
-   62 else_opt: TOKEN_PALAVRA_CHAVE_ELSE • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+   59 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
 
-    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 107
+    TOKEN_NEWLINE  shift, and go to state 90
+
+    bloco  go to state 105
 
 
 State 104
-
-   60 elif_list_opt: elif_list_opt TOKEN_PALAVRA_CHAVE_ELIF • expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-    TOKEN_IDENTIFICADOR                shift, and go to state 35
-    TOKEN_STRING                       shift, and go to state 2
-    TOKEN_INTEIRO                      shift, and go to state 3
-    TOKEN_PALAVRA_CHAVE_TRUE           shift, and go to state 4
-    TOKEN_PALAVRA_CHAVE_FALSE          shift, and go to state 5
-    TOKEN_DELIMITADOR_ABRE_PARENTESES  shift, and go to state 9
-    TOKEN_DELIMITADOR_ABRE_COLCHETES   shift, and go to state 10
-
-    chamada_funcao  go to state 25
-    expressao       go to state 108
-    atomo           go to state 27
-    chamada_index   go to state 28
-
-
-State 105
-
-   58 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco elif_list_opt else_opt •
-
-    $default  reduce using rule 58 (if_stmt)
-
-
-State 106
 
    16 declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
 
     TOKEN_NEWLINE  shift, and go to state 90
 
-    bloco  go to state 109
+    bloco  go to state 106
 
 
-State 107
+State 105
 
-   62 else_opt: TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
+   59 if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
 
-    TOKEN_NEWLINE  shift, and go to state 90
-
-    bloco  go to state 110
+    $default  reduce using rule 59 (if_stmt)
 
 
-State 108
-
-   34 expressao: expressao • TOKEN_OPERADOR_MAIS expressao
-   35          | expressao • TOKEN_OPERADOR_MENOS expressao
-   36          | expressao • TOKEN_OPERADOR_MULTIPLICACAO expressao
-   37          | expressao • TOKEN_OPERADOR_DIVISAO expressao
-   38          | expressao • TOKEN_OPERADOR_IGUAL expressao
-   39          | expressao • TOKEN_OPERADOR_DIFERENTE expressao
-   40          | expressao • TOKEN_OPERADOR_MENOR expressao
-   41          | expressao • TOKEN_OPERADOR_MENOR_IGUAL expressao
-   42          | expressao • TOKEN_OPERADOR_MAIOR expressao
-   43          | expressao • TOKEN_OPERADOR_MAIOR_IGUAL expressao
-   60 elif_list_opt: elif_list_opt TOKEN_PALAVRA_CHAVE_ELIF expressao • TOKEN_DELIMITADOR_DOIS_PONTOS bloco
-
-    TOKEN_OPERADOR_IGUAL           shift, and go to state 50
-    TOKEN_OPERADOR_DIFERENTE       shift, and go to state 51
-    TOKEN_OPERADOR_MENOR_IGUAL     shift, and go to state 52
-    TOKEN_OPERADOR_MAIOR_IGUAL     shift, and go to state 53
-    TOKEN_OPERADOR_MENOR           shift, and go to state 54
-    TOKEN_OPERADOR_MAIOR           shift, and go to state 55
-    TOKEN_OPERADOR_MAIS            shift, and go to state 56
-    TOKEN_OPERADOR_MENOS           shift, and go to state 57
-    TOKEN_OPERADOR_MULTIPLICACAO   shift, and go to state 58
-    TOKEN_OPERADOR_DIVISAO         shift, and go to state 59
-    TOKEN_DELIMITADOR_DOIS_PONTOS  shift, and go to state 111
-
-
-State 109
+State 106
 
    16 declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
 
     $default  reduce using rule 16 (declaracao_funcao)
-
-
-State 110
-
-   62 else_opt: TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
-
-    $default  reduce using rule 62 (else_opt)
-
-
-State 111
-
-   60 elif_list_opt: elif_list_opt TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS • bloco
-
-    TOKEN_NEWLINE  shift, and go to state 90
-
-    bloco  go to state 112
-
-
-State 112
-
-   60 elif_list_opt: elif_list_opt TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco •
-
-    $default  reduce using rule 60 (elif_list_opt)
