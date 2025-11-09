@@ -15,6 +15,7 @@ typedef enum {
     NO_ATRIBUICAO_MULTIPLA,
     NO_IF,
     NO_WHILE,
+    NO_FOR,
     NO_LISTA_COMANDOS,
     NO_VAZIO,
     NO_CHAMADA_FUNCAO,
@@ -86,8 +87,11 @@ NoAST* adicionaExpNaLista(NoAST* lista, NoAST* exp);
 NoAST* criarNoAtribuicaoMultipla(NoAST* listaIds, NoAST* listaExp);
 
 NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args);
+NoAST *criarNoFor(NoAST *var, NoAST *iterable, NoAST *bloco);
 
 Tipo inferirTipo(NoAST *no);
+
+void registrarParametros( NoAST *parametros);
 
 
 // --- Funções de Gerenciamento ---
@@ -102,3 +106,5 @@ void executarAtribuicao(NoAST *no);
 void executarAST(NoAST *raiz);
 
 #endif
+
+

@@ -35,6 +35,36 @@ LEXER: Token DELIMITADOR_VIRGULA (,)
 LEXER: Token IDENTIFICADOR (b)
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token PALAVRA_CHAVE_DEF (def)
+LEXER: Token IDENTIFICADOR (soma2)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (c)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (d)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token PALAVRA_CHAVE_RETURN (return)
+LEXER: Token IDENTIFICADOR (c)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token IDENTIFICADOR (d)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: DEDENT (nível 0)
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token INTEIRO (1)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (2)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
@@ -63,6 +93,25 @@ CALL:
       ARGS:
         ID: a
         ID: b
+DEF: soma2
+  PARAMS:
+    ID: c
+    ID: d
+  BODY:
+    RETURN:
+      OP: +
+        ID: c
+        ID: d
+CALL:
+  FUNC:
+    ID: print
+  ARGS:
+    CALL:
+      FUNC:
+        ID: soma
+      ARGS:
+        NUM: 1
+        NUM: 2
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -73,4 +122,5 @@ CALL:
 Nome: soma       | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
+Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================

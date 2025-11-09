@@ -60,7 +60,7 @@
 /* --- Regras (não-terminais) que produzem um nó da AST --- */
 %type <no> programa
 %type <no> lista_comandos_opt lista_comandos comando
-%type <no> atribuicao if_stmt while_stmt
+%type <no> atribuicao if_stmt while_stmt for_stmt 
 %type <no> lista_identificadores lista_expressoes atribuicao_simples atribuicao_multipla atribuicao_encadeada
 %type <no> chamada_funcao lista_argumentos
 %type <no> bloco 
@@ -79,6 +79,8 @@
 
 /* Para resolver ambiguidade "dangling else" */
 %nonassoc TOKEN_PALAVRA_CHAVE_ELSE
+
+%nonassoc LOWER_THAN_ELSE
 
 %%
 
@@ -121,19 +123,33 @@ comando:
   | expressao            { $$ = $1; }
   | if_stmt              { $$ = $1; }
   | while_stmt           { $$ = $1; }
+  | for_stmt             { $$ = $1; }     /* <-- ADICIONADO */
   | TOKEN_NEWLINE        { $$ = NULL; } /* Newline não gera nó */
   | bloco                { $$ = $1; }
   | declaracao_funcao    { $$ = $1; }   
   | retorno              { $$ = $1; } 
   ;
 
+
 declaracao_funcao:
-    TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS
     {
-        $$ = criarNoFuncao($2, $4, $7);
-        insertST($2, FUNCAO);
+        
+        openScope();
+
+        
+        registrarParametros($4); 
     }
-  ;
+    bloco // <-- O 'bloco' é processado aqui, *depois* das ações acima
+    {
+        // Ação 3: Executa DEPOIS do 'bloco' ser analisado
+        closeScope();
+        
+        // Ação 4: Agora sim, cria o nó da função
+        $$ = criarNoFuncao($2, $4, $8); // $8 é o 'bloco'
+        insertST($2, FUNCAO); // Insere o nome da função no escopo *anterior*
+    }
+;
 
 retorno:
     TOKEN_PALAVRA_CHAVE_RETURN expressao
@@ -380,37 +396,82 @@ chamada_index:
 
 
 
-/* Um bloco é o que está dentro de um INDENT/DEDENT */
+/* 'bloco' agora só lida com indentação, não com escopo */
 bloco:
     TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
     {
-        openScope();       // entra em escopo
-        $$ = $3;           // lista_comandos retorna NoAST*
-        closeScope();      // sai do escopo
+        $$ = $3;        // Apenas retorna a lista de comandos
     }
 ;
 
 
 
 
-/* Regras para IF e IF/ELSE */
 if_stmt:
-    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco %prec TOKEN_PALAVRA_CHAVE_ELSE
+    /* IF simples (sem ELSE) */
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS
     {
-        $$ = criarNoIf($2, $4, NULL);
+        openScope(); // Abre o escopo ANTES de analisar o bloco
     }
-  | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    bloco
     {
-        $$ = criarNoIf($2, $4, $7);
+        closeScope(); // Fecha o escopo DEPOIS de analisar o bloco
+        $$ = criarNoIf($2, $5, NULL); // $2 = expressao, $5 = bloco
+    }
+  |
+    /* IF com ELSE */
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS
+    {
+        openScope(); // Abre o escopo do bloco 'if'
+    }
+    bloco
+    {
+        closeScope(); // Fecha o escopo do 'if'
+    }
+    TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS
+    {
+        openScope(); // Abre o escopo do bloco 'else'
+    }
+    bloco
+    {
+        closeScope(); // Fecha o escopo do 'else'
+        $$ = criarNoIf($2, $5, $10);
+        // $2 = expressao
+        // $5 = bloco do 'if'
+        // $10 = bloco do 'else'
     }
 ;
 
 while_stmt:
-    TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS
     {
-        $$ = criarNoWhile($2, $4);
+        openScope(); // Abre o escopo ANTES do bloco
     }
-  ;
+    bloco // $5
+    {
+        closeScope(); // Fecha o escopo DEPOIS do bloco
+        $$ = criarNoWhile($2, $5);
+    }
+;
+
+for_stmt:
+    TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS
+    {
+        openScope(); // Abre o escopo ANTES do bloco
+        
+        // Adiciona a variável de iteração ($2) ao *novo* escopo
+        if (!searchST($2)) {
+            insertST($2, INT); // Ou o tipo que você inferir da expressão $4
+        }
+        // Você pode querer marcar como inicializada aqui também
+    }
+    bloco // $7
+    {
+        closeScope(); // Fecha o escopo DEPOIS do bloco
+        $$ = criarNoFor(criarNoId($2), $4, $7);
+        free($2);
+    }
+;
 
 %%
 

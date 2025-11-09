@@ -141,6 +141,7 @@ int getScope() {
     return escopo_atual;
 }
 
+
 // Retorna ponteiro para vetor de inteiros da variável
 int *getListaST(const char *nome) {
     Simbolo *s = searchST((char*)nome);

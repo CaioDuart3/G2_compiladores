@@ -78,6 +78,44 @@ NoAST *criarNoBool(int valor) {
     return novo;
 }
 
+void registrarParametros( NoAST *parametros) {
+    
+    // 'no_atual' começa no primeiro parâmetro (ex: 'c' em soma2)
+    NoAST *no_atual = parametros;
+
+    // Percorre a lista ligada até o final (NULL)
+    while (no_atual != NULL) {
+        
+        // Verificamos se o nó é do tipo esperado (NO_ID)
+        // (Assumindo que sua AST usa 'NO_ID' e 'valor_string' 
+        //  com base nas regras 'atomo' e 'atribuicao')
+        if (no_atual->tipo == NO_ID) {
+            
+            char *nome_param = no_atual->valor_string;
+
+            // 1. Insere o símbolo na Tabela de Símbolos
+            //    Usamos INT como tipo padrão, conforme sua sugestão.
+            //    Em um sistema de tipos mais complexo, poderia ser 'NONE' ou 'ANY'.
+            insertST(nome_param, INT);
+
+            // 2. [RECOMENDADO] Marca o parâmetro como INICIALIZADO.
+            //    Parâmetros são "inicializados" pelo próprio ato da
+            //    chamada da função, então é seguro definir isso como 'true'.
+            Simbolo *s = searchST(nome_param);
+            if (s != NULL) {
+                s->inicializado = true;
+            }
+            
+        } else {
+            // Isso não deveria acontecer se a gramática estiver correta
+            fprintf(stderr, "[ERRO INTERNO] Nó de parâmetro não é um NO_ID!\n");
+        }
+
+        // Avança para o próximo parâmetro na lista (ex: 'd' em soma2)
+        no_atual = no_atual->proximo;
+    }
+}
+
 NoAST *criarNoVazio() {
     return alocarNo(NO_VAZIO);
 }
@@ -117,6 +155,23 @@ NoAST *criarNoWhile(NoAST *condicao, NoAST *bloco) {
     no->proximo = NULL;
     return no;
 }
+
+NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco) {
+    NoAST *no = malloc(sizeof(NoAST));
+    no->tipo = NO_FOR;
+    no->filho1 = id;        // variável de iteração
+    no->filho2 = iteravel;  // lista ou range
+    no->filho3 = bloco;     // corpo do laço
+    no->proximo = NULL;
+
+    // Cria a variável do laço na tabela de símbolos
+    if (id && id->valor_string) {
+        insertST(id->valor_string, inferirTipo(iteravel));
+    }
+
+    return no;
+}
+
 
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
     NoAST *novo = alocarNo(NO_LISTA_COMANDOS);
@@ -260,6 +315,19 @@ void imprimirAST(const NoAST *raiz, int indent) {
 
             printIndent(indent + 1); printf("BODY:\n");
             imprimirAST(raiz->filho2, indent + 2);  // Corpo do laço
+            break;
+
+        case NO_FOR:
+            printf("FOR:\n");
+            printIndent(indent + 1);
+            printf("VAR:\n");
+            imprimirAST(raiz->filho1, indent + 2);
+            printIndent(indent + 1);
+            printf("IN:\n");
+            imprimirAST(raiz->filho2, indent + 2);
+            printIndent(indent + 1);
+            printf("BLOCO:\n");
+            imprimirAST(raiz->filho3, indent + 2);
             break;
 
 
@@ -468,6 +536,63 @@ void executarAST(NoAST *raiz) {
                 } else if (atual->filho3) {
                     executarAST(atual->filho3); // bloco else
                 }
+                break;
+            }
+            case NO_FOR: {
+                NoAST *iterVar = atual->filho1;    // nó ID (i)
+                NoAST *iterable = atual->filho2;   // nó lista literal ou ID (lista)
+                NoAST *body = atual->filho3;       // corpo
+
+                if (!iterVar || !iterable) break;
+
+                // Garante que a variável exista na tabela (tipo INT por simplicidade)
+                if (!searchST(iterVar->valor_string)) {
+                    insertST(iterVar->valor_string, INT);
+                }
+                Simbolo *var = searchST(iterVar->valor_string);
+                if (!var) break;
+
+                // 1) Se for lista literal: NO_LISTA
+                if (iterable->tipo == NO_LISTA) {
+                    NoAST *elem = iterable;
+                    while (elem) {
+                        // Alguns implementações guardam o elemento em filho1, outras colocam diretamente.
+                        // Tentamos suportar ambos:
+                        NoAST *valueNode = elem->filho1 ? elem->filho1 : elem;
+                        int valor = avaliarExpressao(valueNode);
+                        var->valor.valor_int = valor;
+                        var->inicializado = true;
+
+                        // Executa o corpo (body é uma lista de comandos)
+                        executarAST(body);
+
+                        elem = elem->proximo;
+                    }
+                }
+                // 2) Se for variável que representa lista/array: NO_ID
+                else if (iterable->tipo == NO_ID) {
+                    Simbolo *s = searchST(iterable->valor_string);
+                    if (!s) {
+                        fprintf(stderr, "Erro: lista '%s' não encontrada em tempo de execução.\n", iterable->valor_string);
+                        break;
+                    }
+                    if (!s->vetor) {
+                        fprintf(stderr, "Erro: '%s' não é uma lista inicializada.\n", s->nome);
+                        break;
+                    }
+                    // usa s->tamanho quando definido (atribuicao_simples preenche s->tamanho)
+                    int tamanho = s->tamanho;
+                    for (int i = 0; i < tamanho; i++) {
+                        var->valor.valor_int = s->vetor[i];
+                        var->inicializado = true;
+                        executarAST(body);
+                    }
+                }
+                // 3) Caso expressões que resultem em outras coleções — implementar depois
+                else {
+                    fprintf(stderr, "Erro: iterável do for não é suportado (linha ?).\n");
+                }
+
                 break;
             }
 

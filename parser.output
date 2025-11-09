@@ -5,7 +5,6 @@ Terminals unused in grammar
     TOKEN_DELIMITADOR_ABRE_CHAVES
     TOKEN_DELIMITADOR_FECHA_CHAVES
     TOKEN_DESCONHECIDO
-    LOWER_THAN_ELSE
 
 
 Rules useless in parser due to conflicts
