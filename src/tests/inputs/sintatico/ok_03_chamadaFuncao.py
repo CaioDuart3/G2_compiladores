@@ -1,3 +1,5 @@
-print("Olá, mundo!")
-funcao_qualquer()
-minha_funcao(param1, param2)
+a = 2
+b = 2
+def soma(a ,b):
+    return a+b
+print(soma(a,b))

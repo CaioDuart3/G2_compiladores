@@ -92,6 +92,7 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 
 \n        { 
     line_num++;
+    yylineno++;
     BEGIN(IDENT);
     printf("LEXER: Token QUEBRA-DE-LINHA (\\n)\n\n");
     return TOKEN_NEWLINE;

@@ -1,44 +1,13 @@
-[ERRO] Variável 'param1' usada antes de ser declarada (linha 1)
-[ERRO] Variável 'param2' usada antes de ser declarada (linha 1)
-LEXER: Token IDENTIFICADOR (print)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token STRING ("Olá, mundo!")
-LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+ERRO SINTÁTICO (linha 3): syntax error, unexpected TOKEN_PALAVRA_CHAVE_DEF, expecting end of file
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (2)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-LEXER: Token IDENTIFICADOR (funcao_qualquer)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (2)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-LEXER: Token IDENTIFICADOR (minha_funcao)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token IDENTIFICADOR (param1)
-LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token IDENTIFICADOR (param2)
-LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
-Parsing concluído com sucesso!
-
---- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-CALL:
-  FUNC:
-    ID: print
-  ARGS:
-    STRING: "Olá, mundo!"
-CALL:
-  FUNC:
-    ID: funcao_qualquer
-CALL:
-  FUNC:
-    ID: minha_funcao
-  ARGS:
-    ID: param1
-    ID: param2
----------------------------------------
-
---- TABELA DE SÍMBOLOS ---
-
-===== TABELA DE SÍMBOLOS =====
-Nome: param1     | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
-Nome: param2     | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
-===============================
+LEXER: Token PALAVRA_CHAVE_DEF (def)
+Parsing interrompido por erro.

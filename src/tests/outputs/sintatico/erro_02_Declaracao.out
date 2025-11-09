@@ -1,4 +1,4 @@
-ERRO SINTÁTICO (linha 1): syntax error
+ERRO SINTÁTICO (linha 2): syntax error, unexpected TOKEN_INTEIRO, expecting TOKEN_IDENTIFICADOR
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 

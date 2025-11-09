@@ -1,3 +1,5 @@
-ERRO SINTÁTICO (linha 1): syntax error
-LEXER: Token PALAVRA_CHAVE_FOR (for)
+ERRO SINTÁTICO (linha 1): syntax error, unexpected TOKEN_DELIMITADOR_ABRE_COLCHETES
+LEXER: Token IDENTIFICADOR (lista)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
 Parsing interrompido por erro.

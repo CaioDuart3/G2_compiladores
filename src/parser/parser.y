@@ -19,8 +19,10 @@
   NoAST *raizAST = NULL;
 %}
 
+%define parse.error verbose
 %define parse.trace
 %locations
+
 
 /* * A %union define os "tipos" que os tokens e regras podem carregar.
  */
@@ -306,9 +308,9 @@ atomo:
 bloco:
     TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
     {
-        openScope();      // entra em novo escopo
-        $$ = $3;          // lista_comandos retorna NoAST*
-        closeScope();     // sai do escopo
+        openScope();       // entra em escopo
+        $$ = $3;           // lista_comandos retorna NoAST*
+        closeScope();      // sai do escopo
     }
 ;
 
