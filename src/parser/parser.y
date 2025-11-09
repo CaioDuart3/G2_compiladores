@@ -3,9 +3,9 @@
   #include <stdlib.h>
   #include <string.h>
   #include "../st/st.h"
-  // #include "../st/st.c"
+
   #include "../ast/ast.h"
-  // #include "../ast/ast.c"
+
 
   #define YYERROR_VERBOSE 1
 
@@ -54,14 +54,19 @@
 /* --- Regras (não-terminais) que produzem um nó da AST --- */
 %type <no> programa
 %type <no> lista_comandos_opt lista_comandos comando
-%type <no> atribuicao expressao atomo bloco if_stmt
+%type <no> atribuicao expressao atomo if_stmt
 %type <no> lista_identificadores lista_expressoes atribuicao_simples atribuicao_multipla atribuicao_encadeada
 %type <no> chamada_funcao lista_argumentos
+%type <no> bloco
 
-/* --- Precedência dos operadores --- */
+/* Precedência de operadores */
+%left TOKEN_OPERADOR_IGUAL TOKEN_OPERADOR_DIFERENTE
+%left TOKEN_OPERADOR_MENOR TOKEN_OPERADOR_MENOR_IGUAL
+%left TOKEN_OPERADOR_MAIOR TOKEN_OPERADOR_MAIOR_IGUAL
 %left TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS
 %left TOKEN_OPERADOR_MULTIPLICACAO TOKEN_OPERADOR_DIVISAO
 %right TOKEN_OPERADOR_ATRIBUICAO
+
 
 /* Para resolver ambiguidade "dangling else" */
 %nonassoc TOKEN_PALAVRA_CHAVE_ELSE
@@ -113,11 +118,39 @@ atribuicao:
     ;
 
 atribuicao_simples:
-      TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
-      {
-          $$ = criarNoAtribuicao(criarNoId($1), $3);
-      }
-    ;
+    TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
+{
+    $$ = criarNoAtribuicao(criarNoId($1), $3);
+
+    Simbolo *s = searchST($1);
+    if (!s) {
+        insertST($1, inferirTipo($3));
+        s = searchST($1);
+    }
+
+    s->inicializado = true;
+switch (s->tipo) {
+    case INT:
+        s->valor.valor_int = $3->valor_int; // $3 é NoAST*, NO_NUM
+        break;
+    case BOOL:
+        s->valor.valor_bool = $3->valor_int; // NO_BOOL armazena booleano em valor_int
+        break;
+    case STRING:
+        if ($3->valor_string)
+            s->valor.valor_string = strdup($3->valor_string); // NO_STRING ou NO_ID
+        break;
+    case FLOAT:
+        fprintf(stderr, "[WARN] FLOAT não implementado ainda.\n");
+        break;
+    default:
+        break;
+}
+
+
+    free($1);
+}
+;
 
 atribuicao_multipla:
       lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
@@ -127,11 +160,49 @@ atribuicao_multipla:
     ;
 
 atribuicao_encadeada:
-      TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao
-      {
-          $$ = criarNoAtribuicao(criarNoId($1), $3);
-      }
-    ;
+    TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao
+{
+    $$ = criarNoAtribuicao(criarNoId($1), $3);
+
+    // Todos os nós da cadeia de atribuição
+    NoAST *rhs = $3;
+
+    while (rhs->tipo == NO_ATRIBUICAO) {
+        rhs = rhs->filho2; // vai para o próximo RHS
+    }
+
+    // Inferir tipo do RHS final
+    Tipo t = inferirTipo(rhs);
+
+    // Atualizar ST para o LHS
+    Simbolo *s = searchST($1);
+    if (!s) insertST($1, t);
+    else s->tipo = t;
+
+    // Atualizar valor do LHS com nomes corretos do union
+switch (t) {
+    case INT:
+        s->valor.valor_int = $3->valor_int; // $3 é NoAST*, NO_NUM
+        break;
+    case BOOL:
+        s->valor.valor_bool = $3->valor_int; // NO_BOOL armazena booleano em valor_int
+        break;
+    case STRING:
+        if ($3->valor_string)
+            s->valor.valor_string = strdup($3->valor_string); // NO_STRING ou NO_ID
+        break;
+    case FLOAT:
+        fprintf(stderr, "[WARN] FLOAT não implementado ainda.\n");
+        break;
+    default:
+        break;
+}
+
+
+    free($1);
+}
+;
+
 
 lista_identificadores:
       TOKEN_IDENTIFICADOR
@@ -175,19 +246,31 @@ chamada_funcao:
         }
     ;
 
-
+/* Expressões */
 expressao:
-    expressao TOKEN_OPERADOR_MAIS expressao
+      expressao TOKEN_OPERADOR_MAIS expressao
         { $$ = criarNoOp('+', $1, $3); }
-  | expressao TOKEN_OPERADOR_MENOS expressao
+    | expressao TOKEN_OPERADOR_MENOS expressao
         { $$ = criarNoOp('-', $1, $3); }
-  | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
+    | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
         { $$ = criarNoOp('*', $1, $3); }
-  | expressao TOKEN_OPERADOR_DIVISAO expressao
+    | expressao TOKEN_OPERADOR_DIVISAO expressao
         { $$ = criarNoOp('/', $1, $3); }
-  | atomo
+    | expressao TOKEN_OPERADOR_IGUAL expressao
+        { $$ = criarNoOp('=', $1, $3); }       /* == */
+    | expressao TOKEN_OPERADOR_DIFERENTE expressao
+        { $$ = criarNoOp('!', $1, $3); }       /* != */
+    | expressao TOKEN_OPERADOR_MENOR expressao
+        { $$ = criarNoOp('<', $1, $3); }       /* < */
+    | expressao TOKEN_OPERADOR_MENOR_IGUAL expressao
+        { $$ = criarNoOp('l', $1, $3); }       /* <= */
+    | expressao TOKEN_OPERADOR_MAIOR expressao
+        { $$ = criarNoOp('>', $1, $3); }       /* > */
+    | expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao
+        { $$ = criarNoOp('g', $1, $3); }       /* >= */
+    | atomo
         { $$ = $1; }
-  ;
+;
 
 /* 'atomo' são os elementos básicos de uma expressão */
 atomo:
@@ -201,15 +284,15 @@ atomo:
         {
             $$ = criarNoId($1);
 
-            // Verifica se o identificador já existe
             Simbolo *s = searchST($1);
-            if (s == NULL) {
-                // Se não existe, insere com tipo NONE
-                insertST($1, NONE);
+            if (!s) {
+                fprintf(stderr, "[ERRO] Variável '%s' usada antes de ser declarada (linha %d)\n", $1, yylineno);
+                insertST($1, NONE); // opcional para continuar parsing
             }
 
-            free($1); // libera memória duplicada pelo lexer
+            free($1);
         }
+
   | TOKEN_STRING
         { $$ = criarNoString($1); free($1); }
   | TOKEN_PALAVRA_CHAVE_TRUE
@@ -222,8 +305,15 @@ atomo:
 /* Um bloco é o que está dentro de um INDENT/DEDENT */
 bloco:
     TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
-    { $$ = $3; } /* O nó do bloco é a própria lista de comandos */
-  ;
+    {
+        openScope();      // entra em novo escopo
+        $$ = $3;          // lista_comandos retorna NoAST*
+        closeScope();     // sai do escopo
+    }
+;
+
+
+
 
 /* Regras para IF e IF/ELSE */
 if_stmt:
@@ -244,8 +334,8 @@ void yyerror(const char *s) {
 }
 
 int main(void) {
-  inicializa_pilha();
   initST();
+  inicializa_pilha();
   yylineno = 1;
   int result = yyparse();
   

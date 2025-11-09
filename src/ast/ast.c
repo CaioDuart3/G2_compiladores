@@ -1,4 +1,5 @@
 #include "ast.h"
+#include "../st/st.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,12 +61,16 @@ NoAST *criarNoVazio() {
 }
 
 NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir) {
-    NoAST *novo = alocarNo(NO_OP_BINARIA);
-    novo->operador = operador;
-    novo->filho1 = esq;
-    novo->filho2 = dir;
-    return novo;
+    NoAST *no = malloc(sizeof(NoAST));
+    no->tipo = NO_OP_BINARIA;
+    no->operador = operador;
+    no->filho1 = esq;
+    no->filho2 = dir;
+    no->filho3 = NULL;
+    no->proximo = NULL;
+    return no;
 }
+
 
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr) {
     NoAST *novo = alocarNo(NO_ATRIBUICAO);
@@ -243,4 +248,16 @@ void liberarAST(NoAST *raiz) {
     
     // Libera o próprio nó
     free(raiz);
+}
+
+Tipo inferirTipo(NoAST *no) {
+    switch (no->tipo) {
+        case NO_NUM: return INT;
+        case NO_STRING: return STRING;
+        case NO_BOOL: return BOOL;
+        case NO_OP_BINARIA:
+            // Simplificação: se ambos INT -> INT, etc.
+            return INT;
+        default: return NONE;
+    }
 }

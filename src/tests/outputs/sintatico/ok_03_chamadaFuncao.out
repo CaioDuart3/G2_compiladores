@@ -1,3 +1,5 @@
+[ERRO] Variável 'param1' usada antes de ser declarada (linha 1)
+[ERRO] Variável 'param2' usada antes de ser declarada (linha 1)
 LEXER: Token IDENTIFICADOR (print)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
 LEXER: Token STRING ("Olá, mundo!")
@@ -37,6 +39,6 @@ CALL:
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
-Nome: param1     | Tipo: NONE    | Escopo: 0
-Nome: param2     | Tipo: NONE    | Escopo: 0
+Nome: param1     | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+Nome: param2     | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================

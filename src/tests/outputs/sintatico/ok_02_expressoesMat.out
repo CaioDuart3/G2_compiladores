@@ -1,3 +1,5 @@
+[ERRO] Variável 'b' usada antes de ser declarada (linha 1)
+[ERRO] Variável 'c' usada antes de ser declarada (linha 1)
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
@@ -44,7 +46,7 @@ OP: +
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
-Nome: a          | Tipo: NONE    | Escopo: 0
-Nome: b          | Tipo: NONE    | Escopo: 0
-Nome: c          | Tipo: NONE    | Escopo: 0
+Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
+Nome: b          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+Nome: c          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================

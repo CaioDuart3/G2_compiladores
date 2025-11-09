@@ -1,10 +1,13 @@
+#include "../st/st.h"
 #ifndef AST_H
 #define AST_H
-
 // Enumeração expandida para todos os tipos de nós
 typedef enum {
     NO_NUM,                 // Nó para um número literal (ex: 123)
     NO_ID,                  // Nó para um identificador (ex: 'x')
+    NO_INT,
+    NO_FLOAT,
+    NO_FUNCAO,
     NO_STRING,              // Nó para um literal string (ex: "ola")
     NO_BOOL,                // Nó para um booleano (True, False)
     NO_OP_BINARIA,          // Nó para uma operação binária (ex: +, -, *, /)
@@ -71,6 +74,7 @@ NoAST* criarNoAtribuicaoMultipla(NoAST* listaIds, NoAST* listaExp);
 
 NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args);
 
+Tipo inferirTipo(NoAST *no);
 
 
 // --- Funções de Gerenciamento ---
