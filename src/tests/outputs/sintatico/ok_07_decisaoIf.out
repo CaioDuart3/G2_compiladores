@@ -1,4 +1,5 @@
-ERRO SINTÁTICO (linha 3): syntax error, unexpected TOKEN_PALAVRA_CHAVE_DEF, expecting end of file
+[ERRO] Variável 'x' usada antes de ser declarada (linha 4)
+[ERRO] Variável 'y' usada antes de ser declarada (linha 5)
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (1)
@@ -11,4 +12,179 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 
 
 LEXER: Token PALAVRA_CHAVE_DEF (def)
-Parsing interrompido por erro.
+LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (x)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (y)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token PALAVRA_CHAVE_RETURN (return)
+LEXER: Token IDENTIFICADOR (x)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token IDENTIFICADOR (y)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: DEDENT (nível 0)
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token INTEIRO (1)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 2)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token INTEIRO (1)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: DEDENT (nível 1)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (1)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (x)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token OPERADOR_MAIOR (>)
+LEXER: Token INTEIRO (10)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 2)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token INTEIRO (2)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: DEDENT (nível 1)
+LEXER: Token PALAVRA_CHAVE_ELSE (else)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 2)
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token STRING ("acabou")
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: DEDENT (nível 1)
+LEXER: DEDENT (nível 0)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: a
+  NUM: 1
+ATTR:
+  ID: b
+  NUM: 1
+DEF: soma
+  PARAMS:
+    ID: x
+    ID: y
+  BODY:
+    RETURN:
+      OP: +
+        ID: x
+        ID: y
+IF:
+  COND:
+    ID: a
+  THEN:
+    ATTR:
+      ID: b
+      OP: +
+        ID: b
+        NUM: 1
+    IF:
+      COND:
+        ID: b
+      THEN:
+        ATTR:
+          ID: a
+          OP: +
+            ID: a
+            NUM: 1
+    ATTR:
+      ID: b
+      NUM: 1
+    ATTR:
+      ID: x
+      CALL:
+        FUNC:
+          ID: soma
+        ARGS:
+          ID: a
+          ID: b
+    IF:
+      COND:
+        OP: >
+          CALL:
+            FUNC:
+              ID: soma
+            ARGS:
+              ID: a
+              ID: b
+          NUM: 10
+      THEN:
+        ATTR:
+          ID: a
+          OP: +
+            ID: a
+            NUM: 2
+      ELSE:
+        CALL:
+          FUNC:
+            ID: print
+          ARGS:
+            STRING: "acabou"
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: soma       | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 4
+Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
+Nome: x          | Tipo: NONE    | Escopo: 0 | Inicializado: SIM | Valor: N/A
+Nome: y          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+===============================

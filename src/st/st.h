@@ -31,8 +31,15 @@ typedef struct simbolo
     int escopo;
     Valor valor;
     bool inicializado;
+
+    // Para vetores de inteiros
+    int *vetor;   // ponteiro para vetor
+    int tamanho;  // tamanho do vetor
+
     struct simbolo *proximo;
 } Simbolo;
+
+
 
 // Função hash para string
 unsigned hash(char *s);
@@ -59,5 +66,6 @@ void freeST();
 void openScope();
 void closeScope();
 int getScope();
+int *getListaST(const char *nome);
 
 #endif

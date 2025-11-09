@@ -11,7 +11,7 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token INTEIRO (1)
+LEXER: Token INTEIRO (6)
 LEXER: Token OPERADOR_MAIS (+)
 LEXER: Token INTEIRO (2)
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
@@ -46,7 +46,7 @@ ATTR:
   OP: *
     OP: /
       OP: +
-        NUM: 1
+        NUM: 6
         NUM: 2
       NUM: 2
     NUM: 4
@@ -61,11 +61,13 @@ ATTR:
       NUM: 2
 ---------------------------------------
 
+--- EXECUÇÃO DA AST ---
+
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
-Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
+Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 16
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: c          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
-Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
+Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
 ===============================

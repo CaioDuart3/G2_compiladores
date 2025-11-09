@@ -3,20 +3,24 @@
 #define AST_H
 // Enumeração expandida para todos os tipos de nós
 typedef enum {
-    NO_NUM,                 // Nó para um número literal (ex: 123)
-    NO_ID,                  // Nó para um identificador (ex: 'x')
+    NO_NUM,
+    NO_ID,
     NO_INT,
     NO_FLOAT,
     NO_FUNCAO,
-    NO_STRING,              // Nó para um literal string (ex: "ola")
-    NO_BOOL,                // Nó para um booleano (True, False)
-    NO_OP_BINARIA,          // Nó para uma operação binária (ex: +, -, *, /)
-    NO_ATRIBUICAO,          // Nó para uma atribuição (ex: x = 5)
-    NO_ATRIBUICAO_MULTIPLA, // Nó para atribuição múltipla (ex: a, b = 1, 2)
-    NO_IF,                  // Nó para um comando 'if' (com 'else' opcional)
-    NO_LISTA_COMANDOS,      // Nó que representa um comando em uma lista (um 'bloco')
-    NO_VAZIO,                // Nó especial para comandos que não fazem nada (ex: uma linha em branco)
-    NO_CHAMADA_FUNCAO       // Nó para chamada de função (ex: foo())
+    NO_STRING,
+    NO_BOOL,
+    NO_OP_BINARIA,
+    NO_ATRIBUICAO,
+    NO_ATRIBUICAO_MULTIPLA,
+    NO_IF,
+    NO_WHILE,
+    NO_LISTA_COMANDOS,
+    NO_VAZIO,
+    NO_CHAMADA_FUNCAO,
+    NO_RETORNO,
+    NO_INDEX,       // <--- novo, para indexação a[i]
+    NO_LISTA        // <--- novo, para listas literais [1,2,3]
 } TipoNo;
 
 typedef struct NoAST {
@@ -48,6 +52,10 @@ typedef struct NoAST {
 
 // --- Funções de Criação de Nós ("Fábricas") ---
 
+
+// Nós para vetores
+NoAST *criarNoIndex(NoAST *lista, NoAST *indice);
+
 // Nós Folha
 NoAST *criarNoNum(int valor);
 NoAST *criarNoId(char *nome);
@@ -62,6 +70,11 @@ NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir);
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr);
 NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse);
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista);
+NoAST *criarNoWhile(NoAST *condicao, NoAST *bloco);
+
+NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo);
+NoAST *criarNoReturn(NoAST *expr);
+
 
 // Nós de atribuição múltipla
 NoAST* criarListaIds(char* nome);
@@ -84,5 +97,8 @@ void imprimirAST(const NoAST *raiz, int indent);
 
 // Libera toda a memória da AST
 void liberarAST(NoAST *raiz);
+int avaliarExpressao(NoAST *expr);
+void executarAtribuicao(NoAST *no); 
+void executarAST(NoAST *raiz);
 
 #endif

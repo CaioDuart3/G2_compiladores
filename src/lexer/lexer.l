@@ -98,6 +98,8 @@ ID        {LETRA}({LETRA}|{DIGITO})*
     return TOKEN_NEWLINE;
 }
 
+#.*                { /* ignora comentários Python-like */ }
+
 [ \t]+    { /* Ignora espaço em branco no meio da linha */ }
 
 <IDENT>^[ \t]+ {

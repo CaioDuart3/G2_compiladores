@@ -141,5 +141,18 @@ int getScope() {
     return escopo_atual;
 }
 
+// Retorna ponteiro para vetor de inteiros da variável
+int *getListaST(const char *nome) {
+    Simbolo *s = searchST((char*)nome);
+    if (!s) {
+        fprintf(stderr, "Erro: vetor '%s' não existe na tabela de símbolos.\n", nome);
+        return NULL;
+    }
+    if (!s->vetor) {
+        fprintf(stderr, "Erro: vetor '%s' não foi inicializado.\n", nome);
+        return NULL;
+    }
+    return s->vetor;
+}
 
 

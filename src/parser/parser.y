@@ -33,14 +33,16 @@
 }
 
 /* --- Tokens que carregam valores --- */
-%token <ival> TOKEN_INTEIRO
 %token <sval> TOKEN_IDENTIFICADOR TOKEN_STRING
-%token <ival> TOKEN_PALAVRA_CHAVE_TRUE TOKEN_PALAVRA_CHAVE_FALSE
+%token <ival> TOKEN_INTEIRO TOKEN_PALAVRA_CHAVE_TRUE TOKEN_PALAVRA_CHAVE_FALSE
+%type <no> expressao atribuicao_indexacao
+
+
 
 /* --- Tokens que NÃO carregam valores --- */
 %token TOKEN_FLOAT /* Não implementado na AST ainda */
 %token TOKEN_PALAVRA_CHAVE_IF TOKEN_PALAVRA_CHAVE_ELSE TOKEN_PALAVRA_CHAVE_ELIF
-%token TOKEN_PALAVRA_CHAVE_WHILE TOKEN_PALAVRA_CHAVE_FOR TOKEN_PALAVRA_CHAVE_DEF TOKEN_PALAVRA_CHAVE_RETURN TOKEN_PALAVRA_CHAVE_IN
+%token TOKEN_PALAVRA_CHAVE_WHILE TOKEN_PALAVRA_CHAVE_FOR TOKEN_PALAVRA_CHAVE_RETURN TOKEN_PALAVRA_CHAVE_IN
 %token TOKEN_OPERADOR_IGUAL TOKEN_OPERADOR_DIFERENTE TOKEN_OPERADOR_MENOR_IGUAL TOKEN_OPERADOR_MAIOR_IGUAL
 %token TOKEN_OPERADOR_MENOR TOKEN_OPERADOR_MAIOR
 %token TOKEN_OPERADOR_ATRIBUICAO
@@ -51,15 +53,20 @@
 %token TOKEN_DELIMITADOR_ABRE_COLCHETES TOKEN_DELIMITADOR_FECHA_COLCHETES
 %token TOKEN_DESCONHECIDO
 %token TOKEN_NEWLINE TOKEN_INDENT TOKEN_DEDENT
+%token TOKEN_PALAVRA_CHAVE_DEF
+
 
 
 /* --- Regras (não-terminais) que produzem um nó da AST --- */
 %type <no> programa
 %type <no> lista_comandos_opt lista_comandos comando
-%type <no> atribuicao expressao atomo if_stmt
+%type <no> atribuicao if_stmt while_stmt
 %type <no> lista_identificadores lista_expressoes atribuicao_simples atribuicao_multipla atribuicao_encadeada
 %type <no> chamada_funcao lista_argumentos
-%type <no> bloco
+%type <no> bloco 
+%type <no> atomo lista_valores chamada_index
+%type <no> declaracao_funcao retorno
+
 
 /* Precedência de operadores */
 %left TOKEN_OPERADOR_IGUAL TOKEN_OPERADOR_DIFERENTE
@@ -77,12 +84,17 @@
 
 /* O programa é uma lista opcional de comandos */
 programa:
-    lista_comandos_opt 
+    lista_comandos_opt newlines_opt
     { 
         raizAST = $1; /* Salva a raiz global */
         $$ = $1;
     }
   ;
+
+newlines_opt:
+    /* vazio */
+  | newlines_opt TOKEN_NEWLINE
+;
 
 lista_comandos_opt:
     /* vazio */         { $$ = NULL; }
@@ -106,18 +118,52 @@ lista_comandos:
 
 comando:
     atribuicao           { $$ = $1; }
-  | chamada_funcao       { $$ = $1; }
   | expressao            { $$ = $1; }
   | if_stmt              { $$ = $1; }
+  | while_stmt           { $$ = $1; }
   | TOKEN_NEWLINE        { $$ = NULL; } /* Newline não gera nó */
   | bloco                { $$ = $1; }
+  | declaracao_funcao    { $$ = $1; }   
+  | retorno              { $$ = $1; } 
   ;
+
+declaracao_funcao:
+    TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    {
+        $$ = criarNoFuncao($2, $4, $7);
+        insertST($2, FUNCAO);
+    }
+  ;
+
+retorno:
+    TOKEN_PALAVRA_CHAVE_RETURN expressao
+    {
+        $$ = criarNoReturn($2);
+    }
+  ;
+
+
 
 atribuicao:
       atribuicao_simples
     | atribuicao_multipla
     | atribuicao_encadeada
-    ;
+    | atribuicao_indexacao   /* adiciona suporte a ID[expr] = expr */
+;
+
+atribuicao_indexacao:
+    TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao
+    {
+        // $1 = char* (nome do vetor)
+        // $3 = NoAST* (índice)
+        // $6 = NoAST* (valor a atribuir)
+
+        NoAST *no_index = criarNoIndex(criarNoId($1), $3); // cria vetor_int[0]
+        $$ = criarNoAtribuicao(no_index, $6);              // cria vetor_int[0] = 0
+
+        free($1); // libera string
+    }
+;
 
 atribuicao_simples:
     TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
@@ -131,24 +177,31 @@ atribuicao_simples:
     }
 
     s->inicializado = true;
-switch (s->tipo) {
-    case INT:
-        s->valor.valor_int = $3->valor_int; // $3 é NoAST*, NO_NUM
-        break;
-    case BOOL:
-        s->valor.valor_bool = $3->valor_int; // NO_BOOL armazena booleano em valor_int
-        break;
-    case STRING:
-        if ($3->valor_string)
-            s->valor.valor_string = strdup($3->valor_string); // NO_STRING ou NO_ID
-        break;
-    case FLOAT:
-        fprintf(stderr, "[WARN] FLOAT não implementado ainda.\n");
-        break;
-    default:
-        break;
-}
 
+    // Se for lista, cria vetor
+    if ($3->tipo == NO_LISTA) {
+        int tamanho = 0;
+        NoAST *elem = $3;
+        while(elem) { tamanho++; elem = elem->proximo; }
+        s->vetor = malloc(sizeof(int) * tamanho);
+        s->tamanho = tamanho;
+        elem = $3;
+        for(int i=0; i<tamanho; i++, elem=elem->proximo)
+            s->vetor[i] = elem->valor_int;
+    }
+
+    // Avalia expressões
+    switch(s->tipo) {
+        case INT:
+        case BOOL:
+            s->valor.valor_int = avaliarExpressao($3);
+            break;
+        case STRING:
+            if ($3->valor_string) s->valor.valor_string = strdup($3->valor_string);
+            break;
+        default:
+            break;
+    }
 
     free($1);
 }
@@ -274,12 +327,13 @@ expressao:
         { $$ = $1; }
 ;
 
-/* 'atomo' são os elementos básicos de uma expressão */
+
+/* --- Atomos --- */
+
+
 atomo:
-    TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
-        {
-            $$ = $2; /* Apenas repassa o nó interno */
-        }
+      TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+        { $$ = $2; } /* Apenas repassa o nó interno */
   | TOKEN_INTEIRO
         { $$ = criarNoNum($1); }
   | TOKEN_IDENTIFICADOR
@@ -294,14 +348,36 @@ atomo:
 
             free($1);
         }
-
   | TOKEN_STRING
         { $$ = criarNoString($1); free($1); }
   | TOKEN_PALAVRA_CHAVE_TRUE
         { $$ = criarNoBool($1); }
   | TOKEN_PALAVRA_CHAVE_FALSE
         { $$ = criarNoBool($1); }
-  ;
+  | TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES
+        {
+            $$ = criarNoLista($2, NULL); /* Lista literal */
+        }
+  | chamada_index
+        { $$ = $1; }
+  | chamada_funcao       
+        { $$ = $1; }
+;
+
+/* --- Lista de valores dentro de [ ... ] --- */
+lista_valores:
+      /* vazio */          { $$ = NULL; }  /* lista vazia */
+  | lista_expressoes       { $$ = $1; }    /* lista de expressões */
+;
+
+/* --- Indexação de listas/arrays --- */
+chamada_index:
+      atomo TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES
+        {
+            $$ = criarNoIndex($1, $3); /* cria nó AST de indexação: $1[$3] */
+        }
+;
+
 
 
 /* Um bloco é o que está dentro de um INDENT/DEDENT */
@@ -319,44 +395,75 @@ bloco:
 
 /* Regras para IF e IF/ELSE */
 if_stmt:
-    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco %prec TOKEN_PALAVRA_CHAVE_ELSE
     {
-        $$ = criarNoIf($2, $4, NULL); /* IF sem ELSE */
+        $$ = criarNoIf($2, $4, NULL);
     }
   | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
     {
-        $$ = criarNoIf($2, $4, $7); /* IF com ELSE */
+        $$ = criarNoIf($2, $4, $7);
+    }
+;
+
+while_stmt:
+    TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    {
+        $$ = criarNoWhile($2, $4);
     }
   ;
 
 %%
+
 
 void yyerror(const char *s) {
   fprintf(stderr, "ERRO SINTÁTICO (linha %d): %s\n", yylineno, s);
 }
 
 int main(void) {
-  initST();
-  inicializa_pilha();
-  yylineno = 1;
-  int result = yyparse();
-  
-  if (result == 0) {
-      printf("Parsing concluído com sucesso!\n");
-      printf("\n--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---\n");
-      if (raizAST) {
-          imprimirAST(raizAST, 0); // Imprime a árvore
-          liberarAST(raizAST);     // Libera a memória
-      } else {
-          printf("(AST está vazia)\n");
-      }
-      printf("---------------------------------------\n");
-      printf("\n--- TABELA DE SÍMBOLOS ---\n");
-      showST();
-      freeST();
-  } else {
-      printf("Parsing interrompido por erro.\n");
-  }
+    initST();
+    inicializa_pilha();
+    yylineno = 1;
 
-  return result;
+    int result = yyparse();
+
+    if (result == 0) {
+        printf("Parsing concluído com sucesso!\n");
+
+        printf("\n--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---\n");
+        if (raizAST) {
+            imprimirAST(raizAST, 0); // Imprime a árvore
+        } else {
+            printf("(AST está vazia)\n");
+        }
+        printf("---------------------------------------\n");
+
+        printf("\n--- EXECUÇÃO DA AST ---\n");
+        if (raizAST) {
+            NoAST *cmd = raizAST;
+            while (cmd) {
+                // Executa comandos de atribuição
+                if (cmd->tipo == NO_ATRIBUICAO || cmd->tipo == NO_ATRIBUICAO_MULTIPLA) {
+                    executarAtribuicao(cmd);
+                }
+                // Para expressões isoladas, você pode avaliar e imprimir
+                else if (cmd->tipo == NO_OP_BINARIA) {
+                    int val = avaliarExpressao(cmd);
+                    printf("Resultado da expressão: %d\n", val);
+                }
+                cmd = cmd->proximo;
+            }
+        }
+
+        printf("\n--- TABELA DE SÍMBOLOS ---\n");
+        showST();   // Mostra as variáveis e valores
+        freeST();   // Libera a tabela de símbolos
+
+        if (raizAST) {
+            liberarAST(raizAST); // Libera a memória da AST após a execução
+        }
+    } else {
+        printf("Parsing interrompido por erro.\n");
+    }
+
+    return result;
 }
