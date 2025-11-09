@@ -1,6 +1,9 @@
 a =1
 b =1
 
+y=0
+x=0
+
 def soma(x, y):
     return x + y
 
