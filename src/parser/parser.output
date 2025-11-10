@@ -12,19 +12,6 @@ Estado 1 conflitos: 3 de deslocamento/redução
 Estado 17 conflitos: 1 de deslocamento/redução
 Estado 29 conflitos: 1 de deslocamento/redução
 Estado 38 conflitos: 1 de deslocamento/redução
-Estado 49 conflitos: 12 de deslocamento/redução
-Estado 84 conflitos: 2 de deslocamento/redução
-Estado 85 conflitos: 2 de deslocamento/redução
-Estado 86 conflitos: 2 de deslocamento/redução
-Estado 87 conflitos: 2 de deslocamento/redução
-Estado 88 conflitos: 2 de deslocamento/redução
-Estado 89 conflitos: 2 de deslocamento/redução
-Estado 90 conflitos: 2 de deslocamento/redução
-Estado 91 conflitos: 2 de deslocamento/redução
-Estado 92 conflitos: 2 de deslocamento/redução
-Estado 93 conflitos: 2 de deslocamento/redução
-Estado 94 conflitos: 12 de deslocamento/redução
-Estado 95 conflitos: 12 de deslocamento/redução
 
 
 Gramática
@@ -1042,22 +1029,8 @@ Estado 49
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_IGUAL          [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_DIFERENTE      [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MENOR_IGUAL    [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MAIOR_IGUAL    [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MENOR          [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MAIOR          [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MAIS           [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MENOS          [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_MULTIPLICACAO  [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_DIVISAO        [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_LOGICO_AND     [reduzir usando a regra 48 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR      [reduzir usando a regra 48 (expressao)]
-    $padrão                       reduzir usando a regra 48 (expressao)
+    $padrão  reduzir usando a regra 48 (expressao)
 
 
 Estado 50
@@ -1639,12 +1612,11 @@ Estado 84
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 40 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 40 (expressao)]
-    $padrão                    reduzir usando a regra 40 (expressao)
+    TOKEN_OPERADOR_IGUAL      erro (não associativo)
+    TOKEN_OPERADOR_DIFERENTE  erro (não associativo)
+
+    $padrão  reduzir usando a regra 40 (expressao)
 
 
 Estado 85
@@ -1671,12 +1643,11 @@ Estado 85
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 41 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 41 (expressao)]
-    $padrão                    reduzir usando a regra 41 (expressao)
+    TOKEN_OPERADOR_IGUAL      erro (não associativo)
+    TOKEN_OPERADOR_DIFERENTE  erro (não associativo)
+
+    $padrão  reduzir usando a regra 41 (expressao)
 
 
 Estado 86
@@ -1701,12 +1672,11 @@ Estado 86
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 43 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 43 (expressao)]
-    $padrão                    reduzir usando a regra 43 (expressao)
+    TOKEN_OPERADOR_MENOR_IGUAL  erro (não associativo)
+    TOKEN_OPERADOR_MENOR        erro (não associativo)
+
+    $padrão  reduzir usando a regra 43 (expressao)
 
 
 Estado 87
@@ -1729,12 +1699,11 @@ Estado 87
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 45 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 45 (expressao)]
-    $padrão                    reduzir usando a regra 45 (expressao)
+    TOKEN_OPERADOR_MAIOR_IGUAL  erro (não associativo)
+    TOKEN_OPERADOR_MAIOR        erro (não associativo)
+
+    $padrão  reduzir usando a regra 45 (expressao)
 
 
 Estado 88
@@ -1759,12 +1728,11 @@ Estado 88
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 42 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 42 (expressao)]
-    $padrão                    reduzir usando a regra 42 (expressao)
+    TOKEN_OPERADOR_MENOR_IGUAL  erro (não associativo)
+    TOKEN_OPERADOR_MENOR        erro (não associativo)
+
+    $padrão  reduzir usando a regra 42 (expressao)
 
 
 Estado 89
@@ -1787,12 +1755,11 @@ Estado 89
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 44 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 44 (expressao)]
-    $padrão                    reduzir usando a regra 44 (expressao)
+    TOKEN_OPERADOR_MAIOR_IGUAL  erro (não associativo)
+    TOKEN_OPERADOR_MAIOR        erro (não associativo)
+
+    $padrão  reduzir usando a regra 44 (expressao)
 
 
 Estado 90
@@ -1813,12 +1780,8 @@ Estado 90
 
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 36 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 36 (expressao)]
-    $padrão                    reduzir usando a regra 36 (expressao)
+    $padrão  reduzir usando a regra 36 (expressao)
 
 
 Estado 91
@@ -1839,12 +1802,8 @@ Estado 91
 
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 37 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 37 (expressao)]
-    $padrão                    reduzir usando a regra 37 (expressao)
+    $padrão  reduzir usando a regra 37 (expressao)
 
 
 Estado 92
@@ -1863,12 +1822,7 @@ Estado 92
    46          | expressao • TOKEN_OPERADOR_LOGICO_AND expressao
    47          | expressao • TOKEN_OPERADOR_LOGICO_OR expressao
 
-    TOKEN_OPERADOR_LOGICO_AND  deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR   deslocar, e ir ao estado 66
-
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 38 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 38 (expressao)]
-    $padrão                    reduzir usando a regra 38 (expressao)
+    $padrão  reduzir usando a regra 38 (expressao)
 
 
 Estado 93
@@ -1887,12 +1841,7 @@ Estado 93
    46          | expressao • TOKEN_OPERADOR_LOGICO_AND expressao
    47          | expressao • TOKEN_OPERADOR_LOGICO_OR expressao
 
-    TOKEN_OPERADOR_LOGICO_AND  deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR   deslocar, e ir ao estado 66
-
-    TOKEN_OPERADOR_LOGICO_AND  [reduzir usando a regra 39 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR   [reduzir usando a regra 39 (expressao)]
-    $padrão                    reduzir usando a regra 39 (expressao)
+    $padrão  reduzir usando a regra 39 (expressao)
 
 
 Estado 94
@@ -1921,22 +1870,8 @@ Estado 94
     TOKEN_OPERADOR_MENOS          deslocar, e ir ao estado 62
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
-    TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_IGUAL          [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_DIFERENTE      [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MENOR_IGUAL    [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MAIOR_IGUAL    [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MENOR          [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MAIOR          [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MAIS           [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MENOS          [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_MULTIPLICACAO  [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_DIVISAO        [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_LOGICO_AND     [reduzir usando a regra 46 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR      [reduzir usando a regra 46 (expressao)]
-    $padrão                       reduzir usando a regra 46 (expressao)
+    $padrão  reduzir usando a regra 46 (expressao)
 
 
 Estado 95
@@ -1966,21 +1901,8 @@ Estado 95
     TOKEN_OPERADOR_MULTIPLICACAO  deslocar, e ir ao estado 63
     TOKEN_OPERADOR_DIVISAO        deslocar, e ir ao estado 64
     TOKEN_OPERADOR_LOGICO_AND     deslocar, e ir ao estado 65
-    TOKEN_OPERADOR_LOGICO_OR      deslocar, e ir ao estado 66
 
-    TOKEN_OPERADOR_IGUAL          [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_DIFERENTE      [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MENOR_IGUAL    [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MAIOR_IGUAL    [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MENOR          [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MAIOR          [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MAIS           [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MENOS          [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_MULTIPLICACAO  [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_DIVISAO        [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_LOGICO_AND     [reduzir usando a regra 47 (expressao)]
-    TOKEN_OPERADOR_LOGICO_OR      [reduzir usando a regra 47 (expressao)]
-    $padrão                       reduzir usando a regra 47 (expressao)
+    $padrão  reduzir usando a regra 47 (expressao)
 
 
 Estado 96
