@@ -82,6 +82,15 @@ NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse) {
     return novo;
 }
 
+NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco) {
+    NoAST *novo = alocarNo(NO_FOR);
+    novo->filho1 = id;      
+    novo->filho2 = iteravel;  // expressão iterável (ex: lista)
+    novo->filho3 = bloco;     // corpo do laço
+    return novo;
+}
+
+
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
     NoAST *novo = alocarNo(NO_LISTA_COMANDOS);
     novo->filho1 = comando;
@@ -153,6 +162,20 @@ void imprimirAST(const NoAST *raiz, int indent) {
                 imprimirAST(raiz->filho3, indent + 2); // Bloco Else
             }
             break;
+
+        case NO_FOR:
+            printf("FOR:\n");
+            printIndent(indent + 1); printf("VAR:\n");
+            imprimirAST(raiz->filho1, indent + 2);
+
+            printIndent(indent + 1); printf("IN:\n");
+            imprimirAST(raiz->filho2, indent + 2);
+            
+            printIndent(indent + 1); printf("BLOCO:\n");
+            imprimirAST(raiz->filho3, indent + 2);
+            break;
+        
+
             
         default:
             fprintf(stderr, "Erro: tipo de nó desconhecido para impressão.\n");

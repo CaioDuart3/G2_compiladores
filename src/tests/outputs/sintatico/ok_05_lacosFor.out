@@ -3,20 +3,204 @@ Entering state 0
 Stack now 0
 Reading a token
 Next token is token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
-Reducing stack by rule 2 (line 63):
+Shifting token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 23
+Stack now 0 7 23
+Reading a token
+Next token is token TOKEN_PALAVRA_CHAVE_IN (1.1: )
+Shifting token TOKEN_PALAVRA_CHAVE_IN (1.1: )
+Entering state 34
+Stack now 0 7 23 34
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 21
+Stack now 0 7 23 34 21
+Reducing stack by rule 20 (line 122):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+-> $$ = nterm atomo (1.1: )
+Entering state 16
+Stack now 0 7 23 34 16
+Reducing stack by rule 17 (line 113):
+   $1 = nterm atomo (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 43
+Stack now 0 7 23 34 43
+Reading a token
+Next token is token TOKEN_DELIMITADOR_DOIS_PONTOS (1.1: )
+Shifting token TOKEN_DELIMITADOR_DOIS_PONTOS (1.1: )
+Entering state 46
+Stack now 0 7 23 34 43 46
+Reading a token
+Next token is token TOKEN_NEWLINE (1.1: )
+Shifting token TOKEN_NEWLINE (1.1: )
+Entering state 41
+Stack now 0 7 23 34 43 46 41
+Reading a token
+Next token is token TOKEN_INDENT (1.1: )
+Shifting token TOKEN_INDENT (1.1: )
+Entering state 25
+Stack now 0 7 23 34 43 46 41 25
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 2
+Stack now 0 7 23 34 43 46 41 25 2
+Reading a token
+Next token is token TOKEN_OPERADOR_ATRIBUICAO (1.1: )
+Shifting token TOKEN_OPERADOR_ATRIBUICAO (1.1: )
+Entering state 20
+Stack now 0 7 23 34 43 46 41 25 2 20
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 21
+Stack now 0 7 23 34 43 46 41 25 2 20 21
+Reducing stack by rule 20 (line 122):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+-> $$ = nterm atomo (1.1: )
+Entering state 16
+Stack now 0 7 23 34 43 46 41 25 2 20 16
+Reducing stack by rule 17 (line 113):
+   $1 = nterm atomo (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 32
+Stack now 0 7 23 34 43 46 41 25 2 20 32
+Reading a token
+Next token is token TOKEN_OPERADOR_MAIS (1.1: )
+Shifting token TOKEN_OPERADOR_MAIS (1.1: )
+Entering state 28
+Stack now 0 7 23 34 43 46 41 25 2 20 32 28
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 21
+Stack now 0 7 23 34 43 46 41 25 2 20 32 28 21
+Reducing stack by rule 20 (line 122):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+-> $$ = nterm atomo (1.1: )
+Entering state 16
+Stack now 0 7 23 34 43 46 41 25 2 20 32 28 16
+Reducing stack by rule 17 (line 113):
+   $1 = nterm atomo (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 37
+Stack now 0 7 23 34 43 46 41 25 2 20 32 28 37
+Reading a token
+Next token is token TOKEN_DEDENT (1.1: )
+Reducing stack by rule 13 (line 105):
+   $1 = nterm expressao (1.1: )
+   $2 = token TOKEN_OPERADOR_MAIS (1.1: )
+   $3 = nterm expressao (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 32
+Stack now 0 7 23 34 43 46 41 25 2 20 32
+Next token is token TOKEN_DEDENT (1.1: )
+Reducing stack by rule 12 (line 94):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+   $2 = token TOKEN_OPERADOR_ATRIBUICAO (1.1: )
+   $3 = nterm expressao (1.1: )
+-> $$ = nterm atribuicao (1.1: )
+Entering state 14
+Stack now 0 7 23 34 43 46 41 25 14
+Reducing stack by rule 6 (line 85):
+   $1 = nterm atribuicao (1.1: )
+-> $$ = nterm comando (1.1: )
+Entering state 13
+Stack now 0 7 23 34 43 46 41 25 13
+Reducing stack by rule 4 (line 68):
+   $1 = nterm comando (1.1: )
+-> $$ = nterm lista_comandos (1.1: )
+Entering state 36
+Stack now 0 7 23 34 43 46 41 25 36
+Next token is token TOKEN_DEDENT (1.1: )
+Shifting token TOKEN_DEDENT (1.1: )
+Entering state 44
+Stack now 0 7 23 34 43 46 41 25 36 44
+Reducing stack by rule 24 (line 140):
+   $1 = token TOKEN_NEWLINE (1.1: )
+   $2 = token TOKEN_INDENT (1.1: )
+   $3 = nterm lista_comandos (1.1: )
+   $4 = token TOKEN_DEDENT (1.1: )
+-> $$ = nterm bloco (1.1: )
+Entering state 48
+Stack now 0 7 23 34 43 46 48
+Reducing stack by rule 27 (line 153):
+   $1 = token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+   $2 = token TOKEN_IDENTIFICADOR (1.1: )
+   $3 = token TOKEN_PALAVRA_CHAVE_IN (1.1: )
+   $4 = nterm expressao (1.1: )
+   $5 = token TOKEN_DELIMITADOR_DOIS_PONTOS (1.1: )
+   $6 = nterm bloco (1.1: )
+-> $$ = nterm for_stmt (1.1: )
+Entering state 19
+Stack now 0 19
+Reducing stack by rule 9 (line 88):
+   $1 = nterm for_stmt (1.1: )
+-> $$ = nterm comando (1.1: )
+Entering state 13
+Stack now 0 13
+Reducing stack by rule 4 (line 68):
+   $1 = nterm comando (1.1: )
+-> $$ = nterm lista_comandos (1.1: )
+Entering state 12
+Stack now 0 12
+Reading a token
+Now at end of input.
+Reducing stack by rule 3 (line 64):
+   $1 = nterm lista_comandos (1.1: )
 -> $$ = nterm lista_comandos_opt (1.1: )
-Entering state 10
-Stack now 0 10
+Entering state 11
+Stack now 0 11
 Reducing stack by rule 1 (line 55):
    $1 = nterm lista_comandos_opt (1.1: )
 -> $$ = nterm programa (1.1: )
-Entering state 9
-Stack now 0 9
-Next token is token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
-ERRO SINTÁTICO (linha 1): syntax error
-Error: popping nterm programa (1.1: )
-Stack now 0
-Cleanup: discarding lookahead token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
-Stack now 0
+Entering state 10
+Stack now 0 10
+Now at end of input.
+Shifting token "end of file" (1.1: )
+Entering state 26
+Stack now 0 10 26
+Stack now 0 10 26
+Cleanup: popping token "end of file" (1.1: )
+Cleanup: popping nterm programa (1.1: )
 LEXER: Token PALAVRA_CHAVE_FOR (for)
-Parsing interrompido por erro.
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token PALAVRA_CHAVE_IN (in)
+LEXER: Token IDENTIFICADOR (lista)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)\n\nLEXER: INDENT (nível 1, cols=4)
+LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token IDENTIFICADOR (i)
+LEXER: EOF -> DEDENT (nível 0)
+
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+FOR:
+  VAR:
+    ID: i
+  IN:
+    ID: lista
+  BLOCO:
+    ATTR:
+      ID: soma
+      OP: +
+        ID: soma
+        ID: i
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: soma       | Tipo: NONE    | Escopo: 0
+Nome: i          | Tipo: NONE    | Escopo: 0
+Nome: lista      | Tipo: NONE    | Escopo: 0
+===============================

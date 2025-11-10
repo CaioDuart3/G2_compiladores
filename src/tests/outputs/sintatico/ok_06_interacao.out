@@ -3,20 +3,50 @@ Entering state 0
 Stack now 0
 Reading a token
 Next token is token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
-Reducing stack by rule 2 (line 63):
--> $$ = nterm lista_comandos_opt (1.1: )
-Entering state 10
-Stack now 0 10
-Reducing stack by rule 1 (line 55):
-   $1 = nterm lista_comandos_opt (1.1: )
--> $$ = nterm programa (1.1: )
-Entering state 9
-Stack now 0 9
-Next token is token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+Shifting token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+Entering state 7
+Stack now 0 7
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 23
+Stack now 0 7 23
+Reading a token
+Next token is token TOKEN_PALAVRA_CHAVE_IN (1.1: )
+Shifting token TOKEN_PALAVRA_CHAVE_IN (1.1: )
+Entering state 34
+Stack now 0 7 23 34
+Reading a token
+Next token is token TOKEN_IDENTIFICADOR (1.1: )
+Shifting token TOKEN_IDENTIFICADOR (1.1: )
+Entering state 21
+Stack now 0 7 23 34 21
+Reducing stack by rule 20 (line 122):
+   $1 = token TOKEN_IDENTIFICADOR (1.1: )
+-> $$ = nterm atomo (1.1: )
+Entering state 16
+Stack now 0 7 23 34 16
+Reducing stack by rule 17 (line 113):
+   $1 = nterm atomo (1.1: )
+-> $$ = nterm expressao (1.1: )
+Entering state 43
+Stack now 0 7 23 34 43
+Reading a token
+Next token is token TOKEN_DELIMITADOR_ABRE_PARENTESES (1.1: )
 ERRO SINTÁTICO (linha 1): syntax error
-Error: popping nterm programa (1.1: )
+Error: popping nterm expressao (1.1: )
+Stack now 0 7 23 34
+Error: popping token TOKEN_PALAVRA_CHAVE_IN (1.1: )
+Stack now 0 7 23
+Error: popping token TOKEN_IDENTIFICADOR (1.1: )
+Stack now 0 7
+Error: popping token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
 Stack now 0
-Cleanup: discarding lookahead token TOKEN_PALAVRA_CHAVE_FOR (1.1: )
+Cleanup: discarding lookahead token TOKEN_DELIMITADOR_ABRE_PARENTESES (1.1: )
 Stack now 0
 LEXER: Token PALAVRA_CHAVE_FOR (for)
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token PALAVRA_CHAVE_IN (in)
+LEXER: Token IDENTIFICADOR (range)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
 Parsing interrompido por erro.

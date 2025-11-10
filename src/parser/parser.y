@@ -42,7 +42,7 @@
 %token TOKEN_DESCONHECIDO
 %token TOKEN_NEWLINE TOKEN_INDENT TOKEN_DEDENT
 
-%type <no> programa lista_comandos_opt lista_comandos comando atribuicao expressao atomo bloco if_stmt
+%type <no> programa lista_comandos_opt lista_comandos comando atribuicao expressao atomo bloco if_stmt for_stmt
 
 %left TOKEN_OPERADOR_MAIS TOKEN_OPERADOR_MENOS
 %left TOKEN_OPERADOR_MULTIPLICAACAO TOKEN_OPERADOR_DIVISAO
@@ -85,6 +85,7 @@ comando:
     atribuicao           { $$ = $1; }
   | expressao            { $$ = $1; }
   | if_stmt              { $$ = $1; }
+  | for_stmt             { $$ = $1; }
   | bloco                { $$ = $1; }
   | TOKEN_NEWLINE        { $$ = NULL; }
   ;
@@ -145,6 +146,18 @@ if_stmt:
         { $$ = criarNoIf($2, $4, NULL); }
   | TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
         { $$ = criarNoIf($2, $4, $7); }
+  ;
+
+
+for_stmt:
+    TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    {
+        Simbolo *s = searchST($2);
+        if (!s) insertST($2, NONE);
+
+        $$ = criarNoFor(criarNoId($2), $4, $6);
+        free($2);
+    }
   ;
 
 %%

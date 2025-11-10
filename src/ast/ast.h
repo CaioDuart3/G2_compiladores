@@ -10,6 +10,7 @@ typedef enum {
     NO_OP_BINARIA,          // Nó para uma operação binária (ex: +, -, *, /)
     NO_ATRIBUICAO,          // Nó para uma atribuição (ex: x = 5)
     NO_IF,                  // Nó para um comando 'if' (com 'else' opcional)
+    NO_FOR,                 // Nó para um comando 'for' (ex: for x in y:)
     NO_LISTA_COMANDOS,      // Nó que representa um comando em uma lista (um 'bloco')
     NO_VAZIO                // Nó especial para comandos que não fazem nada (ex: uma linha em branco)
 } TipoNo;
@@ -53,6 +54,7 @@ NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir);
 // Nós de Comando
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr);
 NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse);
+NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco);
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista);
 
 // --- Funções de Gerenciamento ---
