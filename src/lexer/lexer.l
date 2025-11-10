@@ -50,6 +50,10 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 "-"       { printf("LEXER: Token OPERADOR_MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
 "*"       { printf("LEXER: Token OPERADOR_MULTIPLICACAO (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
 "/"       { printf("LEXER: Token OPERADOR_DIVISAO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
+"and"     { printf("LEXER: Token OPERADOR_LOGICO_AND (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_AND; }
+"or"      { printf("LEXER: Token OPERADOR_LOGICO_OR (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_OR; }
+"not"     { printf("LEXER: Token OPERADOR_LOGICO_NOT (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_NOT; }
+
 
     /* Delimitadores */
 ":"       { printf("LEXER: Token DELIMITADOR_DOIS_PONTOS (%s)\n", yytext); return TOKEN_DELIMITADOR_DOIS_PONTOS; }

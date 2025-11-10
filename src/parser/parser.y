@@ -63,6 +63,7 @@
 %token TOKEN_DESCONHECIDO
 %token TOKEN_NEWLINE TOKEN_INDENT TOKEN_DEDENT
 %token TOKEN_PALAVRA_CHAVE_DEF
+%token TOKEN_OPERADOR_LOGICO_AND TOKEN_OPERADOR_LOGICO_OR TOKEN_OPERADOR_LOGICO_NOT
 
 
 
@@ -349,6 +350,12 @@ expressao:
         { $$ = criarNoOp('>', $1, $3); }       /* > */
     | expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao
         { $$ = criarNoOp('g', $1, $3); }       /* >= */
+    | expressao TOKEN_OPERADOR_LOGICO_AND expressao
+        { $$ = criarNoOp('A', $1, $3); }
+    | expressao TOKEN_OPERADOR_LOGICO_OR expressao
+        { $$ = criarNoOp('O', $1, $3); }
+    | TOKEN_OPERADOR_LOGICO_NOT expressao
+        { $$ = criarNoOp('N', $2, NULL); }
     | atomo
         { $$ = $1; }
 ;
