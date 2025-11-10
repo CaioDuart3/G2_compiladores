@@ -1,5 +1,3 @@
-[ERRO] Variável 'f' usada antes de ser declarada (linha 2)
-ERRO SINTÁTICO (linha 2): syntax error, unexpected TOKEN_STRING, expecting TOKEN_DELIMITADOR_VIRGULA or TOKEN_DELIMITADOR_FECHA_PARENTESES
 LEXER: Token PALAVRA_CHAVE_FOR (for)
 LEXER: Token IDENTIFICADOR (i)
 LEXER: Token PALAVRA_CHAVE_IN (in)
@@ -15,6 +13,34 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: INDENT (nível 1)
 LEXER: Token IDENTIFICADOR (print)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token IDENTIFICADOR (f)
-LEXER: Token STRING ("i: {i}")
-Parsing interrompido por erro.
+LEXER: Token F-STRING (f"i: {i}")
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: DEDENT (nível 0)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+FOR:
+  VAR:
+    ID: i
+  IN:
+    CALL:
+      FUNC:
+        ID: range
+      ARGS:
+        NUM: 0
+        NUM: 5
+  BLOCO:
+    CALL:
+      FUNC:
+        ID: print
+      ARGS:
+        STRING: ""i: {i}"
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+===============================

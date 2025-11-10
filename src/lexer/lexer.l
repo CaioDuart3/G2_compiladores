@@ -76,7 +76,19 @@ ID        {LETRA}({LETRA}|{DIGITO})*
     }
 }
 
-    /* Strings (ambas ' e ") */
+    /* F-strings (f"..." ou f'...') — precisa vir antes das regras normais de string */
+[fF]\"([^"\\]|\\.)*\"  { 
+    yylval.sval = strdup(yytext); 
+    printf("LEXER: Token F-STRING (%s)\n", yytext); 
+    return TOKEN_STRING; 
+}
+[fF]'([^'\\]|\\.)*'  { 
+    yylval.sval = strdup(yytext); 
+    printf("LEXER: Token F-STRING (%s)\n", yytext); 
+    return TOKEN_STRING; 
+}
+
+    /* Strings normais */
 \"[^\"]*\"  { yylval.sval = strdup(yytext); printf("LEXER: Token STRING (%s)\n", yytext); return TOKEN_STRING; }
 \'[^\']*\'  { yylval.sval = strdup(yytext); printf("LEXER: Token STRING (%s)\n", yytext); return TOKEN_STRING; }
 

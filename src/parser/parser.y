@@ -17,6 +17,15 @@
 
   /* Variável global que guardará a raiz da nossa árvore */
   NoAST *raizAST = NULL;
+
+  /* Auxiliares para passar dados do header do 'for' até depois do 'bloco' */
+  static char *last_for_var = NULL;
+  static NoAST *last_for_expr = NULL;
+
+  static void set_last_for_var(char *s) { last_for_var = s; }
+  static char *get_last_for_var(void) { return last_for_var; }
+  static void set_last_for_expr(NoAST *n) { last_for_expr = n; }
+  static NoAST *get_last_for_expr(void) { return last_for_expr; }
 %}
 
 %define parse.error verbose
@@ -66,6 +75,7 @@
 %type <no> bloco 
 %type <no> atomo lista_valores chamada_index
 %type <no> declaracao_funcao retorno
+
 
 
 /* Precedência de operadores */
@@ -407,41 +417,51 @@ bloco:
 
 
 
+/* ---------- IF / ELIF / ELSE ---------- */
+
+/* Regra 1: IF simples (sem ELSE) */
 if_stmt:
-    /* IF simples (sem ELSE) */
-    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS
+    /* Caso simples: apenas if */
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
     {
-        openScope(); // Abre o escopo ANTES de analisar o bloco
+        /* $2 = expressao do if, $4 = bloco do if */
+        $$ = criarNoIf($2, $4, NULL);
     }
-    bloco
+
+  | /* Caso com elif */
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
     {
-        closeScope(); // Fecha o escopo DEPOIS de analisar o bloco
-        $$ = criarNoIf($2, $5, NULL); // $2 = expressao, $5 = bloco
+        /* $2 = expr do if, $4 = bloco if */
+        /* $6 = expr do elif, $8 = bloco elif */
+        NoAST *elif_if = criarNoIf($6, $8, NULL);
+        $$ = criarNoIf($2, $4, elif_if);
     }
-  |
-    /* IF com ELSE */
-    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS
+
+  | /* Caso com elif e else */
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
     {
-        openScope(); // Abre o escopo do bloco 'if'
+        /* $2 = expr do if, $4 = bloco if */
+        /* $6 = expr do elif, $8 = bloco elif */
+        /* $11 = bloco else */
+        NoAST *elif_if = criarNoIf($6, $8, $11);
+        $$ = criarNoIf($2, $4, elif_if);
     }
-    bloco
+
+  | /* Caso com apenas if e else */
+    TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco
+    TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco
     {
-        closeScope(); // Fecha o escopo do 'if'
-    }
-    TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS
-    {
-        openScope(); // Abre o escopo do bloco 'else'
-    }
-    bloco
-    {
-        closeScope(); // Fecha o escopo do 'else'
-        $$ = criarNoIf($2, $5, $10);
-        // $2 = expressao
-        // $5 = bloco do 'if'
-        // $10 = bloco do 'else'
+        /* $2 = expr do if, $4 = bloco if */
+        /* $7 = bloco else */
+        $$ = criarNoIf($2, $4, $7);
     }
 ;
 
+
+/* ---------- WHILE ---------- */
 while_stmt:
     TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS
     {
@@ -454,6 +474,14 @@ while_stmt:
     }
 ;
 
+
+/* ---------- FOR (corrigido para inserir var antes do bloco) ---------- */
+/* Observações:
+   - Usamos ações intermediárias para duplicar o nome do identificador ($2)
+     e salvar a expressão ($4) em variáveis estáticas para serem usadas
+     depois do 'bloco'. Assim a variável de iteração já existe no ST
+     quando o 'bloco' for parseado.
+*/
 for_stmt:
     TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS
     {
@@ -468,11 +496,10 @@ for_stmt:
     bloco // $7
     {
         closeScope(); // Fecha o escopo DEPOIS do bloco
-        $$ = criarNoFor(criarNoId($2), $4, $7);
+        $$ = criarNoFor(criarNoId($2), $4, $7); /* $7 é o bloco */
         free($2);
     }
 ;
-
 %%
 
 
