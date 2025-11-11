@@ -5,15 +5,40 @@
 #include <stdbool.h>
 
 // tipos de dados
-typedef enum { INT, FLOAT, STRING, BOOL, NONE, FUNCAO } Tipo;
+typedef enum
+{
+    INT,
+    FLOAT,
+    STRING,
+    BOOL,
+    NONE,
+    FUNCAO
+} Tipo;
 
-// Colunas da tabela
-typedef struct simbolo {
-    char nome[33]; // + \0
+// union
+typedef union
+{
+    int valor_int;
+    float valor_float;
+    char *valor_string;
+    bool valor_bool;
+} Valor;
+
+typedef struct simbolo
+{
+    char nome[33];
     Tipo tipo;
     int escopo;
+    Valor valor;
+    bool inicializado;
+
+    // Para vetores de inteiros
+    int *vetor;   // ponteiro para vetor
+    int tamanho;  // tamanho do vetor
+
     struct simbolo *proximo;
 } Simbolo;
+
 
 
 // Função hash para string
@@ -41,5 +66,6 @@ void freeST();
 void openScope();
 void closeScope();
 int getScope();
+int *getListaST(const char *nome);
 
 #endif

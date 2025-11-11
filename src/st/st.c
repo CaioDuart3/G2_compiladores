@@ -25,21 +25,26 @@ void initST() {
 
 // Insere um novo símbolo na tabela
 void insertST(char *nome, Tipo tipo) {
-    unsigned i = hash(nome);
-    Simbolo *s = malloc(sizeof(Simbolo));
-
-    if (!s) {
-        printf("Erro: Falha ao alocar memória para símbolo\n");
-        return;
+    unsigned h = hash(nome);
+    Simbolo *novo = malloc(sizeof(Simbolo));
+    strcpy(novo->nome, nome);
+    novo->tipo = tipo;
+    novo->escopo = getScope();
+    novo->inicializado = false;
+    
+    // Valores padrão
+    switch(tipo) {
+        case INT: novo->valor.valor_int = 0; break;
+        case FLOAT: novo->valor.valor_float = 0.0; break;
+        case BOOL: novo->valor.valor_bool = false; break;
+        case STRING: novo->valor.valor_string = NULL; break;
+        default: break;
     }
 
-    strncpy(s->nome, nome, sizeof(s->nome) - 1);
-    s->nome[sizeof(s->nome) - 1] = '\0'; //garante que no final tenha um \0
-    s->tipo = tipo;
-    s->escopo = escopo_atual;
-    s->proximo = tabela[i];
-    tabela[i] = s;
+    novo->proximo = tabela[h];
+    tabela[h] = novo;
 }
+
 
 // Busca um símbolo na tabela
 Simbolo *searchST(char *nome) {
@@ -69,8 +74,22 @@ void showST() {
     printf("\n===== TABELA DE SÍMBOLOS =====\n");
     for (int i = 0; i < TAM; i++) {
         for (Simbolo *s = tabela[i]; s; s = s->proximo) {
-            printf("Nome: %-10s | Tipo: %-7s | Escopo: %d\n",
-                   s->nome, tipoParaString(s->tipo), s->escopo);
+            printf("Nome: %-10s | Tipo: %-7s | Escopo: %d | Inicializado: %s | Valor: ",
+                   s->nome, tipoParaString(s->tipo), s->escopo,
+                   s->inicializado ? "SIM" : "NAO");
+            
+            if (!s->inicializado) {
+                printf("NAO ATRIBUIDO");
+            } else {
+                switch(s->tipo) {
+                    case INT: printf("%d", s->valor.valor_int); break;
+                    case FLOAT: printf("%f", s->valor.valor_float); break;
+                    case BOOL: printf("%s", s->valor.valor_bool ? "TRUE" : "FALSE"); break;
+                    case STRING: printf("\"%s\"", s->valor.valor_string ? s->valor.valor_string : ""); break;
+                    default: printf("N/A"); break;
+                }
+            }
+            printf("\n");
         }
     }
     printf("===============================\n");
@@ -121,3 +140,20 @@ void closeScope() {
 int getScope() {
     return escopo_atual;
 }
+
+
+// Retorna ponteiro para vetor de inteiros da variável
+int *getListaST(const char *nome) {
+    Simbolo *s = searchST((char*)nome);
+    if (!s) {
+        fprintf(stderr, "Erro: vetor '%s' não existe na tabela de símbolos.\n", nome);
+        return NULL;
+    }
+    if (!s->vetor) {
+        fprintf(stderr, "Erro: vetor '%s' não foi inicializado.\n", nome);
+        return NULL;
+    }
+    return s->vetor;
+}
+
+

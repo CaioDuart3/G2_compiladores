@@ -1,4 +1,4 @@
-ERRO SINTÁTICO (linha 1): syntax error
+ERRO SINTÁTICO (linha 2): syntax error, unexpected TOKEN_OPERADOR_DIVISAO
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (20)
@@ -8,6 +8,6 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 
 
 LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_MULTIPLICAACAO (*)
+LEXER: Token OPERADOR_MULTIPLICACAO (*)
 LEXER: Token OPERADOR_DIVISAO (/)
 Parsing interrompido por erro.

@@ -1,0 +1,5 @@
+ERRO SINTÁTICO (linha 1): syntax error
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_DIFERENTE (!=)
+Parsing interrompido por erro.

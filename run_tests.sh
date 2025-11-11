@@ -11,63 +11,52 @@ AST_H="$AST_DIR/ast.h"
 LEXER_DIR="$SRC_DIR/lexer"
 LEXER_SRC="$LEXER_DIR/lexer.l"
 LEXER_C="$LEXER_DIR/lex.yy.c"
-LEXER_MAIN="$LEXER_DIR/lexer_main.c" # <-- NOVO
+LEXER_MAIN="$LEXER_DIR/lexer_main.c"
 
 PARSER_DIR="$SRC_DIR/parser"
 PARSER_SRC="$PARSER_DIR/parser.y"
 PARSER_C="$PARSER_DIR/parser.tab.c"
 PARSER_H="$PARSER_DIR/parser.tab.h"
 
+ST_DIR="$SRC_DIR/st"
+ST_C="$ST_DIR/st.c"
+ST_H="$ST_DIR/st.h"
+
 # --- Nossos dois executáveis ---
 COMPILADOR="$ROOT_DIR/compilador"
-ANALISADOR_LEX="$ROOT_DIR/analisador_lexico" # <-- NOVO
+ANALISADOR_LEX="$ROOT_DIR/analisador_lexico"
 
 TESTS_DIR="$SRC_DIR/tests/inputs"
 OUTPUTS_DIR="$SRC_DIR/tests/outputs"
 
-# --- Função de Compilação Atualizada ---
+# --- Função de Compilação ---
 compile_all() {
     echo "Compilando o parser (Bison)..."
-    if ! bison -d -v -o "$PARSER_C" "$PARSER_SRC"; then
-        echo "Falha na compilação do parser (Bison)"
-        exit 1
-    fi
+    bison -d -v -o "$PARSER_C" "$PARSER_SRC" || { echo "Falha na compilação do parser"; exit 1; }
 
     echo "Compilando o lexer (Flex)..."
-    if ! flex -o "$LEXER_C" "$LEXER_SRC"; then
-        echo "Falha na compilação do lexer (Flex)"
-        exit 1
-    fi
+    flex -o "$LEXER_C" "$LEXER_SRC" || { echo "Falha na compilação do lexer"; exit 1; }
 
     echo "Compilando o COMPILADOR completo (parser+lexer+ast+st)..."
-    if ! gcc -g -Wall \
-            "$PARSER_C" "$LEXER_C" "$AST_C" "$SRC_DIR/st/st.c" \
-            -I"$AST_DIR" -I"$PARSER_DIR" -I"$SRC_DIR/st" \
-            -o "$COMPILADOR" -lfl; then
-        echo "Falha na compilação do COMPILADOR"
-        exit 1
-    fi
+    gcc -g -Wall \
+        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" \
+        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" \
+        -o "$COMPILADOR" -lfl || { echo "Falha na compilação do COMPILADOR"; exit 1; }
 
-    echo "Compilando o ANALISADOR LÉXICO (lexer_main+lexer)..."
-    if ! gcc -g -Wall \
-             "$LEXER_MAIN" "$LEXER_C" \
-             -I"$PARSER_DIR" \
-             -o "$ANALISADOR_LEX" -lfl; then
-        echo "Falha na compilação do ANALISADOR LÉXICO"
-        exit 1
-    fi
-    
+    echo "Compilando o ANALISADOR LÉXICO (lexer_main + lexer)..."
+    gcc -g -Wall \
+        "$LEXER_MAIN" "$LEXER_C" \
+        -I"$PARSER_DIR" -I"$ST_DIR" -I"$AST_DIR" \
+        -o "$ANALISADOR_LEX" -lfl || { echo "Falha na compilação do ANALISADOR LÉXICO"; exit 1; }
+
     echo "Compilação concluída."
 }
 
-# --- Lógica Principal ---
-
-# Compila se qualquer executável estiver faltando ou se fontes forem mais novas
+# --- Verifica se precisa compilar ---
 if [ ! -x "$COMPILADOR" ] || [ ! -x "$ANALISADOR_LEX" ] || \
    [ "$PARSER_SRC" -nt "$COMPILADOR" ] || [ "$LEXER_SRC" -nt "$COMPILADOR" ] || \
    [ "$AST_C" -nt "$COMPILADOR" ] || [ "$AST_H" -nt "$COMPILADOR" ] || \
    [ "$LEXER_MAIN" -nt "$ANALISADOR_LEX" ]; then
-    
     compile_all
 fi
 
@@ -89,43 +78,31 @@ for tipo in lexico sintatico semantico; do
 
     mkdir -p "$OUTPUTS_DIR/$tipo"
 
-    # --- ESCOLHE O EXECUTÁVEL CORRETO ---
+    # Escolhe executável correto
     case "$tipo" in
-        lexico)
-            EXEC="$ANALISADOR_LEX"
-            ;;
-        sintatico|semantico)
-            EXEC="$COMPILADOR"
-            ;;
-        *)
-            echo "Tipo de teste desconhecido: $tipo"
-            continue
-            ;;
+        lexico) EXEC="$ANALISADOR_LEX" ;;
+        sintatico|semantico) EXEC="$COMPILADOR" ;;
+        *) echo "Tipo de teste desconhecido: $tipo"; continue ;;
     esac
 
     for f in "$TIPO_DIR"/*.py; do
         base=$(basename "$f" .py)
         total=$((total+1))
 
-        # Executa e captura saída (stdout e stderr)
         OUTPUT=$("$EXEC" < "$f" 2>&1)
-        # Salva o código de saída (0 = sucesso, 1 = erro)
-        STATUS=$? 
-        
+        STATUS=$?
+
         echo "$OUTPUT" > "$OUTPUTS_DIR/$tipo/$base.out"
-        
-        # Verifica se o programa retornou erro (STATUS != 0) ou se imprimiu "ERRO"
+
         DEU_ERRO=
-        if [ $STATUS -ne 0 ] || [ -n "$(echo "$OUTPUT" | grep "ERRO")" ]; then
+        if [ $STATUS -ne 0 ] || grep -q "ERRO" <<< "$OUTPUT"; then
             DEU_ERRO=1
         fi
-        
-        ERRO_DETALHADO=$(echo "$OUTPUT" | grep "ERRO")
 
-        # --- Lógica de Sucesso/Falha Baseada no Nome ---
+        ERRO_DETALHADO=$(grep "ERRO" <<< "$OUTPUT")
+
         case "$base" in
             ok_*)
-                # Teste deve PASSAR (não deve ter erro)
                 if [ -n "$DEU_ERRO" ]; then
                     echo -n "F"
                     failures=$((failures+1))
@@ -135,9 +112,7 @@ for tipo in lexico sintatico semantico; do
                     passes=$((passes+1))
                 fi
                 ;;
-            
             erro_*)
-                # Teste deve FALHAR (deve ter erro)
                 if [ -n "$DEU_ERRO" ]; then
                     echo -n "."
                     passes=$((passes+1))
@@ -147,9 +122,8 @@ for tipo in lexico sintatico semantico; do
                     erros+=("[$tipo] $base: FALHOU. Teste deveria dar erro, mas passou.")
                 fi
                 ;;
-            
             *)
-                echo -n "W" # 'W' de Warning (Aviso)
+                echo -n "W"
                 erros+=("[$tipo] $base: AVISO. Nome não começa com 'ok_' ou 'erro_'.")
                 ;;
         esac

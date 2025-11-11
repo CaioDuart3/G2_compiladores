@@ -48,8 +48,12 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 "="       { printf("LEXER: Token OPERADOR_ATRIBUICAO (%s)\n", yytext); return TOKEN_OPERADOR_ATRIBUICAO; }
 "+"       { printf("LEXER: Token OPERADOR_MAIS (%s)\n", yytext); return TOKEN_OPERADOR_MAIS; }
 "-"       { printf("LEXER: Token OPERADOR_MENOS (%s)\n", yytext); return TOKEN_OPERADOR_MENOS; }
-"*"       { printf("LEXER: Token OPERADOR_MULTIPLICAACAO (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICAACAO; }
+"*"       { printf("LEXER: Token OPERADOR_MULTIPLICACAO (%s)\n", yytext); return TOKEN_OPERADOR_MULTIPLICACAO; }
 "/"       { printf("LEXER: Token OPERADOR_DIVISAO (%s)\n", yytext); return TOKEN_OPERADOR_DIVISAO; }
+"and"     { printf("LEXER: Token OPERADOR_LOGICO_AND (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_AND; }
+"or"      { printf("LEXER: Token OPERADOR_LOGICO_OR (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_OR; }
+"not"     { printf("LEXER: Token OPERADOR_LOGICO_NOT (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_NOT; }
+
 
     /* Delimitadores */
 ":"       { printf("LEXER: Token DELIMITADOR_DOIS_PONTOS (%s)\n", yytext); return TOKEN_DELIMITADOR_DOIS_PONTOS; }
@@ -76,7 +80,19 @@ ID        {LETRA}({LETRA}|{DIGITO})*
     }
 }
 
-    /* Strings (ambas ' e ") */
+    /* F-strings (f"..." ou f'...') — precisa vir antes das regras normais de string */
+[fF]\"([^"\\]|\\.)*\"  { 
+    yylval.sval = strdup(yytext); 
+    printf("LEXER: Token F-STRING (%s)\n", yytext); 
+    return TOKEN_STRING; 
+}
+[fF]'([^'\\]|\\.)*'  { 
+    yylval.sval = strdup(yytext); 
+    printf("LEXER: Token F-STRING (%s)\n", yytext); 
+    return TOKEN_STRING; 
+}
+
+    /* Strings normais */
 \"[^\"]*\"  { yylval.sval = strdup(yytext); printf("LEXER: Token STRING (%s)\n", yytext); return TOKEN_STRING; }
 \'[^\']*\'  { yylval.sval = strdup(yytext); printf("LEXER: Token STRING (%s)\n", yytext); return TOKEN_STRING; }
 
@@ -92,10 +108,13 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 
 \n        { 
     line_num++;
+    yylineno++;
     BEGIN(IDENT);
     printf("LEXER: Token QUEBRA-DE-LINHA (\\n)\n\n");
     return TOKEN_NEWLINE;
 }
+
+#.*                { /* ignora comentários Python-like */ }
 
 [ \t]+    { /* Ignora espaço em branco no meio da linha */ }
 

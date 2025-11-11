@@ -1,3 +1,56 @@
-ERRO SINTÁTICO (linha 1): syntax error
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (0)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
 LEXER: Token PALAVRA_CHAVE_WHILE (while)
-Parsing interrompido por erro.
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token OPERADOR_MENOR (<)
+LEXER: Token INTEIRO (10)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token INTEIRO (1)
+LEXER: DEDENT (nível 0)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: i
+  NUM: 0
+WHILE:
+  COND:
+    OP: <
+      ID: i
+      NUM: 10
+  BODY:
+    CALL:
+      FUNC:
+        ID: print
+      ARGS:
+        ID: i
+    ATTR:
+      ID: i
+      OP: +
+        ID: i
+        NUM: 1
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: i          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
+===============================

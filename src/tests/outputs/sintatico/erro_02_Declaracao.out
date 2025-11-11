@@ -1,7 +1,8 @@
-ERRO SINTÁTICO (linha 1): syntax error
+ERRO SINTÁTICO (linha 2): syntax error, unexpected TOKEN_INTEIRO, expecting TOKEN_IDENTIFICADOR
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (1)
 Parsing interrompido por erro.
