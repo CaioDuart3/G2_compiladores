@@ -3,7 +3,7 @@
   #include <stdlib.h>
   #include <string.h>
   #include "../st/st.h"
-
+  #include "../tac/tac.h"
   #include "../ast/ast.h"
 
 
@@ -560,9 +560,11 @@ int main(void) {
         showST();   // Mostra as variáveis e valores
         freeST();   // Libera a tabela de símbolos
 
+
         if (raizAST) {
-            liberarAST(raizAST); // Libera a memória da AST após a execução
+            liberarAST(raizAST); 
         }
+
     } else {
         printf("Parsing interrompido por erro.\n");
     }
