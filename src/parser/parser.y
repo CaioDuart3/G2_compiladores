@@ -505,7 +505,6 @@ for_stmt:
         if (!searchST($2)) {
             insertST($2, INT); // Ou o tipo que você inferir da expressão $4
         }
-        // Você pode querer marcar como inicializada aqui também
     }
     bloco // $7
     {
@@ -561,9 +560,23 @@ int main(void) {
         freeST();   // Libera a tabela de símbolos
 
 
+        /* ===== INTEGRAÇÃO TAC: gera, imprime e libera o código TAC ===== */
         if (raizAST) {
-            liberarAST(raizAST); 
+            printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
+            TacCodigo* codigo = gerar_tac(raizAST);  /* função declarada em tac.h */
+            if (codigo) {
+                imprimir_tac(codigo);
+                liberar_tac(codigo);
+            } else {
+                printf("(Código TAC vazio)\n");
+            }
+            printf("-----------------------------------\n");
         }
+
+        if (raizAST) {
+            liberarAST(raizAST);
+        }
+
 
     } else {
         printf("Parsing interrompido por erro.\n");
