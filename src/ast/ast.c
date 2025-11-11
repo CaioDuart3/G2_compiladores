@@ -131,6 +131,20 @@ NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir) {
     return no;
 }
 
+NoAST *criarNoOpLogicaAnd(NoAST *esq, NoAST *dir) {
+    // Usamos a função auxiliar que você já tem
+    NoAST *no = alocarNo(NO_OP_LOGICA_AND);
+    no->filho1 = esq;
+    no->filho2 = dir;
+    return no;
+}
+
+NoAST *criarNoOpLogicaOr(NoAST *esq, NoAST *dir) {
+    NoAST *no = alocarNo(NO_OP_LOGICA_OR);
+    no->filho1 = esq;
+    no->filho2 = dir;
+    return no;
+}
 
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr) {
     NoAST *novo = alocarNo(NO_ATRIBUICAO);
@@ -287,7 +301,20 @@ void imprimirAST(const NoAST *raiz, int indent) {
             imprimirAST(raiz->filho1, indent + 1);
             imprimirAST(raiz->filho2, indent + 1);
             break;
-            
+
+        case NO_OP_LOGICA_AND:
+            printf("OP: AND\n"); 
+            imprimirAST(raiz->filho1, indent + 1);
+            imprimirAST(raiz->filho2, indent + 1);
+            break;
+
+        case NO_OP_LOGICA_OR:
+            printf("OP: OR\n"); 
+            imprimirAST(raiz->filho1, indent + 1);
+            imprimirAST(raiz->filho2, indent + 1);
+            break;
+        
+
         case NO_ATRIBUICAO:
             printf("ATTR:\n");
             imprimirAST(raiz->filho1, indent + 1); // ID
@@ -464,6 +491,19 @@ int avaliarExpressao(NoAST *expr) {
                 case '!': return a != b;
             }
         }
+        
+        case NO_OP_LOGICA_AND: {
+            int esq = avaliarExpressao(expr->filho1);
+            if (esq == 0) return 0; // Se a esquerda é Falsa, o resultado é Falso
+            return (avaliarExpressao(expr->filho2) != 0); // Senão, o resultado é o da direita
+        }
+
+        case NO_OP_LOGICA_OR: {
+            int esq = avaliarExpressao(expr->filho1);
+            if (esq != 0) return 1; // Se a esquerda é Verdadeira, o resultado é Verdadeiro
+            return (avaliarExpressao(expr->filho2) != 0); // Senão, o resultado é o da direita
+        }
+
         default: return 0;
     }
 }

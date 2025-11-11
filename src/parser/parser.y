@@ -358,9 +358,9 @@ expressao:
     | expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao
         { $$ = criarNoOp('g', $1, $3); }       /* >= */
     | expressao TOKEN_OPERADOR_LOGICO_AND expressao
-        { $$ = criarNoOp('A', $1, $3); }
+        { $$ = criarNoOpLogicaAnd($1, $3); } 
     | expressao TOKEN_OPERADOR_LOGICO_OR expressao
-        { $$ = criarNoOp('O', $1, $3); }
+        { $$ = criarNoOpLogicaOr($1, $3); }
     | TOKEN_OPERADOR_LOGICO_NOT expressao
         { $$ = criarNoOp('N', $2, NULL); }
     | atomo

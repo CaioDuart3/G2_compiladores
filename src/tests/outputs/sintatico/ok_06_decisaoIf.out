@@ -145,7 +145,7 @@ DEF: soma
         ID: y
 IF:
   COND:
-    OP: A
+    OP: AND
       ID: a
       ID: b
   THEN:
@@ -156,7 +156,7 @@ IF:
         NUM: 1
     IF:
       COND:
-        OP: O
+        OP: OR
           ID: b
           ID: a
       THEN:

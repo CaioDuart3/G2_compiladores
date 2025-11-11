@@ -11,6 +11,8 @@ typedef enum {
     NO_STRING,
     NO_BOOL,
     NO_OP_BINARIA,
+    NO_OP_LOGICA_AND,
+    NO_OP_LOGICA_OR,
     NO_ATRIBUICAO,
     NO_ATRIBUICAO_MULTIPLA,
     NO_IF,
@@ -66,6 +68,8 @@ NoAST *criarNoVazio();
 
 // Nós de Expressão
 NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir);
+NoAST *criarNoOpLogicaAnd(NoAST *esq, NoAST *dir);
+NoAST *criarNoOpLogicaOr(NoAST *esq, NoAST *dir);
 
 // Nós de Comando
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr);
