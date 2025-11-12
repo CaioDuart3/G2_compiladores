@@ -8,6 +8,9 @@ CFLAGS = -Wall -g
 LEXER = lexer/lexer.l
 PARSER = parser/parser.y
 MAIN = tests/main.c
+AST = ast/ast.c
+TAC = tac/tac.c
+ST = st/st.c
 
 # Arquivos gerados
 LEXER_C = lexer/lex.yy.c
@@ -27,8 +30,9 @@ $(PARSER_C) $(PARSER_H): $(PARSER)
 	$(BISON) -d -o $(PARSER_C) $(PARSER)
 
 # Compila tudo
-$(EXEC): $(LEXER_C) $(PARSER_C) $(MAIN)
-	$(CC) $(CFLAGS) -o $(EXEC) $(LEXER_C) $(PARSER_C) $(MAIN) -lfl
+$(EXEC): $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN)
+    $(CC) $(CFLAGS) -o $(EXEC) $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN) -lfl
+
 
 # Limpeza
 clean:

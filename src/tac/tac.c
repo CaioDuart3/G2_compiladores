@@ -167,8 +167,8 @@ static char* processar_no(NoAST* no) {
             }
             
             emitir(op, res, esq, dir);
-            free(esq); // Já usamos os resultados dos filhos
-            free(dir);
+            // free(esq); // Já usamos os resultados dos filhos
+            // free(dir);
             return res; // Retorna o temporário (ex: "t0")
 
         // Implementação de 'AND' e 'OR' com curto-circuito
@@ -189,7 +189,7 @@ static char* processar_no(NoAST* no) {
             
             emitir(TAC_LABEL, aux2, NULL, NULL);   // L_FIM:
             
-            free(esq); free(dir); free(aux1); free(aux2);
+            // free(esq); free(dir); free(aux1); free(aux2);
             return res;
             
         case NO_OP_LOGICA_OR:
@@ -216,7 +216,7 @@ static char* processar_no(NoAST* no) {
             
             emitir(TAC_LABEL, aux2, NULL, NULL);   // L_FIM:
             
-            free(esq); free(dir); free(aux1); free(aux2);
+            // free(esq); free(dir); free(aux1); free(aux2);
             return res;
 
         // --- Comandos (Statements) ---
@@ -243,7 +243,7 @@ static char* processar_no(NoAST* no) {
             // REFAZENDO NO_ATRIBUICAO (correto):
             arg1 = processar_no(no->filho2); // Valor (ex: "t0")
             emitir(TAC_ATRIBUICAO, strdup(no->filho1->valor_string), arg1, NULL);
-            free(arg1); // Libera o temp/constante do lado direito
+            // free(arg1); // Libera o temp/constante do lado direito
             return NULL;
             
         case NO_IF:
@@ -256,7 +256,7 @@ static char* processar_no(NoAST* no) {
             // 2. Emite o salto condicional
             //    (Se a condição 'res' for falsa (zero), pula para 'aux1' [label_else])
             emitir(TAC_IFZ, aux1, res, NULL);
-            free(res); // Já usamos o resultado da condição
+            // free(res); // Já usamos o resultado da condição
             
             // 3. Processa o bloco THEN
             processar_no(no->filho2);
@@ -274,10 +274,10 @@ static char* processar_no(NoAST* no) {
                 processar_no(no->filho3);
                 // 7. Emite o label FIM
                 emitir(TAC_LABEL, aux2, NULL, NULL);
-                free(aux2);
+                // free(aux2);
             }
             
-            free(aux1);
+            // free(aux1);
             return NULL;
 
         case NO_WHILE:
@@ -292,7 +292,6 @@ static char* processar_no(NoAST* no) {
             
             // 3. Emite o salto condicional (se for falso, pula para o fim 'aux2')
             emitir(TAC_IFZ, aux2, res, NULL);
-            free(res);
             
             // 4. Processa o CORPO do loop
             processar_no(no->filho2);
@@ -303,8 +302,8 @@ static char* processar_no(NoAST* no) {
             // 6. Emite o label de FIM
             emitir(TAC_LABEL, aux2, NULL, NULL);
             
-            free(aux1);
-            free(aux2);
+            // free(aux1);
+            // free(aux2);
             return NULL;
             
         case NO_FUNCAO:
@@ -324,7 +323,6 @@ static char* processar_no(NoAST* no) {
             if (no->filho1) {
                 res = processar_no(no->filho1);
                 emitir(TAC_RETORNO_VAL, NULL, res, NULL);
-                free(res);
             } else {
                 emitir(TAC_RETORNO_VAZIO, NULL, NULL, NULL);
             }
@@ -336,7 +334,6 @@ static char* processar_no(NoAST* no) {
             while (no_lista) {
                 res = processar_no(no_lista);
                 emitir(TAC_ARG, NULL, res, NULL);
-                free(res);
                 no_lista = no_lista->proximo;
             }
             
@@ -355,7 +352,7 @@ static char* processar_no(NoAST* no) {
         case NO_INDEX:
         case NO_LISTA:
         case NO_ATRIBUICAO_MULTIPLA:
-            fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n", no->tipo);
+fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n", no->tipo);
             return NULL;
 
         case NO_VAZIO:
@@ -366,7 +363,7 @@ static char* processar_no(NoAST* no) {
             fprintf(stderr, "Aviso: Nó AST desconhecido (%d) encontrado pelo gerador TAC.\n", no->tipo);
             return NULL;
     }
-}
+}            
 
 
 // --- Funções Públicas (Definidas em tac.h) ---
