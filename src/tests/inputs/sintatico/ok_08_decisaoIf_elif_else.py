@@ -1,11 +1,8 @@
-# Caso de teste: estruturas de decisão com if, elif e else
-# Contém if, elif e else aninhados e atribuições dentro de cada bloco
-
 x = 5
 y = 0
 z = 10
 
-if x > 10:  # falso neste caso
+if x > 10:  # falso
     y = y + 1  # não executado
     if z > 0:
         x = x + z
@@ -14,9 +11,9 @@ if x > 10:  # falso neste caso
     else:
         y = 2
 
-elif x == 5:  # verdadeiro
+elif x == 5: # verdadeiro
     y = 100
-    if y > 50:  # verdadeiro
+    if y > 50: # verdadeiro
         z = z + 5  # z vira 15
         if z > 20:
             x = x + 10
