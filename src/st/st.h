@@ -39,8 +39,6 @@ typedef struct simbolo
     struct simbolo *proximo;
 } Simbolo;
 
-
-
 // Função hash para string
 unsigned hash(char *s);
 

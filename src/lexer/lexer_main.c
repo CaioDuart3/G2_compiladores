@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include "../parser/parser.tab.h" // Para ter a definição dos tokens
+#include "../parser/parser.tab.h"
 
-// Declarações de funções e variáveis do Flex
 int yylex(void);
-YYSTYPE yylval; // <<< MUDANÇA: Define a variável que o linker estava procurando
+YYSTYPE yylval;
 extern int yylineno;
 extern char* yytext;
 extern void inicializa_pilha();
@@ -19,7 +18,6 @@ int main(void) {
     
     int token;
     // Puxa tokens até o yylex() retornar 0 (EOF)
-    // <<< MUDANÇA: Parênteses extras para remover o warning
     while ((token = yylex())) { 
         
         // Se o lexer reportar um token desconhecido, é um erro léxico.
@@ -28,7 +26,6 @@ int main(void) {
             return 1; // Retorna código de erro
         }
     }
-    
-    // Chegou ao fim do arquivo sem erros léxicos
-    return 0; // Sucesso
+
+    return 0;
 }

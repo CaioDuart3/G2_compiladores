@@ -1,7 +1,6 @@
 #include "../st/st.h"
 #ifndef AST_H
 #define AST_H
-// Enumeração expandida para todos os tipos de nós
 typedef enum {
     NO_NUM,
     NO_ID,
@@ -22,8 +21,8 @@ typedef enum {
     NO_VAZIO,
     NO_CHAMADA_FUNCAO,
     NO_RETORNO,
-    NO_INDEX,       // <--- novo, para indexação a[i]
-    NO_LISTA        // <--- novo, para listas literais [1,2,3]
+    NO_INDEX,
+    NO_LISTA
 } TipoNo;
 
 typedef struct NoAST {
@@ -55,7 +54,6 @@ typedef struct NoAST {
 
 // --- Funções de Criação de Nós ("Fábricas") ---
 
-
 // Nós para vetores
 NoAST *criarNoIndex(NoAST *lista, NoAST *indice);
 
@@ -80,7 +78,6 @@ NoAST *criarNoWhile(NoAST *condicao, NoAST *bloco);
 NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo);
 NoAST *criarNoReturn(NoAST *expr);
 
-
 // Nós de atribuição múltipla
 NoAST* criarListaIds(char* nome);
 NoAST* adicionaIdNaLista(NoAST* lista, char* nome);
@@ -96,7 +93,6 @@ NoAST *criarNoFor(NoAST *var, NoAST *iterable, NoAST *bloco);
 Tipo inferirTipo(NoAST *no);
 
 void registrarParametros( NoAST *parametros);
-
 
 // --- Funções de Gerenciamento ---
 
