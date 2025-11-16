@@ -39,6 +39,8 @@ typedef struct simbolo
     struct simbolo *proximo;
 } Simbolo;
 
+
+
 // Função hash para string
 unsigned hash(char *s);
 
@@ -66,4 +68,9 @@ void closeScope();
 int getScope();
 int *getListaST(const char *nome);
 
+Simbolo **getAllSymbols(int *numSimbolos);
+
+extern Simbolo *tabela[TAM];
+
 #endif
+

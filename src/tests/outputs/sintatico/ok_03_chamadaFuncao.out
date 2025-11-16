@@ -114,8 +114,6 @@ CALL:
         NUM: 2
 ---------------------------------------
 
---- EXECUÇÃO DA AST ---
-
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
@@ -124,3 +122,6 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+---------------------------------------
+
+Código C gerado com sucesso em 'saida.c'

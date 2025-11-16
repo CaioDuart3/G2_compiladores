@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 1 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -75,7 +75,7 @@
   #include "../st/st.h"
   #include "../tac/tac.h"
   #include "../ast/ast.h"
-
+  #include "../codegen/gerarC.h" 
 
   #define YYERROR_VERBOSE 1
 
@@ -97,7 +97,7 @@
   static void set_last_for_expr(NoAST *n) { last_for_expr = n; }
   static NoAST *get_last_for_expr(void) { return last_for_expr; }
 
-#line 101 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 101 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -595,8 +595,8 @@ static const yytype_int16 yyrline[] =
      277,   284,   288,   297,   298,   300,   305,   315,   317,   319,
      321,   323,   325,   327,   329,   331,   333,   335,   337,   339,
      341,   348,   350,   352,   364,   366,   368,   370,   374,   376,
-     382,   383,   388,   396,   406,   412,   420,   429,   439,   438,
-     459,   458
+     382,   383,   388,   396,   406,   412,   420,   429,   440,   439,
+     460,   459
 };
 #endif
 
@@ -1681,128 +1681,128 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: lista_comandos_opt newlines_opt  */
-#line 103 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 103 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     { 
         raizAST = (yyvsp[-1].no); /* Salva a raiz global */
         (yyval.no) = (yyvsp[-1].no);
     }
-#line 1690 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1690 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 5: /* lista_comandos_opt: %empty  */
-#line 115 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 115 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                         { (yyval.no) = NULL; }
-#line 1696 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1696 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 6: /* lista_comandos_opt: lista_comandos  */
-#line 116 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 116 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 1702 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1702 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 7: /* lista_comandos: comando  */
-#line 124 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 124 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoLista((yyvsp[0].no), NULL); }
-#line 1708 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1708 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 8: /* lista_comandos: lista_comandos comando  */
-#line 126 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 126 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         {
             if ((yyvsp[0].no) != NULL)
                 (yyval.no) = criarNoLista((yyvsp[-1].no), (yyvsp[0].no));
             else
                 (yyval.no) = (yyvsp[-1].no);
         }
-#line 1719 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1719 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 9: /* comando: atribuicao  */
-#line 135 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 135 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1725 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1725 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 10: /* comando: expressao  */
-#line 136 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 136 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1731 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1731 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 11: /* comando: if_stmt  */
-#line 137 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 137 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1737 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1737 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 12: /* comando: while_stmt  */
-#line 138 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 138 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1743 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1743 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 13: /* comando: for_stmt  */
-#line 139 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 139 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1749 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1749 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 14: /* comando: TOKEN_NEWLINE  */
-#line 140 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 140 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 1755 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1755 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 15: /* comando: bloco  */
-#line 141 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 141 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1761 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1761 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 16: /* comando: declaracao_funcao  */
-#line 142 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 142 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1767 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1767 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 17: /* comando: retorno  */
-#line 143 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 143 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1773 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1773 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 18: /* $@1: %empty  */
-#line 149 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 149 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         openScope();
 
         registrarParametros((yyvsp[-2].no)); 
     }
-#line 1783 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1783 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 19: /* declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS $@1 bloco  */
-#line 155 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 155 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         
         (yyval.no) = criarNoFuncao((yyvsp[-6].sval), (yyvsp[-4].no), (yyvsp[0].no));
         insertST((yyvsp[-6].sval), FUNCAO);
     }
-#line 1794 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1794 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 20: /* retorno: TOKEN_PALAVRA_CHAVE_RETURN expressao  */
-#line 165 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 165 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         (yyval.no) = criarNoReturn((yyvsp[0].no));
     }
-#line 1802 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1802 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 25: /* atribuicao_indexacao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 179 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 179 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
 
         NoAST *no_index = criarNoIndex(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no));
@@ -1810,11 +1810,11 @@ yyreduce:
 
         free((yyvsp[-5].sval));
     }
-#line 1814 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1814 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 26: /* atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 190 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 190 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
 
@@ -1850,19 +1850,19 @@ yyreduce:
     }
     free((yyvsp[-2].sval));
 }
-#line 1854 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1854 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 27: /* atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes  */
-#line 229 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 229 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
       {
           (yyval.no) = criarNoAtribuicaoMultipla((yyvsp[-2].no), (yyvsp[0].no));
       }
-#line 1862 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1862 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 28: /* atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao  */
-#line 236 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 236 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
 
@@ -1897,167 +1897,167 @@ switch (t) {
 }
     free((yyvsp[-2].sval));
 }
-#line 1901 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1901 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 29: /* lista_identificadores: TOKEN_IDENTIFICADOR  */
-#line 274 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 274 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
       {
           (yyval.no) = criarListaIds((yyvsp[0].sval));
       }
-#line 1909 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1909 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 30: /* lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR  */
-#line 278 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 278 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
       {
           (yyval.no) = adicionaIdNaLista((yyvsp[-2].no), (yyvsp[0].sval));
       }
-#line 1917 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1917 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 31: /* lista_expressoes: expressao  */
-#line 285 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 285 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
       {
           (yyval.no) = criarListaExp((yyvsp[0].no));
       }
-#line 1925 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1925 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 32: /* lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 289 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 289 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
       {
           (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no));
       }
-#line 1933 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1933 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 33: /* lista_argumentos: %empty  */
-#line 297 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 297 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = NULL; }
-#line 1939 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1939 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 34: /* lista_argumentos: expressao  */
-#line 299 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 299 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1945 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1945 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 35: /* lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 301 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 301 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1951 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1951 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 36: /* chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 306 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 306 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         {
             NoAST *id = criarNoId((yyvsp[-3].sval));
             (yyval.no) = criarNoChamadaFuncao(id, (yyvsp[-1].no));
             free((yyvsp[-3].sval));
         }
-#line 1961 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1961 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 37: /* expressao: expressao TOKEN_OPERADOR_MAIS expressao  */
-#line 316 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 316 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('+', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1967 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1967 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 38: /* expressao: expressao TOKEN_OPERADOR_MENOS expressao  */
-#line 318 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 318 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('-', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1973 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1973 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 39: /* expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO expressao  */
-#line 320 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 320 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('*', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1979 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1979 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 40: /* expressao: expressao TOKEN_OPERADOR_DIVISAO expressao  */
-#line 322 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 322 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('/', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1985 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1985 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 41: /* expressao: expressao TOKEN_OPERADOR_IGUAL expressao  */
-#line 324 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 324 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('=', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1991 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1991 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 42: /* expressao: expressao TOKEN_OPERADOR_DIFERENTE expressao  */
-#line 326 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 326 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('!', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1997 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 1997 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 43: /* expressao: expressao TOKEN_OPERADOR_MENOR expressao  */
-#line 328 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 328 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('<', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2003 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2003 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 44: /* expressao: expressao TOKEN_OPERADOR_MENOR_IGUAL expressao  */
-#line 330 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 330 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('l', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2009 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2009 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 45: /* expressao: expressao TOKEN_OPERADOR_MAIOR expressao  */
-#line 332 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 332 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('>', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2015 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2015 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 46: /* expressao: expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao  */
-#line 334 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 334 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('g', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2021 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2021 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 47: /* expressao: expressao TOKEN_OPERADOR_LOGICO_AND expressao  */
-#line 336 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 336 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOpLogicaAnd((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2027 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2027 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 48: /* expressao: expressao TOKEN_OPERADOR_LOGICO_OR expressao  */
-#line 338 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 338 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOpLogicaOr((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2033 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2033 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 49: /* expressao: TOKEN_OPERADOR_LOGICO_NOT expressao  */
-#line 340 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 340 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoOp('N', (yyvsp[0].no), NULL); }
-#line 2039 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2039 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 50: /* expressao: atomo  */
-#line 342 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 342 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = (yyvsp[0].no); }
-#line 2045 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2045 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 51: /* atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 349 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 349 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = (yyvsp[-1].no); }
-#line 2051 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2051 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 52: /* atomo: TOKEN_INTEIRO  */
-#line 351 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 351 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoNum((yyvsp[0].ival)); }
-#line 2057 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2057 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 53: /* atomo: TOKEN_IDENTIFICADOR  */
-#line 353 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 353 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         {
             (yyval.no) = criarNoId((yyvsp[0].sval));
 
@@ -2069,128 +2069,128 @@ switch (t) {
 
             free((yyvsp[0].sval));
         }
-#line 2073 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2073 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 54: /* atomo: TOKEN_STRING  */
-#line 365 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 365 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoString((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 2079 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2079 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 55: /* atomo: TOKEN_PALAVRA_CHAVE_TRUE  */
-#line 367 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 367 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2085 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2085 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 56: /* atomo: TOKEN_PALAVRA_CHAVE_FALSE  */
-#line 369 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 369 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2091 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2091 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 57: /* atomo: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 371 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 371 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         {
             (yyval.no) = criarNoLista((yyvsp[-1].no), NULL);
         }
-#line 2099 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2099 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 58: /* atomo: chamada_index  */
-#line 375 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 375 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = (yyvsp[0].no); }
-#line 2105 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2105 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 59: /* atomo: chamada_funcao  */
-#line 377 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 377 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = (yyvsp[0].no); }
-#line 2111 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2111 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 60: /* lista_valores: %empty  */
-#line 382 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 382 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                            { (yyval.no) = NULL; }
-#line 2117 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2117 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 61: /* lista_valores: lista_expressoes  */
-#line 383 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 383 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
                            { (yyval.no) = (yyvsp[0].no); }
-#line 2123 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2123 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 62: /* chamada_index: atomo TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 389 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 389 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
         {
             (yyval.no) = criarNoIndex((yyvsp[-3].no), (yyvsp[-1].no)); /* cria nó AST de indexação: $1[$3] */
         }
-#line 2131 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2131 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 63: /* bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT  */
-#line 397 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 397 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         (yyval.no) = (yyvsp[-1].no); // Apenas retorna a lista de comandos
     }
-#line 2139 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2139 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 64: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 407 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 407 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         (yyval.no) = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
     }
-#line 2147 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2147 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 65: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 414 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 414 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
         (yyval.no) = criarNoIf((yyvsp[-6].no), (yyvsp[-4].no), elif_if);
     }
-#line 2156 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2156 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 66: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 423 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 423 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
         (yyval.no) = criarNoIf((yyvsp[-9].no), (yyvsp[-7].no), elif_if);
     }
-#line 2165 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2165 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 67: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 431 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 431 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         (yyval.no) = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2173 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2173 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 68: /* $@2: %empty  */
-#line 439 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 440 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         openScope();
     }
-#line 2181 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2181 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 69: /* while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@2 bloco  */
-#line 443 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 444 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoWhile((yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2190 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2190 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 70: /* $@3: %empty  */
-#line 459 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 460 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         openScope();
         
@@ -2198,21 +2198,21 @@ switch (t) {
             insertST((yyvsp[-3].sval), INT);
         }
     }
-#line 2202 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2202 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 71: /* for_stmt: TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@3 bloco  */
-#line 467 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 468 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFor(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no), (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 2212 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2212 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
     break;
 
 
-#line 2216 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.c"
+#line 2216 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
 
       default: break;
     }
@@ -2441,13 +2441,14 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 473 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 474 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
 
 
 
 void yyerror(const char *s) {
   fprintf(stderr, "ERRO SINTÁTICO (linha %d): %s\n", yylineno, s);
 }
+
 
 int main(void) {
     initST();
@@ -2467,43 +2468,32 @@ int main(void) {
         }
         printf("---------------------------------------\n");
 
-        printf("\n--- EXECUÇÃO DA AST ---\n");
-        if (raizAST) {
-            NoAST *cmd = raizAST;
-            while (cmd) {
-                if (cmd->tipo == NO_ATRIBUICAO || cmd->tipo == NO_ATRIBUICAO_MULTIPLA) {
-                    executarAtribuicao(cmd);
-                }
-                else if (cmd->tipo == NO_OP_BINARIA) {
-                    int val = avaliarExpressao(cmd);
-                    printf("Resultado da expressão: %d\n", val);
-                }
-                cmd = cmd->proximo;
-            }
-        }
-
         printf("\n--- TABELA DE SÍMBOLOS ---\n");
         showST();   // Mostra as variáveis e valores
-        freeST();   // Libera a tabela de símbolos
+        printf("---------------------------------------\n");
 
-
-        /* ===== INTEGRAÇÃO TAC: gera, imprime e libera o código TAC ===== */
+        // ===== Geração de código C direto =====
         if (raizAST) {
-            printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
-            TacCodigo* codigo = gerar_tac(raizAST);  /* função declarada em tac.h */
-            if (codigo) {
-                imprimir_tac(codigo);
-                liberar_tac(codigo);
-            } else {
-                printf("(Código TAC vazio)\n");
+            FILE *saida = fopen("saida.c", "w");
+            if (!saida) {
+                perror("Erro ao abrir arquivo de saída");
+                return 1;
             }
-            printf("-----------------------------------\n");
+
+            gerarCabecalhoC(saida);           // Includes e início de main()
+            gerarDeclaracoesVariaveis(saida); // Declara variáveis globais
+            gerarC(raizAST, saida);           // Percorre AST e gera comandos
+            fprintf(saida, "return 0;\n}\n"); // Fecha main
+            fclose(saida);
+
+            printf("\nCódigo C gerado com sucesso em 'saida.c'\n");
         }
 
         if (raizAST) {
             liberarAST(raizAST);
         }
 
+        freeST(); // libera tabela de símbolos
 
     } else {
         printf("Parsing interrompido por erro.\n");

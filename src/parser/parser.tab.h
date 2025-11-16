@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
-# define YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
+#ifndef YY_YY_HOME_LARYSSA_DOCUMENTS_UNB_COMPILADORES_1_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
+# define YY_YY_HOME_LARYSSA_DOCUMENTS_UNB_COMPILADORES_1_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -103,13 +103,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 38 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.y"
+#line 38 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
 
     int ival;            /* Para inteiros (TOKEN_INTEIRO) e Bools (0 ou 1) */
     char *sval;          /* Para strings (TOKEN_IDENTIFICADOR, TOKEN_STRING) */
     struct NoAST *no;    /* um ponteiro para um nó da AST */
 
-#line 113 "/home/ludebug/Estudos/UnB/6semestre-esse/G2_compiladores/src/parser/parser.tab.h"
+#line 113 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -138,4 +138,4 @@ extern YYLTYPE yylloc;
 int yyparse (void);
 
 
-#endif /* !YY_YY_HOME_LUDEBUG_ESTUDOS_UNB_6SEMESTRE_ESSE_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_HOME_LARYSSA_DOCUMENTS_UNB_COMPILADORES_1_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED  */

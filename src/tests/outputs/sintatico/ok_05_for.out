@@ -37,10 +37,11 @@ FOR:
         STRING: ""i: {i}"
 ---------------------------------------
 
---- EXECUÇÃO DA AST ---
-
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
 Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+---------------------------------------
+
+Código C gerado com sucesso em 'saida.c'

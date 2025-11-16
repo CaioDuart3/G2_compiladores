@@ -101,8 +101,6 @@ IF:
       NUM: 0
 ---------------------------------------
 
---- EXECUÇÃO DA AST ---
-
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
@@ -113,3 +111,6 @@ Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
 Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola mundo"
 Nome: vetor_int  | Tipo: NONE    | Escopo: 0 | Inicializado: SIM | Valor: N/A
 ===============================
+---------------------------------------
+
+Código C gerado com sucesso em 'saida.c'

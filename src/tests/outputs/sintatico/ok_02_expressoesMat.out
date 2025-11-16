@@ -61,8 +61,6 @@ ATTR:
       NUM: 2
 ---------------------------------------
 
---- EXECUÇÃO DA AST ---
-
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
@@ -71,3 +69,6 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: c          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
 ===============================
+---------------------------------------
+
+Código C gerado com sucesso em 'saida.c'

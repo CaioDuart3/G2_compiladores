@@ -5,7 +5,7 @@
   #include "../st/st.h"
   #include "../tac/tac.h"
   #include "../ast/ast.h"
-
+  #include "../codegen/gerarC.h" 
 
   #define YYERROR_VERBOSE 1
 
@@ -433,6 +433,7 @@ if_stmt:
     }
 ;
 
+
 /* ---------- WHILE ---------- */
 while_stmt:
     TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS
@@ -477,6 +478,7 @@ void yyerror(const char *s) {
   fprintf(stderr, "ERRO SINTÁTICO (linha %d): %s\n", yylineno, s);
 }
 
+
 int main(void) {
     initST();
     inicializa_pilha();
@@ -495,43 +497,32 @@ int main(void) {
         }
         printf("---------------------------------------\n");
 
-        printf("\n--- EXECUÇÃO DA AST ---\n");
-        if (raizAST) {
-            NoAST *cmd = raizAST;
-            while (cmd) {
-                if (cmd->tipo == NO_ATRIBUICAO || cmd->tipo == NO_ATRIBUICAO_MULTIPLA) {
-                    executarAtribuicao(cmd);
-                }
-                else if (cmd->tipo == NO_OP_BINARIA) {
-                    int val = avaliarExpressao(cmd);
-                    printf("Resultado da expressão: %d\n", val);
-                }
-                cmd = cmd->proximo;
-            }
-        }
-
         printf("\n--- TABELA DE SÍMBOLOS ---\n");
         showST();   // Mostra as variáveis e valores
-        freeST();   // Libera a tabela de símbolos
+        printf("---------------------------------------\n");
 
-
-        /* ===== INTEGRAÇÃO TAC: gera, imprime e libera o código TAC ===== */
+        // ===== Geração de código C direto =====
         if (raizAST) {
-            printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
-            TacCodigo* codigo = gerar_tac(raizAST);  /* função declarada em tac.h */
-            if (codigo) {
-                imprimir_tac(codigo);
-                liberar_tac(codigo);
-            } else {
-                printf("(Código TAC vazio)\n");
+            FILE *saida = fopen("saida.c", "w");
+            if (!saida) {
+                perror("Erro ao abrir arquivo de saída");
+                return 1;
             }
-            printf("-----------------------------------\n");
+
+            gerarCabecalhoC(saida);           // Includes e início de main()
+            gerarDeclaracoesVariaveis(saida); // Declara variáveis globais
+            gerarC(raizAST, saida);           // Percorre AST e gera comandos
+            fprintf(saida, "return 0;\n}\n"); // Fecha main
+            fclose(saida);
+
+            printf("\nCódigo C gerado com sucesso em 'saida.c'\n");
         }
 
         if (raizAST) {
             liberarAST(raizAST);
         }
 
+        freeST(); // libera tabela de símbolos
 
     } else {
         printf("Parsing interrompido por erro.\n");

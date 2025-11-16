@@ -47,10 +47,11 @@ WHILE:
         NUM: 1
 ---------------------------------------
 
---- EXECUÇÃO DA AST ---
-
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
 Nome: i          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 ===============================
+---------------------------------------
+
+Código C gerado com sucesso em 'saida.c'

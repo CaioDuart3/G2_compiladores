@@ -28,8 +28,12 @@ ANALISADOR_LEX="$ROOT_DIR/analisador_lexico"
 
 TESTS_DIR="$SRC_DIR/tests/inputs"
 OUTPUTS_DIR="$SRC_DIR/tests/outputs"
+# --- Código Gerador C ---
+CODEGEN_DIR="$SRC_DIR/codegen"
+GERAR_C_C="$CODEGEN_DIR/gerarC.c"
+GERAR_C_H="$CODEGEN_DIR/gerarC.h"
 
-# --- Função de Compilação ---
+
 compile_all() {
     echo "Compilando o parser (Bison)..."
     bison -d -v -o "$PARSER_C" "$PARSER_SRC" || { echo "Falha na compilação do parser"; exit 1; }
@@ -37,10 +41,10 @@ compile_all() {
     echo "Compilando o lexer (Flex)..."
     flex -o "$LEXER_C" "$LEXER_SRC" || { echo "Falha na compilação do lexer"; exit 1; }
 
-    echo "Compilando o COMPILADOR completo (parser+lexer+ast+st)..."
+    echo "Compilando o COMPILADOR completo (parser+lexer+ast+st+codegen)..."
     gcc -g -Wall \
-        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" \
-        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" \
+        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" "$GERAR_C_C" \
+        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" -I"$CODEGEN_DIR" \
         -o "$COMPILADOR" -lfl || { echo "Falha na compilação do COMPILADOR"; exit 1; }
 
     echo "Compilando o ANALISADOR LÉXICO (lexer_main + lexer)..."

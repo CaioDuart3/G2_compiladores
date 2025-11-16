@@ -200,8 +200,6 @@ IF:
             STRING: "acabou"
 ---------------------------------------
 
---- EXECUÇÃO DA AST ---
-
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
@@ -211,3 +209,6 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: x          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 ===============================
+---------------------------------------
+
+Código C gerado com sucesso em 'saida.c'

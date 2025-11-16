@@ -1,9 +1,4 @@
-ERRO SINTÁTICO (linha 14): syntax error, unexpected TOKEN_PALAVRA_CHAVE_ELIF
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-
+ERRO SINTÁTICO (linha 12): syntax error, unexpected TOKEN_PALAVRA_CHAVE_ELIF
 LEXER: Token IDENTIFICADOR (x)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (5)

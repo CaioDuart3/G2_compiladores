@@ -155,3 +155,16 @@ int *getListaST(const char *nome) {
 }
 
 
+Simbolo *tabela[TAM]; // já existente
+
+Simbolo **getAllSymbols(int *numSimbolos) {
+    static Simbolo *lista[TAM]; // lista temporária
+    int count = 0;
+    for(int i=0; i<TAM; i++){
+        for(Simbolo *s = tabela[i]; s; s = s->proximo){
+            lista[count++] = s;
+        }
+    }
+    *numSimbolos = count;
+    return lista;
+}
