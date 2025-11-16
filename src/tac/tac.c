@@ -1,9 +1,3 @@
-/*
- * tac.c - Implementação do Gerador de Código de Três Endereços (TAC)
- *
- * "Visita" a AST e gera uma lista ligada de instruções TAC.
- */
-
 #include "tac.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -365,9 +359,7 @@ fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n",
     }
 }            
 
-
 // --- Funções Públicas (Definidas em tac.h) ---
-
 TacCodigo* gerar_tac(NoAST* raiz) {
     inicializar_gerador();
     if (raiz) {

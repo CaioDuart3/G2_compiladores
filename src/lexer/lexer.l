@@ -67,20 +67,18 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 
 
     /* --- Tokens com Valor --- */
-
 {DIGITO}+("."{DIGITO}+)?  { 
     if (strchr(yytext,'.')) {
-        /* yylval.fval = atof(yytext); // Descomente se adicionar float na union */
         printf("LEXER: Token FLOAT (%s)\n", yytext);
         return TOKEN_FLOAT;
     } else {
-        yylval.ival = atoi(yytext); /* Coloca o inteiro na union */
+        yylval.ival = atoi(yytext);
         printf("LEXER: Token INTEIRO (%s)\n", yytext);
         return TOKEN_INTEIRO;
     }
 }
 
-    /* F-strings (f"..." ou f'...') — precisa vir antes das regras normais de string */
+    /* F-strings (f"..." ou f'...') - precisa vir antes das regras normais de string */
 [fF]\"([^"\\]|\\.)*\"  { 
     yylval.sval = strdup(yytext); 
     printf("LEXER: Token F-STRING (%s)\n", yytext); 

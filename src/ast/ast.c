@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Função auxiliar interna para alocar e inicializar um nó
 static NoAST *alocarNo(TipoNo tipo) {
     NoAST *novo = malloc(sizeof(NoAST));
     if (!novo) {
@@ -32,8 +31,8 @@ NoAST *criarNoIndex(NoAST *lista, NoAST *indice) {
     }
 
     no->tipo = NO_INDEX;
-    no->filho1 = lista;   // variável ou expressão que representa a lista
-    no->filho2 = indice;  // expressão do índice
+    no->filho1 = lista;
+    no->filho2 = indice;
     no->filho3 = NULL;
     no->proximo = NULL;
     no->listaIds = NULL;
@@ -45,9 +44,6 @@ NoAST *criarNoIndex(NoAST *lista, NoAST *indice) {
     return no;
 }
 
-
-// --- Funções de Criação de Nós ("Fábricas") ---
-
 NoAST *criarNoNum(int valor) {
     NoAST *novo = alocarNo(NO_NUM);
     novo->valor_int = valor;
@@ -56,62 +52,48 @@ NoAST *criarNoNum(int valor) {
 
 NoAST *criarNoId(char *nome) {
     NoAST *novo = alocarNo(NO_ID);
-    novo->valor_string = strdup(nome); // Copia a string
+    novo->valor_string = strdup(nome);
     return novo;
 }
 
 NoAST *criarNoString(char *texto) {
     NoAST *novo = alocarNo(NO_STRING);
-    // Remove as aspas (simples ou duplas)
     int len = strlen(texto);
     if (len >= 2) {
         novo->valor_string = strndup(texto + 1, len - 2);
     } else {
-        novo->valor_string = strdup(""); // String vazia se algo der errado
+        novo->valor_string = strdup("");
     }
     return novo;
 }
 
 NoAST *criarNoBool(int valor) {
     NoAST *novo = alocarNo(NO_BOOL);
-    novo->valor_int = (valor != 0); // Garante 0 ou 1
+    novo->valor_int = (valor != 0);
     return novo;
 }
 
 void registrarParametros( NoAST *parametros) {
     
-    // 'no_atual' começa no primeiro parâmetro (ex: 'c' em soma2)
     NoAST *no_atual = parametros;
 
-    // Percorre a lista ligada até o final (NULL)
     while (no_atual != NULL) {
         
-        // Verificamos se o nó é do tipo esperado (NO_ID)
-        // (Assumindo que sua AST usa 'NO_ID' e 'valor_string' 
-        //  com base nas regras 'atomo' e 'atribuicao')
         if (no_atual->tipo == NO_ID) {
             
             char *nome_param = no_atual->valor_string;
 
-            // 1. Insere o símbolo na Tabela de Símbolos
-            //    Usamos INT como tipo padrão, conforme sua sugestão.
-            //    Em um sistema de tipos mais complexo, poderia ser 'NONE' ou 'ANY'.
             insertST(nome_param, INT);
 
-            // 2. [RECOMENDADO] Marca o parâmetro como INICIALIZADO.
-            //    Parâmetros são "inicializados" pelo próprio ato da
-            //    chamada da função, então é seguro definir isso como 'true'.
             Simbolo *s = searchST(nome_param);
             if (s != NULL) {
                 s->inicializado = true;
             }
             
         } else {
-            // Isso não deveria acontecer se a gramática estiver correta
             fprintf(stderr, "[ERRO INTERNO] Nó de parâmetro não é um NO_ID!\n");
         }
 
-        // Avança para o próximo parâmetro na lista (ex: 'd' em soma2)
         no_atual = no_atual->proximo;
     }
 }
@@ -132,7 +114,6 @@ NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir) {
 }
 
 NoAST *criarNoOpLogicaAnd(NoAST *esq, NoAST *dir) {
-    // Usamos a função auxiliar que você já tem
     NoAST *no = alocarNo(NO_OP_LOGICA_AND);
     no->filho1 = esq;
     no->filho2 = dir;
@@ -157,7 +138,7 @@ NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse) {
     NoAST *novo = alocarNo(NO_IF);
     novo->filho1 = cond;
     novo->filho2 = blocoThen;
-    novo->filho3 = blocoElse; // Pode ser NULL
+    novo->filho3 = blocoElse;
     return novo;
 }
 
@@ -173,12 +154,11 @@ NoAST *criarNoWhile(NoAST *condicao, NoAST *bloco) {
 NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco) {
     NoAST *no = malloc(sizeof(NoAST));
     no->tipo = NO_FOR;
-    no->filho1 = id;        // variável de iteração
-    no->filho2 = iteravel;  // lista ou range
-    no->filho3 = bloco;     // corpo do laço
+    no->filho1 = id;
+    no->filho2 = iteravel;
+    no->filho3 = bloco;
     no->proximo = NULL;
 
-    // Cria a variável do laço na tabela de símbolos
     if (id && id->valor_string) {
         insertST(id->valor_string, inferirTipo(iteravel));
     }
@@ -196,9 +176,9 @@ NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
 
 NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo) {
     NoAST *novo = alocarNo(NO_FUNCAO);
-    novo->valor_string = strdup(nome); // nome da função
-    novo->filho1 = params;             // parâmetros
-    novo->filho2 = corpo;              // corpo (bloco)
+    novo->valor_string = strdup(nome);
+    novo->filho1 = params;
+    novo->filho2 = corpo;
     return novo;
 }
 
@@ -257,9 +237,6 @@ NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args) {
     return novo;
 }
 
-// --- Funções de Gerenciamento ---
-
-// Função auxiliar para imprimir indentação
 static void printIndent(int indent) {
     for (int i = 0; i < indent; i++) {
         printf("  ");
@@ -269,14 +246,12 @@ static void printIndent(int indent) {
 void imprimirAST(const NoAST *raiz, int indent) {
     if (!raiz) return;
 
-    // Nós que são parte de uma lista de comandos
     if (raiz->tipo == NO_LISTA_COMANDOS) {
-        imprimirAST(raiz->filho1, indent); // Imprime o comando atual
-        imprimirAST(raiz->proximo, indent); // Imprime o resto da lista
+        imprimirAST(raiz->filho1, indent);
+        imprimirAST(raiz->proximo, indent);
         return;
     }
 
-    // Para todos os outros nós, imprime a indentação
     printIndent(indent);
 
     switch (raiz->tipo) {
@@ -314,7 +289,6 @@ void imprimirAST(const NoAST *raiz, int indent) {
             imprimirAST(raiz->filho2, indent + 1);
             break;
         
-
         case NO_ATRIBUICAO:
             printf("ATTR:\n");
             imprimirAST(raiz->filho1, indent + 1); // ID
@@ -356,7 +330,6 @@ void imprimirAST(const NoAST *raiz, int indent) {
             printf("BLOCO:\n");
             imprimirAST(raiz->filho3, indent + 2);
             break;
-
 
         case NO_FUNCAO:
             printf("DEF: %s\n", raiz->valor_string);
@@ -420,20 +393,16 @@ void imprimirAST(const NoAST *raiz, int indent) {
 void liberarAST(NoAST *raiz) {
     if (!raiz) return;
     
-    // Libera filhos
     liberarAST(raiz->filho1);
     liberarAST(raiz->filho2);
     liberarAST(raiz->filho3);
     
-    // Libera o próximo da lista
     liberarAST(raiz->proximo);
     
-    // Libera strings alocadas
     if (raiz->tipo == NO_ID || raiz->tipo == NO_STRING) {
         free(raiz->valor_string);
     }
     
-    // Libera o próprio nó
     free(raiz);
 }
 
@@ -450,11 +419,11 @@ Tipo inferirTipo(NoAST *no) {
         case NO_ID: {
             Simbolo *s = searchST(no->valor_string);
             if (!s) return NONE;
-            return s->tipo;  // <--- pega o tipo da variável
+            return s->tipo;
         }
-        case NO_LISTA:       // lista literal [1,2,3]
-            return INT;       // vetor de inteiros
-        case NO_OP_BINARIA:  // tipo do filho1 (esquerda)
+        case NO_LISTA:
+            return INT;
+        case NO_OP_BINARIA:
             return inferirTipo(no->filho1);
         case NO_ATRIBUICAO:
             return inferirTipo(no->filho2);
@@ -494,28 +463,25 @@ int avaliarExpressao(NoAST *expr) {
         
         case NO_OP_LOGICA_AND: {
             int esq = avaliarExpressao(expr->filho1);
-            if (esq == 0) return 0; // Se a esquerda é Falsa, o resultado é Falso
-            return (avaliarExpressao(expr->filho2) != 0); // Senão, o resultado é o da direita
+            if (esq == 0) return 0;
+            return (avaliarExpressao(expr->filho2) != 0);
         }
 
         case NO_OP_LOGICA_OR: {
             int esq = avaliarExpressao(expr->filho1);
-            if (esq != 0) return 1; // Se a esquerda é Verdadeira, o resultado é Verdadeiro
-            return (avaliarExpressao(expr->filho2) != 0); // Senão, o resultado é o da direita
+            if (esq != 0) return 1;
+            return (avaliarExpressao(expr->filho2) != 0);
         }
 
         default: return 0;
     }
 }
 
-// Executa atribuição simples ou indexada
 void executarAtribuicao(NoAST *no) {
     if (!no) return;
 
     if (no->tipo == NO_ATRIBUICAO) {
-        // Se for indexação: vetor[i] = valor
         if (no->filho1->tipo == NO_OP_BINARIA && no->filho1->operador == 'I') { 
-            // 'I' usado como nó de indexação
             NoAST *indexNode = no->filho1;
             int valor = avaliarExpressao(no->filho2);
             int indice = avaliarExpressao(indexNode->filho2);
@@ -548,11 +514,9 @@ void executarAtribuicao(NoAST *no) {
             s->inicializado = true;
         }
     } else if (no->tipo == NO_ATRIBUICAO_MULTIPLA) {
-        // Implementação futura para múltiplas atribuições
     }
 }
 
-// Executa blocos de comandos ou AST geral
 void executarAST(NoAST *raiz) {
     if (!raiz) return;
 
@@ -572,44 +536,38 @@ void executarAST(NoAST *raiz) {
             case NO_IF: {
                 int cond = avaliarExpressao(atual->filho1);
                 if (cond) {
-                    executarAST(atual->filho2); // bloco then
+                    executarAST(atual->filho2);
                 } else if (atual->filho3) {
-                    executarAST(atual->filho3); // bloco else
+                    executarAST(atual->filho3);
                 }
                 break;
             }
             case NO_FOR: {
-                NoAST *iterVar = atual->filho1;    // nó ID (i)
-                NoAST *iterable = atual->filho2;   // nó lista literal ou ID (lista)
-                NoAST *body = atual->filho3;       // corpo
+                NoAST *iterVar = atual->filho1;
+                NoAST *iterable = atual->filho2;
+                NoAST *body = atual->filho3;
 
                 if (!iterVar || !iterable) break;
 
-                // Garante que a variável exista na tabela (tipo INT por simplicidade)
                 if (!searchST(iterVar->valor_string)) {
                     insertST(iterVar->valor_string, INT);
                 }
                 Simbolo *var = searchST(iterVar->valor_string);
                 if (!var) break;
 
-                // 1) Se for lista literal: NO_LISTA
                 if (iterable->tipo == NO_LISTA) {
                     NoAST *elem = iterable;
                     while (elem) {
-                        // Alguns implementações guardam o elemento em filho1, outras colocam diretamente.
-                        // Tentamos suportar ambos:
                         NoAST *valueNode = elem->filho1 ? elem->filho1 : elem;
                         int valor = avaliarExpressao(valueNode);
                         var->valor.valor_int = valor;
                         var->inicializado = true;
 
-                        // Executa o corpo (body é uma lista de comandos)
                         executarAST(body);
 
                         elem = elem->proximo;
                     }
                 }
-                // 2) Se for variável que representa lista/array: NO_ID
                 else if (iterable->tipo == NO_ID) {
                     Simbolo *s = searchST(iterable->valor_string);
                     if (!s) {
@@ -620,7 +578,6 @@ void executarAST(NoAST *raiz) {
                         fprintf(stderr, "Erro: '%s' não é uma lista inicializada.\n", s->nome);
                         break;
                     }
-                    // usa s->tamanho quando definido (atribuicao_simples preenche s->tamanho)
                     int tamanho = s->tamanho;
                     for (int i = 0; i < tamanho; i++) {
                         var->valor.valor_int = s->vetor[i];
@@ -628,7 +585,6 @@ void executarAST(NoAST *raiz) {
                         executarAST(body);
                     }
                 }
-                // 3) Caso expressões que resultem em outras coleções — implementar depois
                 else {
                     fprintf(stderr, "Erro: iterável do for não é suportado (linha ?).\n");
                 }
@@ -637,7 +593,6 @@ void executarAST(NoAST *raiz) {
             }
 
             default:
-                // Expressões avulsas
                 avaliarExpressao(atual);
         }
 

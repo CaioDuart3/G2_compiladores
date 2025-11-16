@@ -15,7 +15,6 @@ unsigned hash(char *s) {
     return h;
 }
 
-
 // Inicializa a tabela de símbolos
 void initST() {
     for (int i = 0; i < TAM; i++)
@@ -44,7 +43,6 @@ void insertST(char *nome, Tipo tipo) {
     novo->proximo = tabela[h];
     tabela[h] = novo;
 }
-
 
 // Busca um símbolo na tabela
 Simbolo *searchST(char *nome) {
