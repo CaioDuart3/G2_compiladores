@@ -55,6 +55,7 @@ static char* novo_label() {
  * @param valor O inteiro a ser convertido.
  * @return Uma nova string (alocada) com o número.
  */
+
 static char* int_para_string(int valor) {
     char buffer[20];
     sprintf(buffer, "%d", valor);
@@ -66,6 +67,7 @@ static char* int_para_string(int valor) {
  * @param str A string do nó (ex: "acabou").
  * @return Uma nova string (alocada) com o formato (ex: "\"acabou\"").
  */
+
 static char* formatar_string_literal(const char* str) {
     // Aloca espaço para aspas + string + terminador nulo
     char* buffer = (char*) malloc(strlen(str) + 3);
@@ -84,6 +86,7 @@ static char* formatar_string_literal(const char* str) {
  * @param arg1 O endereço do argumento 1 (pode ser NULL).
  * @param arg2 O endereço do argumento 2 (pode ser NULL).
  */
+
 static void emitir(TacOpcode op, char* res, char* arg1, char* arg2) {
     TacInstrucao* nova = (TacInstrucao*) malloc(sizeof(TacInstrucao));
     if (!nova) {
@@ -92,9 +95,13 @@ static void emitir(TacOpcode op, char* res, char* arg1, char* arg2) {
     }
     
     nova->op = op;
-    nova->res = res;   // Esta função assume a "posse" das strings.
-    nova->arg1 = arg1; // Elas devem ter sido alocadas (strdup, novo_temp, etc).
-    nova->arg2 = arg2;
+    
+    // MODELO SEGURO: A instrução copia TODOS os seus dados.
+    // Ela não "rouba" nenhum ponteiro do processar_no.
+    nova->res = res ? strdup(res) : NULL;
+    nova->arg1 = arg1 ? strdup(arg1) : NULL;
+    nova->arg2 = arg2 ? strdup(arg2) : NULL;
+    
     nova->proxima = NULL;
     
     if (tac_global->inicio == NULL) {
@@ -108,7 +115,7 @@ static void emitir(TacOpcode op, char* res, char* arg1, char* arg2) {
     }
 }
 
-// --- O Visitor Recursivo (O Cérebro) ---
+
 
 /**
  * @brief Processa recursivamente um nó da AST e gera o TAC correspondente.
@@ -117,6 +124,8 @@ static void emitir(TacOpcode op, char* res, char* arg1, char* arg2) {
  * temporário/variável/constante que contém o resultado.
  * Para nós de COMANDO (statements), retorna NULL.
  */
+
+
 static char* processar_no(NoAST* no) {
     if (!no) return NULL;
 
@@ -127,12 +136,13 @@ static char* processar_no(NoAST* no) {
     switch (no->tipo) {
         
         // --- Casos Base (Folhas) ---
+        // Retornam ponteiros alocados que serão liberados pelo 'pai'
         case NO_NUM:
             return int_para_string(no->valor_int);
         case NO_BOOL:
-            return int_para_string(no->valor_int); // 1 (True) ou 0 (False)
+            return int_para_string(no->valor_int);
         case NO_ID:
-            return strdup(no->valor_string); // Nome da variável
+            return strdup(no->valor_string);
         case NO_STRING:
             return formatar_string_literal(no->valor_string);
 
@@ -151,17 +161,21 @@ static char* processar_no(NoAST* no) {
                 case '/': op = TAC_DIV; break;
                 case '<': op = TAC_MENOR; break;
                 case '>': op = TAC_MAIOR; break;
-                case 'l': op = TAC_MENOR_IGUAL; break; // (de "<=")
-                case 'g': op = TAC_MAIOR_IGUAL; break; // (de ">=")
-                case '=': op = TAC_IGUAL; break;       // (de "==")
-                case '!': op = TAC_DIFERENTE; break;   // (de "!=")
+                case 'l': op = TAC_MENOR_IGUAL; break; 
+                case 'g': op = TAC_MAIOR_IGUAL; break; 
+                case '=': op = TAC_IGUAL; break;       
+                case '!': op = TAC_DIFERENTE; break;   
                 default:  op = TAC_INDEFINIDO; break;
             }
             
             emitir(op, res, esq, dir);
-            // free(esq); // DEIXE COMENTADO! (emitir() deve estar fazendo isso)
-            // free(dir); // DEIXE COMENTADO!
-            return res; // Retorna o temporário (ex: "t0")
+            
+            // REGRA: Liberamos tudo que passamos, pois emitir() copiou.
+            free(esq);
+            free(dir);
+            
+            // NÃO liberamos 'res', pois ele é retornado para o 'pai'.
+            return res; 
 
         case NO_OP_LOGICA_AND:
             res = novo_temp();
@@ -169,19 +183,25 @@ static char* processar_no(NoAST* no) {
             aux2 = novo_label(); // label_fim
             
             esq = processar_no(no->filho1);
-            emitir(TAC_IFZ, aux1, esq, NULL); // if_false esq goto L_FALSO
+            emitir(TAC_IFZ, aux1, esq, NULL); 
+            free(esq); // Liberado
             
             dir = processar_no(no->filho2);
-            emitir(TAC_ATRIBUICAO, res, dir, NULL); // res = dir (resultado de B)
-            emitir(TAC_GOTO, aux2, NULL, NULL);     // goto L_FIM
+            emitir(TAC_ATRIBUICAO, res, dir, NULL);
+            free(dir); // Liberado
             
-            emitir(TAC_LABEL, aux1, NULL, NULL);   // L_FALSO:
-            emitir(TAC_ATRIBUICAO, res, strdup("0"), NULL); // res = 0 (False)
+            emitir(TAC_GOTO, aux2, NULL, NULL);     
             
-            emitir(TAC_LABEL, aux2, NULL, NULL);   // L_FIM:
+            emitir(TAC_LABEL, aux1, NULL, NULL);   
+            emitir(TAC_ATRIBUICAO, res, strdup("0"), NULL); // strdup é liberado pelo emitir
             
-            // free(esq); free(dir); free(aux1); free(aux2); // DEIXE COMENTADO!
-            return res;
+            emitir(TAC_LABEL, aux2, NULL, NULL);   
+            
+            // REGRA: Liberamos nossos labels locais
+            free(aux1);
+            free(aux2);
+            
+            return res; // Retorna 'res' para o 'pai'
             
         case NO_OP_LOGICA_OR:
             res = novo_temp();
@@ -189,96 +209,91 @@ static char* processar_no(NoAST* no) {
             aux2 = novo_label(); // label_fim
             
             esq = processar_no(no->filho1);
+            emitir(TAC_IFZ, aux1, esq, NULL); 
+            free(esq); // Liberado
             
-            emitir(TAC_IFZ, aux1, esq, NULL); // if_false esq goto L_TESTA_B
-            emitir(TAC_ATRIBUICAO, res, strdup("1"), NULL); // res = 1 (True)
-            emitir(TAC_GOTO, aux2, NULL, NULL);     // goto L_FIM
+            emitir(TAC_ATRIBUICAO, res, strdup("1"), NULL); // strdup é liberado pelo emitir
+            emitir(TAC_GOTO, aux2, NULL, NULL);     
 
-            emitir(TAC_LABEL, aux1, NULL, NULL);   // L_TESTA_B:
+            emitir(TAC_LABEL, aux1, NULL, NULL);   
             dir = processar_no(no->filho2);
-            emitir(TAC_ATRIBUICAO, res, dir, NULL); // res = dir (resultado de B)
+            emitir(TAC_ATRIBUICAO, res, dir, NULL); 
+            free(dir); // Liberado
             
-            emitir(TAC_LABEL, aux2, NULL, NULL);   // L_FIM:
+            emitir(TAC_LABEL, aux2, NULL, NULL);   
             
-            // free(esq); free(dir); free(aux1); free(aux2); // DEIXE COMENTADO!
-            return res;
+            // REGRA: Liberamos nossos labels locais
+            free(aux1);
+            free(aux2);
+            
+            return res; // Retorna 'res' para o 'pai'
 
         // --- Comandos (Statements) ---
         case NO_LISTA_COMANDOS:
-            processar_no(no->filho1);  // Processa o comando atual
-            processar_no(no->proximo); // Processa o resto da lista
+            processar_no(no->filho1);  
+            processar_no(no->proximo); 
             return NULL;
 
         case NO_ATRIBUICAO:
-            // O bloco 1 (duplicado) foi removido.
+            arg1 = processar_no(no->filho2); // Recebe o 'res' do filho (ex: "t0")
             
-            // REFAZENDO NO_ATRIBUICAO (correto):
-            arg1 = processar_no(no->filho2); // Valor (ex: "t0")
+            // strdup(ID) é copiado e liberado por emitir
             emitir(TAC_ATRIBUICAO, strdup(no->filho1->valor_string), arg1, NULL);
-            // free(arg1); // DEIXE COMENTADO!
+            
+            // REGRA: Liberamos o 'res' que recebemos do filho
+            free(arg1);
             return NULL;
             
         case NO_IF:
             aux1 = novo_label(); // label_else
             aux2 = novo_label(); // label_fim_if
             
-            // 1. Processa a condição
-            res = processar_no(no->filho1);
+            res = processar_no(no->filho1); // Condição
             
-            // 2. Emite o salto condicional
             emitir(TAC_IFZ, aux1, res, NULL);
-            // free(res); // DEIXE COMENTADO!
+            free(res); // Liberado
             
-            // 3. Processa o bloco THEN
-            processar_no(no->filho2);
+            processar_no(no->filho2); // Bloco THEN
             
-            // 4. Se houver um 'else', precisamos pular sobre ele
             if (no->filho3) {
                 emitir(TAC_GOTO, aux2, NULL, NULL);
             }
             
-            // 5. Emite o label ELSE (ou fim, se não houver 'else')
             emitir(TAC_LABEL, aux1, NULL, NULL);
             
-            // 6. Processa o bloco ELSE (se existir)
             if (no->filho3) {
-                processar_no(no->filho3);
-                // 7. Emite o label FIM
+                processar_no(no->filho3); // Bloco ELSE
                 emitir(TAC_LABEL, aux2, NULL, NULL);
-                // free(aux2); // DEIXE COMENTADO!
             }
             
-            // free(aux1); // DEIXE COMENTADO!
+            // REGRA: Liberamos nossos labels locais
+            free(aux1);
+            free(aux2);
             return NULL;
 
         case NO_WHILE:
             aux1 = novo_label(); // label_inicio_loop
             aux2 = novo_label(); // label_fim_loop
             
-            // 1. Emite o label de INÍCIO
             emitir(TAC_LABEL, aux1, NULL, NULL);
             
-            // 2. Processa a condição
-            res = processar_no(no->filho1);
-            
-            // 3. Emite o salto condicional (se for falso, pula para o fim 'aux2')
+            res = processar_no(no->filho1); // Condição
             emitir(TAC_IFZ, aux2, res, NULL);
-            // free(res); // DEIXE COMENTADO!
+            free(res); // Liberado
             
-            // 4. Processa o CORPO do loop
-            processar_no(no->filho2);
+            processar_no(no->filho2); // CORPO
             
-            // 5. Emite o salto incondicional de volta para o INÍCIO
             emitir(TAC_GOTO, aux1, NULL, NULL);
             
-            // 6. Emite o label de FIM
             emitir(TAC_LABEL, aux2, NULL, NULL);
             
-            // free(aux1); // DEIXE COMENTADO!
-            // free(aux2); // DEIXE COMENTADO!
+            // REGRA: Liberamos nossos labels locais
+            free(aux1);
+            free(aux2);
             return NULL;
             
         case NO_FUNCAO:
+            // strdup(nome) é copiado e liberado por emitir
             emitir(TAC_INICIO_FUNCAO, strdup(no->valor_string), NULL, NULL);
             
             no_lista = no->filho1;
@@ -295,29 +310,25 @@ static char* processar_no(NoAST* no) {
             if (no->filho1) {
                 res = processar_no(no->filho1);
                 emitir(TAC_RETORNO_VAL, NULL, res, NULL);
-                // free(res); // DEIXE COMENTADO!
+                free(res); // Liberado
             } else {
                 emitir(TAC_RETORNO_VAZIO, NULL, NULL, NULL);
             }
             return NULL;
 
         case NO_CHAMADA_FUNCAO:
-            // 1. Processa todos os argumentos (filho2) e os emite
-            no_lista = no->filho2;
+            no_lista = no->filho2; // Lista de argumentos
             while (no_lista) {
-                res = processar_no(no_lista);
+                res = processar_no(no_lista); // Processa argumento
                 emitir(TAC_ARG, NULL, res, NULL);
-                // free(res); // DEIXE COMENTADO!
+                free(res); // Libera o 'res' do argumento
                 no_lista = no_lista->proximo;
             }
             
-            // 2. Cria um temporário para o valor de retorno
-            res = novo_temp();
-            
-            // 3. Emite a chamada
+            res = novo_temp(); // 'res' para o valor de retorno
             emitir(TAC_CHAMADA, res, strdup(no->filho1->valor_string), NULL);
             
-            // 4. Retorna o temporário que contém o resultado
+            // NÃO liberamos 'res', pois ele é retornado para o 'pai'.
             return res;
 
         // --- Nós ainda não implementados ---
@@ -325,7 +336,7 @@ static char* processar_no(NoAST* no) {
         case NO_INDEX:
         case NO_LISTA:
         case NO_ATRIBUICAO_MULTIPLA:
-fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n", no->tipo);
+    fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n", no->tipo);
             return NULL;
 
         case NO_VAZIO:
@@ -335,7 +346,7 @@ fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n",
             fprintf(stderr, "Aviso: Nó AST desconhecido (%d) encontrado pelo gerador TAC.\n", no->tipo);
             return NULL;
     }
-}           
+}
 
 // --- Funções Públicas (Definidas em tac.h) ---
 TacCodigo* gerar_tac(NoAST* raiz) {
