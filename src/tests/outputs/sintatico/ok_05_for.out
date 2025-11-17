@@ -1,3 +1,4 @@
+Aviso: Geração TAC para o nó 14 ainda não implementada.
 LEXER: Token PALAVRA_CHAVE_FOR (for)
 LEXER: Token IDENTIFICADOR (i)
 LEXER: Token PALAVRA_CHAVE_IN (in)
@@ -44,3 +45,6 @@ FOR:
 ===== TABELA DE SÍMBOLOS =====
 Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+-----------------------------------

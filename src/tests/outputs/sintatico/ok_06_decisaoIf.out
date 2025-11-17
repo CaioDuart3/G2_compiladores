@@ -211,3 +211,54 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: x          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 ===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  a = 1
+  b = 1
+  y = 0
+  x = 0
+
+--- Início Função: soma ---
+  param x
+  param y
+  t0 = x + y
+  return t0
+--- Fim Função: soma ---
+  if_false a goto L2
+  t1 = b
+  goto L3
+L2:
+  t1 = 0
+L3:
+  if_false t1 goto L0
+  t2 = b + 1
+  b = t2
+  if_false b goto L6
+  t3 = 1
+  goto L7
+L6:
+  t3 = a
+L7:
+  if_false t3 goto L4
+  t4 = a + 1
+  a = t4
+L4:
+  b = 1
+  arg a
+  arg b
+  t5 = call soma
+  x = t5
+  arg a
+  arg b
+  t6 = call soma
+  t7 = t6 > 10
+  if_false t7 goto L8
+  t8 = a + 2
+  a = t8
+  goto L9
+L8:
+  arg "acabou"
+  t9 = call print
+L9:
+L0:
+-----------------------------------

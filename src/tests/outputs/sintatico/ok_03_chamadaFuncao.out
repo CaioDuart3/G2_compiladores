@@ -124,3 +124,32 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  a = 2
+  b = 2
+
+--- Início Função: soma ---
+  param a
+  param b
+  t0 = a + b
+  return t0
+--- Fim Função: soma ---
+  arg a
+  arg b
+  t1 = call soma
+  arg t1
+  t2 = call print
+
+--- Início Função: soma2 ---
+  param c
+  param d
+  t3 = c + d
+  return t3
+--- Fim Função: soma2 ---
+  arg 1
+  arg 2
+  t4 = call soma
+  arg t4
+  t5 = call print
+-----------------------------------
