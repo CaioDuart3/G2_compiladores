@@ -235,13 +235,31 @@ static char* processar_no(NoAST* no) {
             return NULL;
 
         case NO_ATRIBUICAO:
-            arg1 = processar_no(no->filho2); // Recebe o 'res' do filho (ex: "t0")
             
-            // strdup(ID) é copiado e liberado por emitir
-            emitir(TAC_ATRIBUICAO, strdup(no->filho1->valor_string), arg1, NULL);
+            if (no->filho1->tipo == NO_INDEX) {
+                // Estrutura do NO_INDEX: filho1 = ID (nome), filho2 = Expressão (índice)
+                NoAST* no_index = no->filho1;
+                
+                char* nome_vetor = strdup(no_index->filho1->valor_string);
+                char* indice = processar_no(no_index->filho2); // Processa o índice (ex: "0")
+                char* valor = processar_no(no->filho2);        // Processa o valor (ex: "10")
+                
+                // Emite: nome_vetor[indice] = valor
+                emitir(TAC_VET_SET, nome_vetor, indice, valor);
+                
+                free(nome_vetor); // strdup copiado por emitir
+                free(indice);     // processar_no liberado
+                free(valor);      // processar_no liberado
+                
+            } 
             
-            // REGRA: Liberamos o 'res' que recebemos do filho
-            free(arg1);
+            else {
+                // Atribuição normal: variavel = valor
+                arg1 = processar_no(no->filho2); 
+                emitir(TAC_ATRIBUICAO, strdup(no->filho1->valor_string), arg1, NULL);
+                free(arg1);
+            }
+            
             return NULL;
             
         case NO_IF:
@@ -271,6 +289,7 @@ static char* processar_no(NoAST* no) {
             free(aux2);
             return NULL;
 
+
         case NO_WHILE:
             aux1 = novo_label(); // label_inicio_loop
             aux2 = novo_label(); // label_fim_loop
@@ -292,6 +311,7 @@ static char* processar_no(NoAST* no) {
             free(aux2);
             return NULL;
             
+
         case NO_FUNCAO:
             // strdup(nome) é copiado e liberado por emitir
             emitir(TAC_INICIO_FUNCAO, strdup(no->valor_string), NULL, NULL);
@@ -306,6 +326,7 @@ static char* processar_no(NoAST* no) {
             emitir(TAC_FIM_FUNCAO, strdup(no->valor_string), NULL, NULL);
             return NULL;
             
+
         case NO_RETORNO:
             if (no->filho1) {
                 res = processar_no(no->filho1);
@@ -315,6 +336,7 @@ static char* processar_no(NoAST* no) {
                 emitir(TAC_RETORNO_VAZIO, NULL, NULL, NULL);
             }
             return NULL;
+
 
         case NO_CHAMADA_FUNCAO:
             no_lista = no->filho2; // Lista de argumentos
@@ -407,10 +429,103 @@ static char* processar_no(NoAST* no) {
             return NULL;
             
         case NO_INDEX:
+            
+            res = novo_temp(); // Vai guardar o valor lido
+            
+            // filho1 é o ID do vetor, filho2 é a expressão do índice
+            char* nome_vet = strdup(no->filho1->valor_string);
+            char* val_idx = processar_no(no->filho2);
+            
+            // t1 = vetor[0]
+            emitir(TAC_VET_GET, strdup(res), nome_vet, val_idx);
+            
+            free(nome_vet); // strdup copiado por emitir
+            free(val_idx);  // processar_no liberado
+            
+            return res;
 
+    
         case NO_LISTA:
+            res = novo_temp();
+            
+            // Conta quantos elementos tem na lista
+            int tamanho = 0;
+            no_lista = no->filho1;
+            while (no_lista) {
+                tamanho++;
+                no_lista = no_lista->proximo;
+            }
+            
+            // Emite alocação: t0 = alloc tamanho
+            char* str_tam = int_para_string(tamanho);
+            emitir(TAC_VET_ALLOC, strdup(res), str_tam, NULL);
+            free(str_tam); // int_para_string liberado
+            
+            // Percorre a lista preenchendo os valores
+            // t0[0] = 1, t0[1] = 2...
+            no_lista = no->filho1;
+            int idx = 0;
+            while (no_lista) {
+                char* val_elem = processar_no(no_lista); // Valor do elemento
+                char* str_idx = int_para_string(idx);    // Índice atual
+                
+                // vetor[idx] = val
+                emitir(TAC_VET_SET, strdup(res), str_idx, val_elem);
+                
+                free(val_elem);
+                free(str_idx);
+                
+                idx++;
+                no_lista = no_lista->proximo;
+            }
+            
+            return res;
 
+        
         case NO_ATRIBUICAO_MULTIPLA:
+            
+            int qtd = 0;
+            no_lista = no->filho2;
+            while (no_lista) {
+                qtd++;
+                no_lista = no_lista->proximo;
+            }
+            
+            if (qtd == 0) return NULL;
+
+            char** temps_rhs = (char**) malloc(qtd * sizeof(char*));
+            if (!temps_rhs) {
+                fprintf(stderr, "Erro de alocação em atribuição múltipla.\n");
+                exit(1);
+            }
+
+            no_lista = no->filho2;
+            int i = 0;
+            while (no_lista) {
+                temps_rhs[i] = processar_no(no_lista); 
+                no_lista = no_lista->proximo;
+                i++;
+            }
+
+            no_lista = no->filho1;
+            i = 0;
+            while (no_lista && i < qtd) {
+                
+                if (no_lista->tipo == NO_ID) {
+                    // Copia nome da var e nome do temp para o emitir
+                    emitir(TAC_ATRIBUICAO, strdup(no_lista->valor_string), temps_rhs[i], NULL);
+                }
+                free(temps_rhs[i]);
+                
+                no_lista = no_lista->proximo;
+                i++;
+            }
+            
+            free(temps_rhs);
+            
+            return NULL;
+
+
 
     fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n", no->tipo);
             return NULL;
@@ -496,6 +611,17 @@ void imprimir_tac(TacCodigo* codigo) {
                 break;
             case TAC_INDEFINIDO:
                 printf("  (instrução indefinida)\n");
+                break;
+            case TAC_VET_ALLOC:
+                printf("  %s = alloc %s\n", inst->res, inst->arg1);
+                break;
+            case TAC_VET_SET:
+                // vetor[indice] = valor
+                printf("  %s[%s] = %s\n", inst->res, inst->arg1, inst->arg2);
+                break;
+            case TAC_VET_GET:
+                // valor = vetor[indice]
+                printf("  %s = %s[%s]\n", inst->res, inst->arg1, inst->arg2);
                 break;
             default:
                 // Formato padrão: res = arg1 op arg2
