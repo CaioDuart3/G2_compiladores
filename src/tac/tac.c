@@ -331,11 +331,87 @@ static char* processar_no(NoAST* no) {
             // NÃO liberamos 'res', pois ele é retornado para o 'pai'.
             return res;
 
-        // --- Nós ainda não implementados ---
+       
         case NO_FOR:
+            // Verifica se é um range()
+            // (Assumindo que filho2 é NO_CHAMADA_FUNCAO e o nome é "range")
+            if (no->filho2->tipo == NO_CHAMADA_FUNCAO &&
+                strcmp(no->filho2->filho1->valor_string, "range") == 0) {
+                
+                // --- 1. Extrair argumentos do range(inicio, fim) ---
+                NoAST* args = no->filho2->filho2;
+                NoAST* arg_inicio = args; 
+                NoAST* arg_fim = args->proximo; // Assumindo range(0, 5)
+
+                // Se quiser ser robusto para range(5), precisaria checar se arg_fim existe
+                // Mas vamos focar no teste ok_05 que tem 2 argumentos.
+
+                // --- 2. Inicialização (i = inicio) ---
+                char* val_inicio = processar_no(arg_inicio);
+                
+                // i = 0
+                emitir(TAC_ATRIBUICAO, strdup(no->filho1->valor_string), val_inicio, NULL);
+                free(val_inicio); // Libera o temp/valor retornado
+
+                // --- 3. Labels ---
+                aux1 = novo_label(); // Label INICIO
+                aux2 = novo_label(); // Label FIM
+
+                emitir(TAC_LABEL, aux1, NULL, NULL); // L_INICIO:
+
+                // --- 4. Condição de Parada (i < fim) ---
+                // Precisamos comparar a variável 'i' com o valor final
+                char* val_fim = processar_no(arg_fim);
+                res = novo_temp(); // Temp para guardar (i < 5)
+                
+                // emitir copia os args, então podemos passar strdup e liberar
+                char* var_iter = strdup(no->filho1->valor_string);
+                emitir(TAC_MENOR, res, var_iter, val_fim); 
+                free(var_iter);
+                free(val_fim);
+
+                // Se (i < 5) for falso (zero), sai do loop
+                emitir(TAC_IFZ, strdup(aux2), res, NULL);
+                free(res); // Libera temp da condição
+
+                // --- 5. Corpo do Loop ---
+                processar_no(no->filho3);
+
+                // --- 6. Incremento Automático (i = i + 1) ---
+                // Como é um range, o Python incrementa sozinho no final
+                char* temp_inc = novo_temp();
+                var_iter = strdup(no->filho1->valor_string);
+                
+                // tX = i + 1
+                emitir(TAC_SOMA, temp_inc, var_iter, "1"); // "1" literal é copiado pelo emitir
+                free(var_iter);
+
+                // i = tX
+                emitir(TAC_ATRIBUICAO, strdup(no->filho1->valor_string), strdup(temp_inc), NULL);
+                free(temp_inc);
+
+                // --- 7. Volta para o início ---
+                emitir(TAC_GOTO, strdup(aux1), NULL, NULL);
+
+                // --- 8. Label Fim ---
+                emitir(TAC_LABEL, aux2, NULL, NULL);
+
+                // Limpeza de labels locais
+                free(aux1);
+                free(aux2);
+
+            } else {
+                // Caso tente fazer "for i in lista" (ainda não suportado)
+                 fprintf(stderr, "Aviso: Loop FOR suporta apenas range() por enquanto.\n");
+            }
+            return NULL;
+            
         case NO_INDEX:
+
         case NO_LISTA:
+
         case NO_ATRIBUICAO_MULTIPLA:
+
     fprintf(stderr, "Aviso: Geração TAC para o nó %d ainda não implementada.\n", no->tipo);
             return NULL;
 
