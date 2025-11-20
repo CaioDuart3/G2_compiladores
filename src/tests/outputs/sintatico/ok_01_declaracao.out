@@ -113,3 +113,18 @@ Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
 Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola mundo"
 Nome: vetor_int  | Tipo: NONE    | Escopo: 0 | Inicializado: SIM | Valor: N/A
 ===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  a = 1
+  b = 2
+  c = 1
+  d = "ola mundo"
+  vetor_int = (null)
+  t0 = a + b
+  soma = t0
+  t1 = a < b
+  if_false t1 goto L0
+  c = 0
+  vetor_int[0] = 0
+L0:
+-----------------------------------

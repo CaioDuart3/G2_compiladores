@@ -38,8 +38,11 @@ typedef enum {
     TAC_ARG, // Passa um argumento para uma chamada
     TAC_CHAMADA, // res = call arg1 (arg1=nome da func)
     TAC_RETORNO_VAL, // return arg1
-    TAC_RETORNO_VAZIO // return (void)
-
+    TAC_RETORNO_VAZIO, // return (void)
+    TAC_VET_ALLOC,  // res = alloc tamanho (Aloca espaço)
+    TAC_VET_SET,    // res[arg1] = arg2    (Atribuição em vetor: vetor[indice] = valor)
+    TAC_VET_GET
+    
 } TacOpcode;
 
 // --- Estrutura da Instrução ---

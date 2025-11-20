@@ -54,3 +54,16 @@ WHILE:
 ===== TABELA DE SÍMBOLOS =====
 Nome: i          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 ===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  i = 0
+L0:
+  t0 = i < 10
+  if_false t0 goto L1
+  arg i
+  t1 = call print
+  t2 = i + 1
+  i = t2
+  goto L0
+L1:
+-----------------------------------

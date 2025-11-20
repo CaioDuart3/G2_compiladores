@@ -71,3 +71,16 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: c          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
 ===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  b = 1
+  c = 1
+  t0 = 6 + 2
+  t1 = t0 / 2
+  t2 = t1 * 4
+  a = t2
+  t3 = b + c
+  t4 = t3 * 2
+  t5 = a + t4
+  d = t5
+-----------------------------------

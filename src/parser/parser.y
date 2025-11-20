@@ -5,7 +5,7 @@
   #include "../st/st.h"
   #include "../tac/tac.h"
   #include "../ast/ast.h"
-
+  #include "../tac/tac.c"
 
   #define YYERROR_VERBOSE 1
 
