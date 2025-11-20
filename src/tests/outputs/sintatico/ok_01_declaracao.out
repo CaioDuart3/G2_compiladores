@@ -63,42 +63,24 @@ LEXER: DEDENT (nível 0)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-ATTR:
-  ID: a
-  NUM: 1
-ATTR:
-  ID: b
-  NUM: 2
-ATTR:
-  ID: c
-  BOOL: True
-ATTR:
-  ID: d
-  STRING: "ola mundo"
-ATTR:
-  ID: vetor_int
-  NUM: 1
-ATTR:
-  ID: soma
-  OP: +
+LISTA LITERAL:
+  LISTA LITERAL:
+    LISTA LITERAL:
+      LISTA LITERAL:
+        LISTA LITERAL:
+          LISTA LITERAL:
+            LISTA LITERAL:
+              ATTR:
+                ID: a
+                NUM: 1
+            ID: b
+          ID: c
+        ID: d
+      ID: vetor_int
+    ID: soma
+  OP: <
     ID: a
     ID: b
-IF:
-  COND:
-    OP: <
-      ID: a
-      ID: b
-  THEN:
-    ATTR:
-      ID: c
-      BOOL: False
-    ATTR:
-      INDEX:
-        LISTA/VAR:
-          ID: vetor_int
-        INDICE:
-          NUM: 0
-      NUM: 0
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -111,20 +93,39 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
 Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola mundo"
-Nome: vetor_int  | Tipo: NONE    | Escopo: 0 | Inicializado: SIM | Valor: N/A
+Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0]
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  t0 = alloc 2
+  t1 = alloc 2
+  t2 = alloc 2
+  t3 = alloc 2
+  t4 = alloc 2
+  t5 = alloc 1
+  t6 = alloc 1
   a = 1
+  t6[0] = (null)
+  t5[0] = t6
+  t4[0] = t5
   b = 2
+  t4[1] = (null)
+  t3[0] = t4
   c = 1
+  t3[1] = (null)
+  t2[0] = t3
   d = "ola mundo"
-  vetor_int = (null)
-  t0 = a + b
-  soma = t0
-  t1 = a < b
-  if_false t1 goto L0
-  c = 0
-  vetor_int[0] = 0
-L0:
+  t2[1] = (null)
+  t1[0] = t2
+  t7 = alloc 4
+  t7[0] = 1
+  t7[1] = 2
+  t7[2] = 3
+  t7[3] = 4
+  vetor_int = t7
+  t1[1] = (null)
+  t0[0] = t1
+  t8 = a + b
+  soma = t8
+  t0[1] = (null)
 -----------------------------------

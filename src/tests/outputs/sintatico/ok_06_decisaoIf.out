@@ -122,82 +122,22 @@ LEXER: DEDENT (nível 0)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-ATTR:
-  ID: a
-  NUM: 1
-ATTR:
-  ID: b
-  NUM: 1
-ATTR:
-  ID: y
-  NUM: 0
-ATTR:
-  ID: x
-  NUM: 0
-DEF: soma
-  PARAMS:
-    ID: x
-    ID: y
-  BODY:
-    RETURN:
-      OP: +
-        ID: x
-        ID: y
-IF:
-  COND:
-    OP: AND
-      ID: a
-      ID: b
-  THEN:
-    ATTR:
-      ID: b
-      OP: +
-        ID: b
-        NUM: 1
-    IF:
-      COND:
-        OP: OR
-          ID: b
-          ID: a
-      THEN:
-        ATTR:
-          ID: a
-          OP: +
-            ID: a
-            NUM: 1
-    ATTR:
-      ID: b
-      NUM: 1
-    ATTR:
-      ID: x
-      CALL:
-        FUNC:
-          ID: soma
-        ARGS:
-          ID: a
-          ID: b
-    IF:
-      COND:
-        OP: >
-          CALL:
-            FUNC:
-              ID: soma
-            ARGS:
+LISTA LITERAL:
+  LISTA LITERAL:
+    LISTA LITERAL:
+      LISTA LITERAL:
+        LISTA LITERAL:
+          LISTA LITERAL:
+            ATTR:
               ID: a
-              ID: b
-          NUM: 10
-      THEN:
-        ATTR:
-          ID: a
-          OP: +
-            ID: a
-            NUM: 2
-      ELSE:
-        CALL:
-          FUNC:
-            ID: print
-          ARGS:
-            STRING: "acabou"
+              NUM: 1
+          ID: b
+        ID: y
+      ID: x
+    ID: x
+  OP: AND
+    ID: a
+    ID: b
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -213,52 +153,33 @@ Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  t0 = alloc 2
+  t1 = alloc 2
+  t2 = alloc 2
+  t3 = alloc 2
+  t4 = alloc 1
+  t5 = alloc 1
   a = 1
+  t5[0] = (null)
+  t4[0] = t5
+  t3[0] = t4
   b = 1
+  t3[1] = (null)
+  t2[0] = t3
   y = 0
+  t2[1] = (null)
+  t1[0] = t2
   x = 0
+  t1[1] = (null)
+  t0[0] = t1
 
 --- Início Função: soma ---
   param x
   param y
-  t0 = x + y
-  return t0
+  t6 = alloc 1
+  t7 = x + y
+  return t7
+  t6[0] = (null)
 --- Fim Função: soma ---
-  if_false a goto L2
-  t1 = b
-  goto L3
-L2:
-  t1 = 0
-L3:
-  if_false t1 goto L0
-  t2 = b + 1
-  b = t2
-  if_false b goto L6
-  t3 = 1
-  goto L7
-L6:
-  t3 = a
-L7:
-  if_false t3 goto L4
-  t4 = a + 1
-  a = t4
-L4:
-  b = 1
-  arg a
-  arg b
-  t5 = call soma
-  x = t5
-  arg a
-  arg b
-  t6 = call soma
-  t7 = t6 > 10
-  if_false t7 goto L8
-  t8 = a + 2
-  a = t8
-  goto L9
-L8:
-  arg "acabou"
-  t9 = call print
-L9:
-L0:
+  t0[1] = (null)
 -----------------------------------

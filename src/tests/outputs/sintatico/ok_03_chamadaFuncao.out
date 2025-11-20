@@ -68,50 +68,20 @@ LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-ATTR:
-  ID: a
-  NUM: 2
-ATTR:
-  ID: b
-  NUM: 2
-DEF: soma
-  PARAMS:
-    ID: a
-    ID: b
-  BODY:
-    RETURN:
-      OP: +
+LISTA LITERAL:
+  LISTA LITERAL:
+    LISTA LITERAL:
+      LISTA LITERAL:
+        LISTA LITERAL:
+          LISTA LITERAL:
+            ATTR:
+              ID: a
+              NUM: 2
+          ID: b
         ID: a
-        ID: b
-CALL:
-  FUNC:
-    ID: print
-  ARGS:
-    CALL:
-      FUNC:
-        ID: soma
-      ARGS:
-        ID: a
-        ID: b
-DEF: soma2
-  PARAMS:
+      ID: print
     ID: c
-    ID: d
-  BODY:
-    RETURN:
-      OP: +
-        ID: c
-        ID: d
-CALL:
-  FUNC:
-    ID: print
-  ARGS:
-    CALL:
-      FUNC:
-        ID: soma
-      ARGS:
-        NUM: 1
-        NUM: 2
+  ID: print
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -126,30 +96,45 @@ Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO AT
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  t0 = alloc 2
+  t1 = alloc 2
+  t2 = alloc 2
+  t3 = alloc 2
+  t4 = alloc 1
+  t5 = alloc 1
   a = 2
+  t5[0] = (null)
+  t4[0] = t5
+  t3[0] = t4
   b = 2
+  t3[1] = (null)
+  t2[0] = t3
 
 --- Início Função: soma ---
   param a
   param b
-  t0 = a + b
-  return t0
+  t6 = alloc 1
+  t7 = a + b
+  return t7
+  t6[0] = (null)
 --- Fim Função: soma ---
+  t2[1] = (null)
+  t1[0] = t2
   arg a
   arg b
-  t1 = call soma
-  arg t1
-  t2 = call print
+  t8 = call soma
+  arg t8
+  t9 = call print
+  t1[1] = t9
+  t0[0] = t1
 
 --- Início Função: soma2 ---
   param c
   param d
-  t3 = c + d
-  return t3
+  t10 = alloc 1
+  t11 = c + d
+  return t11
+  t10[0] = (null)
 --- Fim Função: soma2 ---
-  arg 1
-  arg 2
-  t4 = call soma
-  arg t4
-  t5 = call print
+  t0[1] = (null)
 -----------------------------------

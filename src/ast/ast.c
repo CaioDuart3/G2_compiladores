@@ -169,6 +169,7 @@ NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco) {
 
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
     NoAST *novo = alocarNo(NO_LISTA_COMANDOS);
+    novo->tipo = NO_LISTA;
     novo->filho1 = comando;
     novo->proximo = proximaLista;
     return novo;
@@ -422,7 +423,7 @@ Tipo inferirTipo(NoAST *no) {
             return s->tipo;
         }
         case NO_LISTA:
-            return INT;
+            return VETOR;
         case NO_OP_BINARIA:
             return inferirTipo(no->filho1);
         case NO_ATRIBUICAO:

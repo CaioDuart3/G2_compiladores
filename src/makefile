@@ -31,7 +31,7 @@ $(PARSER_C) $(PARSER_H): $(PARSER)
 
 # Compila tudo
 $(EXEC): $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN)
-    $(CC) $(CFLAGS) -o $(EXEC) $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN) -lfl
+	$(CC) $(CFLAGS) -o $(EXEC) $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN) -lfl
 
 
 # Limpeza

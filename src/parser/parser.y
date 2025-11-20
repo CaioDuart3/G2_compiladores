@@ -5,7 +5,7 @@
   #include "../st/st.h"
   #include "../tac/tac.h"
   #include "../ast/ast.h"
-  #include "../tac/tac.c"
+
 
   #define YYERROR_VERBOSE 1
 
@@ -199,11 +199,17 @@ atribuicao_simples:
     s->inicializado = true;
 
     if ($3->tipo == NO_LISTA) {
+        s->tipo = VETOR; 
+        
         int tamanho = 0;
         NoAST *elem = $3;
         while(elem) { tamanho++; elem = elem->proximo; }
+        
+        if (s->vetor) free(s->vetor);
+
         s->vetor = malloc(sizeof(int) * tamanho);
         s->tamanho = tamanho;
+        
         elem = $3;
         for(int i=0; i<tamanho; i++, elem=elem->proximo)
             s->vetor[i] = elem->valor_int;

@@ -22,6 +22,11 @@ ST_DIR="$SRC_DIR/st"
 ST_C="$ST_DIR/st.c"
 ST_H="$ST_DIR/st.h"
 
+# --- ADICIONADO: Configuração do TAC ---
+TAC_DIR="$SRC_DIR/tac"
+TAC_C="$TAC_DIR/tac.c"
+TAC_H="$TAC_DIR/tac.h"
+
 # --- Nossos dois executáveis ---
 COMPILADOR="$ROOT_DIR/compilador"
 ANALISADOR_LEX="$ROOT_DIR/analisador_lexico"
@@ -37,10 +42,11 @@ compile_all() {
     echo "Compilando o lexer (Flex)..."
     flex -o "$LEXER_C" "$LEXER_SRC" || { echo "Falha na compilação do lexer"; exit 1; }
 
-    echo "Compilando o COMPILADOR completo (parser+lexer+ast+st)..."
+    echo "Compilando o COMPILADOR completo (parser+lexer+ast+st+tac)..."
+    # ADICIONADO: $TAC_C e -I$TAC_DIR
     gcc -g -Wall \
-        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" \
-        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" \
+        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" "$TAC_C" \
+        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" -I"$TAC_DIR" \
         -o "$COMPILADOR" -lfl || { echo "Falha na compilação do COMPILADOR"; exit 1; }
 
     echo "Compilando o ANALISADOR LÉXICO (lexer_main + lexer)..."
@@ -53,9 +59,12 @@ compile_all() {
 }
 
 # --- Verifica se precisa compilar ---
+# ADICIONADO: Checagem de ST e TAC nas datas de modificação
 if [ ! -x "$COMPILADOR" ] || [ ! -x "$ANALISADOR_LEX" ] || \
    [ "$PARSER_SRC" -nt "$COMPILADOR" ] || [ "$LEXER_SRC" -nt "$COMPILADOR" ] || \
    [ "$AST_C" -nt "$COMPILADOR" ] || [ "$AST_H" -nt "$COMPILADOR" ] || \
+   [ "$ST_C" -nt "$COMPILADOR" ] || [ "$ST_H" -nt "$COMPILADOR" ] || \
+   [ "$TAC_C" -nt "$COMPILADOR" ] || [ "$TAC_H" -nt "$COMPILADOR" ] || \
    [ "$LEXER_MAIN" -nt "$ANALISADOR_LEX" ]; then
     compile_all
 fi
@@ -146,4 +155,4 @@ fi
 
 # --- Limpeza ---
 rm -f "$LEXER_C" "$PARSER_C" "$PARSER_H"
-rm -f "$COMPILADOR" "$ANALISADOR_LEX"
+# rm -f "$COMPILADOR" "$ANALISADOR_LEX"  <-- Comentei isso para ele não recompilar toda vez sem necessidade

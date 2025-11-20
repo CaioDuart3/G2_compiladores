@@ -12,7 +12,8 @@ typedef enum
     STRING,
     BOOL,
     NONE,
-    FUNCAO
+    FUNCAO,
+    VETOR
 } Tipo;
 
 // union
