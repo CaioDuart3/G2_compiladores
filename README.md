@@ -14,11 +14,15 @@ This is a repository for a Python-to-C compiler built using **Flex** and **Bison
 ├─ /src               # Compiler source code
 │   ├─ lexer/         # Lexical analysis (tokenization)
 │   ├─ parser/        # Syntax analysis (parse tree construction)
-│   ├─ outputs/       # Output from tested analyzers
 │   ├─ tests/         # Python code to be tested by the analyzers
+      └─ inputs/
+      └─ outputs/
 │   ├─ ST/            # Symbol Table for syntax analysis
-│   └─ main.py        # Compiler entry point
-```
+│   ├─ AST/
+└─ run_tests.sh/        # Compiler the project ```
+
+---
+
 ## How to Run the Project
 
 This section will guide you through setting up and running the Python-to-C compiler.
