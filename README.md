@@ -19,9 +19,8 @@ This is a repository for a Python-to-C compiler built using **Flex** and **Bison
       └─ outputs/
 │   ├─ ST/            # Symbol Table for syntax analysis
 │   ├─ AST/
-└─ run_tests.sh/        # Compiler the project ```
-
----
+└─ run_tests.sh/        # Compiler the project
+```
 
 ## How to Run the Project
 
