@@ -482,17 +482,32 @@ void executarAtribuicao(NoAST *no) {
     if (!no) return;
 
     if (no->tipo == NO_ATRIBUICAO) {
-        if (no->filho1->tipo == NO_OP_BINARIA && no->filho1->operador == 'I') { 
-            NoAST *indexNode = no->filho1;
-            int valor = avaliarExpressao(no->filho2);
-            int indice = avaliarExpressao(indexNode->filho2);
-            int* vetor = getListaST(indexNode->filho1->valor_string);
-            if (vetor) {
-                vetor[indice] = valor;
+        // CORREÇÃO: Verifica se o lado esquerdo é um nó de Indexação (ex: vet[0])
+        if (no->filho1->tipo == NO_INDEX) { 
+            NoAST *noIndex = no->filho1;
+            NoAST *noId = noIndex->filho1;   // O nome do vetor
+            NoAST *noIndice = noIndex->filho2; // A expressão do índice
+
+            int valor = avaliarExpressao(no->filho2); // Valor a ser atribuído (RHS)
+            int indice = avaliarExpressao(noIndice);  // Índice calculado
+
+            Simbolo *s = searchST(noId->valor_string);
+
+            if (s && s->tipo == VETOR && s->vetor) {
+                if (indice >= 0 && indice < s->tamanho) {
+                    s->vetor[indice] = valor;
+                    // printf("[DEBUG] Vetor %s[%d] atualizado para %d\n", s->nome, indice, valor);
+                } else {
+                    fprintf(stderr, "Erro em tempo de execução: Índice %d fora dos limites para vetor '%s' (tamanho %d).\n", 
+                            indice, s->nome, s->tamanho);
+                }
             } else {
-                fprintf(stderr, "Erro: vetor '%s' não existe.\n", indexNode->filho1->valor_string);
+                fprintf(stderr, "Erro: Tentativa de indexar variável '%s' que não é um vetor inicializado.\n", 
+                        noId->valor_string);
             }
-        } else {
+        } 
+        else {
+            // Atribuição Simples (variável escalar)
             int valor = avaliarExpressao(no->filho2);
 
             Simbolo *s = searchST(no->filho1->valor_string);
@@ -501,20 +516,23 @@ void executarAtribuicao(NoAST *no) {
                 s = searchST(no->filho1->valor_string);
             }
 
+            s->inicializado = true;
+
             switch (s->tipo) {
                 case INT:
                     s->valor.valor_int = valor;
                     break;
                 case BOOL:
-                    s->valor.valor_bool = valor != 0;
+                    s->valor.valor_bool = (valor != 0);
                     break;
+                // Adicione caso VETOR aqui se quiser suportar cópia de vetor (v1 = v2)
                 default:
-                    fprintf(stderr, "Erro: atribuição não suportada para variável '%s'\n", s->nome);
+                    // Se for string, etc, mantenha sua lógica original
                     break;
             }
-            s->inicializado = true;
         }
     } else if (no->tipo == NO_ATRIBUICAO_MULTIPLA) {
+        // (Sua lógica de atribuição múltipla permanece aqui)
     }
 }
 

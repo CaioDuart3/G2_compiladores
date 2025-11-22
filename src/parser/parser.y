@@ -189,42 +189,55 @@ atribuicao_simples:
     TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao
 {
     $$ = criarNoAtribuicao(criarNoId($1), $3);
-
     Simbolo *s = searchST($1);
+    
+    // Se não existe, cria. Se for lista, cria como VETOR, senão inferir.
     if (!s) {
-        insertST($1, inferirTipo($3));
+        Tipo t = ($3->tipo == NO_LISTA) ? VETOR : inferirTipo($3);
+        insertST($1, t);
         s = searchST($1);
     }
 
     s->inicializado = true;
 
     if ($3->tipo == NO_LISTA) {
-        s->tipo = VETOR; 
-        
+        s->tipo = VETOR;
         int tamanho = 0;
-        NoAST *elem = $3;
-        while(elem) { tamanho++; elem = elem->proximo; }
         
+        // O nó NO_LISTA tem a cadeia de expressões no filho1
+        NoAST *elem = $3->filho1; 
+        
+        // 1. Calcular tamanho
+        while(elem) { 
+            tamanho++; 
+            elem = elem->proximo; 
+        }
+        
+        // 2. Realocar memória
         if (s->vetor) free(s->vetor);
-
         s->vetor = malloc(sizeof(int) * tamanho);
         s->tamanho = tamanho;
         
-        elem = $3;
-        for(int i=0; i<tamanho; i++, elem=elem->proximo)
-            s->vetor[i] = elem->valor_int;
-    }
-
-    switch(s->tipo) {
-        case INT:
-        case BOOL:
-            s->valor.valor_int = avaliarExpressao($3);
-            break;
-        case STRING:
-            if ($3->valor_string) s->valor.valor_string = strdup($3->valor_string);
-            break;
-        default:
-            break;
+        // 3. Preencher valores (AVALIANDO a expressão)
+        elem = $3->filho1; // Reinicia ponteiro
+        for(int i=0; i < tamanho; i++) {
+            // O elemento da lista pode ser uma expressão (ex: 1+1), precisa avaliar
+            s->vetor[i] = avaliarExpressao(elem);
+            elem = elem->proximo;
+        }
+    } else {
+        // Lógica padrão para escalares
+        switch(s->tipo) {
+            case INT:
+            case BOOL:
+                s->valor.valor_int = avaliarExpressao($3);
+                break;
+            case STRING:
+                if ($3->valor_string) s->valor.valor_string = strdup($3->valor_string);
+                break;
+            default:
+                break;
+        }
     }
     free($1);
 }
@@ -489,10 +502,8 @@ int main(void) {
     yylineno = 1;
 
     int result = yyparse();
-
     if (result == 0) {
         printf("Parsing concluído com sucesso!\n");
-
         printf("\n--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---\n");
         if (raizAST) {
             imprimirAST(raizAST, 0);
@@ -503,28 +514,18 @@ int main(void) {
 
         printf("\n--- EXECUÇÃO DA AST ---\n");
         if (raizAST) {
-            NoAST *cmd = raizAST;
-            while (cmd) {
-                if (cmd->tipo == NO_ATRIBUICAO || cmd->tipo == NO_ATRIBUICAO_MULTIPLA) {
-                    executarAtribuicao(cmd);
-                }
-                else if (cmd->tipo == NO_OP_BINARIA) {
-                    int val = avaliarExpressao(cmd);
-                    printf("Resultado da expressão: %d\n", val);
-                }
-                cmd = cmd->proximo;
-            }
+            // CORREÇÃO: Usar a função recursiva executarAST em vez do loop while manual.
+            // A função executarAST (em ast.c) sabe lidar com IF, FOR e recursão de listas.
+            executarAST(raizAST);
         }
 
         printf("\n--- TABELA DE SÍMBOLOS ---\n");
         showST();   // Mostra as variáveis e valores
-        freeST();   // Libera a tabela de símbolos
-
-
-        /* ===== INTEGRAÇÃO TAC: gera, imprime e libera o código TAC ===== */
+        
+        /* ===== INTEGRAÇÃO TAC ===== */
         if (raizAST) {
             printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
-            TacCodigo* codigo = gerar_tac(raizAST);  /* função declarada em tac.h */
+            TacCodigo* codigo = gerar_tac(raizAST);
             if (codigo) {
                 imprimir_tac(codigo);
                 liberar_tac(codigo);
@@ -534,10 +535,10 @@ int main(void) {
             printf("-----------------------------------\n");
         }
 
+        freeST(); // Libera a tabela de símbolos
         if (raizAST) {
             liberarAST(raizAST);
         }
-
 
     } else {
         printf("Parsing interrompido por erro.\n");

@@ -1,0 +1,67 @@
+LEXER: Token IDENTIFICADOR (v)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
+LEXER: Token INTEIRO (10)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (20)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (30)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (40)
+LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (v)
+LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
+LEXER: Token INTEIRO (2)
+LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (50)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+LISTA LITERAL:
+  LISTA LITERAL:
+    ATTR:
+      ID: v
+      LISTA LITERAL:
+        NUM: 10
+  INDEX:
+    LISTA/VAR:
+      ID: v
+    INDICE:
+      NUM: 2
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: v          | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [10, 20, 50, 40]
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  t0 = alloc 1
+  t1 = alloc 1
+  t2 = alloc 4
+  t2[0] = 10
+  t2[1] = 20
+  t2[2] = 30
+  t2[3] = 40
+  v = t2
+  t1[0] = (null)
+  t0[0] = t1
+-----------------------------------

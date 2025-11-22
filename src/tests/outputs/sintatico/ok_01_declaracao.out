@@ -93,7 +93,7 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
 Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola mundo"
-Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0]
+Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2, 3, 4]
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
