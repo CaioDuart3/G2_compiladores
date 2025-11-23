@@ -19,13 +19,13 @@
   NoAST *raizAST = NULL;
 
   /* Auxiliares para passar dados do header do 'for' até depois do 'bloco' */
-  static char *last_for_var = NULL;
-  static NoAST *last_for_expr = NULL;
+//   static char *last_for_var = NULL;
+//   static NoAST *last_for_expr = NULL;
 
-  static void set_last_for_var(char *s) { last_for_var = s; }
-  static char *get_last_for_var(void) { return last_for_var; }
-  static void set_last_for_expr(NoAST *n) { last_for_expr = n; }
-  static NoAST *get_last_for_expr(void) { return last_for_expr; }
+//   static void set_last_for_var(char *s) { last_for_var = s; }
+//   static char *get_last_for_var(void) { return last_for_var; }
+//   static void set_last_for_expr(NoAST *n) { last_for_expr = n; }
+//   static NoAST *get_last_for_expr(void) { return last_for_expr; }
 %}
 
 %define parse.error verbose
@@ -37,6 +37,7 @@
  */
 %union {
     int ival;            /* Para inteiros (TOKEN_INTEIRO) e Bools (0 ou 1) */
+    double dval;         /* NOVO: Para floats (TOKEN_FLOAT) */
     char *sval;          /* Para strings (TOKEN_IDENTIFICADOR, TOKEN_STRING) */
     struct NoAST *no;    /* um ponteiro para um nó da AST */
 }
@@ -44,12 +45,12 @@
 /* --- Tokens que carregam valores --- */
 %token <sval> TOKEN_IDENTIFICADOR TOKEN_STRING
 %token <ival> TOKEN_INTEIRO TOKEN_PALAVRA_CHAVE_TRUE TOKEN_PALAVRA_CHAVE_FALSE
+%token <dval> TOKEN_FLOAT
 %type <no> expressao atribuicao_indexacao
 
 
 
 /* --- Tokens que NÃO carregam valores --- */
-%token TOKEN_FLOAT /* Não implementado na AST ainda */
 %token TOKEN_PALAVRA_CHAVE_IF TOKEN_PALAVRA_CHAVE_ELSE TOKEN_PALAVRA_CHAVE_ELIF
 %token TOKEN_PALAVRA_CHAVE_WHILE TOKEN_PALAVRA_CHAVE_FOR TOKEN_PALAVRA_CHAVE_RETURN TOKEN_PALAVRA_CHAVE_IN
 %token TOKEN_OPERADOR_IGUAL TOKEN_OPERADOR_DIFERENTE TOKEN_OPERADOR_MENOR_IGUAL TOKEN_OPERADOR_MAIOR_IGUAL
@@ -230,7 +231,13 @@ atribuicao_simples:
         switch(s->tipo) {
             case INT:
             case BOOL:
-                s->valor.valor_int = avaliarExpressao($3);
+                // Assume que avaliarExpressao retorna INT/BOOL
+                s->valor.valor_int = avaliarExpressao($3); 
+                break;
+            case FLOAT:
+                // NOVO: Usa a nova função de avaliação para floats
+                // (Assumimos que você criará avaliarExpressaoFloat no seu ast.c)
+                s->valor.valor_float = avaliarExpressaoFloat($3); 
                 break;
             case STRING:
                 if ($3->valor_string) s->valor.valor_string = strdup($3->valor_string);
@@ -368,6 +375,8 @@ atomo:
         { $$ = $2; } /* Apenas repassa o nó interno */
   | TOKEN_INTEIRO
         { $$ = criarNoNum($1); }
+    | TOKEN_FLOAT /* NOVO: Cria o nó FLOAT */
+        { $$ = criarNoFloat($1); }
   | TOKEN_IDENTIFICADOR
         {
             $$ = criarNoId($1);
@@ -513,9 +522,10 @@ int main(void) {
         printf("---------------------------------------\n");
 
         printf("\n--- EXECUÇÃO DA AST ---\n");
+        
         if (raizAST) {
-            // CORREÇÃO: Usar a função recursiva executarAST em vez do loop while manual.
-            // A função executarAST (em ast.c) sabe lidar com IF, FOR e recursão de listas.
+            // Chamamos a função completa, que está em ast.c, para executar a árvore.
+            // Ela é recursiva e sabe lidar com todos os tipos de comando (incluindo o NO_LISTA_COMANDOS).
             executarAST(raizAST);
         }
 

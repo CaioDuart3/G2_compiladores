@@ -6,6 +6,7 @@ typedef enum {
     NO_ID,
     NO_INT,
     NO_FLOAT,
+    
     NO_FUNCAO,
     NO_STRING,
     NO_BOOL,
@@ -31,7 +32,10 @@ typedef struct NoAST {
     // Para nós "folha" (literais)
     int valor_int;          // Usado por NO_NUM, NO_BOOL (1=True, 0=False)
     char *valor_string;     // Usado por NO_ID, NO_STRING (requer strdup/free)
-
+    double valor_double;    /* Usado por NO_FLOAT */
+    
+    // Para tipagem e verificação
+    Tipo tipo_dado;
     // Para nós de operação
     char operador;          // Usado por NO_OP_BINARIA (ex: '+', '-', etc.)
 
@@ -101,9 +105,12 @@ void imprimirAST(const NoAST *raiz, int indent);
 
 // Libera toda a memória da AST
 void liberarAST(NoAST *raiz);
-int avaliarExpressao(NoAST *expr);
+int avaliarExpressao(NoAST *no);
+double avaliarExpressaoFloat(NoAST *no);
+NoAST *criarNoFloat(double valor);
 void executarAtribuicao(NoAST *no); 
 void executarAST(NoAST *raiz);
+double avaliarExpressaoFloat(NoAST *no);
 
 #endif
 
