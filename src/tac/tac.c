@@ -1,4 +1,5 @@
 #include "tac.h"
+#include "../ast/ast.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,6 +60,12 @@ static char* novo_label() {
 static char* int_para_string(int valor) {
     char buffer[20];
     sprintf(buffer, "%d", valor);
+    return strdup(buffer);
+}
+
+static char* float_para_string(double valor) {
+    char buffer[64];
+    sprintf(buffer, "%.6f", valor);
     return strdup(buffer);
 }
 
@@ -139,8 +146,13 @@ static char* processar_no(NoAST* no) {
         // Retornam ponteiros alocados que serão liberados pelo 'pai'
         case NO_NUM:
             return int_para_string(no->valor_int);
+
+        case NO_FLOAT: 
+            return float_para_string(no->valor_double);
+
         case NO_BOOL:
             return int_para_string(no->valor_int);
+
         case NO_ID:
             return strdup(no->valor_string);
         case NO_STRING:
@@ -152,19 +164,28 @@ static char* processar_no(NoAST* no) {
             dir = processar_no(no->filho2);
             res = novo_temp();
             
-            TacOpcode op;
-            // ... (mapeamento de operadores) ...
+            Tipo t = inferirTipo(no);     // Descobre se é FLOAT ou INT
+            int eh_float = (t == FLOAT);  // Flag auxiliar
+            TacOpcode op = TAC_INDEFINIDO;
+            
             switch (no->operador) {
-                case '+': op = TAC_SOMA; break;
-                case '-': op = TAC_SUB; break;
-                case '*': op = TAC_MUL; break;
-                case '/': op = TAC_DIV; break;
-                case '<': op = TAC_MENOR; break;
-                case '>': op = TAC_MAIOR; break;
-                case 'l': op = TAC_MENOR_IGUAL; break; 
-                case 'g': op = TAC_MAIOR_IGUAL; break; 
-                case '=': op = TAC_IGUAL; break;       
-                case '!': op = TAC_DIFERENTE; break;   
+                // Aritmética: Se eh_float for verdadeiro, usa _F, senão usa o normal
+                case '+': op = eh_float ? TAC_SOMA_F : TAC_SOMA; break;
+                case '-': op = eh_float ? TAC_SUB_F : TAC_SUB; break;
+                case '*': op = eh_float ? TAC_MUL_F : TAC_MUL; break;
+                case '/': op = eh_float ? TAC_DIV_F : TAC_DIV; break;
+                
+                // Relacional
+                case '<': op = eh_float ? TAC_MENOR_F : TAC_MENOR; break;
+                case '>': op = eh_float ? TAC_MAIOR_F : TAC_MAIOR; break;
+                
+                // Ajuste conforme os caracteres que seu parser usa (ex: 'l' para <=)
+                case 'l': op = eh_float ? TAC_MENOR_IGUAL_F : TAC_MENOR_IGUAL; break; 
+                case 'g': op = eh_float ? TAC_MAIOR_IGUAL_F : TAC_MAIOR_IGUAL; break; 
+                
+                case '=': op = eh_float ? TAC_IGUAL_F : TAC_IGUAL; break;       
+                case '!': op = eh_float ? TAC_DIFERENTE_F : TAC_DIFERENTE; break;   
+                
                 default:  op = TAC_INDEFINIDO; break;
             }
             

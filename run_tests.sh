@@ -37,7 +37,7 @@ OUTPUTS_DIR="$SRC_DIR/tests/outputs"
 # --- Função de Compilação ---
 compile_all() {
     echo "Compilando o parser (Bison)..."
-    bison -d -v -o "$PARSER_C" "$PARSER_SRC" || { echo "Falha na compilação do parser"; exit 1; }
+    bison -d -v -o "$PARSER_C" -Wcounterexamples "$PARSER_SRC" || { echo "Falha na compilação do parser"; exit 1; }
 
     echo "Compilando o lexer (Flex)..."
     flex -o "$LEXER_C" "$LEXER_SRC" || { echo "Falha na compilação do lexer"; exit 1; }

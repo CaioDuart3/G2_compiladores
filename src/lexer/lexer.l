@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/* Inclui a definição dos tokens E da union 'yylval' vinda do parser */
 #include "../parser/parser.tab.h" 
 
 int line_num = 1;
@@ -21,10 +20,10 @@ void inicializa_pilha() {
 DIGITO    [0-9]
 LETRA     [a-zA-Z_]
 ID        {LETRA}({LETRA}|{DIGITO})*
+PONTO_FLUTUANTE {DIGITO}+\.({DIGITO}+)?([eE][+-]?{DIGITO}+)?  
 
 %%
 
-    /* Palavras-chave */
 "if"      { printf("LEXER: Token PALAVRA_CHAVE_IF (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_IF; }
 "else"    { printf("LEXER: Token PALAVRA_CHAVE_ELSE (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_ELSE; }
 "elif"    { printf("LEXER: Token PALAVRA_CHAVE_ELIF (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_ELIF; }
@@ -34,11 +33,11 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 "return"  { printf("LEXER: Token PALAVRA_CHAVE_RETURN (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_RETURN; }
 "in"      { printf("LEXER: Token PALAVRA_CHAVE_IN (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_IN; }
 
-    /* Literais Booleanos (colocam 1 ou 0 na yylval) */
+
 "True"    { yylval.ival = 1; printf("LEXER: Token PALAVRA_CHAVE_TRUE (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_TRUE; }
 "False"   { yylval.ival = 0; printf("LEXER: Token PALAVRA_CHAVE_FALSE (%s)\n", yytext); return TOKEN_PALAVRA_CHAVE_FALSE; }
 
-    /* Operadores */
+
 "=="      { printf("LEXER: Token OPERADOR_IGUAL (%s)\n", yytext); return TOKEN_OPERADOR_IGUAL; }
 "!="      { printf("LEXER: Token OPERADOR_DIFERENTE (%s)\n", yytext); return TOKEN_OPERADOR_DIFERENTE; }
 "<="      { printf("LEXER: Token OPERADOR_MENOR_IGUAL (%s)\n", yytext); return TOKEN_OPERADOR_MENOR_IGUAL; }
@@ -55,7 +54,6 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 "not"     { printf("LEXER: Token OPERADOR_LOGICO_NOT (%s)\n", yytext); return TOKEN_OPERADOR_LOGICO_NOT; }
 
 
-    /* Delimitadores */
 ":"       { printf("LEXER: Token DELIMITADOR_DOIS_PONTOS (%s)\n", yytext); return TOKEN_DELIMITADOR_DOIS_PONTOS; }
 ","       { printf("LEXER: Token DELIMITADOR_VIRGULA (%s)\n", yytext); return TOKEN_DELIMITADOR_VIRGULA; }
 "("       { printf("LEXER: Token DELIMITADOR_ABRE_PARENTESES (%s)\n", yytext); return TOKEN_DELIMITADOR_ABRE_PARENTESES; }
@@ -66,19 +64,18 @@ ID        {LETRA}({LETRA}|{DIGITO})*
 "}"       { printf("LEXER: Token DELIMITADOR_FECHA_CHAVES (%s)\n", yytext); return TOKEN_DELIMITADOR_FECHA_CHAVES; }
 
 
-    /* --- Tokens com Valor --- */
-{DIGITO}+("."{DIGITO}+)?  { 
-    if (strchr(yytext,'.')) {
-        printf("LEXER: Token FLOAT (%s)\n", yytext);
-        return TOKEN_FLOAT;
-    } else {
-        yylval.ival = atoi(yytext);
-        printf("LEXER: Token INTEIRO (%s)\n", yytext);
-        return TOKEN_INTEIRO;
-    }
+{PONTO_FLUTUANTE}  { 
+    yylval.dval = atof(yytext); 
+    printf("LEXER: Token FLOAT (%.6f) - Texto: %s\n", yylval.dval, yytext);
+    return TOKEN_FLOAT;
 }
 
-    /* F-strings (f"..." ou f'...') - precisa vir antes das regras normais de string */
+{DIGITO}+  {
+    yylval.ival = atoi(yytext);
+    printf("LEXER: Token INTEIRO (%d)\n", yylval.ival);
+    return TOKEN_INTEIRO;
+}
+
 [fF]\"([^"\\]|\\.)*\"  { 
     yylval.sval = strdup(yytext); 
     printf("LEXER: Token F-STRING (%s)\n", yytext); 
@@ -90,19 +87,19 @@ ID        {LETRA}({LETRA}|{DIGITO})*
     return TOKEN_STRING; 
 }
 
-    /* Strings normais */
+
 \"[^\"]*\"  { yylval.sval = strdup(yytext); printf("LEXER: Token STRING (%s)\n", yytext); return TOKEN_STRING; }
 \'[^\']*\'  { yylval.sval = strdup(yytext); printf("LEXER: Token STRING (%s)\n", yytext); return TOKEN_STRING; }
 
-    /* Identificador */
+
 {ID}      { 
-    yylval.sval = strdup(yytext); /* Coloca a string na union */
+    yylval.sval = strdup(yytext);
     printf("LEXER: Token IDENTIFICADOR (%s)\n", yytext);
     return TOKEN_IDENTIFICADOR; 
 }
 
 
-    /* --- Lógica de Indentação --- */
+
 
 \n        { 
     line_num++;
@@ -112,9 +109,9 @@ ID        {LETRA}({LETRA}|{DIGITO})*
     return TOKEN_NEWLINE;
 }
 
-#.*                { /* ignora comentários Python-like */ }
+#.*                {  }
 
-[ \t]+    { /* Ignora espaço em branco no meio da linha */ }
+[ \t]+    {  }
 
 <IDENT>^[ \t]+ {
     int espacos = 0;
@@ -136,7 +133,7 @@ ID        {LETRA}({LETRA}|{DIGITO})*
             return TOKEN_DEDENT;
         }
     }
-    BEGIN(INITIAL); /* Mesma indentação, não faz nada */
+    BEGIN(INITIAL);
 }
 
 <IDENT>^[^ \t\n] {

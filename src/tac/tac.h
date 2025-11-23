@@ -8,23 +8,37 @@ typedef enum {
     TAC_INDEFINIDO, // Para debug
     TAC_ATRIBUICAO, // res = arg1 (ex: x = t1)
     
-    // Operações Aritméticas
+    // Operações Aritméticas (Inteiros)
     TAC_SOMA, // res = arg1 + arg2
     TAC_SUB, // res = arg1 - arg2
     TAC_MUL, // res = arg1 * arg2
     TAC_DIV, // res = arg1 / arg2
     
-    // Operações Lógicas (baseadas no que vimos no seu ast.c)
+    // Operações Lógicas
     TAC_AND, // res = arg1 and arg2
     TAC_OR, // res = arg1 or arg2
+    TAC_NOT, // res = not arg1 (Adicionei caso precise)
     
-    // Operações Relacionais
+    // Operações Relacionais (Inteiros)
     TAC_MENOR, // res = arg1 < arg2
     TAC_MAIOR, // res = arg1 > arg2
     TAC_MENOR_IGUAL, // res = arg1 <= arg2
     TAC_MAIOR_IGUAL, // res = arg1 >= arg2
     TAC_IGUAL, // res = arg1 == arg2
     TAC_DIFERENTE,  // res = arg1 != arg2
+
+    /* --- NOVOS: Operações de Float (ADICIONADOS AQUI) --- */
+    TAC_SOMA_F,      // res = arg1 + arg2 (float)
+    TAC_SUB_F,       // res = arg1 - arg2 (float)
+    TAC_MUL_F,       // res = arg1 * arg2 (float)
+    TAC_DIV_F,       // res = arg1 / arg2 (float)
+    
+    TAC_MENOR_F,       // < (float)
+    TAC_MAIOR_F,       // > (float)
+    TAC_MENOR_IGUAL_F, // <= (float)
+    TAC_MAIOR_IGUAL_F, // >= (float)
+    TAC_IGUAL_F,       // == (float)
+    TAC_DIFERENTE_F,   // != (float)
     
     // Controle de Fluxo
     TAC_LABEL, // res:
@@ -39,9 +53,11 @@ typedef enum {
     TAC_CHAMADA, // res = call arg1 (arg1=nome da func)
     TAC_RETORNO_VAL, // return arg1
     TAC_RETORNO_VAZIO, // return (void)
-    TAC_VET_ALLOC,  // res = alloc tamanho (Aloca espaço)
-    TAC_VET_SET,    // res[arg1] = arg2    (Atribuição em vetor: vetor[indice] = valor)
-    TAC_VET_GET
+    
+    // Vetores
+    TAC_VET_ALLOC,  // res = alloc tamanho
+    TAC_VET_SET,    // res[arg1] = arg2
+    TAC_VET_GET     // res = arg1[arg2]
     
 } TacOpcode;
 

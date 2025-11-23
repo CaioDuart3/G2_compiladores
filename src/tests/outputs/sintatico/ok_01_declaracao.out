@@ -18,6 +18,11 @@ LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token STRING ("ola mundo")
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
+LEXER: Token IDENTIFICADOR (f)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (1.400000) - Texto: 1.4
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
 LEXER: Token IDENTIFICADOR (vetor_int)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
@@ -46,6 +51,11 @@ LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (f)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (3.140000) - Texto: 3.14
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
 LEXER: Token IDENTIFICADOR (c)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token PALAVRA_CHAVE_FALSE (False)
@@ -70,12 +80,14 @@ LISTA LITERAL:
         LISTA LITERAL:
           LISTA LITERAL:
             LISTA LITERAL:
-              ATTR:
-                ID: a
-                NUM: 1
-            ID: b
-          ID: c
-        ID: d
+              LISTA LITERAL:
+                ATTR:
+                  ID: a
+                  NUM: 1
+              ID: b
+            ID: c
+          ID: d
+        ID: f
       ID: vetor_int
     ID: soma
   OP: <
@@ -93,6 +105,7 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
 Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola mundo"
+Nome: f          | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.140000
 Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2, 3, 4]
 ===============================
 
@@ -102,30 +115,34 @@ Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2,
   t2 = alloc 2
   t3 = alloc 2
   t4 = alloc 2
-  t5 = alloc 1
+  t5 = alloc 2
   t6 = alloc 1
+  t7 = alloc 1
   a = 1
-  t6[0] = (null)
+  t7[0] = (null)
+  t6[0] = t7
   t5[0] = t6
-  t4[0] = t5
   b = 2
+  t5[1] = (null)
+  t4[0] = t5
+  c = 1
   t4[1] = (null)
   t3[0] = t4
-  c = 1
+  d = "ola mundo"
   t3[1] = (null)
   t2[0] = t3
-  d = "ola mundo"
+  f = 1.400000
   t2[1] = (null)
   t1[0] = t2
-  t7 = alloc 4
-  t7[0] = 1
-  t7[1] = 2
-  t7[2] = 3
-  t7[3] = 4
-  vetor_int = t7
+  t8 = alloc 4
+  t8[0] = 1
+  t8[1] = 2
+  t8[2] = 3
+  t8[3] = 4
+  vetor_int = t8
   t1[1] = (null)
   t0[0] = t1
-  t8 = a + b
-  soma = t8
+  t9 = a + b
+  soma = t9
   t0[1] = (null)
 -----------------------------------

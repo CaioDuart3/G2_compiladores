@@ -13,6 +13,7 @@ static NoAST *alocarNo(TipoNo tipo) {
     
     novo->tipo = tipo;
     novo->valor_int = 0;
+    novo->valor_double = 0.0;
     novo->valor_string = NULL;
     novo->operador = '\0';
     novo->filho1 = NULL;
@@ -66,6 +67,21 @@ NoAST *criarNoString(char *texto) {
     }
     return novo;
 }
+
+// NOVO: Adicione esta função em ast.c, junto às outras funções 'criarNoX'
+NoAST *criarNoFloat(double valor) {
+    // Usa alocarNo para garantir a inicialização padrão
+    NoAST *novo = alocarNo(NO_FLOAT); 
+    
+    // Armazena o valor vindo do lexer/parser
+    novo->valor_double = valor; 
+    
+    // O tipo de dado deste nó é FLOAT (do st.h)
+    novo->tipo_dado = FLOAT; 
+    
+    return novo;
+}
+
 
 NoAST *criarNoBool(int valor) {
     NoAST *novo = alocarNo(NO_BOOL);
@@ -387,7 +403,7 @@ void imprimirAST(const NoAST *raiz, int indent) {
             break;
 
         default:
-            fprintf(stderr, "Erro: tipo de nó desconhecido para impressão.\n");
+            fprintf(stderr, "Warning: tipo de nó desconhecido para impressão.\n");
     }
 }
 
@@ -415,6 +431,8 @@ Tipo inferirTipo(NoAST *no) {
             return INT;
         case NO_BOOL:
             return BOOL;
+        case NO_FLOAT: 
+            return FLOAT;
         case NO_STRING:
             return STRING;
         case NO_ID: {
@@ -424,12 +442,25 @@ Tipo inferirTipo(NoAST *no) {
         }
         case NO_LISTA:
             return VETOR;
-        case NO_OP_BINARIA:
-            return inferirTipo(no->filho1);
+        case NO_OP_BINARIA: {
+                    Tipo t1 = inferirTipo(no->filho1);
+                    Tipo t2 = inferirTipo(no->filho2);
+                    char op = no->operador;
+
+                    // NOVO: Lógica de PROMOÇÃO DE TIPO
+                    if (t1 == FLOAT || t2 == FLOAT) {
+                        // Se for comparação, o resultado é BOOL (0 ou 1)
+                        if (op == '=' || op == '!' || op == '<' || op == 'l' || op == '>' || op == 'g')
+                            return BOOL;
+                        
+                        // Se for operação aritmética, o resultado é FLOAT
+                        return FLOAT;
+                    }
         case NO_ATRIBUICAO:
             return inferirTipo(no->filho2);
         default:
             return NONE;
+        }
     }
 }
 
@@ -616,5 +647,44 @@ void executarAST(NoAST *raiz) {
         }
 
         atual = atual->proximo;
+    }
+}
+
+double avaliarExpressaoFloat(NoAST *no) {
+    if (!no) return 0.0;
+
+    switch (no->tipo) {
+        case NO_FLOAT:
+            return no->valor_double;
+        case NO_ID: {
+            Simbolo *s = searchST(no->valor_string);
+            if (s && s->tipo == FLOAT) {
+                return s->valor.valor_float;
+            }
+            // Tratar erro ou retornar 0.0
+            fprintf(stderr, "[WARN] ID '%s' não é float ou não inicializado para avaliação float.\n", no->valor_string);
+            return 0.0;
+        }
+        case NO_OP_BINARIA: {
+            double esq = avaliarExpressaoFloat(no->filho1);
+            double dir = avaliarExpressaoFloat(no->filho2);
+            switch (no->operador) {
+                case '+': return esq + dir;
+                case '-': return esq - dir;
+                case '*': return esq * dir;
+                case '/': 
+                    if (dir == 0.0) {
+                        fprintf(stderr, "Erro: Divisão por zero em float.\n");
+                        return 0.0;
+                    }
+                    return esq / dir;
+                // Para operadores relacionais (<, >, =, etc.), você pode decidir se retorna 1.0 ou 0.0
+                // ou se a avaliação de relacionais deve sempre cair em avaliarExpressao (INT/BOOL)
+                default:
+                    return 0.0; 
+            }
+        }
+        default:
+            return 0.0; // Tipo de nó desconhecido para avaliação float.
     }
 }
