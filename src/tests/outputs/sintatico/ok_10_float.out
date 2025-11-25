@@ -1,4 +1,5 @@
 Warning: tipo de nó desconhecido para impressão.
+Erro: iterável do for não é suportado (linha ?).
 LEXER: Token IDENTIFICADOR (pi)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token FLOAT (3.141500) - Texto: 3.1415
@@ -14,13 +15,58 @@ LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token FLOAT (0.000000) - Texto: 0.0
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token IDENTIFICADOR (soma_variaveis)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token IDENTIFICADOR (pi)
 LEXER: Token OPERADOR_MAIS (+)
 LEXER: Token IDENTIFICADOR (flutuante)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
+LEXER: Token IDENTIFICADOR (soma_com_constante)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (soma_variaveis)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token FLOAT (1.000000) - Texto: 1.0
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (2.000000) - Texto: 2.00
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: DEDENT (nível 0)
+LEXER: Token IDENTIFICADOR (inteiro)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (0)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token PALAVRA_CHAVE_FOR (for)
+LEXER: Token IDENTIFICADOR (i)
+LEXER: Token PALAVRA_CHAVE_IN (in)
+LEXER: Token IDENTIFICADOR (range)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token INTEIRO (0)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (4)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (inteiro)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (inteiro)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token INTEIRO (1)
+LEXER: DEDENT (nível 0)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
@@ -28,11 +74,19 @@ LISTA LITERAL:
   LISTA LITERAL:
     LISTA LITERAL:
       LISTA LITERAL:
-        ATTR:
-          ID: pi
-                ID: flutuante
-    ID: flutuante
-  ID: soma
+        LISTA LITERAL:
+          LISTA LITERAL:
+            LISTA LITERAL:
+              LISTA LITERAL:
+                ATTR:
+                  ID: pi
+                                ID: flutuante
+            ID: flutuante
+          ID: soma_variaveis
+        ID: soma_com_constante
+      ID: flutuante
+    ID: inteiro
+  ID: i
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -40,23 +94,48 @@ LISTA LITERAL:
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
-Nome: soma       | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.141500
+Nome: soma_variaveis | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.141500
 Nome: pi         | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.141500
-Nome: flutuante  | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 0.000000
+Nome: inteiro    | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
+Nome: soma_com_constante | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 4.141500
+Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+Nome: flutuante  | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 2.000000
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 2
   t1 = alloc 2
-  t2 = alloc 1
-  t3 = alloc 1
+  t2 = alloc 2
+  t3 = alloc 2
+  t4 = alloc 2
+  t5 = alloc 2
+  t6 = alloc 1
+  t7 = alloc 1
   pi = 3.141500
-  t3[0] = (null)
-  t2[0] = t3
-  t1[0] = t2
+  t7[0] = (null)
+  t6[0] = t7
+  t5[0] = t6
   flutuante = 1.000000
+  t5[1] = (null)
+  t4[0] = t5
+  flutuante = 0.000000
+  t4[1] = (null)
+  t3[0] = t4
+  t8 = pi ?OP? flutuante
+  soma_variaveis = t8
+  t3[1] = (null)
+  t2[0] = t3
+  t9 = soma_variaveis ?OP? 1.000000
+  soma_com_constante = t9
+  t2[1] = (null)
+  t1[0] = t2
+  if_false flutuante goto L0
+  t10 = alloc 1
+  flutuante = 2.000000
+  t10[0] = (null)
+L0:
   t1[1] = (null)
   t0[0] = t1
-  flutuante = 0.000000
+  inteiro = 0
   t0[1] = (null)
 -----------------------------------

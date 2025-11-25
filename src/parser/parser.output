@@ -294,6 +294,42 @@ State 0
     while_stmt             go to state 34
     for_stmt               go to state 35
 
+    shift/reduce conflict on token TOKEN_NEWLINE:
+        4 lista_comandos_opt: ε •
+       13 comando: • TOKEN_NEWLINE
+      Example: • TOKEN_NEWLINE
+      Shift derivation
+        programa
+        ↳ 1: lista_comandos_opt              newlines_opt
+             ↳ 5: lista_comandos             ↳ 1: ε
+                  ↳ 6: comando
+                       ↳ 13: • TOKEN_NEWLINE
+      Reduce derivation
+        programa
+        ↳ 1: lista_comandos_opt newlines_opt
+             ↳ 4: ε •           ↳ 3: newlines_opt TOKEN_NEWLINE
+                                     ↳ 3: ε
+
+    shift/reduce conflict on token TOKEN_NEWLINE:
+        4 lista_comandos_opt: ε •
+       63 bloco: • TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+      First example: • TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT newlines_opt $end
+      Shift derivation
+        $accept
+        ↳ 0: programa                                                                                         $end
+             ↳ 1: lista_comandos_opt                                                             newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 6: comando
+                            ↳ 14: bloco
+                                  ↳ 63: • TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+      Second example: • newlines_opt TOKEN_NEWLINE TOKEN_NEWLINE $end
+      Reduce derivation
+        $accept
+        ↳ 0: programa                                                              $end
+             ↳ 1: lista_comandos_opt newlines_opt
+                  ↳ 4: ε •           ↳ 3: newlines_opt TOKEN_NEWLINE TOKEN_NEWLINE
+
+
 
 State 1
 
@@ -313,6 +349,85 @@ State 1
     TOKEN_DELIMITADOR_ABRE_PARENTESES  [reduce using rule 53 (atomo)]
     TOKEN_DELIMITADOR_ABRE_COLCHETES   [reduce using rule 53 (atomo)]
     $default                           reduce using rule 53 (atomo)
+
+    shift/reduce conflict on token TOKEN_OPERADOR_ATRIBUICAO:
+       28 lista_identificadores: TOKEN_IDENTIFICADOR •
+       25 atribuicao_simples: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
+      Example: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
+      Shift derivation
+        atribuicao
+        ↳ 20: atribuicao_simples
+              ↳ 25: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO expressao
+      Reduce derivation
+        atribuicao
+        ↳ 21: atribuicao_multipla
+              ↳ 26: lista_identificadores       TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+                    ↳ 28: TOKEN_IDENTIFICADOR •                           ↳ 30: expressao
+
+    shift/reduce conflict on token TOKEN_OPERADOR_ATRIBUICAO:
+       28 lista_identificadores: TOKEN_IDENTIFICADOR •
+       27 atribuicao_encadeada: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO atribuicao
+      First example: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO atribuicao newlines_opt $end
+      Shift derivation
+        $accept
+        ↳ 0: programa                                                                                                $end
+             ↳ 1: lista_comandos_opt                                                                    newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 6: comando
+                            ↳ 8: atribuicao
+                                 ↳ 22: atribuicao_encadeada
+                                       ↳ 27: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO atribuicao
+      Second example: TOKEN_IDENTIFICADOR • TOKEN_OPERADOR_ATRIBUICAO lista_expressoes newlines_opt $end
+      Reduce derivation
+        $accept
+        ↳ 0: programa                                                                                                            $end
+             ↳ 1: lista_comandos_opt                                                                                newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 6: comando
+                            ↳ 8: atribuicao
+                                 ↳ 21: atribuicao_multipla
+                                       ↳ 26: lista_identificadores       TOKEN_OPERADOR_ATRIBUICAO lista_expressoes
+                                             ↳ 28: TOKEN_IDENTIFICADOR •
+
+    shift/reduce conflict on token TOKEN_DELIMITADOR_ABRE_COLCHETES:
+       53 atomo: TOKEN_IDENTIFICADOR •
+       24 atribuicao_indexacao: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao
+      First example: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao newlines_opt $end
+      Shift derivation
+        $accept
+        ↳ 0: programa                                                                                                                                                                            $end
+             ↳ 1: lista_comandos_opt                                                                                                                                                newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 6: comando
+                            ↳ 8: atribuicao
+                                 ↳ 23: atribuicao_indexacao
+                                       ↳ 24: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao
+      Second example: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES newlines_opt $end
+      Reduce derivation
+        $accept
+        ↳ 0: programa                                                                                                                                                                  $end
+             ↳ 1: lista_comandos_opt                                                                                                                                      newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 7: lista_comandos                              comando
+                            ↳ 6: comando                                ↳ 9: expressao
+                                 ↳ 9: expressao                              ↳ 49: atomo
+                                      ↳ 49: atomo                                  ↳ 57: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES
+                                            ↳ 53: TOKEN_IDENTIFICADOR •
+
+    shift/reduce conflict on token TOKEN_DELIMITADOR_ABRE_PARENTESES:
+       53 atomo: TOKEN_IDENTIFICADOR •
+       35 chamada_funcao: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+      First example: comando
+      Shift derivation
+        lista_comandos
+        ↳ 7: comando
+      Second example: TOKEN_DELIMITADOR_FECHA_PARENTESES
+      Reduce derivation
+        lista_comandos
+        ↳ 7: TOKEN_DELIMITADOR_FECHA_PARENTESES comando
+                                                ↳ 9: expressao
+                                                     ↳ 49: ε
+
 
 
 State 2
@@ -559,6 +674,42 @@ State 18
     while_stmt             go to state 34
     for_stmt               go to state 35
 
+    shift/reduce conflict on token TOKEN_NEWLINE:
+        5 lista_comandos_opt: lista_comandos •
+       13 comando: • TOKEN_NEWLINE
+      Example: lista_comandos • TOKEN_NEWLINE
+      Shift derivation
+        programa
+        ↳ 1: lista_comandos_opt                             newlines_opt
+             ↳ 5: lista_comandos                            ↳ 1: ε
+                  ↳ 7: lista_comandos comando
+                                      ↳ 13: • TOKEN_NEWLINE
+      Reduce derivation
+        programa
+        ↳ 1: lista_comandos_opt    newlines_opt
+             ↳ 5: lista_comandos • ↳ 3: newlines_opt TOKEN_NEWLINE
+                                        ↳ 3: ε
+
+    shift/reduce conflict on token TOKEN_NEWLINE:
+        5 lista_comandos_opt: lista_comandos •
+       63 bloco: • TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+      First example: lista_comandos • TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT newlines_opt $end
+      Shift derivation
+        $accept
+        ↳ 0: programa                                                                                                        $end
+             ↳ 1: lista_comandos_opt                                                                            newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 7: lista_comandos comando
+                                           ↳ 14: bloco
+                                                 ↳ 63: • TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT
+      Second example: lista_comandos • newlines_opt TOKEN_NEWLINE TOKEN_NEWLINE $end
+      Reduce derivation
+        $accept
+        ↳ 0: programa                                                                 $end
+             ↳ 1: lista_comandos_opt    newlines_opt
+                  ↳ 5: lista_comandos • ↳ 3: newlines_opt TOKEN_NEWLINE TOKEN_NEWLINE
+
+
 
 State 19
 
@@ -673,6 +824,32 @@ State 30
 
     TOKEN_DELIMITADOR_ABRE_COLCHETES  [reduce using rule 49 (expressao)]
     $default                          reduce using rule 49 (expressao)
+
+    shift/reduce conflict on token TOKEN_DELIMITADOR_ABRE_COLCHETES:
+       49 expressao: atomo •
+       62 chamada_index: atomo • TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES
+      First example: atomo • TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES newlines_opt $end
+      Shift derivation
+        $accept
+        ↳ 0: programa                                                                                                                                $end
+             ↳ 1: lista_comandos_opt                                                                                                    newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 6: comando
+                            ↳ 9: expressao
+                                 ↳ 49: atomo
+                                       ↳ 58: chamada_index
+                                             ↳ 62: atomo • TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES
+      Second example: atomo • TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES newlines_opt $end
+      Reduce derivation
+        $accept
+        ↳ 0: programa                                                                                                                                              $end
+             ↳ 1: lista_comandos_opt                                                                                                                  newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 7: lista_comandos          comando
+                            ↳ 6: comando            ↳ 9: expressao
+                                 ↳ 9: expressao          ↳ 49: atomo
+                                      ↳ 49: atomo •            ↳ 57: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES
+
 
 
 State 31
@@ -789,6 +966,35 @@ State 39
 
     TOKEN_DELIMITADOR_ABRE_PARENTESES  [reduce using rule 53 (atomo)]
     $default                           reduce using rule 53 (atomo)
+
+    shift/reduce conflict on token TOKEN_DELIMITADOR_ABRE_PARENTESES:
+       53 atomo: TOKEN_IDENTIFICADOR •
+       35 chamada_funcao: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+      First example: TOKEN_OPERADOR_LOGICO_NOT TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES comando newlines_opt $end
+      Shift derivation
+        $accept
+        ↳ 0: programa                                                                                                                                                                                               $end
+             ↳ 1: lista_comandos_opt                                                                                                                                                                   newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 7: lista_comandos                                                                                                                                                     comando
+                            ↳ 6: expressao
+                                 ↳ 48: TOKEN_OPERADOR_LOGICO_NOT expressao
+                                                                 ↳ 49: atomo
+                                                                       ↳ 59: chamada_funcao
+                                                                             ↳ 35: TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES
+      Second example: TOKEN_OPERADOR_LOGICO_NOT TOKEN_IDENTIFICADOR • TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES newlines_opt $end
+      Reduce derivation
+        $accept
+        ↳ 0: programa                                                                                                                                                                                                $end
+             ↳ 1: lista_comandos_opt                                                                                                                                                                    newlines_opt
+                  ↳ 5: lista_comandos
+                       ↳ 7: lista_comandos                                                              comando
+                            ↳ 6: comando                                                                ↳ 9: expressao
+                                 ↳ 9: expressao                                                              ↳ 49: atomo
+                                      ↳ 48: TOKEN_OPERADOR_LOGICO_NOT expressao                                    ↳ 50: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES
+                                                                      ↳ 49: atomo
+                                                                            ↳ 53: TOKEN_IDENTIFICADOR •
+
 
 
 State 40

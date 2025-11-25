@@ -5,6 +5,8 @@
   #include "../st/st.h"
   #include "../tac/tac.h"
   #include "../ast/ast.h"
+  #include "../codigo_final/gerador_codigo_final.h"
+
 
 
   #define YYERROR_VERBOSE 1
@@ -513,6 +515,8 @@ int main(void) {
     int result = yyparse();
     if (result == 0) {
         printf("Parsing concluído com sucesso!\n");
+
+        /* --- AST --- */
         printf("\n--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---\n");
         if (raizAST) {
             imprimirAST(raizAST, 0);
@@ -521,31 +525,43 @@ int main(void) {
         }
         printf("---------------------------------------\n");
 
+        /* --- Execução da AST --- */
         printf("\n--- EXECUÇÃO DA AST ---\n");
-        
         if (raizAST) {
-            // Chamamos a função completa, que está em ast.c, para executar a árvore.
-            // Ela é recursiva e sabe lidar com todos os tipos de comando (incluindo o NO_LISTA_COMANDOS).
             executarAST(raizAST);
         }
 
+        /* --- Tabela de Símbolos --- */
         printf("\n--- TABELA DE SÍMBOLOS ---\n");
-        showST();   // Mostra as variáveis e valores
-        
-        /* ===== INTEGRAÇÃO TAC ===== */
+        showST();
+
+        /* --- TAC --- */
         if (raizAST) {
             printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
             TacCodigo* codigo = gerar_tac(raizAST);
             if (codigo) {
                 imprimir_tac(codigo);
+
+                /* --- Código Final em C --- */
+                printf("\n--- GERAÇÃO DE CÓDIGO FINAL ---\n");
+                FILE* out = fopen("programa_gerado.c", "w");
+                if (out) {
+                    gerar_codigo_final(codigo, out);
+                    fclose(out);
+                    printf("[INFO] Código C gerado em 'programa_gerado.c'.\n");
+                } else {
+                    fprintf(stderr, "[ERRO] Não foi possível criar 'programa_gerado.c'.\n");
+                }
+                printf("-----------------------------------\n");
+
                 liberar_tac(codigo);
             } else {
                 printf("(Código TAC vazio)\n");
             }
-            printf("-----------------------------------\n");
         }
 
-        freeST(); // Libera a tabela de símbolos
+        /* --- Limpeza --- */
+        freeST();
         if (raizAST) {
             liberarAST(raizAST);
         }
