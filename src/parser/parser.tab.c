@@ -78,8 +78,6 @@
   #include "../codigo_final/gerador_codigo_final.h"
   #include "../codigo_final/gerador_codigo_final.c"
 
-
-
   #define YYERROR_VERBOSE 1
 
   int yylex(void);
@@ -91,16 +89,7 @@
   /* Variável global que guardará a raiz da árvore */
   NoAST *raizAST = NULL;
 
-  /* Auxiliares para passar dados do header do 'for' até depois do 'bloco' */
-//   static char *last_for_var = NULL;
-//   static NoAST *last_for_expr = NULL;
-
-//   static void set_last_for_var(char *s) { last_for_var = s; }
-//   static char *get_last_for_var(void) { return last_for_var; }
-//   static void set_last_for_expr(NoAST *n) { last_for_expr = n; }
-//   static NoAST *get_last_for_expr(void) { return last_for_expr; }
-
-#line 104 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 93 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -592,14 +581,14 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   106,   106,   113,   115,   119,   120,   127,   129,   139,
-     140,   141,   142,   143,   144,   145,   146,   147,   153,   152,
-     168,   175,   176,   177,   178,   182,   193,   257,   264,   302,
-     306,   313,   317,   326,   327,   329,   334,   344,   346,   348,
-     350,   352,   354,   356,   358,   360,   362,   364,   366,   368,
-     370,   377,   379,   381,   383,   395,   397,   399,   401,   405,
-     407,   413,   414,   419,   427,   437,   443,   451,   460,   470,
-     469,   490,   489
+       0,    83,    83,    90,    92,    96,    97,   102,   104,   115,
+     116,   117,   118,   119,   120,   121,   122,   123,   128,   127,
+     141,   146,   147,   148,   149,   153,   162,   210,   215,   237,
+     239,   244,   246,   251,   252,   253,   258,   267,   268,   269,
+     270,   271,   272,   273,   274,   275,   276,   277,   278,   279,
+     280,   284,   285,   286,   287,   297,   298,   299,   300,   305,
+     306,   310,   311,   315,   320,   325,   327,   332,   337,   343,
+     342,   353,   352
 };
 #endif
 
@@ -1687,569 +1676,507 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: lista_comandos_opt newlines_opt  */
-#line 107 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 84 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     { 
-        raizAST = (yyvsp[-1].no); /* Salva a raiz global */
+        raizAST = (yyvsp[-1].no); 
         (yyval.no) = (yyvsp[-1].no);
     }
-#line 1696 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1685 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 5: /* lista_comandos_opt: %empty  */
-#line 119 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 96 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                         { (yyval.no) = NULL; }
-#line 1702 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1691 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 6: /* lista_comandos_opt: lista_comandos  */
-#line 120 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 97 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 1708 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1697 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 7: /* lista_comandos: comando  */
-#line 128 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoLista((yyvsp[0].no), NULL); }
-#line 1714 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 103 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+        { (yyval.no) = criarNoListaComandos((yyvsp[0].no), NULL); }
+#line 1703 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 8: /* lista_comandos: lista_comandos comando  */
-#line 130 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 105 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
         {
             if ((yyvsp[0].no) != NULL)
-                (yyval.no) = criarNoLista((yyvsp[-1].no), (yyvsp[0].no));
+                (yyval.no) = criarNoListaComandos((yyvsp[-1].no), (yyvsp[0].no));
             else
                 (yyval.no) = (yyvsp[-1].no);
         }
-#line 1725 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1714 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 9: /* comando: atribuicao  */
-#line 139 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 115 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1731 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1720 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 10: /* comando: expressao  */
-#line 140 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 116 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1737 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1726 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 11: /* comando: if_stmt  */
-#line 141 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 117 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1743 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1732 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 12: /* comando: while_stmt  */
-#line 142 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 118 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1749 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1738 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 13: /* comando: for_stmt  */
-#line 143 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 119 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1755 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1744 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 14: /* comando: TOKEN_NEWLINE  */
-#line 144 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 120 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 1761 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1750 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 15: /* comando: bloco  */
-#line 145 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 121 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1767 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1756 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 16: /* comando: declaracao_funcao  */
-#line 146 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 122 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1773 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1762 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 17: /* comando: retorno  */
-#line 147 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 123 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1779 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1768 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 18: /* $@1: %empty  */
-#line 153 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 128 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         openScope();
-
         registrarParametros((yyvsp[-2].no)); 
     }
-#line 1789 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1777 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 19: /* declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS $@1 bloco  */
-#line 159 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 133 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
-        
         (yyval.no) = criarNoFuncao((yyvsp[-6].sval), (yyvsp[-4].no), (yyvsp[0].no));
         insertST((yyvsp[-6].sval), FUNCAO);
     }
-#line 1800 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1787 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 20: /* retorno: TOKEN_PALAVRA_CHAVE_RETURN expressao  */
-#line 169 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-    {
-        (yyval.no) = criarNoReturn((yyvsp[0].no));
-    }
-#line 1808 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 142 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+    { (yyval.no) = criarNoReturn((yyvsp[0].no)); }
+#line 1793 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 25: /* atribuicao_indexacao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 183 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 154 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
-
         NoAST *no_index = criarNoIndex(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no));
         (yyval.no) = criarNoAtribuicao(no_index, (yyvsp[0].no));
-
         free((yyvsp[-5].sval));
     }
-#line 1820 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1803 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 26: /* atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 194 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 163 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
     Simbolo *s = searchST((yyvsp[-2].sval));
     
-    // Se não existe, cria. Se for lista, cria como VETOR, senão inferir.
     if (!s) {
         Tipo t = ((yyvsp[0].no)->tipo == NO_LISTA) ? VETOR : inferirTipo((yyvsp[0].no));
         insertST((yyvsp[-2].sval), t);
         s = searchST((yyvsp[-2].sval));
     }
-
     s->inicializado = true;
 
     if ((yyvsp[0].no)->tipo == NO_LISTA) {
         s->tipo = VETOR;
         int tamanho = 0;
-        
-        // O nó NO_LISTA tem a cadeia de expressões no filho1
         NoAST *elem = (yyvsp[0].no)->filho1; 
-        
-        // 1. Calcular tamanho
         while(elem) { 
             tamanho++; 
             elem = elem->proximo; 
         }
-        
-        // 2. Realocar memória
         if (s->vetor) free(s->vetor);
         s->vetor = malloc(sizeof(int) * tamanho);
         s->tamanho = tamanho;
-        
-        // 3. Preencher valores (AVALIANDO a expressão)
-        elem = (yyvsp[0].no)->filho1; // Reinicia ponteiro
+        elem = (yyvsp[0].no)->filho1;
         for(int i=0; i < tamanho; i++) {
-            // O elemento da lista pode ser uma expressão (ex: 1+1), precisa avaliar
             s->vetor[i] = avaliarExpressao(elem);
             elem = elem->proximo;
         }
     } else {
-        // Lógica padrão para escalares
         switch(s->tipo) {
             case INT:
             case BOOL:
-                // Assume que avaliarExpressao retorna INT/BOOL
                 s->valor.valor_int = avaliarExpressao((yyvsp[0].no)); 
                 break;
             case FLOAT:
-                // NOVO: Usa a nova função de avaliação para floats
-                // (Assumimos que você criará avaliarExpressaoFloat no seu ast.c)
                 s->valor.valor_float = avaliarExpressaoFloat((yyvsp[0].no)); 
                 break;
             case STRING:
                 if ((yyvsp[0].no)->valor_string) s->valor.valor_string = strdup((yyvsp[0].no)->valor_string);
                 break;
-            default:
-                break;
+            default: break;
         }
     }
     free((yyvsp[-2].sval));
 }
-#line 1885 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1852 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 27: /* atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes  */
-#line 258 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-      {
-          (yyval.no) = criarNoAtribuicaoMultipla((yyvsp[-2].no), (yyvsp[0].no));
-      }
-#line 1893 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 211 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+      { (yyval.no) = criarNoAtribuicaoMultipla((yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1858 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 28: /* atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao  */
-#line 265 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 216 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
-
     NoAST *rhs = (yyvsp[0].no);
-
     while (rhs->tipo == NO_ATRIBUICAO) {
         rhs = rhs->filho2;
     }
-
     Tipo t = inferirTipo(rhs);
-
     Simbolo *s = searchST((yyvsp[-2].sval));
     if (!s) insertST((yyvsp[-2].sval), t);
     else s->tipo = t;
-
-switch (t) {
-    case INT:
-        s->valor.valor_int = (yyvsp[0].no)->valor_int;
-        break;
-    case BOOL:
-        s->valor.valor_bool = (yyvsp[0].no)->valor_int;
-        break;
-    case STRING:
-        if ((yyvsp[0].no)->valor_string)
-            s->valor.valor_string = strdup((yyvsp[0].no)->valor_string);
-        break;
-    case FLOAT:
-        fprintf(stderr, "[WARN] FLOAT não implementado ainda.\n");
-        break;
-    default:
-        break;
-}
+    switch (t) {
+        case INT: s->valor.valor_int = (yyvsp[0].no)->valor_int; break;
+        case BOOL: s->valor.valor_bool = (yyvsp[0].no)->valor_int; break;
+        case STRING: if ((yyvsp[0].no)->valor_string) s->valor.valor_string = strdup((yyvsp[0].no)->valor_string); break;
+        default: break;
+    }
     free((yyvsp[-2].sval));
 }
-#line 1932 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1881 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 29: /* lista_identificadores: TOKEN_IDENTIFICADOR  */
-#line 303 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-      {
-          (yyval.no) = criarListaIds((yyvsp[0].sval));
-      }
-#line 1940 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 238 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+      { (yyval.no) = criarListaIds((yyvsp[0].sval)); }
+#line 1887 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 30: /* lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR  */
-#line 307 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-      {
-          (yyval.no) = adicionaIdNaLista((yyvsp[-2].no), (yyvsp[0].sval));
-      }
-#line 1948 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 240 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+      { (yyval.no) = adicionaIdNaLista((yyvsp[-2].no), (yyvsp[0].sval)); }
+#line 1893 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 31: /* lista_expressoes: expressao  */
-#line 314 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-      {
-          (yyval.no) = criarListaExp((yyvsp[0].no));
-      }
-#line 1956 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 245 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+      { (yyval.no) = criarListaExp((yyvsp[0].no)); }
+#line 1899 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 32: /* lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 318 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-      {
-          (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no));
-      }
-#line 1964 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 247 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+      { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1905 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 33: /* lista_argumentos: %empty  */
-#line 326 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = NULL; }
-#line 1970 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 251 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                  { (yyval.no) = NULL; }
+#line 1911 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 34: /* lista_argumentos: expressao  */
-#line 328 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1976 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 252 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                  { (yyval.no) = criarListaExp((yyvsp[0].no)); }
+#line 1917 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 35: /* lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 330 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 254 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1982 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1923 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 36: /* chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 335 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 259 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
         {
             NoAST *id = criarNoId((yyvsp[-3].sval));
             (yyval.no) = criarNoChamadaFuncao(id, (yyvsp[-1].no));
             free((yyvsp[-3].sval));
         }
-#line 1992 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 1933 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 37: /* expressao: expressao TOKEN_OPERADOR_MAIS expressao  */
-#line 345 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('+', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1998 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 267 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('+', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1939 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 38: /* expressao: expressao TOKEN_OPERADOR_MENOS expressao  */
-#line 347 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('-', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2004 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 268 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('-', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1945 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 39: /* expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO expressao  */
-#line 349 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('*', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2010 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 269 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('*', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1951 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 40: /* expressao: expressao TOKEN_OPERADOR_DIVISAO expressao  */
-#line 351 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('/', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2016 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 270 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('/', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1957 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 41: /* expressao: expressao TOKEN_OPERADOR_IGUAL expressao  */
-#line 353 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('=', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2022 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 271 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('=', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1963 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 42: /* expressao: expressao TOKEN_OPERADOR_DIFERENTE expressao  */
-#line 355 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('!', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2028 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 272 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('!', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1969 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 43: /* expressao: expressao TOKEN_OPERADOR_MENOR expressao  */
-#line 357 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('<', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2034 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 273 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('<', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1975 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 44: /* expressao: expressao TOKEN_OPERADOR_MENOR_IGUAL expressao  */
-#line 359 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('l', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2040 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 274 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('l', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1981 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 45: /* expressao: expressao TOKEN_OPERADOR_MAIOR expressao  */
-#line 361 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('>', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2046 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 275 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('>', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1987 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 46: /* expressao: expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao  */
-#line 363 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('g', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2052 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 276 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('g', (yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1993 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 47: /* expressao: expressao TOKEN_OPERADOR_LOGICO_AND expressao  */
-#line 365 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOpLogicaAnd((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2058 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 277 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOpLogicaAnd((yyvsp[-2].no), (yyvsp[0].no)); }
+#line 1999 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 48: /* expressao: expressao TOKEN_OPERADOR_LOGICO_OR expressao  */
-#line 367 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOpLogicaOr((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2064 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 278 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOpLogicaOr((yyvsp[-2].no), (yyvsp[0].no)); }
+#line 2005 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 49: /* expressao: TOKEN_OPERADOR_LOGICO_NOT expressao  */
-#line 369 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoOp('N', (yyvsp[0].no), NULL); }
-#line 2070 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 279 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = criarNoOp('N', (yyvsp[0].no), NULL); }
+#line 2011 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 50: /* expressao: atomo  */
-#line 371 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = (yyvsp[0].no); }
-#line 2076 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 280 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                        { (yyval.no) = (yyvsp[0].no); }
+#line 2017 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 51: /* atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 378 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = (yyvsp[-1].no); }
-#line 2082 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 284 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                                                                     { (yyval.no) = (yyvsp[-1].no); }
+#line 2023 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 52: /* atomo: TOKEN_INTEIRO  */
-#line 380 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoNum((yyvsp[0].ival)); }
-#line 2088 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 285 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                              { (yyval.no) = criarNoNum((yyvsp[0].ival)); }
+#line 2029 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 53: /* atomo: TOKEN_FLOAT  */
-#line 382 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoFloat((yyvsp[0].dval)); }
-#line 2094 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 286 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                              { (yyval.no) = criarNoFloat((yyvsp[0].dval)); }
+#line 2035 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 54: /* atomo: TOKEN_IDENTIFICADOR  */
-#line 384 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 288 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
         {
             (yyval.no) = criarNoId((yyvsp[0].sval));
-
             Simbolo *s = searchST((yyvsp[0].sval));
             if (!s) {
                 fprintf(stderr, "[ERRO] Variável '%s' usada antes de ser declarada (linha %d)\n", (yyvsp[0].sval), yylineno);
                 insertST((yyvsp[0].sval), NONE);
             }
-
             free((yyvsp[0].sval));
         }
-#line 2110 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2049 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 55: /* atomo: TOKEN_STRING  */
-#line 396 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoString((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 2116 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 297 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                              { (yyval.no) = criarNoString((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 2055 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 56: /* atomo: TOKEN_PALAVRA_CHAVE_TRUE  */
-#line 398 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2122 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 298 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
+#line 2061 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 57: /* atomo: TOKEN_PALAVRA_CHAVE_FALSE  */
-#line 400 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2128 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 299 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                                { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
+#line 2067 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 58: /* atomo: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 402 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 301 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
         {
+            /* Aqui continua sendo lista de vetor, então mantemos criarNoLista */
             (yyval.no) = criarNoLista((yyvsp[-1].no), NULL);
         }
-#line 2136 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2076 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 59: /* atomo: chamada_index  */
-#line 406 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = (yyvsp[0].no); }
-#line 2142 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 305 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                      { (yyval.no) = (yyvsp[0].no); }
+#line 2082 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 60: /* atomo: chamada_funcao  */
-#line 408 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        { (yyval.no) = (yyvsp[0].no); }
-#line 2148 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 306 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                      { (yyval.no) = (yyvsp[0].no); }
+#line 2088 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 61: /* lista_valores: %empty  */
-#line 413 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-                           { (yyval.no) = NULL; }
-#line 2154 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 310 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                         { (yyval.no) = NULL; }
+#line 2094 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 62: /* lista_valores: lista_expressoes  */
-#line 414 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-                           { (yyval.no) = (yyvsp[0].no); }
-#line 2160 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 311 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+                         { (yyval.no) = (yyvsp[0].no); }
+#line 2100 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 63: /* chamada_index: atomo TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 420 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-        {
-            (yyval.no) = criarNoIndex((yyvsp[-3].no), (yyvsp[-1].no)); /* cria nó AST de indexação: $1[$3] */
-        }
-#line 2168 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 316 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+        { (yyval.no) = criarNoIndex((yyvsp[-3].no), (yyvsp[-1].no)); }
+#line 2106 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 64: /* bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT  */
-#line 428 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-    {
-        (yyval.no) = (yyvsp[-1].no); // Apenas retorna a lista de comandos
-    }
-#line 2176 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 321 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+    { (yyval.no) = (yyvsp[-1].no); }
+#line 2112 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 65: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 438 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-    {
-        (yyval.no) = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
-    }
-#line 2184 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 326 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+    { (yyval.no) = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL); }
+#line 2118 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 66: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 445 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 328 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
         (yyval.no) = criarNoIf((yyvsp[-6].no), (yyvsp[-4].no), elif_if);
     }
-#line 2193 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2127 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 67: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 454 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 333 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
         (yyval.no) = criarNoIf((yyvsp[-9].no), (yyvsp[-7].no), elif_if);
     }
-#line 2202 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2136 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 68: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 462 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-    {
-        (yyval.no) = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
-    }
-#line 2210 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 338 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+    { (yyval.no) = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no)); }
+#line 2142 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 69: /* $@2: %empty  */
-#line 470 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-    {
-        openScope();
-    }
-#line 2218 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 343 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+    { openScope(); }
+#line 2148 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 70: /* while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@2 bloco  */
-#line 474 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 345 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoWhile((yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2227 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2157 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 71: /* $@3: %empty  */
-#line 490 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 353 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         openScope();
-        
-        if (!searchST((yyvsp[-3].sval))) {
-            insertST((yyvsp[-3].sval), INT);
-        }
+        if (!searchST((yyvsp[-3].sval))) insertST((yyvsp[-3].sval), INT);
     }
-#line 2239 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2166 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 72: /* for_stmt: TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@3 bloco  */
-#line 498 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 358 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFor(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no), (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 2249 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2176 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
     break;
 
 
-#line 2253 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
+#line 2180 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.c"
 
       default: break;
     }
@@ -2478,8 +2405,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 504 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
-
+#line 364 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
 
 
 void yyerror(const char *s) {
@@ -2487,43 +2413,27 @@ void yyerror(const char *s) {
 }
 
 int main(int argc, char *argv[]) {
-    // Inicializações
     initST();
     inicializa_pilha();
     yylineno = 1;
 
-    // Inicia o parsing
-    // O yyparse lê do stdin padrão (que o script redireciona com < arquivo.py)
     int result = yyparse();
 
     if (result == 0) {
-        // Sucesso no Parsing: Imprime as estruturas para debug
-        // O script vai capturar esses printfs e salvar no arquivo .out correspondente
-
         printf("Parsing concluído com sucesso!\n");
 
-        /* --- AST --- */
         printf("\n--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---\n");
-        if (raizAST) {
-            imprimirAST(raizAST, 0);
-        } else {
-            printf("(AST está vazia)\n");
-        }
+        if (raizAST) imprimirAST(raizAST, 0);
+        else printf("(AST está vazia)\n");
         printf("---------------------------------------\n");
 
-        /* --- Execução (Interpretador) --- */
-        // CUIDADO: Se seu código tiver prints, eles aparecerão aqui
         printf("\n--- EXECUÇÃO DA AST ---\n");
-        if (raizAST) {
-            executarAST(raizAST);
-        }
+        if (raizAST) executarAST(raizAST);
 
-        /* --- Tabela de Símbolos --- */
         printf("\n--- TABELA DE SÍMBOLOS ---\n");
         showST();
         printf("===============================\n");
 
-        /* --- TAC e Geração de Código --- */
         if (raizAST) {
             printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
             TacCodigo* codigo = gerar_tac(raizAST);
@@ -2531,13 +2441,8 @@ int main(int argc, char *argv[]) {
             if (codigo) {
                 imprimir_tac(codigo);
 
-                /* Geração do arquivo .c final */
                 printf("\n--- GERAÇÃO DE CÓDIGO FINAL ---\n");
-                
-                // Nota: Esse arquivo será sobrescrito a cada teste. 
-                // Se quiser salvar um .c por teste, precisaria mudar a lógica de nomes aqui.
                 FILE* out = fopen("programa_gerado.c", "w");
-                
                 if (out) {
                     gerar_codigo_final(codigo, out);
                     fclose(out);
@@ -2546,21 +2451,16 @@ int main(int argc, char *argv[]) {
                     fprintf(stderr, "[ERRO] Não foi possível criar 'programa_gerado.c'.\n");
                 }
                 printf("-----------------------------------\n");
-
                 liberar_tac(codigo);
             } else {
                 printf("(Código TAC vazio ou não gerado)\n");
             }
         }
 
-        /* --- Limpeza de Memória --- */
         freeST();
-        if (raizAST) {
-            liberarAST(raizAST);
-        }
+        if (raizAST) liberarAST(raizAST);
 
     } else {
-        // O yyerror já imprime no stderr, que o script também captura
         printf("Parsing interrompido por erro sintático.\n");
     }
 

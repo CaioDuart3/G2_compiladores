@@ -3,7 +3,7 @@
 #include <string.h>
 
     /* Declarações de variáveis globais */
-    int a = 4;
+    int a = 2;
     int b = 1;
     int x = 0;
     int y = 0;

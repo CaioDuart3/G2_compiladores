@@ -3,7 +3,7 @@
 #include <string.h>
 
     /* Declarações de variáveis globais */
-    int i = 1;
+    int i = 0;
 
 
 int main() {

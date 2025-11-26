@@ -103,12 +103,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 41 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 28 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
 
-    int ival;            /* Para inteiros (TOKEN_INTEIRO) e Bools (0 ou 1) */
-    double dval;         /* NOVO: Para floats (TOKEN_FLOAT) */
-    char *sval;          /* Para strings (TOKEN_IDENTIFICADOR, TOKEN_STRING) */
-    struct NoAST *no;    /* um ponteiro para um nó da AST */
+    int ival;            
+    double dval;         
+    char *sval;          
+    struct NoAST *no;    
 
 #line 114 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.h"
 

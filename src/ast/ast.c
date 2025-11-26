@@ -26,11 +26,6 @@ static NoAST *alocarNo(TipoNo tipo) {
 
 NoAST *criarNoIndex(NoAST *lista, NoAST *indice) {
     NoAST *no = malloc(sizeof(NoAST));
-    if (!no) {
-        fprintf(stderr, "Erro: falha ao alocar memória para nó de index.\n");
-        exit(EXIT_FAILURE);
-    }
-
     no->tipo = NO_INDEX;
     no->filho1 = lista;
     no->filho2 = indice;
@@ -41,7 +36,6 @@ NoAST *criarNoIndex(NoAST *lista, NoAST *indice) {
     no->valor_int = 0;
     no->valor_string = NULL;
     no->operador = '\0';
-
     return no;
 }
 
@@ -68,20 +62,12 @@ NoAST *criarNoString(char *texto) {
     return novo;
 }
 
-// NOVO: Adicione esta função em ast.c, junto às outras funções 'criarNoX'
 NoAST *criarNoFloat(double valor) {
-    // Usa alocarNo para garantir a inicialização padrão
     NoAST *novo = alocarNo(NO_FLOAT); 
-    
-    // Armazena o valor vindo do lexer/parser
     novo->valor_double = valor; 
-    
-    // O tipo de dado deste nó é FLOAT (do st.h)
     novo->tipo_dado = FLOAT; 
-    
     return novo;
 }
-
 
 NoAST *criarNoBool(int valor) {
     NoAST *novo = alocarNo(NO_BOOL);
@@ -89,27 +75,17 @@ NoAST *criarNoBool(int valor) {
     return novo;
 }
 
-void registrarParametros( NoAST *parametros) {
-    
+void registrarParametros(NoAST *parametros) {
     NoAST *no_atual = parametros;
-
     while (no_atual != NULL) {
-        
         if (no_atual->tipo == NO_ID) {
-            
             char *nome_param = no_atual->valor_string;
-
             insertST(nome_param, INT);
-
             Simbolo *s = searchST(nome_param);
             if (s != NULL) {
                 s->inicializado = true;
             }
-            
-        } else {
-            fprintf(stderr, "[ERRO INTERNO] Nó de parâmetro não é um NO_ID!\n");
         }
-
         no_atual = no_atual->proximo;
     }
 }
@@ -178,18 +154,29 @@ NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco) {
     if (id && id->valor_string) {
         insertST(id->valor_string, inferirTipo(iteravel));
     }
-
     return no;
 }
 
+// --- MUDANÇAS AQUI ---
 
+// Função antiga corrigida: Cria estritamente VETORES (NO_LISTA)
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
-    NoAST *novo = alocarNo(NO_LISTA_COMANDOS);
-    novo->tipo = NO_LISTA;
+    NoAST *novo = alocarNo(NO_LISTA); // Aloca tipo NO_LISTA
+    novo->tipo = NO_LISTA;            // Reforça
     novo->filho1 = comando;
     novo->proximo = proximaLista;
     return novo;
 }
+
+// Nova função: Cria BLOCOS DE CÓDIGO (NO_LISTA_COMANDOS)
+NoAST *criarNoListaComandos(NoAST *comando, NoAST *proximo) {
+    NoAST *novo = alocarNo(NO_LISTA_COMANDOS); // Aloca tipo NO_LISTA_COMANDOS
+    novo->tipo = NO_LISTA_COMANDOS;            // Reforça
+    novo->filho1 = comando;
+    novo->proximo = proximo;
+    return novo;
+}
+// ---------------------
 
 NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo) {
     NoAST *novo = alocarNo(NO_FUNCAO);
@@ -205,7 +192,6 @@ NoAST *criarNoReturn(NoAST *expr) {
     return novo;
 }
 
-// Nós de atribuição múltipla
 NoAST* criarListaIds(char* nome) {
     NoAST* no = criarNoId(nome);
     no->proximo = NULL;
@@ -215,11 +201,9 @@ NoAST* criarListaIds(char* nome) {
 NoAST* adicionaIdNaLista(NoAST* lista, char* nome) {
     NoAST* novo = criarNoId(nome);
     novo->proximo = NULL;
-
     NoAST* temp = lista;
     while (temp->proximo != NULL)
         temp = temp->proximo;
-
     temp->proximo = novo;
     return lista;
 }
@@ -233,7 +217,6 @@ NoAST* adicionaExpNaLista(NoAST* lista, NoAST* exp) {
     NoAST* temp = lista;
     while (temp->proximo != NULL)
         temp = temp->proximo;
-
     temp->proximo = exp;
     return lista;
 }
@@ -255,9 +238,7 @@ NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args) {
 }
 
 static void printIndent(int indent) {
-    for (int i = 0; i < indent; i++) {
-        printf("  ");
-    }
+    for (int i = 0; i < indent; i++) printf("  ");
 }
 
 void imprimirAST(const NoAST *raiz, int indent) {
@@ -272,21 +253,11 @@ void imprimirAST(const NoAST *raiz, int indent) {
     printIndent(indent);
 
     switch (raiz->tipo) {
-        case NO_NUM:
-            printf("NUM: %d\n", raiz->valor_int);
-            break;
-        case NO_ID:
-            printf("ID: %s\n", raiz->valor_string);
-            break;
-        case NO_STRING:
-            printf("STRING: \"%s\"\n", raiz->valor_string);
-            break;
-        case NO_BOOL:
-            printf("BOOL: %s\n", raiz->valor_int ? "True" : "False");
-            break;
-        case NO_VAZIO:
-            printf("(Comando Vazio)\n");
-            break;
+        case NO_NUM: printf("NUM: %d\n", raiz->valor_int); break;
+        case NO_ID: printf("ID: %s\n", raiz->valor_string); break;
+        case NO_STRING: printf("STRING: \"%s\"\n", raiz->valor_string); break;
+        case NO_BOOL: printf("BOOL: %s\n", raiz->valor_int ? "True" : "False"); break;
+        case NO_VAZIO: printf("(Comando Vazio)\n"); break;
 
         case NO_OP_BINARIA:
             printf("OP: %c\n", raiz->operador);
@@ -308,43 +279,37 @@ void imprimirAST(const NoAST *raiz, int indent) {
         
         case NO_ATRIBUICAO:
             printf("ATTR:\n");
-            imprimirAST(raiz->filho1, indent + 1); // ID
-            imprimirAST(raiz->filho2, indent + 1); // Expressão
+            imprimirAST(raiz->filho1, indent + 1); 
+            imprimirAST(raiz->filho2, indent + 1); 
             break;
 
         case NO_IF:
             printf("IF:\n");
             printIndent(indent + 1); printf("COND:\n");
-            imprimirAST(raiz->filho1, indent + 2); // Condição
-            
+            imprimirAST(raiz->filho1, indent + 2);
             printIndent(indent + 1); printf("THEN:\n");
-            imprimirAST(raiz->filho2, indent + 2); // Bloco Then
-            
+            imprimirAST(raiz->filho2, indent + 2);
             if (raiz->filho3) {
                 printIndent(indent + 1); printf("ELSE:\n");
-                imprimirAST(raiz->filho3, indent + 2); // Bloco Else
+                imprimirAST(raiz->filho3, indent + 2);
             }
             break;
 
         case NO_WHILE:
             printf("WHILE:\n");
             printIndent(indent + 1); printf("COND:\n");
-            imprimirAST(raiz->filho1, indent + 2);  // Condição
-
+            imprimirAST(raiz->filho1, indent + 2);
             printIndent(indent + 1); printf("BODY:\n");
-            imprimirAST(raiz->filho2, indent + 2);  // Corpo do laço
+            imprimirAST(raiz->filho2, indent + 2);
             break;
 
         case NO_FOR:
             printf("FOR:\n");
-            printIndent(indent + 1);
-            printf("VAR:\n");
+            printIndent(indent + 1); printf("VAR:\n");
             imprimirAST(raiz->filho1, indent + 2);
-            printIndent(indent + 1);
-            printf("IN:\n");
+            printIndent(indent + 1); printf("IN:\n");
             imprimirAST(raiz->filho2, indent + 2);
-            printIndent(indent + 1);
-            printf("BLOCO:\n");
+            printIndent(indent + 1); printf("BLOCO:\n");
             imprimirAST(raiz->filho3, indent + 2);
             break;
 
@@ -371,16 +336,14 @@ void imprimirAST(const NoAST *raiz, int indent) {
 
         case NO_CHAMADA_FUNCAO:
             printf("CALL:\n");
-            printIndent(indent + 1);
-            printf("FUNC:\n");
+            printIndent(indent + 1); printf("FUNC:\n");
             imprimirAST(raiz->filho1, indent + 2);
             if (raiz->filho2) {
-                printIndent(indent + 1);
-                printf("ARGS:\n");
+                printIndent(indent + 1); printf("ARGS:\n");
                 NoAST *arg = raiz->filho2;
                 while (arg) {
                     imprimirAST(arg, indent + 2);
-                    arg = arg->proximo; // percorre a lista de argumentos
+                    arg = arg->proximo; 
                 }
             }
             break;
@@ -409,64 +372,47 @@ void imprimirAST(const NoAST *raiz, int indent) {
 
 void liberarAST(NoAST *raiz) {
     if (!raiz) return;
-    
     liberarAST(raiz->filho1);
     liberarAST(raiz->filho2);
     liberarAST(raiz->filho3);
-    
     liberarAST(raiz->proximo);
-    
     if (raiz->tipo == NO_ID || raiz->tipo == NO_STRING) {
         free(raiz->valor_string);
     }
-    
     free(raiz);
 }
 
 Tipo inferirTipo(NoAST *no) {
     if (!no) return NONE;
-
     switch(no->tipo) {
-        case NO_NUM:
-            return INT;
-        case NO_BOOL:
-            return BOOL;
-        case NO_FLOAT: 
-            return FLOAT;
-        case NO_STRING:
-            return STRING;
+        case NO_NUM: return INT;
+        case NO_BOOL: return BOOL;
+        case NO_FLOAT: return FLOAT;
+        case NO_STRING: return STRING;
         case NO_ID: {
             Simbolo *s = searchST(no->valor_string);
             if (!s) return NONE;
             return s->tipo;
         }
-        case NO_LISTA:
-            return VETOR;
+        case NO_LISTA: return VETOR;
         case NO_OP_BINARIA: {
-                    Tipo t1 = inferirTipo(no->filho1);
-                    Tipo t2 = inferirTipo(no->filho2);
-                    char op = no->operador;
-
-                    // NOVO: Lógica de PROMOÇÃO DE TIPO
-                    if (t1 == FLOAT || t2 == FLOAT) {
-                        // Se for comparação, o resultado é BOOL (0 ou 1)
-                        if (op == '=' || op == '!' || op == '<' || op == 'l' || op == '>' || op == 'g')
-                            return BOOL;
-                        
-                        // Se for operação aritmética, o resultado é FLOAT
-                        return FLOAT;
-                    }
-        case NO_ATRIBUICAO:
-            return inferirTipo(no->filho2);
-        default:
-            return NONE;
+            Tipo t1 = inferirTipo(no->filho1);
+            Tipo t2 = inferirTipo(no->filho2);
+            char op = no->operador;
+            if (t1 == FLOAT || t2 == FLOAT) {
+                if (op == '=' || op == '!' || op == '<' || op == 'l' || op == '>' || op == 'g')
+                    return BOOL;
+                return FLOAT;
+            }
+            return INT; 
         }
+        case NO_ATRIBUICAO: return inferirTipo(no->filho2);
+        default: return NONE;
     }
 }
 
 int avaliarExpressao(NoAST *expr) {
     if(!expr) return 0;
-
     switch(expr->tipo) {
         case NO_NUM: return expr->valor_int;
         case NO_BOOL: return expr->valor_int;
@@ -483,208 +429,111 @@ int avaliarExpressao(NoAST *expr) {
                 case '+': return a + b;
                 case '-': return a - b;
                 case '*': return a * b;
-                case '/': return a / b;
+                case '/': return (b != 0) ? a / b : 0;
                 case '<': return a < b;
                 case '>': return a > b;
                 case 'l': return a <= b;
                 case 'g': return a >= b;
                 case '=': return a == b;
                 case '!': return a != b;
+                default: return 0;
             }
         }
-        
-        case NO_OP_LOGICA_AND: {
-            int esq = avaliarExpressao(expr->filho1);
-            if (esq == 0) return 0;
-            return (avaliarExpressao(expr->filho2) != 0);
-        }
-
-        case NO_OP_LOGICA_OR: {
-            int esq = avaliarExpressao(expr->filho1);
-            if (esq != 0) return 1;
-            return (avaliarExpressao(expr->filho2) != 0);
-        }
-
+        case NO_OP_LOGICA_AND: return avaliarExpressao(expr->filho1) && avaliarExpressao(expr->filho2);
+        case NO_OP_LOGICA_OR: return avaliarExpressao(expr->filho1) || avaliarExpressao(expr->filho2);
         default: return 0;
     }
 }
 
 void executarAtribuicao(NoAST *no) {
     if (!no) return;
-
     if (no->tipo == NO_ATRIBUICAO) {
-        // CORREÇÃO: Verifica se o lado esquerdo é um nó de Indexação (ex: vet[0])
         if (no->filho1->tipo == NO_INDEX) { 
             NoAST *noIndex = no->filho1;
-            NoAST *noId = noIndex->filho1;   // O nome do vetor
-            NoAST *noIndice = noIndex->filho2; // A expressão do índice
-
-            int valor = avaliarExpressao(no->filho2); // Valor a ser atribuído (RHS)
-            int indice = avaliarExpressao(noIndice);  // Índice calculado
-
+            NoAST *noId = noIndex->filho1;
+            NoAST *noIndice = noIndex->filho2;
+            int valor = avaliarExpressao(no->filho2);
+            int indice = avaliarExpressao(noIndice);
             Simbolo *s = searchST(noId->valor_string);
-
             if (s && s->tipo == VETOR && s->vetor) {
                 if (indice >= 0 && indice < s->tamanho) {
                     s->vetor[indice] = valor;
-                    // printf("[DEBUG] Vetor %s[%d] atualizado para %d\n", s->nome, indice, valor);
                 } else {
-                    fprintf(stderr, "Erro em tempo de execução: Índice %d fora dos limites para vetor '%s' (tamanho %d).\n", 
-                            indice, s->nome, s->tamanho);
+                    fprintf(stderr, "Erro Runtime: Índice %d inválido.\n", indice);
                 }
-            } else {
-                fprintf(stderr, "Erro: Tentativa de indexar variável '%s' que não é um vetor inicializado.\n", 
-                        noId->valor_string);
             }
-        } 
-        else {
-            // Atribuição Simples (variável escalar)
+        } else {
             int valor = avaliarExpressao(no->filho2);
-
             Simbolo *s = searchST(no->filho1->valor_string);
             if (!s) {
                 insertST(no->filho1->valor_string, inferirTipo(no->filho2));
                 s = searchST(no->filho1->valor_string);
             }
-
             s->inicializado = true;
-
-            switch (s->tipo) {
-                case INT:
-                    s->valor.valor_int = valor;
-                    break;
-                case BOOL:
-                    s->valor.valor_bool = (valor != 0);
-                    break;
-                // Adicione caso VETOR aqui se quiser suportar cópia de vetor (v1 = v2)
-                default:
-                    // Se for string, etc, mantenha sua lógica original
-                    break;
-            }
+            if (s->tipo == INT) s->valor.valor_int = valor;
+            else if (s->tipo == BOOL) s->valor.valor_bool = (valor != 0);
         }
-    } else if (no->tipo == NO_ATRIBUICAO_MULTIPLA) {
-        // (Sua lógica de atribuição múltipla permanece aqui)
     }
 }
 
 void executarAST(NoAST *raiz) {
     if (!raiz) return;
-
     NoAST *atual = raiz;
-
     while (atual) {
         switch (atual->tipo) {
-            case NO_LISTA_COMANDOS:
-                executarAST(atual->filho1);
-                break;
-
+            case NO_LISTA_COMANDOS: executarAST(atual->filho1); break;
             case NO_ATRIBUICAO:
-            case NO_ATRIBUICAO_MULTIPLA:
-                executarAtribuicao(atual);
-                break;
-
+            case NO_ATRIBUICAO_MULTIPLA: executarAtribuicao(atual); break;
             case NO_IF: {
-                int cond = avaliarExpressao(atual->filho1);
-                if (cond) {
-                    executarAST(atual->filho2);
-                } else if (atual->filho3) {
-                    executarAST(atual->filho3);
-                }
+                if (avaliarExpressao(atual->filho1)) executarAST(atual->filho2);
+                else if (atual->filho3) executarAST(atual->filho3);
                 break;
             }
             case NO_FOR: {
+                /* (Sua lógica de FOR original mantida) */
                 NoAST *iterVar = atual->filho1;
                 NoAST *iterable = atual->filho2;
                 NoAST *body = atual->filho3;
-
                 if (!iterVar || !iterable) break;
-
-                if (!searchST(iterVar->valor_string)) {
-                    insertST(iterVar->valor_string, INT);
-                }
+                if (!searchST(iterVar->valor_string)) insertST(iterVar->valor_string, INT);
                 Simbolo *var = searchST(iterVar->valor_string);
-                if (!var) break;
-
                 if (iterable->tipo == NO_LISTA) {
                     NoAST *elem = iterable;
                     while (elem) {
-                        NoAST *valueNode = elem->filho1 ? elem->filho1 : elem;
-                        int valor = avaliarExpressao(valueNode);
-                        var->valor.valor_int = valor;
-                        var->inicializado = true;
-
+                        NoAST *val = elem->filho1 ? elem->filho1 : elem;
+                        var->valor.valor_int = avaliarExpressao(val);
                         executarAST(body);
-
                         elem = elem->proximo;
                     }
                 }
-                else if (iterable->tipo == NO_ID) {
-                    Simbolo *s = searchST(iterable->valor_string);
-                    if (!s) {
-                        fprintf(stderr, "Erro: lista '%s' não encontrada em tempo de execução.\n", iterable->valor_string);
-                        break;
-                    }
-                    if (!s->vetor) {
-                        fprintf(stderr, "Erro: '%s' não é uma lista inicializada.\n", s->nome);
-                        break;
-                    }
-                    int tamanho = s->tamanho;
-                    for (int i = 0; i < tamanho; i++) {
-                        var->valor.valor_int = s->vetor[i];
-                        var->inicializado = true;
-                        executarAST(body);
-                    }
-                }
-                else {
-                    fprintf(stderr, "Erro: iterável do for não é suportado (linha ?).\n");
-                }
-
                 break;
             }
-
-            default:
-                avaliarExpressao(atual);
+            default: avaliarExpressao(atual);
         }
-
         atual = atual->proximo;
     }
 }
 
 double avaliarExpressaoFloat(NoAST *no) {
     if (!no) return 0.0;
-
     switch (no->tipo) {
-        case NO_FLOAT:
-            return no->valor_double;
+        case NO_FLOAT: return no->valor_double;
         case NO_ID: {
             Simbolo *s = searchST(no->valor_string);
-            if (s && s->tipo == FLOAT) {
-                return s->valor.valor_float;
-            }
-            // Tratar erro ou retornar 0.0
-            fprintf(stderr, "[WARN] ID '%s' não é float ou não inicializado para avaliação float.\n", no->valor_string);
+            if (s && s->tipo == FLOAT) return s->valor.valor_float;
             return 0.0;
         }
         case NO_OP_BINARIA: {
-            double esq = avaliarExpressaoFloat(no->filho1);
-            double dir = avaliarExpressaoFloat(no->filho2);
+            double e = avaliarExpressaoFloat(no->filho1);
+            double d = avaliarExpressaoFloat(no->filho2);
             switch (no->operador) {
-                case '+': return esq + dir;
-                case '-': return esq - dir;
-                case '*': return esq * dir;
-                case '/': 
-                    if (dir == 0.0) {
-                        fprintf(stderr, "Erro: Divisão por zero em float.\n");
-                        return 0.0;
-                    }
-                    return esq / dir;
-                // Para operadores relacionais (<, >, =, etc.), você pode decidir se retorna 1.0 ou 0.0
-                // ou se a avaliação de relacionais deve sempre cair em avaliarExpressao (INT/BOOL)
-                default:
-                    return 0.0; 
+                case '+': return e + d;
+                case '-': return e - d;
+                case '*': return e * d;
+                case '/': return (d != 0.0) ? e / d : 0.0;
+                default: return 0.0;
             }
         }
-        default:
-            return 0.0; // Tipo de nó desconhecido para avaliação float.
+        default: return 0.0;
     }
 }

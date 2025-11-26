@@ -35,16 +35,30 @@ LEXER: Token INTEIRO (2)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-LISTA LITERAL:
-  LISTA LITERAL:
-    LISTA LITERAL:
-      LISTA LITERAL:
-        ATTR:
-          ID: b
-          NUM: 1
-      ID: c
-    ID: a
+ATTR:
+  ID: b
+  NUM: 1
+ATTR:
+  ID: c
+  NUM: 1
+ATTR:
+  ID: a
+  OP: *
+    OP: /
+      OP: +
+        NUM: 6
+        NUM: 2
+      NUM: 2
+    NUM: 4
+ATTR:
   ID: d
+  OP: +
+    ID: a
+    OP: *
+      OP: +
+        ID: b
+        ID: c
+      NUM: 2
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -60,22 +74,16 @@ Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
-  t0 = alloc 2
-  t1 = alloc 2
-  t2 = alloc 1
-  t3 = alloc 1
   b = 1
-  t3[0] = (null)
-  t2[0] = t3
-  t1[0] = t2
   c = 1
-  t1[1] = (null)
-  t0[0] = t1
-  t4 = 6 + 2
-  t5 = t4 / 2
-  t6 = t5 * 4
-  a = t6
-  t0[1] = (null)
+  t0 = 6 + 2
+  t1 = t0 / 2
+  t2 = t1 * 4
+  a = t2
+  t3 = b + c
+  t4 = t3 * 2
+  t5 = a + t4
+  d = t5
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
 [INFO] Código C gerado em 'programa_gerado.c'.

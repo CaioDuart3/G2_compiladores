@@ -19,7 +19,6 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-LISTA LITERAL:
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -31,7 +30,6 @@ LISTA LITERAL:
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
-  t0 = alloc 0
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
 [INFO] Código C gerado em 'programa_gerado.c'.

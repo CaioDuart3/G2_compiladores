@@ -1,4 +1,8 @@
 Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
 LEXER: Token IDENTIFICADOR (pi)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token FLOAT (3.141500) - Texto: 3.1415
@@ -45,20 +49,28 @@ LEXER: DEDENT (nível 0)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-LISTA LITERAL:
-  LISTA LITERAL:
-    LISTA LITERAL:
-      LISTA LITERAL:
-        LISTA LITERAL:
-          LISTA LITERAL:
-            ATTR:
-              ID: pi
-                        ID: flutuante
-        ID: flutuante
-      ID: soma_variaveis
-    ID: soma_com_constante
+ATTR:
+  ID: pi
+  ATTR:
   ID: flutuante
----------------------------------------
+  ATTR:
+  ID: flutuante
+  ATTR:
+  ID: soma_variaveis
+  OP: +
+    ID: pi
+    ID: flutuante
+ATTR:
+  ID: soma_com_constante
+  OP: +
+    ID: soma_variaveis
+    IF:
+  COND:
+    ID: flutuante
+  THEN:
+    ATTR:
+      ID: flutuante
+      ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
 
@@ -73,29 +85,16 @@ Nome: flutuante  | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 2.0000
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
-  t0 = alloc 2
-  t1 = alloc 2
-  t2 = alloc 2
-  t3 = alloc 2
-  t4 = alloc 1
-  t5 = alloc 1
   pi = 3.141500
-  t5[0] = (null)
-  t4[0] = t5
-  t3[0] = t4
   flutuante = 1.000000
-  t3[1] = (null)
-  t2[0] = t3
   flutuante = 0.000000
-  t2[1] = (null)
-  t1[0] = t2
-  t6 = pi ?OP? flutuante
-  soma_variaveis = t6
-  t1[1] = (null)
-  t0[0] = t1
-  t7 = soma_variaveis ?OP? 1.000000
-  soma_com_constante = t7
-  t0[1] = (null)
+  t0 = pi ?OP? flutuante
+  soma_variaveis = t0
+  t1 = soma_variaveis ?OP? 1.000000
+  soma_com_constante = t1
+  if_false flutuante goto L0
+  flutuante = 2.000000
+L0:
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
 [INFO] Código C gerado em 'programa_gerado.c'.
