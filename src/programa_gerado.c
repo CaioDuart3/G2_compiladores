@@ -3,20 +3,33 @@
 #include <string.h>
 
     /* Declarações de variáveis globais */
-    float soma_variaveis = 3.141500;
-    float pi = 3.141500;
-    float soma_com_constante = 4.141500;
-    float flutuante = 2.000000;
+    int a = 4;
+    int b = 1;
+    int x = 0;
+    int y = 0;
 
+
+int soma(int x, int y) {
+  return (x + y);
+}
 
 int main() {
-  pi = 3.141500;
-  flutuante = 1.000000;
-  flutuante = 0.000000;
-  soma_variaveis = (pi + flutuante);
-  soma_com_constante = (soma_variaveis + 1.000000);
-  if (flutuante) {
-    flutuante = 2.000000;
+  a = 1;
+  b = 1;
+  y = 0;
+  x = 0;
+  if ((a && b)) {
+    b = (b + 1);
+    if ((b || a)) {
+      a = (a + 1);
+    }
+    b = 1;
+    x = soma(a, b);
+    if ((soma(a, b) > 10)) {
+      a = (a + 2);
+    } else {
+      printf("acabou");
+    }
   }
     return 0;
 }

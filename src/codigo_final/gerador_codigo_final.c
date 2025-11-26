@@ -252,12 +252,27 @@ static void gerar_inicializacoes_vetores(FILE *saida, int indent) {
 
 static void gerar_comando(NoAST *no, FILE *saida, int indent);
 
+static void gerar_funcoes(NoAST *no, FILE *saida) {
+    if (!no) return;
+    
+    if (no->tipo == NO_FUNCAO) {
+        gerar_comando(no, saida, 0);
+    } else if (no->tipo == NO_LISTA || no->tipo == NO_LISTA_COMANDOS) {
+        if (no->filho1) {
+            gerar_funcoes(no->filho1, saida);
+        }
+        if (no->proximo) {
+            gerar_funcoes(no->proximo, saida);
+        }
+    } else if (no->proximo) {
+        gerar_funcoes(no->proximo, saida);
+    }
+}
+
 static void gerar_bloco(NoAST *bloco, FILE *saida, int indent) {
     if (!bloco) return;
 
-    
     if (bloco->tipo == NO_LISTA_COMANDOS || bloco->tipo == NO_LISTA) {
-        
         if (bloco->filho1 && bloco->filho1->tipo != NO_FUNCAO) {
             gerar_comando(bloco->filho1, saida, indent);
         }
@@ -350,8 +365,32 @@ static void gerar_comando(NoAST *no, FILE *saida, int indent) {
             
             indenta(saida, indent);
             
-            
-            if (iter && iter->tipo == NO_ID) {
+            if (iter && iter->tipo == NO_CHAMADA_FUNCAO) {
+                NoAST *func_id = iter->filho1;
+                if (func_id && func_id->tipo == NO_ID && strcmp(func_id->valor_string, "range") == 0) {
+                    NoAST *args = iter->filho2;
+                    if (args) {
+                        const char *start = "0";
+                        const char *end = "0";
+                        if (args && args->tipo != NO_VAZIO) {
+                            start = gerar_expressao(args, saida);
+                            if (args->proximo) {
+                                end = gerar_expressao(args->proximo, saida);
+                            } else {
+                                end = start;
+                                start = "0";
+                            }
+                        }
+                        fprintf(saida, "for (int __i = %s; __i < %s; __i++) {\n", start, end);
+                        indenta(saida, indent + 1);
+                        fprintf(saida, "%s = __i;\n", var->valor_string);
+                        gerar_bloco(no->filho3, saida, indent + 1);
+                        indenta(saida, indent);
+                        fprintf(saida, "}\n");
+                    }
+                }
+            }
+            else if (iter && iter->tipo == NO_ID) {
                 Simbolo *s = searchST(iter->valor_string);
                 if (s && s->tipo == VETOR && s->tamanho > 0) {
                     fprintf(saida, "for (int __i = 0; __i < %d; __i++) {\n", s->tamanho);
@@ -361,7 +400,7 @@ static void gerar_comando(NoAST *no, FILE *saida, int indent) {
                     indenta(saida, indent);
                     fprintf(saida, "}\n");
                 }
-            } 
+            }
             else if (iter && (iter->tipo == NO_LISTA || iter->tipo == NO_LISTA_COMANDOS)) {
                 int count = 0;
                 NoAST *elem = iter;
@@ -415,7 +454,6 @@ static void gerar_comando(NoAST *no, FILE *saida, int indent) {
             }
             fprintf(saida, ") {\n");
             gerar_bloco(no->filho2, saida, 1);
-            fprintf(saida, "    return 0;\n");
             fprintf(saida, "}\n");
             break;
         }
@@ -442,14 +480,8 @@ void gerar_codigo_final(TacCodigo* tac, FILE* saida) {
 
     gerar_declaracoes(saida);
 
-    if (raizAST && (raizAST->tipo == NO_LISTA || raizAST->tipo == NO_LISTA_COMANDOS)) {
-        NoAST *atual = raizAST;
-        while (atual) {
-            if (atual->filho1 && atual->filho1->tipo == NO_FUNCAO) {
-                gerar_comando(atual->filho1, saida, 0);
-            }
-            atual = atual->proximo;
-        }
+    if (raizAST) {
+        gerar_funcoes(raizAST, saida);
     }
 
     fprintf(saida, "\nint main() {\n");
