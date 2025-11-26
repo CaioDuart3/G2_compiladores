@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 1 "parser/parser.y"
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -99,7 +99,7 @@
 //   static void set_last_for_expr(NoAST *n) { last_for_expr = n; }
 //   static NoAST *get_last_for_expr(void) { return last_for_expr; }
 
-#line 103 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 103 "parser/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -1686,128 +1686,128 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: lista_comandos_opt newlines_opt  */
-#line 106 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 106 "parser/parser.y"
     { 
         raizAST = (yyvsp[-1].no); /* Salva a raiz global */
         (yyval.no) = (yyvsp[-1].no);
     }
-#line 1695 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1695 "parser/parser.tab.c"
     break;
 
   case 5: /* lista_comandos_opt: %empty  */
-#line 118 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 118 "parser/parser.y"
                         { (yyval.no) = NULL; }
-#line 1701 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1701 "parser/parser.tab.c"
     break;
 
   case 6: /* lista_comandos_opt: lista_comandos  */
-#line 119 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 119 "parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 1707 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1707 "parser/parser.tab.c"
     break;
 
   case 7: /* lista_comandos: comando  */
-#line 127 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 127 "parser/parser.y"
         { (yyval.no) = criarNoLista((yyvsp[0].no), NULL); }
-#line 1713 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1713 "parser/parser.tab.c"
     break;
 
   case 8: /* lista_comandos: lista_comandos comando  */
-#line 129 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 129 "parser/parser.y"
         {
             if ((yyvsp[0].no) != NULL)
                 (yyval.no) = criarNoLista((yyvsp[-1].no), (yyvsp[0].no));
             else
                 (yyval.no) = (yyvsp[-1].no);
         }
-#line 1724 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1724 "parser/parser.tab.c"
     break;
 
   case 9: /* comando: atribuicao  */
-#line 138 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 138 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1730 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1730 "parser/parser.tab.c"
     break;
 
   case 10: /* comando: expressao  */
-#line 139 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 139 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1736 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1736 "parser/parser.tab.c"
     break;
 
   case 11: /* comando: if_stmt  */
-#line 140 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 140 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1742 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1742 "parser/parser.tab.c"
     break;
 
   case 12: /* comando: while_stmt  */
-#line 141 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 141 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1748 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1748 "parser/parser.tab.c"
     break;
 
   case 13: /* comando: for_stmt  */
-#line 142 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 142 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1754 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1754 "parser/parser.tab.c"
     break;
 
   case 14: /* comando: TOKEN_NEWLINE  */
-#line 143 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 143 "parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 1760 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1760 "parser/parser.tab.c"
     break;
 
   case 15: /* comando: bloco  */
-#line 144 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 144 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1766 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1766 "parser/parser.tab.c"
     break;
 
   case 16: /* comando: declaracao_funcao  */
-#line 145 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 145 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1772 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1772 "parser/parser.tab.c"
     break;
 
   case 17: /* comando: retorno  */
-#line 146 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 146 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1778 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1778 "parser/parser.tab.c"
     break;
 
   case 18: /* $@1: %empty  */
-#line 152 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 152 "parser/parser.y"
     {
         openScope();
 
         registrarParametros((yyvsp[-2].no)); 
     }
-#line 1788 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1788 "parser/parser.tab.c"
     break;
 
   case 19: /* declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS $@1 bloco  */
-#line 158 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 158 "parser/parser.y"
     {
         closeScope();
         
         (yyval.no) = criarNoFuncao((yyvsp[-6].sval), (yyvsp[-4].no), (yyvsp[0].no));
         insertST((yyvsp[-6].sval), FUNCAO);
     }
-#line 1799 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1799 "parser/parser.tab.c"
     break;
 
   case 20: /* retorno: TOKEN_PALAVRA_CHAVE_RETURN expressao  */
-#line 168 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 168 "parser/parser.y"
     {
         (yyval.no) = criarNoReturn((yyvsp[0].no));
     }
-#line 1807 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1807 "parser/parser.tab.c"
     break;
 
   case 25: /* atribuicao_indexacao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 182 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 182 "parser/parser.y"
     {
 
         NoAST *no_index = criarNoIndex(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no));
@@ -1815,11 +1815,11 @@ yyreduce:
 
         free((yyvsp[-5].sval));
     }
-#line 1819 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1819 "parser/parser.tab.c"
     break;
 
   case 26: /* atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 193 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 193 "parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
     Simbolo *s = searchST((yyvsp[-2].sval));
@@ -1880,19 +1880,19 @@ yyreduce:
     }
     free((yyvsp[-2].sval));
 }
-#line 1884 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1884 "parser/parser.tab.c"
     break;
 
   case 27: /* atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes  */
-#line 257 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 257 "parser/parser.y"
       {
           (yyval.no) = criarNoAtribuicaoMultipla((yyvsp[-2].no), (yyvsp[0].no));
       }
-#line 1892 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1892 "parser/parser.tab.c"
     break;
 
   case 28: /* atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao  */
-#line 264 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 264 "parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
 
@@ -1927,173 +1927,173 @@ switch (t) {
 }
     free((yyvsp[-2].sval));
 }
-#line 1931 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1931 "parser/parser.tab.c"
     break;
 
   case 29: /* lista_identificadores: TOKEN_IDENTIFICADOR  */
-#line 302 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 302 "parser/parser.y"
       {
           (yyval.no) = criarListaIds((yyvsp[0].sval));
       }
-#line 1939 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1939 "parser/parser.tab.c"
     break;
 
   case 30: /* lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR  */
-#line 306 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 306 "parser/parser.y"
       {
           (yyval.no) = adicionaIdNaLista((yyvsp[-2].no), (yyvsp[0].sval));
       }
-#line 1947 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1947 "parser/parser.tab.c"
     break;
 
   case 31: /* lista_expressoes: expressao  */
-#line 313 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 313 "parser/parser.y"
       {
           (yyval.no) = criarListaExp((yyvsp[0].no));
       }
-#line 1955 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1955 "parser/parser.tab.c"
     break;
 
   case 32: /* lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 317 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 317 "parser/parser.y"
       {
           (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no));
       }
-#line 1963 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1963 "parser/parser.tab.c"
     break;
 
   case 33: /* lista_argumentos: %empty  */
-#line 325 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 325 "parser/parser.y"
         { (yyval.no) = NULL; }
-#line 1969 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1969 "parser/parser.tab.c"
     break;
 
   case 34: /* lista_argumentos: expressao  */
-#line 327 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 327 "parser/parser.y"
         { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1975 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1975 "parser/parser.tab.c"
     break;
 
   case 35: /* lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 329 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 329 "parser/parser.y"
         { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1981 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1981 "parser/parser.tab.c"
     break;
 
   case 36: /* chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 334 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 334 "parser/parser.y"
         {
             NoAST *id = criarNoId((yyvsp[-3].sval));
             (yyval.no) = criarNoChamadaFuncao(id, (yyvsp[-1].no));
             free((yyvsp[-3].sval));
         }
-#line 1991 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1991 "parser/parser.tab.c"
     break;
 
   case 37: /* expressao: expressao TOKEN_OPERADOR_MAIS expressao  */
-#line 344 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 344 "parser/parser.y"
         { (yyval.no) = criarNoOp('+', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1997 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 1997 "parser/parser.tab.c"
     break;
 
   case 38: /* expressao: expressao TOKEN_OPERADOR_MENOS expressao  */
-#line 346 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 346 "parser/parser.y"
         { (yyval.no) = criarNoOp('-', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2003 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2003 "parser/parser.tab.c"
     break;
 
   case 39: /* expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO expressao  */
-#line 348 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 348 "parser/parser.y"
         { (yyval.no) = criarNoOp('*', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2009 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2009 "parser/parser.tab.c"
     break;
 
   case 40: /* expressao: expressao TOKEN_OPERADOR_DIVISAO expressao  */
-#line 350 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 350 "parser/parser.y"
         { (yyval.no) = criarNoOp('/', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2015 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2015 "parser/parser.tab.c"
     break;
 
   case 41: /* expressao: expressao TOKEN_OPERADOR_IGUAL expressao  */
-#line 352 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 352 "parser/parser.y"
         { (yyval.no) = criarNoOp('=', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2021 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2021 "parser/parser.tab.c"
     break;
 
   case 42: /* expressao: expressao TOKEN_OPERADOR_DIFERENTE expressao  */
-#line 354 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 354 "parser/parser.y"
         { (yyval.no) = criarNoOp('!', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2027 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2027 "parser/parser.tab.c"
     break;
 
   case 43: /* expressao: expressao TOKEN_OPERADOR_MENOR expressao  */
-#line 356 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 356 "parser/parser.y"
         { (yyval.no) = criarNoOp('<', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2033 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2033 "parser/parser.tab.c"
     break;
 
   case 44: /* expressao: expressao TOKEN_OPERADOR_MENOR_IGUAL expressao  */
-#line 358 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 358 "parser/parser.y"
         { (yyval.no) = criarNoOp('l', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2039 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2039 "parser/parser.tab.c"
     break;
 
   case 45: /* expressao: expressao TOKEN_OPERADOR_MAIOR expressao  */
-#line 360 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 360 "parser/parser.y"
         { (yyval.no) = criarNoOp('>', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2045 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2045 "parser/parser.tab.c"
     break;
 
   case 46: /* expressao: expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao  */
-#line 362 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 362 "parser/parser.y"
         { (yyval.no) = criarNoOp('g', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2051 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2051 "parser/parser.tab.c"
     break;
 
   case 47: /* expressao: expressao TOKEN_OPERADOR_LOGICO_AND expressao  */
-#line 364 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 364 "parser/parser.y"
         { (yyval.no) = criarNoOpLogicaAnd((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2057 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2057 "parser/parser.tab.c"
     break;
 
   case 48: /* expressao: expressao TOKEN_OPERADOR_LOGICO_OR expressao  */
-#line 366 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 366 "parser/parser.y"
         { (yyval.no) = criarNoOpLogicaOr((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2063 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2063 "parser/parser.tab.c"
     break;
 
   case 49: /* expressao: TOKEN_OPERADOR_LOGICO_NOT expressao  */
-#line 368 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 368 "parser/parser.y"
         { (yyval.no) = criarNoOp('N', (yyvsp[0].no), NULL); }
-#line 2069 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2069 "parser/parser.tab.c"
     break;
 
   case 50: /* expressao: atomo  */
-#line 370 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 370 "parser/parser.y"
         { (yyval.no) = (yyvsp[0].no); }
-#line 2075 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2075 "parser/parser.tab.c"
     break;
 
   case 51: /* atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 377 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 377 "parser/parser.y"
         { (yyval.no) = (yyvsp[-1].no); }
-#line 2081 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2081 "parser/parser.tab.c"
     break;
 
   case 52: /* atomo: TOKEN_INTEIRO  */
-#line 379 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 379 "parser/parser.y"
         { (yyval.no) = criarNoNum((yyvsp[0].ival)); }
-#line 2087 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2087 "parser/parser.tab.c"
     break;
 
   case 53: /* atomo: TOKEN_FLOAT  */
-#line 381 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 381 "parser/parser.y"
         { (yyval.no) = criarNoFloat((yyvsp[0].dval)); }
-#line 2093 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2093 "parser/parser.tab.c"
     break;
 
   case 54: /* atomo: TOKEN_IDENTIFICADOR  */
-#line 383 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 383 "parser/parser.y"
         {
             (yyval.no) = criarNoId((yyvsp[0].sval));
 
@@ -2105,128 +2105,128 @@ switch (t) {
 
             free((yyvsp[0].sval));
         }
-#line 2109 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2109 "parser/parser.tab.c"
     break;
 
   case 55: /* atomo: TOKEN_STRING  */
-#line 395 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 395 "parser/parser.y"
         { (yyval.no) = criarNoString((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 2115 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2115 "parser/parser.tab.c"
     break;
 
   case 56: /* atomo: TOKEN_PALAVRA_CHAVE_TRUE  */
-#line 397 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 397 "parser/parser.y"
         { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2121 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2121 "parser/parser.tab.c"
     break;
 
   case 57: /* atomo: TOKEN_PALAVRA_CHAVE_FALSE  */
-#line 399 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 399 "parser/parser.y"
         { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2127 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2127 "parser/parser.tab.c"
     break;
 
   case 58: /* atomo: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 401 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 401 "parser/parser.y"
         {
             (yyval.no) = criarNoLista((yyvsp[-1].no), NULL);
         }
-#line 2135 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2135 "parser/parser.tab.c"
     break;
 
   case 59: /* atomo: chamada_index  */
-#line 405 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 405 "parser/parser.y"
         { (yyval.no) = (yyvsp[0].no); }
-#line 2141 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2141 "parser/parser.tab.c"
     break;
 
   case 60: /* atomo: chamada_funcao  */
-#line 407 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 407 "parser/parser.y"
         { (yyval.no) = (yyvsp[0].no); }
-#line 2147 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2147 "parser/parser.tab.c"
     break;
 
   case 61: /* lista_valores: %empty  */
-#line 412 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 412 "parser/parser.y"
                            { (yyval.no) = NULL; }
-#line 2153 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2153 "parser/parser.tab.c"
     break;
 
   case 62: /* lista_valores: lista_expressoes  */
-#line 413 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 413 "parser/parser.y"
                            { (yyval.no) = (yyvsp[0].no); }
-#line 2159 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2159 "parser/parser.tab.c"
     break;
 
   case 63: /* chamada_index: atomo TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 419 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 419 "parser/parser.y"
         {
             (yyval.no) = criarNoIndex((yyvsp[-3].no), (yyvsp[-1].no)); /* cria nó AST de indexação: $1[$3] */
         }
-#line 2167 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2167 "parser/parser.tab.c"
     break;
 
   case 64: /* bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT  */
-#line 427 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 427 "parser/parser.y"
     {
         (yyval.no) = (yyvsp[-1].no); // Apenas retorna a lista de comandos
     }
-#line 2175 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2175 "parser/parser.tab.c"
     break;
 
   case 65: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 437 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 437 "parser/parser.y"
     {
         (yyval.no) = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
     }
-#line 2183 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2183 "parser/parser.tab.c"
     break;
 
   case 66: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 444 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 444 "parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
         (yyval.no) = criarNoIf((yyvsp[-6].no), (yyvsp[-4].no), elif_if);
     }
-#line 2192 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2192 "parser/parser.tab.c"
     break;
 
   case 67: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 453 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 453 "parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
         (yyval.no) = criarNoIf((yyvsp[-9].no), (yyvsp[-7].no), elif_if);
     }
-#line 2201 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2201 "parser/parser.tab.c"
     break;
 
   case 68: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 461 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 461 "parser/parser.y"
     {
         (yyval.no) = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2209 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2209 "parser/parser.tab.c"
     break;
 
   case 69: /* $@2: %empty  */
-#line 469 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 469 "parser/parser.y"
     {
         openScope();
     }
-#line 2217 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2217 "parser/parser.tab.c"
     break;
 
   case 70: /* while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@2 bloco  */
-#line 473 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 473 "parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoWhile((yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2226 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2226 "parser/parser.tab.c"
     break;
 
   case 71: /* $@3: %empty  */
-#line 489 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 489 "parser/parser.y"
     {
         openScope();
         
@@ -2234,21 +2234,21 @@ switch (t) {
             insertST((yyvsp[-3].sval), INT);
         }
     }
-#line 2238 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2238 "parser/parser.tab.c"
     break;
 
   case 72: /* for_stmt: TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@3 bloco  */
-#line 497 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 497 "parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFor(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no), (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 2248 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2248 "parser/parser.tab.c"
     break;
 
 
-#line 2252 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.tab.c"
+#line 2252 "parser/parser.tab.c"
 
       default: break;
     }
@@ -2477,7 +2477,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 503 "/home/laryssa/Documents/unb/compiladores_1/G2_compiladores/src/parser/parser.y"
+#line 503 "parser/parser.y"
 
 
 
