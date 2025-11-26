@@ -473,7 +473,6 @@ void gerar_codigo_final(TacCodigo* tac, FILE* saida) {
     if (!saida) return;
 
     extern NoAST *raizAST;
-
     fprintf(saida, "#include <stdio.h>\n");
     fprintf(saida, "#include <stdlib.h>\n");
     fprintf(saida, "#include <string.h>\n\n");

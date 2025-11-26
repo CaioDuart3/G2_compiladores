@@ -46,6 +46,7 @@ LISTA LITERAL:
 ===== TABELA DE SÍMBOLOS =====
 Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 1
@@ -62,4 +63,7 @@ L0:
   goto L0
 L1:
   t0[0] = (null)
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

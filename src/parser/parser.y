@@ -6,6 +6,7 @@
   #include "../tac/tac.h"
   #include "../ast/ast.h"
   #include "../codigo_final/gerador_codigo_final.h"
+  #include "../codigo_final/gerador_codigo_final.c"
 
 
 
@@ -507,13 +508,20 @@ void yyerror(const char *s) {
   fprintf(stderr, "ERRO SINTÁTICO (linha %d): %s\n", yylineno, s);
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
+    // Inicializações
     initST();
     inicializa_pilha();
     yylineno = 1;
 
+    // Inicia o parsing
+    // O yyparse lê do stdin padrão (que o script redireciona com < arquivo.py)
     int result = yyparse();
+
     if (result == 0) {
+        // Sucesso no Parsing: Imprime as estruturas para debug
+        // O script vai capturar esses printfs e salvar no arquivo .out correspondente
+
         printf("Parsing concluído com sucesso!\n");
 
         /* --- AST --- */
@@ -525,7 +533,8 @@ int main(void) {
         }
         printf("---------------------------------------\n");
 
-        /* --- Execução da AST --- */
+        /* --- Execução (Interpretador) --- */
+        // CUIDADO: Se seu código tiver prints, eles aparecerão aqui
         printf("\n--- EXECUÇÃO DA AST ---\n");
         if (raizAST) {
             executarAST(raizAST);
@@ -534,17 +543,23 @@ int main(void) {
         /* --- Tabela de Símbolos --- */
         printf("\n--- TABELA DE SÍMBOLOS ---\n");
         showST();
+        printf("===============================\n");
 
-        /* --- TAC --- */
+        /* --- TAC e Geração de Código --- */
         if (raizAST) {
             printf("\n--- CÓDIGO INTERMEDIÁRIO (TAC) ---\n");
             TacCodigo* codigo = gerar_tac(raizAST);
+            
             if (codigo) {
                 imprimir_tac(codigo);
 
-                /* --- Código Final em C --- */
+                /* Geração do arquivo .c final */
                 printf("\n--- GERAÇÃO DE CÓDIGO FINAL ---\n");
+                
+                // Nota: Esse arquivo será sobrescrito a cada teste. 
+                // Se quiser salvar um .c por teste, precisaria mudar a lógica de nomes aqui.
                 FILE* out = fopen("programa_gerado.c", "w");
+                
                 if (out) {
                     gerar_codigo_final(codigo, out);
                     fclose(out);
@@ -556,18 +571,19 @@ int main(void) {
 
                 liberar_tac(codigo);
             } else {
-                printf("(Código TAC vazio)\n");
+                printf("(Código TAC vazio ou não gerado)\n");
             }
         }
 
-        /* --- Limpeza --- */
+        /* --- Limpeza de Memória --- */
         freeST();
         if (raizAST) {
             liberarAST(raizAST);
         }
 
     } else {
-        printf("Parsing interrompido por erro.\n");
+        // O yyerror já imprime no stderr, que o script também captura
+        printf("Parsing interrompido por erro sintático.\n");
     }
 
     return result;

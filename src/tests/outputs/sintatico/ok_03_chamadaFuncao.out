@@ -94,6 +94,7 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 2
@@ -137,4 +138,7 @@ Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO AT
   t10[0] = (null)
 --- Fim Função: soma2 ---
   t0[1] = (null)
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

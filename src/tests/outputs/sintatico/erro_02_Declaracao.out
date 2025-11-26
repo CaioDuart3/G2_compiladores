@@ -5,4 +5,4 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_VIRGULA (,)
 LEXER: Token INTEIRO (1)
-Parsing interrompido por erro.
+Parsing interrompido por erro sintático.

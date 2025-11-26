@@ -52,6 +52,7 @@ LISTA LITERAL:
 ===== TABELA DE SÍMBOLOS =====
 Nome: v          | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [10, 20, 50, 40]
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 1
@@ -64,4 +65,7 @@ Nome: v          | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [10, 2
   v = t2
   t1[0] = (null)
   t0[0] = t1
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

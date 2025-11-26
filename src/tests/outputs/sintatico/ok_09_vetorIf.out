@@ -1,44 +1,40 @@
-ERRO SINTÁTICO (linha 6): syntax error, unexpected TOKEN_NEWLINE, expecting TOKEN_OPERADOR_ATRIBUICAO
-LEXER: Token IDENTIFICADOR (dados)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
-LEXER: Token INTEIRO (5)
-LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token INTEIRO (100)
-LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-LEXER: Token IDENTIFICADOR (maior)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (0)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-LEXER: Token IDENTIFICADOR (status)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (0)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 
-LEXER: Token PALAVRA_CHAVE_IF (if)
-LEXER: Token IDENTIFICADOR (dados)
-LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
-LEXER: Token INTEIRO (0)
-LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
-LEXER: Token OPERADOR_MENOR (<)
-LEXER: Token IDENTIFICADOR (dados)
-LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
-LEXER: Token INTEIRO (1)
-LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
-LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-LEXER: INDENT (nível 1)
-LEXER: Token IDENTIFICADOR (maior)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token IDENTIFICADOR (dados)
-LEXER: Token DELIMITADOR_ABRE_COLCHETES ([)
-LEXER: Token INTEIRO (1)
-LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
-Parsing interrompido por erro.
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+LISTA LITERAL:
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  t0 = alloc 0
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
+-----------------------------------

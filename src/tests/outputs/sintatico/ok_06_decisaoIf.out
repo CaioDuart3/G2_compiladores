@@ -151,6 +151,7 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: x          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 2
@@ -182,4 +183,7 @@ Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
   t6[0] = (null)
 --- Fim Função: soma ---
   t0[1] = (null)
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

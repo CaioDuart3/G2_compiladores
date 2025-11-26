@@ -57,6 +57,7 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: c          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 2
@@ -75,4 +76,7 @@ Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
   t6 = t5 * 4
   a = t6
   t0[1] = (null)
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

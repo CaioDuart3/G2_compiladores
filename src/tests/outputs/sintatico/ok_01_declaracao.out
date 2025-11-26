@@ -108,6 +108,7 @@ Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola m
 Nome: f          | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.140000
 Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2, 3, 4]
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   t0 = alloc 2
@@ -145,4 +146,7 @@ Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2,
   t9 = a + b
   soma = t9
   t0[1] = (null)
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------
