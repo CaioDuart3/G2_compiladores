@@ -1,4 +1,4 @@
 ERRO SINTÁTICO (linha 1): syntax error, unexpected TOKEN_OPERADOR_ATRIBUICAO, expecting end of file
 LEXER: Token INTEIRO (2)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
-Parsing interrompido por erro.
+Parsing interrompido por erro sintático.

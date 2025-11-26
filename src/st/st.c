@@ -63,6 +63,7 @@ const char *tipoParaString(Tipo tipo) {
         case BOOL: return "BOOL";
         case NONE: return "NONE";
         case FUNCAO: return "FUNCAO";
+        case VETOR: return "VETOR";
         default: return "DESCONHECIDO";
     }
 }
@@ -84,6 +85,18 @@ void showST() {
                     case FLOAT: printf("%f", s->valor.valor_float); break;
                     case BOOL: printf("%s", s->valor.valor_bool ? "TRUE" : "FALSE"); break;
                     case STRING: printf("\"%s\"", s->valor.valor_string ? s->valor.valor_string : ""); break;
+                    
+                    case VETOR:
+                        printf("[");
+                        if (s->vetor) {
+                            for (int k = 0; k < s->tamanho; k++) {
+                                printf("%d", s->vetor[k]);
+                                if (k < s->tamanho - 1) printf(", ");
+                            }
+                        }
+                        printf("]");
+                        break;
+
                     default: printf("N/A"); break;
                 }
             }
@@ -99,6 +112,16 @@ void freeST() {
         Simbolo *atual = tabela[i];
         while (atual) {
             Simbolo *proximo = atual->proximo;
+            
+            
+            if (atual->tipo == STRING && atual->valor.valor_string) {
+                free(atual->valor.valor_string);
+            }
+            
+            if (atual->vetor) {
+                free(atual->vetor);
+            }
+
             free(atual);
             atual = proximo;
         }

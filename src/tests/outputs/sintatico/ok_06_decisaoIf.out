@@ -206,10 +206,11 @@ IF:
 
 ===== TABELA DE SÍMBOLOS =====
 Nome: soma       | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
-Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 4
+Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: x          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
 Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
+===============================
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
@@ -261,4 +262,7 @@ L8:
   t9 = call print
 L9:
 L0:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

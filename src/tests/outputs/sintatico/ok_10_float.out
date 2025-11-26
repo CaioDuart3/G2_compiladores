@@ -1,0 +1,101 @@
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
+LEXER: Token IDENTIFICADOR (pi)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (3.141500) - Texto: 3.1415
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (1.000000) - Texto: 1.0
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (0.000000) - Texto: 0.0
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (soma_variaveis)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (pi)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (soma_com_constante)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token IDENTIFICADOR (soma_variaveis)
+LEXER: Token OPERADOR_MAIS (+)
+LEXER: Token FLOAT (1.000000) - Texto: 1.0
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (flutuante)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (2.000000) - Texto: 2.00
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: DEDENT (nível 0)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: pi
+  ATTR:
+  ID: flutuante
+  ATTR:
+  ID: flutuante
+  ATTR:
+  ID: soma_variaveis
+  OP: +
+    ID: pi
+    ID: flutuante
+ATTR:
+  ID: soma_com_constante
+  OP: +
+    ID: soma_variaveis
+    IF:
+  COND:
+    ID: flutuante
+  THEN:
+    ATTR:
+      ID: flutuante
+      ---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: soma_variaveis | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.141500
+Nome: pi         | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.141500
+Nome: soma_com_constante | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 4.141500
+Nome: flutuante  | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 2.000000
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  pi = 3.141500
+  flutuante = 1.000000
+  flutuante = 0.000000
+  t0 = pi ?OP? flutuante
+  soma_variaveis = t0
+  t1 = soma_variaveis ?OP? 1.000000
+  soma_com_constante = t1
+  if_false flutuante goto L0
+  flutuante = 2.000000
+L0:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
+-----------------------------------

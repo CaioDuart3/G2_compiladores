@@ -1,0 +1,38 @@
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
+-----------------------------------

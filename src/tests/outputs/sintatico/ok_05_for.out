@@ -44,6 +44,7 @@ FOR:
 ===== TABELA DE SÍMBOLOS =====
 Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   i = 0
@@ -56,4 +57,7 @@ L0:
   i = t2
   goto L0
 L1:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

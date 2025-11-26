@@ -1,11 +1,14 @@
-#include "../st/st.h"
 #ifndef AST_H
 #define AST_H
+
+#include "../st/st.h"
+
 typedef enum {
     NO_NUM,
     NO_ID,
     NO_INT,
     NO_FLOAT,
+    
     NO_FUNCAO,
     NO_STRING,
     NO_BOOL,
@@ -17,29 +20,27 @@ typedef enum {
     NO_IF,
     NO_WHILE,
     NO_FOR,
-    NO_LISTA_COMANDOS,
+    NO_LISTA_COMANDOS, // Usado para blocos de código
     NO_VAZIO,
     NO_CHAMADA_FUNCAO,
     NO_RETORNO,
     NO_INDEX,
-    NO_LISTA
+    NO_LISTA           // Usado para vetores [1,2,3]
 } TipoNo;
 
 typedef struct NoAST {
     TipoNo tipo;
     
     // Para nós "folha" (literais)
-    int valor_int;          // Usado por NO_NUM, NO_BOOL (1=True, 0=False)
-    char *valor_string;     // Usado por NO_ID, NO_STRING (requer strdup/free)
-
+    int valor_int;          
+    char *valor_string;     
+    double valor_double;    
+    
+    // Para tipagem e verificação
+    Tipo tipo_dado;
     // Para nós de operação
-    char operador;          // Usado por NO_OP_BINARIA (ex: '+', '-', etc.)
+    char operador;          
 
-    // Filhos genéricos. O significado depende do 'TipoNo':
-    // NO_OP_BINARIA: filho1=esquerda, filho2=direita
-    // NO_ATRIBUICAO: filho1=id, filho2=expressao
-    // NO_IF:         filho1=condicao, filho2=bloco_then, filho3=bloco_else
-    // NO_LISTA_COMANDOS: filho1=comando_atual
     struct NoAST *filho1;
     struct NoAST *filho2;
     struct NoAST *filho3;
@@ -52,33 +53,33 @@ typedef struct NoAST {
 
 } NoAST;
 
-// --- Funções de Criação de Nós ("Fábricas") ---
+// --- Funções de Criação de Nós ---
 
-// Nós para vetores
 NoAST *criarNoIndex(NoAST *lista, NoAST *indice);
-
-// Nós Folha
 NoAST *criarNoNum(int valor);
 NoAST *criarNoId(char *nome);
 NoAST *criarNoString(char *texto);
 NoAST *criarNoBool(int valor);
+NoAST *criarNoFloat(double valor);
 NoAST *criarNoVazio();
 
-// Nós de Expressão
 NoAST *criarNoOp(char operador, NoAST *esq, NoAST *dir);
 NoAST *criarNoOpLogicaAnd(NoAST *esq, NoAST *dir);
 NoAST *criarNoOpLogicaOr(NoAST *esq, NoAST *dir);
 
-// Nós de Comando
 NoAST *criarNoAtribuicao(NoAST *id, NoAST *expr);
 NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse);
-NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista);
 NoAST *criarNoWhile(NoAST *condicao, NoAST *bloco);
+NoAST *criarNoFor(NoAST *var, NoAST *iterable, NoAST *bloco);
+
+// --- AQUI ESTÁ A MUDANÇA ---
+NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista);          // Para vetores
+NoAST *criarNoListaComandos(NoAST *comando, NoAST *proximo);       // Para blocos de código
+// ---------------------------
 
 NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo);
 NoAST *criarNoReturn(NoAST *expr);
 
-// Nós de atribuição múltipla
 NoAST* criarListaIds(char* nome);
 NoAST* adicionaIdNaLista(NoAST* lista, char* nome);
 
@@ -88,23 +89,16 @@ NoAST* adicionaExpNaLista(NoAST* lista, NoAST* exp);
 NoAST* criarNoAtribuicaoMultipla(NoAST* listaIds, NoAST* listaExp);
 
 NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args);
-NoAST *criarNoFor(NoAST *var, NoAST *iterable, NoAST *bloco);
 
 Tipo inferirTipo(NoAST *no);
-
-void registrarParametros( NoAST *parametros);
+void registrarParametros(NoAST *parametros);
 
 // --- Funções de Gerenciamento ---
-
-// Imprime a árvore (com indentação)
 void imprimirAST(const NoAST *raiz, int indent);
-
-// Libera toda a memória da AST
 void liberarAST(NoAST *raiz);
-int avaliarExpressao(NoAST *expr);
-void executarAtribuicao(NoAST *no); 
+
+int avaliarExpressao(NoAST *no);
+double avaliarExpressaoFloat(NoAST *no);
 void executarAST(NoAST *raiz);
 
 #endif
-
-

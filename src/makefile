@@ -11,6 +11,7 @@ MAIN = tests/main.c
 AST = ast/ast.c
 TAC = tac/tac.c
 ST = st/st.c
+CODEGEN = codigo_final/gerador_codigo_final.c
 
 # Arquivos gerados
 LEXER_C = lexer/lex.yy.c
@@ -30,8 +31,8 @@ $(PARSER_C) $(PARSER_H): $(PARSER)
 	$(BISON) -d -o $(PARSER_C) $(PARSER)
 
 # Compila tudo
-$(EXEC): $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN)
-    $(CC) $(CFLAGS) -o $(EXEC) $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(MAIN) -lfl
+$(EXEC): $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(CODEGEN) $(MAIN)
+	$(CC) $(CFLAGS) -o $(EXEC) $(LEXER_C) $(PARSER_C) $(AST) $(TAC) $(ST) $(CODEGEN) $(MAIN) -lfl
 
 
 # Limpeza

@@ -52,7 +52,8 @@ WHILE:
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
-Nome: i          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
+Nome: i          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
+===============================
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
@@ -66,4 +67,7 @@ L0:
   i = t2
   goto L0
 L1:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

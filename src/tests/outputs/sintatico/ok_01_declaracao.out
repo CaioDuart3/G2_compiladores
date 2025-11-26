@@ -1,3 +1,5 @@
+Warning: tipo de nó desconhecido para impressão.
+Warning: tipo de nó desconhecido para impressão.
 LEXER: Token IDENTIFICADOR (a)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (1)
@@ -16,6 +18,11 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: Token IDENTIFICADOR (d)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token STRING ("ola mundo")
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (f)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (1.400000) - Texto: 1.4
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: Token IDENTIFICADOR (vetor_int)
@@ -46,6 +53,11 @@ LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: INDENT (nível 1)
+LEXER: Token IDENTIFICADOR (f)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token FLOAT (3.140000) - Texto: 3.14
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
 LEXER: Token IDENTIFICADOR (c)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token PALAVRA_CHAVE_FALSE (False)
@@ -76,8 +88,11 @@ ATTR:
   ID: d
   STRING: "ola mundo"
 ATTR:
+  ID: f
+  ATTR:
   ID: vetor_int
-  NUM: 1
+  LISTA LITERAL:
+    NUM: 1
 ATTR:
   ID: soma
   OP: +
@@ -90,6 +105,8 @@ IF:
       ID: b
   THEN:
     ATTR:
+      ID: f
+          ATTR:
       ID: c
       BOOL: False
     ATTR:
@@ -111,7 +128,9 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
 Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
 Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "ola mundo"
-Nome: vetor_int  | Tipo: NONE    | Escopo: 0 | Inicializado: SIM | Valor: N/A
+Nome: f          | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.140000
+Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2, 3, 4]
+===============================
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
@@ -119,12 +138,22 @@ Nome: vetor_int  | Tipo: NONE    | Escopo: 0 | Inicializado: SIM | Valor: N/A
   b = 2
   c = 1
   d = "ola mundo"
-  vetor_int = (null)
-  t0 = a + b
-  soma = t0
-  t1 = a < b
-  if_false t1 goto L0
+  f = 1.400000
+  t0 = alloc 4
+  t0[0] = 1
+  t0[1] = 2
+  t0[2] = 3
+  t0[3] = 4
+  vetor_int = t0
+  t1 = a + b
+  soma = t1
+  t2 = a < b
+  if_false t2 goto L0
+  f = 3.140000
   c = 0
   vetor_int[0] = 0
 L0:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

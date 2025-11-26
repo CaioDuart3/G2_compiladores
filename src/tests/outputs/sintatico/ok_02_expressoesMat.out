@@ -71,6 +71,7 @@ Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: c          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
 ===============================
+===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
   b = 1
@@ -83,4 +84,7 @@ Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
   t4 = t3 * 2
   t5 = a + t4
   d = t5
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------
