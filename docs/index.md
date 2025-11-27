@@ -5,10 +5,78 @@ O sistema é desenvolvido pela equipe **Runtime Terrors** e tem como objetivo cr
 
 ---
 
-# Como utilizar o compilador?
+# Estrutura do Projeto
 
-A princípio, para informações sobre como rodar o projeto e utilizar o compilador, utilize as instruções descritas no [README.md](https://github.com/CaioDuart3/G2_compiladore) do repositório.
+```
+            
+├── docs                  
+│   ├── Desenvolvimento   
+│   ├── Dificuldades      
+│   ├── Escopo            
+│   ├── Metodologia       
+│   └── Planejamento      
+├── site                  
+├── src                   
+│   ├── lexer           
+│   ├── parser            
+│   ├── ast               
+│   ├── st                
+│   ├── tac               
+│   ├── codigo_final     
+│   └── tests             
+├── run_tests.sh          
+├── README.md
+└── mkdocs.yml
+```
 
+# Como Executar o Projeto
+
+
+## Pré-requisitos
+
+Antes de iniciar, certifique-se de ter instalado:
+
+- **Python 3.8+**
+- **Flex** 
+- **Bison** 
+- **GCC** ou outro compilador C
+- **Make** 
+
+### Instalação no Ubuntu/Debian
+
+```bash
+sudo apt update
+sudo apt install flex bison build-essential
+```
+
+### Instalação no macOS 
+
+```bash
+brew install flex bison
+```
+
+# Como Compilar o Projeto
+
+
+
+```bash
+cd src
+make clean && make
+```
+
+# Como Executar os Testes
+
+Na pasta raiz do projeto: 
+
+```bash
+chmod +x run_tests.sh && ./run_tests.sh
+```
+
+O script irá:
+
+- Executar os arquivos de teste em `src/tests/inputs/`
+- Passar cada arquivo pelo compilador
+- Gerar saídas em `src/tests/outputs/`
 ---
 
 ## Integrantes
@@ -25,11 +93,8 @@ A princípio, para informações sobre como rodar o projeto e utilizar o compila
 | Versão | Descrição            | Autor                                         | Data       | Revisor |
 |--------|----------------------|-----------------------------------------------|------------|---------|
 | 1.0    | Criação do documento | [Caio Duarte](https://github.com/caioduart3)  | 02/05/2025 | [Laryssa Felix](https://github.com/felixlaryssa) |
+| 1.1    | Atualização do documento | [Isaque Camargos](https://github.com/isaqzin)  | 26/11/2025 | [Laryssa Felix](https://github.com/felixlaryssa) |
 
 ---
 
-Fonte: [Caio Duarte](https://github.com/caioduart3),  
-[Ludmila Aysha](https://github.com/ludmilaaysha),  
-[Rafael Welz](https://github.com/RafaelSchadt),  
-[Isaque Camargos](https://github.com/isaqzin),  
-[Laryssa Felix](https://github.com/felixlaryssa), 2025.
+Fonte: [Caio Duarte](https://github.com/caioduart3), [Ludmila Aysha](https://github.com/ludmilaaysha), [Rafael Welz](https://github.com/RafaelSchadt), [Isaque Camargos](https://github.com/isaqzin), [Laryssa Felix](https://github.com/felixlaryssa), 2025.

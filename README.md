@@ -4,67 +4,78 @@
   ![Untitled design](https://github.com/user-attachments/assets/d3f39c04-847b-4bb3-9bb6-db7d11f84ba4)
 
 
-This is a repository for a Python-to-C compiler built using **Flex** and **Bison**.
+Projeto de um compilador Python para C elaborado como parte da disciplina **"Compiladores"**, ministrada pelo professor Sergio Freitas.  
+O sistema é desenvolvido pela equipe **Runtime Terrors** e tem como objetivo criar um compilador utilizando as ferramentas **Flex** e **Bison**.
 
-## Project Structure
+# Estrutura do Projeto
+
 ```
-/G2_compiladores
-├─ /site              # GitHub Pages site
-├─ /docs              # Project documentation
-├─ /src               # Compiler source code
-│   ├─ lexer/         # Lexical analysis (tokenization)
-│   ├─ parser/        # Syntax analysis (parse tree construction)
-│   ├─ tests/         # Python code to be tested by the analyzers
-      └─ inputs/
-      └─ outputs/
-│   ├─ ST/            # Symbol Table for syntax analysis
-│   ├─ AST/
-└─ run_tests.sh/        # Compiler the project
+            
+├── docs                  
+│   ├── Desenvolvimento   
+│   ├── Dificuldades      
+│   ├── Escopo            
+│   ├── Metodologia       
+│   └── Planejamento      
+├── site                  
+├── src                   
+│   ├── lexer           
+│   ├── parser            
+│   ├── ast               
+│   ├── st                
+│   ├── tac               
+│   ├── codigo_final     
+│   └── tests             
+├── run_tests.sh          
+├── README.md
+└── mkdocs.yml
 ```
 
-## How to Run the Project
+# Como Executar o Projeto
 
-This section will guide you through setting up and running the Python-to-C compiler.
 
-### Prerequisites
+## Pré-requisitos
 
-Before running the project, make sure you have the following installed:
+Antes de iniciar, certifique-se de ter instalado:
 
-- Python 3.8+
+- **Python 3.8+**
+- **Flex** – Gerador de analisadores léxicos
+- **Bison** – Gerador de analisadores sintáticos
+- **GCC** ou outro compilador C
+- **Make** 
 
-- Flex (lexical analyzer generator)
+### Instalação no Ubuntu/Debian
 
-- Bison (parser generator)
-
-- GCC or another C compiler
-
-- Make (optional, but helpful)
-
-You can install Flex and Bison via:
-````
-# On Ubuntu/Debian:
+```bash
 sudo apt update
 sudo apt install flex bison build-essential
+```
 
-# On macOS (using Homebrew):
+### Instalação no macOS 
+
+```bash
 brew install flex bison
-````
-### Running the Compiler
-
-To run the compiler manually:
-
-Navigate to the src/ directory:
 ```
+
+# Como Compilar o Projeto
+
+
+
+```bash
 cd src
+make clean && make
 ```
-### How to Run the Tests
-To automatically run all test cases:
-```
+
+# Como Executar os Testes
+
+Na pasta raiz do projeto: 
+
+```bash
 chmod +x run_tests.sh && ./run_tests.sh
 ```
 
-This script will:
+O script irá:
 
-- Run all Python test files in src/tests/
-- Process them through the compiler
-S- ave the output C code in src/outputs/
+- Executar os arquivos de teste em `src/tests/inputs/`
+- Passar cada arquivo pelo compilador
+- Gerar saídas em `src/tests/outputs/`

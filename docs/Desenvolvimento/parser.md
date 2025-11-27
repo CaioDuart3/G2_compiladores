@@ -1,156 +1,226 @@
-# Parser
+# Parser - Análise Sintática
 
 ## 1. Introdução
 
-O parser (analisador sintático) tem como objetivo analisar a sequência de tokens gerada pelo analisador léxico e verificar se ela está em conformidade com a gramática da linguagem Python definida para este projeto.
+O parser (analisador sintático) é responsável por verificar se a sequência de *tokens* produzida pelo analisador léxico segue as regras definidas pela gramática da linguagem-alvo, que, neste caso, é um subconjunto de Python implementado para o compilador Python -> C.
+Além de validar a estrutura sintática, o parser constrói a base para a geração da *Abstract Syntax Tree* (AST), que será usada posteriormente na tradução para código C.
 
-Este compilador implementa um subconjunto de Python, focando, até o momento, em construções fundamentais como:
+Este compilador suporta:
 
-- Atribuições
-- Expressões aritméticas
-- Chamadas de função
-- Blocos com indentação
+- Atribuições (simples, múltiplas, encadeadas e indexadas);
+- Expressões aritméticas e lógicas;
+- Chamadas de funções;
+- Listas e indexações;
+- Estruturas condicionais (`if`, `elif`, `else`);
+- Laços (`while`, `for`);
+- Declarações de função e instruções de retorno;
+- Blocos estruturados por indentação, assim como em Python.
 
-Outras implementções futuras estão descritas no tópico [6. Próximos Passos](#6-próximos-passos) deste documento
+## 2. Metodologia
 
-Após a análise sintática, o código reconhecido servirá de base para tradução para código C, etapa posterior do compilador.
+O parser foi implementado utilizando Bison, seguindo o padrão clássico de compiladores baseados em gramáticas livres de contexto. A metodologia adotada inclui:
 
-## 2. Papel do Parser no Compilador Python → C
+**Integração com o Analisador Léxico**
 
-O pipeline geral do compilador funciona da seguinte forma:
+O parser consome *tokens* produzidos pelo Flex, incluindo informações sobre valores e localização (``%locations``), permitindo melhor rastreamento de erros.
 
-***Código Python → Análise Léxica (Flex) → Análise Sintática (Bison) → Representação Intermediária / AST → Geração de Código C → Código C resultante***
+**Implementação das Primeiras Regras**
 
+A implementação inicial do Parser concentrou-se nas regras gramaticais fundamentais, como expressões aritméticas, atribuições e chamadas de função. Essas primeiras definições foram essenciais para que o grupo adquirisse domínio sobre a ferramenta de geração de analisadores e compreendesse, na prática, como estruturar a gramática, integrar ações semânticas e lidar com potenciais conflitos de análise. Esse alicerce tornou possível, posteriormente, a expansão da linguagem com construções mais complexas e dependentes de escopo.
 
-A função do parser é, portanto:
+**Tratamento de Blocos com Indentação**
 
-- Detectar erros sintáticos e reportá-los com precisão.
-- Construir a estrutura sintática do programa em Python.
-- Preparar dados para a etapa de geração de código C.
+A implementação dos tokens ``INDENT`` e ``DEDENT`` foi fundamental para reproduzir o comportamento de blocos estruturais do Python, onde a delimitação de escopos depende exclusivamente da identação. Essa etapa exigiu atenção especial do grupo, pois o tratamento correto desses *tokens* é pré-requisito para o funcionamento de estruturas como ``if/else``, ``for``, ``while`` e ``def``.
 
-## 3. Estrutura do Arquivo parser.y
+A complexidade surgiu principalmente da necessidade de sincronizar o analisador léxico com o parser, garantindo que cada mudança no nível de indentação fosse refletida com precisão na gramática. Esse mecanismo não apenas define os escopos corretamente, mas também permite a construção consistente dos blocos na AST, evitando ambiguidades e garantindo que o compilador reconheça a hierarquia entre instruções.
 
-O arquivo ``parser/parser.y`` contém:
+**Uso de AST como Representação Intermediária**
 
-- Cabeçalho em C
-    - Inclusão de bibliotecas padrão (``stdio.h``, ``stdlib.h``).
-    - Definições de ``yylex()`` e ``yyerror()``.
-    - Acesso a ``yytext`` e ``yylineno`` para mensagens de erro detalhadas.
-- Declarações do Bison
-    - Tokens recebidos do lexer (definidos em ``lexer.l``).
-    - Regras de precedência de operadores (+, -, *, /, =).
-    - Configuração de rastreamento (``%define parse.trace``) e localização de erros (``%locations``).
-- Gramática
-    - Regras que definem a sintaxe do subconjunto de Python aceito.
-    - Estruturas como atribuição múltipla, expressões encadeadas e blocos indentados.
-- Funções auxiliares
-    - Implementação de ``yyerror()`` para reportar erros sintáticos amigáveis.
-    - Função ``main()`` para testar o parser de forma isolada.
+O parser opera em integração direta com o módulo de AST, construindo a árvore sintática abstrata à medida que cada regra gramatical é reconhecida. Para cada produção válida, ações semânticas específicas criam e conectam nós definidos em ``ast.h``, garantindo que a estrutura sintática e semântica do programa seja representada fielmente desde os primeiros estágios da análise.
 
-## 4. Gramática Implementada
+**Tabela de Símbolos**
 
-A gramática foi inspirada na sintaxe de Python, adaptada para fins didáticos.
-Alguns dos não-terminais principais:
+Durante a análise, o parser utiliza e atualiza a Tabela de Símbolos (``st.h``) para:
 
-| Não-terminal   | Descrição                                                           |
-| -------------- | ------------------------------------------------------------------- |
-| programa       | Raiz da gramática; conjunto de comandos                             |
-| comando        | Pode ser atribuição, chamada de função, expressão, bloco ou newline |
-| atribuicao     | Suporta atribuições simples e encadeadas                            |
-| expressao      | Expressões aritméticas com operadores infixos                       |
-| bloco          | Início de conjunto indentado de comandos, simulando blocos Python   |
-| chamada_funcao | Reconhece chamadas com e sem argumentos                             |
+- Registrar variáveis e funções;
+- Verificar uso antes da definição;
+- Inferir tipos;
+- Armazenar valores e tamanhos de vetores.
 
-Exemplo de regra de expressão:
+**Ações semânticas integradas**
 
-```y
-expressao:
-    chamada_funcao
-  | expressao TOKEN_OPERADOR_MAIS expressao
-  | expressao TOKEN_OPERADOR_MENOS expressao
-  | expressao TOKEN_OPERADOR_MULTIPLICACAO expressao
-  | expressao TOKEN_OPERADOR_DIVISAO expressao
-  ;
+Além de construir a AST, o parser já resolve:
+
+- Inferência de tipos;
+- Avaliação constante de expressões simples;
+- Registro de parâmetros de função;
+- Verificação de escopo com funções como openScope() e closeScope().
+
+## 3. Papel do Parser no Compilador
+
+O compilador segue o pipeline:
+
+**Código Python -> Lexer (Flex) -> Parser (Bison) -> AST/TAC -> Gerador de Código Final -> Código C**
+
+O parser cumpre as seguintes funções essenciais:
+
+**Detecção de Erros Sintáticos**
+
+Mensagens detalhadas, indicando *token* problemático, linha e tipo de erro.
+
+**Construção da Estrutura Sintática**
+
+Cada construção Python é convertida em um nó semântico representando elementos como:
+
+- Atribuições;
+- Condicionais;
+- Laços;
+- Chamada de funções;
+- Operações aritméticas e lógicas.
+
+**Interação com Demais Módulos**
+
+Durante a análise, o parser:
+
+- Atualiza a Tabela de Símbolos;
+- Constrói a AST;
+- Prepara dados para geração de código intermediário (TAC) e final (C);
+- Marca variáveis como inicializadas ou vetores quando necessário.
+
+## 4. Implementação
+
+A implementação do parser está localizada em `parser/parser.y`
+
+Ele é dividido nas seguintes seções:
+
+### 4.1 Cabeçalho em C (`%{ ... %}`)
+
+Inclui:
+
+- Bibliotecas padrão (`stdio.h`, `stdlib.h`, `string.h`);
+- Módulos internos do compilador:
+- Tabela de Símbolos (`st.h`);
+- AST (`ast.h`);
+- Código Intermediário (TAC) (`tac.h`);
+- Gerador de código final (`gerador_codigo_final.h`);
+- Declarações de `yylex()` e `yyerror()`;
+- Variável global `raizAST`, que guarda a árvore gerada.
+
+### 4.2 Definições do Bison
+
+Incluindo:
+
+- `%define parse.error verbose`: mensagens de erro detalhadas;
+- `%define parse.trace`: rastreamento opcional do parser;
+- `%locations`: suporte a linha/coluna;
+
+Definição da union que armazena inteiros, floats, strings e ponteiros para nós AST.
+
+### 4.3 *Tokens*
+
+O parser reconhece:
+
+- Identificadores, inteiros, floats, strings;
+- Palavras-chave (`if`, `while`, `for`, `return`, `def`, etc.);
+- Operadores aritméticos, lógicos e relacionais;
+- Delimitadores e símbolos de estrutura;
+- *Tokens* estruturais: `INDENT`, `DEDENT`, `NEWLINE`.
+
+### 4.4 Regras de Precedência
+
+Definidas para evitar ambiguidades, incluindo:
+
+- Atribuições (right associative);
+- Operadores lógicos (`and`, `or`, `not`);
+- Comparações;
+- Operadores aritméticos.
+
+### 4.5 Gramática
+
+Cobre:
+
+- Programa com lista de comandos;
+- Blocos indentados;
+- `if` / `elif` / `else`;
+- Laços `while` e `for`;
+- Atribuições (simples, múltipla, encadeada, indexada);
+- Chamadas de função;
+- Declaração de funções com parâmetros;
+- Retorno de função;
+- Expressões aritméticas, lógicas e relacionais;
+- Literais: inteiros, floats, booleanos, strings, listas;
+- Indexações.
+
+Ações semânticas constroem nós AST com funções como:
+
+- `criarNoAtribuicao`
+- `criarNoOp`
+- `criarNoBool`
+- `criarNoChamadaFuncao`
+- `criarNoLista`
+- `criarNoIndex`
+
+Entre outras
+
+### 4.6 Integração com Tabela de Símbolos
+
+Em regras como atribuição simples:
+
+- A variável é registrada caso ainda não exista;
+- Tipo é inferido a partir da expressão;
+- Valores são avaliados para constantes;
+- Vetores têm tamanho inferido automaticamente.
+
+### 4.7 Tratamento de Erros
+
+`yyerror()` gera mensagens como:
+
+```text
+ERRO (linha X): syntax error próximo de '...'
 ```
 
-## 5. Executando o Parser Individualmente
+Além disso, erros semânticos como uso de variável não declarada também são reportados.
 
-Durante o desenvolvimento, é possível compilar e executar apenas a etapa do parser para verificar se a análise sintática está correta.
+## 5. Execução
 
-Os comandos são:
+Ao executar a análise léxica, há dois resultados possíveis:
 
-**1. Acessar a pasta ``src``**
+## 5.1. Caso a análise sintática seja bem-sucedida
 
-```bash
-cd src
-```
+Quando a entrada está de acordo com as regras gramaticais, o parser imprime:
 
-**2. Gerar arquivos do parser com Bison**
-
-```bash
-bison -d -o "parser/parser.tab.c" "parser/parser.y"
-```
-
-**3. Gerar arquivos do lexer com Flex**
-
-```bash
-flex -o "lexer/lex.yy.c" "lexer/lexer.l"
-```
-
-**4. Compilar parser + lexer**
-
-```bash
-gcc parser/parser.tab.c lexer/lex.yy.c -o parser/compilador -lfl
-```
-
-**5. Executar testes de parser**
-
-```bash
-parser/compilador < tests/sintatico/<test>
-```
-
-Onde ``<test>`` representa um arquivo de teste contendo código Python válido ou inválido, localizado em tests/parser.
-
-- Exemplo de teste válido (``tests/sintatico/parser_01_declaracao.py``):
-```python
-a= 1
-a ,b,c=2,3,4
-d=e= f=5
-```
-
-- Saída esperada:
-```bash
-Iniciando parser...
+```text
 Parsing concluído com sucesso!
 ```
 
-- Exemplo de teste com erro (``tests/sintatico/parser_04_erro1Declaracao.py``):
+Essa mensagem indica que:
 
-```python
-a=1=b=c 
+- todos os *tokens* foram consumidos corretamente;
+- não houve violação de nenhuma regra da gramática;
+- a estrutura do programa é sintaticamente válida.
+
+Nenhum detalhe adicional é mostrado pelo parser nessa etapa, apenas a confirmação de sucesso.
+
+## 5.2. Caso a análise sintática encontre erro
+
+Quando ocorre qualquer inconsistência gramatical, o parser interrompe a análise e apresenta uma mensagem de erro como:
+
+```text
+ERRO SINTÁTICO (linha X): syntax error, unexpected TOKEN_X, expecting Y
+Parsing interrompido por erro sintático.
 ```
 
-- Saída esperada:
-```bash
-Iniciando parser...
-ERRO (linha 1): syntax error próximo de '='
-Parsing interrompido por erro.
-```
+Essa apresentação sempre inclui:
 
-## 6. Próximos Passos
+- a linha onde o erro foi detectado,
+- o *token* inesperado que causou a falha,
+- o que era esperado naquele ponto,
+- e a mensagem final informando a interrupção da análise.
 
-- Ampliar a gramática para incluir:
-    - Condicionais (if, elif, else)
-    - Laços (while, for)
-    - Definição de funções
-    - Declaração e uso de listas
-    - Dicionários
-- Associar ações semânticas às regras do parser para gerar árvores sintáticas abstratas (AST) ou diretamente código C.
-- Implementar mensagens de erro mais específicas para cada regra gramatical.
-- Traduzir estruturas Python para C na etapa seguinte do compilador.
 
 ## Histórico de Versões 
 
 | Versão |Descrição     |Autor                                       |Data    |Revisor|
-|:-:     | :-:          | :-:                                        | :-:        |:-:|
+|:-:     | :-:          | :-:                                        | :-:    |:-:    |
 |1.0     | Criação da v1 da documentação do parser | [Ludmila Nunes](https://github.com/ludmilaaysha)   | 01/10/2025 | [Isaque Camargos](https://github.com/isaqzin)|
+|2.0     | Criação da versão final da documentação do parser | [Ludmila Nunes](https://github.com/ludmilaaysha)   | 26/11/2025 | [Isaque Camargos](https://github.com/isaqzin)|

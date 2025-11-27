@@ -44,10 +44,15 @@ theme:
     - navigation.top
 
 nav:
-  - Apresentação: index.md
-  - Planejamento: Planejamento/planejamento.md
-  - Escopo: Escopo/escopo.md
-  - Dificuldades: Dificuldades/dificuldades.md
-  - Desenvolvimento Técnico:
-    - Parser: Desenvolvimento/parser.md
-    - Lexer: Desenvolvimento/lexer.md
+  - Apresentação: 'index.md'
+  - Planejamento: 'Planejamento/planejamento.md'
+  - Metodologia: 'Metodologia/metodologia.md'
+  - Escopo: 'Escopo/escopo.md'
+  - Dificuldades: 'Dificuldades/dificuldades.md'
+  - Desenvolvimento:
+    - Lexer: 'Desenvolvimento/lexer.md'
+    - Parser: 'Desenvolvimento/parser.md'
+    - AST: 'Desenvolvimento/ast.md'
+    - ST: 'Desenvolvimento/st.md'
+    - TAC: 'Desenvolvimento/tac.md'
+    - Código Final: 'Desenvolvimento/codigo_final.md'
