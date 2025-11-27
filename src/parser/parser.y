@@ -6,7 +6,6 @@
   #include "../tac/tac.h"
   #include "../ast/ast.h"
   #include "../codigo_final/gerador_codigo_final.h"
-  #include "../codigo_final/gerador_codigo_final.c"
 
   #define YYERROR_VERBOSE 1
 
@@ -401,7 +400,7 @@ int main(int argc, char *argv[]) {
                 if (out) {
                     gerar_codigo_final(codigo, out);
                     fclose(out);
-
+                    
                 } else {
                     fprintf(stderr, "[ERRO] Não foi possível criar 'programa_gerado.c'.\n");
                 }

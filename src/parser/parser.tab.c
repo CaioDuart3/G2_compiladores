@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "parser/parser.y"
+#line 1 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -76,7 +76,6 @@
   #include "../tac/tac.h"
   #include "../ast/ast.h"
   #include "../codigo_final/gerador_codigo_final.h"
-  #include "../codigo_final/gerador_codigo_final.c"
 
   #define YYERROR_VERBOSE 1
 
@@ -89,7 +88,7 @@
   /* Variável global que guardará a raiz da árvore */
   NoAST *raizAST = NULL;
 
-#line 93 "parser/parser.tab.c"
+#line 92 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -581,14 +580,14 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    83,    83,    90,    92,    96,    97,   102,   104,   115,
-     116,   117,   118,   119,   120,   121,   122,   123,   128,   127,
-     141,   146,   147,   148,   149,   153,   162,   210,   215,   237,
-     239,   244,   246,   251,   252,   253,   258,   267,   268,   269,
-     270,   271,   272,   273,   274,   275,   276,   277,   278,   279,
-     280,   284,   285,   286,   287,   297,   298,   299,   300,   305,
-     306,   310,   311,   315,   320,   325,   327,   332,   337,   343,
-     342,   353,   352
+       0,    82,    82,    89,    91,    95,    96,   101,   103,   114,
+     115,   116,   117,   118,   119,   120,   121,   122,   127,   126,
+     140,   145,   146,   147,   148,   152,   161,   209,   214,   236,
+     238,   243,   245,   250,   251,   252,   257,   266,   267,   268,
+     269,   270,   271,   272,   273,   274,   275,   276,   277,   278,
+     279,   283,   284,   285,   286,   296,   297,   298,   299,   304,
+     305,   309,   310,   314,   319,   324,   326,   331,   336,   342,
+     341,   352,   351
 };
 #endif
 
@@ -1676,134 +1675,134 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: lista_comandos_opt newlines_opt  */
-#line 84 "parser/parser.y"
+#line 83 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     { 
         raizAST = (yyvsp[-1].no); 
         (yyval.no) = (yyvsp[-1].no);
     }
-#line 1685 "parser/parser.tab.c"
+#line 1684 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 5: /* lista_comandos_opt: %empty  */
-#line 96 "parser/parser.y"
+#line 95 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                         { (yyval.no) = NULL; }
-#line 1691 "parser/parser.tab.c"
+#line 1690 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 6: /* lista_comandos_opt: lista_comandos  */
-#line 97 "parser/parser.y"
+#line 96 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 1697 "parser/parser.tab.c"
+#line 1696 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 7: /* lista_comandos: comando  */
-#line 103 "parser/parser.y"
+#line 102 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoListaComandos((yyvsp[0].no), NULL); }
-#line 1703 "parser/parser.tab.c"
+#line 1702 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 8: /* lista_comandos: lista_comandos comando  */
-#line 105 "parser/parser.y"
+#line 104 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         {
             if ((yyvsp[0].no) != NULL)
                 (yyval.no) = criarNoListaComandos((yyvsp[-1].no), (yyvsp[0].no));
             else
                 (yyval.no) = (yyvsp[-1].no);
         }
-#line 1714 "parser/parser.tab.c"
+#line 1713 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 9: /* comando: atribuicao  */
-#line 115 "parser/parser.y"
+#line 114 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1720 "parser/parser.tab.c"
+#line 1719 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 10: /* comando: expressao  */
-#line 116 "parser/parser.y"
+#line 115 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1726 "parser/parser.tab.c"
+#line 1725 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 11: /* comando: if_stmt  */
-#line 117 "parser/parser.y"
+#line 116 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1732 "parser/parser.tab.c"
+#line 1731 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 12: /* comando: while_stmt  */
-#line 118 "parser/parser.y"
+#line 117 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1738 "parser/parser.tab.c"
+#line 1737 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 13: /* comando: for_stmt  */
-#line 119 "parser/parser.y"
+#line 118 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1744 "parser/parser.tab.c"
+#line 1743 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 14: /* comando: TOKEN_NEWLINE  */
-#line 120 "parser/parser.y"
+#line 119 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 1750 "parser/parser.tab.c"
+#line 1749 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 15: /* comando: bloco  */
-#line 121 "parser/parser.y"
+#line 120 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1756 "parser/parser.tab.c"
+#line 1755 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 16: /* comando: declaracao_funcao  */
-#line 122 "parser/parser.y"
+#line 121 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1762 "parser/parser.tab.c"
+#line 1761 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 17: /* comando: retorno  */
-#line 123 "parser/parser.y"
+#line 122 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1768 "parser/parser.tab.c"
+#line 1767 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 18: /* $@1: %empty  */
-#line 128 "parser/parser.y"
+#line 127 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         openScope();
         registrarParametros((yyvsp[-2].no)); 
     }
-#line 1777 "parser/parser.tab.c"
+#line 1776 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 19: /* declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS $@1 bloco  */
-#line 133 "parser/parser.y"
+#line 132 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFuncao((yyvsp[-6].sval), (yyvsp[-4].no), (yyvsp[0].no));
         insertST((yyvsp[-6].sval), FUNCAO);
     }
-#line 1787 "parser/parser.tab.c"
+#line 1786 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 20: /* retorno: TOKEN_PALAVRA_CHAVE_RETURN expressao  */
-#line 142 "parser/parser.y"
+#line 141 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     { (yyval.no) = criarNoReturn((yyvsp[0].no)); }
-#line 1793 "parser/parser.tab.c"
+#line 1792 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 25: /* atribuicao_indexacao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 154 "parser/parser.y"
+#line 153 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         NoAST *no_index = criarNoIndex(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no));
         (yyval.no) = criarNoAtribuicao(no_index, (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 1803 "parser/parser.tab.c"
+#line 1802 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 26: /* atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 163 "parser/parser.y"
+#line 162 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
     Simbolo *s = searchST((yyvsp[-2].sval));
@@ -1848,17 +1847,17 @@ yyreduce:
     }
     free((yyvsp[-2].sval));
 }
-#line 1852 "parser/parser.tab.c"
+#line 1851 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 27: /* atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes  */
-#line 211 "parser/parser.y"
+#line 210 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
       { (yyval.no) = criarNoAtribuicaoMultipla((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1858 "parser/parser.tab.c"
+#line 1857 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 28: /* atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao  */
-#line 216 "parser/parser.y"
+#line 215 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
     NoAST *rhs = (yyvsp[0].no);
@@ -1877,165 +1876,165 @@ yyreduce:
     }
     free((yyvsp[-2].sval));
 }
-#line 1881 "parser/parser.tab.c"
+#line 1880 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 29: /* lista_identificadores: TOKEN_IDENTIFICADOR  */
-#line 238 "parser/parser.y"
+#line 237 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
       { (yyval.no) = criarListaIds((yyvsp[0].sval)); }
-#line 1887 "parser/parser.tab.c"
+#line 1886 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 30: /* lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR  */
-#line 240 "parser/parser.y"
+#line 239 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
       { (yyval.no) = adicionaIdNaLista((yyvsp[-2].no), (yyvsp[0].sval)); }
-#line 1893 "parser/parser.tab.c"
+#line 1892 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 31: /* lista_expressoes: expressao  */
-#line 245 "parser/parser.y"
+#line 244 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
       { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1899 "parser/parser.tab.c"
+#line 1898 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 32: /* lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 247 "parser/parser.y"
+#line 246 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
       { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1905 "parser/parser.tab.c"
+#line 1904 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 33: /* lista_argumentos: %empty  */
-#line 251 "parser/parser.y"
+#line 250 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                   { (yyval.no) = NULL; }
-#line 1911 "parser/parser.tab.c"
+#line 1910 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 34: /* lista_argumentos: expressao  */
-#line 252 "parser/parser.y"
+#line 251 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                   { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1917 "parser/parser.tab.c"
+#line 1916 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 35: /* lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 254 "parser/parser.y"
+#line 253 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1923 "parser/parser.tab.c"
+#line 1922 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 36: /* chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 259 "parser/parser.y"
+#line 258 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         {
             NoAST *id = criarNoId((yyvsp[-3].sval));
             (yyval.no) = criarNoChamadaFuncao(id, (yyvsp[-1].no));
             free((yyvsp[-3].sval));
         }
-#line 1933 "parser/parser.tab.c"
+#line 1932 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 37: /* expressao: expressao TOKEN_OPERADOR_MAIS expressao  */
-#line 267 "parser/parser.y"
+#line 266 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('+', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1939 "parser/parser.tab.c"
+#line 1938 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 38: /* expressao: expressao TOKEN_OPERADOR_MENOS expressao  */
-#line 268 "parser/parser.y"
+#line 267 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('-', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1945 "parser/parser.tab.c"
+#line 1944 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 39: /* expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO expressao  */
-#line 269 "parser/parser.y"
+#line 268 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('*', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1951 "parser/parser.tab.c"
+#line 1950 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 40: /* expressao: expressao TOKEN_OPERADOR_DIVISAO expressao  */
-#line 270 "parser/parser.y"
+#line 269 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('/', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1957 "parser/parser.tab.c"
+#line 1956 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 41: /* expressao: expressao TOKEN_OPERADOR_IGUAL expressao  */
-#line 271 "parser/parser.y"
+#line 270 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('=', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1963 "parser/parser.tab.c"
+#line 1962 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 42: /* expressao: expressao TOKEN_OPERADOR_DIFERENTE expressao  */
-#line 272 "parser/parser.y"
+#line 271 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('!', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1969 "parser/parser.tab.c"
+#line 1968 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 43: /* expressao: expressao TOKEN_OPERADOR_MENOR expressao  */
-#line 273 "parser/parser.y"
+#line 272 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('<', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1975 "parser/parser.tab.c"
+#line 1974 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 44: /* expressao: expressao TOKEN_OPERADOR_MENOR_IGUAL expressao  */
-#line 274 "parser/parser.y"
+#line 273 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('l', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1981 "parser/parser.tab.c"
+#line 1980 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 45: /* expressao: expressao TOKEN_OPERADOR_MAIOR expressao  */
-#line 275 "parser/parser.y"
+#line 274 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('>', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1987 "parser/parser.tab.c"
+#line 1986 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 46: /* expressao: expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao  */
-#line 276 "parser/parser.y"
+#line 275 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('g', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1993 "parser/parser.tab.c"
+#line 1992 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 47: /* expressao: expressao TOKEN_OPERADOR_LOGICO_AND expressao  */
-#line 277 "parser/parser.y"
+#line 276 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOpLogicaAnd((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1999 "parser/parser.tab.c"
+#line 1998 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 48: /* expressao: expressao TOKEN_OPERADOR_LOGICO_OR expressao  */
-#line 278 "parser/parser.y"
+#line 277 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOpLogicaOr((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2005 "parser/parser.tab.c"
+#line 2004 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 49: /* expressao: TOKEN_OPERADOR_LOGICO_NOT expressao  */
-#line 279 "parser/parser.y"
+#line 278 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = criarNoOp('N', (yyvsp[0].no), NULL); }
-#line 2011 "parser/parser.tab.c"
+#line 2010 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 50: /* expressao: atomo  */
-#line 280 "parser/parser.y"
+#line 279 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                         { (yyval.no) = (yyvsp[0].no); }
-#line 2017 "parser/parser.tab.c"
+#line 2016 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 51: /* atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 284 "parser/parser.y"
+#line 283 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                                                                      { (yyval.no) = (yyvsp[-1].no); }
-#line 2023 "parser/parser.tab.c"
+#line 2022 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 52: /* atomo: TOKEN_INTEIRO  */
-#line 285 "parser/parser.y"
+#line 284 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                               { (yyval.no) = criarNoNum((yyvsp[0].ival)); }
-#line 2029 "parser/parser.tab.c"
+#line 2028 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 53: /* atomo: TOKEN_FLOAT  */
-#line 286 "parser/parser.y"
+#line 285 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                               { (yyval.no) = criarNoFloat((yyvsp[0].dval)); }
-#line 2035 "parser/parser.tab.c"
+#line 2034 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 54: /* atomo: TOKEN_IDENTIFICADOR  */
-#line 288 "parser/parser.y"
+#line 287 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         {
             (yyval.no) = criarNoId((yyvsp[0].sval));
             Simbolo *s = searchST((yyvsp[0].sval));
@@ -2045,138 +2044,138 @@ yyreduce:
             }
             free((yyvsp[0].sval));
         }
-#line 2049 "parser/parser.tab.c"
+#line 2048 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 55: /* atomo: TOKEN_STRING  */
-#line 297 "parser/parser.y"
+#line 296 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                               { (yyval.no) = criarNoString((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 2055 "parser/parser.tab.c"
+#line 2054 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 56: /* atomo: TOKEN_PALAVRA_CHAVE_TRUE  */
-#line 298 "parser/parser.y"
+#line 297 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                 { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2061 "parser/parser.tab.c"
+#line 2060 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 57: /* atomo: TOKEN_PALAVRA_CHAVE_FALSE  */
-#line 299 "parser/parser.y"
+#line 298 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                                 { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2067 "parser/parser.tab.c"
+#line 2066 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 58: /* atomo: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 301 "parser/parser.y"
+#line 300 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         {
             /* Aqui continua sendo lista de vetor, então mantemos criarNoLista */
             (yyval.no) = criarNoLista((yyvsp[-1].no), NULL);
         }
-#line 2076 "parser/parser.tab.c"
+#line 2075 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 59: /* atomo: chamada_index  */
-#line 305 "parser/parser.y"
+#line 304 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 2082 "parser/parser.tab.c"
+#line 2081 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 60: /* atomo: chamada_funcao  */
-#line 306 "parser/parser.y"
+#line 305 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 2088 "parser/parser.tab.c"
+#line 2087 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 61: /* lista_valores: %empty  */
-#line 310 "parser/parser.y"
+#line 309 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 2094 "parser/parser.tab.c"
+#line 2093 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 62: /* lista_valores: lista_expressoes  */
-#line 311 "parser/parser.y"
+#line 310 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 2100 "parser/parser.tab.c"
+#line 2099 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 63: /* chamada_index: atomo TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 316 "parser/parser.y"
+#line 315 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
         { (yyval.no) = criarNoIndex((yyvsp[-3].no), (yyvsp[-1].no)); }
-#line 2106 "parser/parser.tab.c"
+#line 2105 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 64: /* bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT  */
-#line 321 "parser/parser.y"
+#line 320 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     { (yyval.no) = (yyvsp[-1].no); }
-#line 2112 "parser/parser.tab.c"
+#line 2111 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 65: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 326 "parser/parser.y"
+#line 325 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     { (yyval.no) = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL); }
-#line 2118 "parser/parser.tab.c"
+#line 2117 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 66: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 328 "parser/parser.y"
+#line 327 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
         (yyval.no) = criarNoIf((yyvsp[-6].no), (yyvsp[-4].no), elif_if);
     }
-#line 2127 "parser/parser.tab.c"
+#line 2126 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 67: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 333 "parser/parser.y"
+#line 332 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
         (yyval.no) = criarNoIf((yyvsp[-9].no), (yyvsp[-7].no), elif_if);
     }
-#line 2136 "parser/parser.tab.c"
+#line 2135 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 68: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 338 "parser/parser.y"
+#line 337 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     { (yyval.no) = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no)); }
-#line 2142 "parser/parser.tab.c"
+#line 2141 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 69: /* $@2: %empty  */
-#line 343 "parser/parser.y"
+#line 342 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     { openScope(); }
-#line 2148 "parser/parser.tab.c"
+#line 2147 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 70: /* while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@2 bloco  */
-#line 345 "parser/parser.y"
+#line 344 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoWhile((yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2157 "parser/parser.tab.c"
+#line 2156 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 71: /* $@3: %empty  */
-#line 353 "parser/parser.y"
+#line 352 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         openScope();
         if (!searchST((yyvsp[-3].sval))) insertST((yyvsp[-3].sval), INT);
     }
-#line 2166 "parser/parser.tab.c"
+#line 2165 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
   case 72: /* for_stmt: TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@3 bloco  */
-#line 358 "parser/parser.y"
+#line 357 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFor(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no), (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 2176 "parser/parser.tab.c"
+#line 2175 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
     break;
 
 
-#line 2180 "parser/parser.tab.c"
+#line 2179 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.tab.c"
 
       default: break;
     }
@@ -2405,7 +2404,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 364 "parser/parser.y"
+#line 363 "/home/isaque/fga/6_semestre/compiladores/G2_compiladores/src/parser/parser.y"
 
 
 void yyerror(const char *s) {
@@ -2446,7 +2445,7 @@ int main(int argc, char *argv[]) {
                 if (out) {
                     gerar_codigo_final(codigo, out);
                     fclose(out);
-
+                    
                 } else {
                     fprintf(stderr, "[ERRO] Não foi possível criar 'programa_gerado.c'.\n");
                 }

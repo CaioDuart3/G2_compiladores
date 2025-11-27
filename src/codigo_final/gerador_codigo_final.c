@@ -6,11 +6,13 @@
 #include <string.h>
 
 
-
-
 #define MAX_EXPR_BUFFERS 64
 #define EXPR_BUFFER_SIZE 2048
 
+
+static void indenta(FILE *saida, int indent);
+static const char* gerar_expressao(NoAST *expr, FILE *saida);
+static void gerar_comando(NoAST *no, FILE *saida, int indent);
 static char expr_buffers[MAX_EXPR_BUFFERS][EXPR_BUFFER_SIZE];
 static int expr_buffer_idx = 0;
 
@@ -23,7 +25,7 @@ static char* novo_buffer_expr(void) {
 }
 
 
-static void indenta(FILE *saida, int indent);
+
 
 
 static const char* operador_para_c(char op) {
@@ -50,7 +52,7 @@ static void indenta(FILE *saida, int indent) {
     }
 }
 
-static const char* gerar_expressao(NoAST *expr, FILE *saida);
+
 
 
 static int eh_print(NoAST *expr) {
@@ -253,7 +255,7 @@ static void gerar_inicializacoes_vetores(FILE *saida, int indent) {
 }
 
 
-static void gerar_comando(NoAST *no, FILE *saida, int indent);
+
 
 static void gerar_funcoes(NoAST *no, FILE *saida) {
     if (!no) return;

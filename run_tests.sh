@@ -26,6 +26,10 @@ TAC_DIR="$SRC_DIR/tac"
 TAC_C="$TAC_DIR/tac.c"
 TAC_H="$TAC_DIR/tac.h"
 
+CODEGEN_DIR="$SRC_DIR/codigo_final"
+CODEGEN_C="$CODEGEN_DIR/gerador_codigo_final.c"
+CODEGEN_H="$CODEGEN_DIR/gerador_codigo_final.h"
+
 # --- Executáveis ---
 COMPILADOR="$ROOT_DIR/compilador"
 ANALISADOR_LEX="$ROOT_DIR/analisador_lexico"
@@ -55,10 +59,9 @@ compile_all() {
     fi
 
     # 3. Compilador Completo
-    # Importante: Removi flags desnecessárias e garanti as includes
     if gcc -g -Wall \
-        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" "$TAC_C" \
-        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" -I"$TAC_DIR" \
+        "$PARSER_C" "$LEXER_C" "$AST_C" "$ST_C" "$TAC_C" "$CODEGEN_C" \
+        -I"$AST_DIR" -I"$PARSER_DIR" -I"$ST_DIR" -I"$TAC_DIR" -I"$CODEGEN_DIR" \
         -o "$COMPILADOR" -lfl; then
         echo "[OK] Executável COMPILADOR criado."
     else

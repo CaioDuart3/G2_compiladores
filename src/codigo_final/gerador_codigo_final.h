@@ -7,4 +7,6 @@
 
 void gerar_codigo_final(TacCodigo* tac, FILE* saida);
 
+
+
 #endif
