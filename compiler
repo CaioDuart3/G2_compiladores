@@ -1,0 +1,45 @@
+#!/bin/bash
+
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+EXEC="$ROOT_DIR/compilador"
+
+DEBUG=0
+
+if [ "$1" = "-d" ]; then
+    DEBUG=1
+    shift
+fi
+
+# Executa o compilador
+if [ -n "$1" ] && [ -f "$1" ]; then
+    RAW=$("$EXEC" < "$1" 2>&1)
+    STATUS=$?
+else
+    RAW=$("$EXEC" 2>&1)
+    STATUS=$?
+fi
+
+# Remove caracteres UTF-8 inválidos e sequências ANSI
+CLEAN=$(echo "$RAW" \
+    | iconv -f utf-8 -t utf-8 -c \
+    | sed -r "s/\x1B\[[0-9;]*[A-Za-z]//g"
+)
+
+# Debug: mostra tudo limpo
+if [ $DEBUG -eq 1 ]; then
+    echo "$CLEAN"
+    exit $STATUS
+fi
+
+# Filtra por erro ou warning
+FILTERED=$(echo "$CLEAN" | grep -Ei "erro|warning")
+
+# Se não houve erros ou warnings → silêncio total
+if [ -z "$FILTERED" ]; then
+    exit 0
+fi
+
+# Mostra apenas as mensagens relevantes
+echo "$FILTERED"
+
+exit $STATUS

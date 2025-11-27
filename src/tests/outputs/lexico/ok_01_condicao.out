@@ -52,3 +52,79 @@ LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: DEDENT (nível 0)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: a
+  BOOL: True
+ATTR:
+  ID: b
+  BOOL: True
+ATTR:
+  ID: c
+  BOOL: True
+ATTR:
+  ID: d
+  BOOL: True
+IF:
+  COND:
+    OP: OR
+      ID: a
+      OP: AND
+        ID: c
+        ID: d
+  THEN:
+    CALL:
+      FUNC:
+        ID: print
+      ARGS:
+        STRING: "if"
+  ELSE:
+    CALL:
+      FUNC:
+        ID: print
+      ARGS:
+        STRING: "else"
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: a          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: TRUE
+Nome: b          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: TRUE
+Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: TRUE
+Nome: d          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: TRUE
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  a = 1
+  b = 1
+  c = 1
+  d = 1
+  if_false a goto L2
+  t0 = 1
+  goto L3
+L2:
+  if_false c goto L4
+  t1 = d
+  goto L5
+L4:
+  t1 = 0
+L5:
+  t0 = t1
+L3:
+  if_false t0 goto L0
+  arg "if"
+  t2 = call print
+  goto L1
+L0:
+  arg "else"
+  t3 = call print
+L1:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+-----------------------------------

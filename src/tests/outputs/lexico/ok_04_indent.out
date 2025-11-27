@@ -44,3 +44,59 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: DEDENT (nível 1)
 LEXER: DEDENT (nível 0)
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: a
+  NUM: 1
+ATTR:
+  ID: b
+  BOOL: False
+IF:
+  COND:
+    ID: a
+  THEN:
+    IF:
+      COND:
+        ID: b
+      THEN:
+        CALL:
+          FUNC:
+            ID: print
+          ARGS:
+            STRING: "não entra aqui"
+      ELSE:
+        CALL:
+          FUNC:
+            ID: print
+          ARGS:
+            STRING: "entra aqui"
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
+Nome: b          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  a = 1
+  b = 0
+  if_false a goto L0
+  if_false b goto L2
+  arg "não entra aqui"
+  t0 = call print
+  goto L3
+L2:
+  arg "entra aqui"
+  t1 = call print
+L3:
+L0:
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+-----------------------------------

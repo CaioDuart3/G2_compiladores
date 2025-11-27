@@ -1,3 +1,4 @@
+Warning: tipo de nó desconhecido para impressão.
 LEXER: Token IDENTIFICADOR (inteiro)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (1)
@@ -35,3 +36,56 @@ LEXER: Token DELIMITADOR_VIRGULA (,)
 LEXER: Token INTEIRO (4)
 LEXER: Token DELIMITADOR_FECHA_COLCHETES (])
 LEXER: Token QUEBRA-DE-LINHA (\n)
+
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: inteiro
+  NUM: 1
+ATTR:
+  ID: flutuante
+  ATTR:
+  ID: string
+  STRING: "olá, mundo!"
+ATTR:
+  ID: falso
+  BOOL: False
+ATTR:
+  ID: verdadeiro
+  BOOL: True
+ATTR:
+  ID: vetor_int
+  LISTA LITERAL:
+    NUM: 1
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: verdadeiro | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: TRUE
+Nome: inteiro    | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
+Nome: string     | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: "olá, mundo!"
+Nome: falso      | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
+Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [1, 2, 3, 4]
+Nome: flutuante  | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 2.013000
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  inteiro = 1
+  flutuante = 2.013000
+  string = "olá, mundo!"
+  falso = 0
+  verdadeiro = 1
+  t0 = alloc 4
+  t0[0] = 1
+  t0[1] = 2
+  t0[2] = 3
+  t0[3] = 4
+  vetor_int = t0
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+-----------------------------------

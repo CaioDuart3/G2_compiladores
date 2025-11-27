@@ -1,4 +1,5 @@
 ERRO LÉXICO linha 3: '@'
+ERRO SINTÁTICO (linha 3): syntax error, unexpected TOKEN_DESCONHECIDO, expecting end of file
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: Token QUEBRA-DE-LINHA (\n)
@@ -6,3 +7,4 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: Token IDENTIFICADOR (x)
 LEXER: Token OPERADOR_ATRIBUICAO (=)
 LEXER: Token INTEIRO (10)
+Parsing interrompido por erro sintático.

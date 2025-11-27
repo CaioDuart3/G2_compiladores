@@ -33,3 +33,56 @@ LEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_VIRGULA (,)
 LEXER: Token IDENTIFICADOR (b)
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+Parsing concluído com sucesso!
+
+--- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
+ATTR:
+  ID: a
+  NUM: 2
+ATTR:
+  ID: b
+  NUM: 2
+DEF: soma
+  PARAMS:
+    ID: a
+    ID: b
+  BODY:
+    RETURN:
+      OP: +
+        ID: a
+        ID: b
+CALL:
+  FUNC:
+    ID: soma
+  ARGS:
+    ID: a
+    ID: b
+---------------------------------------
+
+--- EXECUÇÃO DA AST ---
+
+--- TABELA DE SÍMBOLOS ---
+
+===== TABELA DE SÍMBOLOS =====
+Nome: soma       | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
+Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
+Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
+===============================
+===============================
+
+--- CÓDIGO INTERMEDIÁRIO (TAC) ---
+  a = 2
+  b = 2
+
+--- Início Função: soma ---
+  param a
+  param b
+  t0 = a + b
+  return t0
+--- Fim Função: soma ---
+  arg a
+  arg b
+  t1 = call soma
+
+--- GERAÇÃO DE CÓDIGO FINAL ---
+-----------------------------------
