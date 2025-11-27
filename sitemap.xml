@@ -2,18 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://github.com/CaioDuart3/G2_compiladores/</loc>
-         <lastmod>2025-10-01</lastmod>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/ast/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/codigo_final/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/lexer/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/parser/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/st/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/tac/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/CaioDuart3/G2_compiladores/Dificuldades/dificuldades/</loc>
-         <lastmod>2025-10-01</lastmod>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/CaioDuart3/G2_compiladores/Escopo/escopo/</loc>
-         <lastmod>2025-10-01</lastmod>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/CaioDuart3/G2_compiladores/Metodologia/metodologia/</loc>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://github.com/CaioDuart3/G2_compiladores/Planejamento/planejamento/</loc>
-         <lastmod>2025-10-01</lastmod>
+         <lastmod>2025-11-27</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>

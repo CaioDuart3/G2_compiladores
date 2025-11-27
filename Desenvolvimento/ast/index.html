@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Dificuldades/dificuldades/">
+        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/ast/">
       
       
-        <link rel="prev" href="../../Escopo/escopo/">
+        <link rel="prev" href="../parser/">
       
       
-        <link rel="next" href="../../Desenvolvimento/lexer/">
+        <link rel="next" href="../st/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Dificuldades - Compiladores - Grupo 2</title>
+        <title>AST - Compiladores - Grupo 2</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dificuldades" class="md-skip">
+        <a href="#ast-arvore-de-sintaxe-abstrata" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dificuldades
+              AST
             
           </span>
         </div>
@@ -291,11 +291,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../../Dificuldades/dificuldades/" class="md-tabs__link">
         
   
     
@@ -310,11 +308,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../Desenvolvimento/lexer/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lexer/" class="md-tabs__link">
           
   
   Desenvolvimento
@@ -450,6 +450,101 @@
       
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../Dificuldades/dificuldades/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dificuldades
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Desenvolvimento
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Desenvolvimento
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lexer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parser/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Parser
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -465,7 +560,7 @@
           
   
   <span class="md-ellipsis">
-    Dificuldades
+    AST
   </span>
   
 
@@ -476,7 +571,7 @@
         
   
   <span class="md-ellipsis">
-    Dificuldades
+    AST
   </span>
   
 
@@ -498,6 +593,127 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Metodologia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-estrutura-de-dados-asth" class="md-nav__link">
+    2.1. Estrutura de Dados (ast.h)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-criacao-de-nos" class="md-nav__link">
+    2.2. Criação de Nós
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-da-ast-no-compilador" class="md-nav__link">
+    3. Papel da AST no Compilador
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Papel da AST no Compilador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-analise-semantica-integrada" class="md-nav__link">
+    3.1. Análise Semântica Integrada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-facilitacao-da-geracao-de-codigo" class="md-nav__link">
+    3.2. Facilitação da Geração de Código
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-codigo" class="md-nav__link">
+    4.1. Código
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1. Código">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gerenciamento-e-debug" class="md-nav__link">
+    Gerenciamento e Debug
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#funcoes-de-semantica-integrada" class="md-nav__link">
+    Funções de Semântica Integrada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Execução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-codigo-fonte" class="md-nav__link">
+    5.1. Código Fonte
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     Histórico de Versões
   </a>
@@ -511,59 +727,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Desenvolvimento
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            Desenvolvimento
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Desenvolvimento/lexer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lexer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -572,47 +735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/parser/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Parser
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Desenvolvimento/ast/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    AST
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Desenvolvimento/st/" class="md-nav__link">
+      <a href="../st/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -632,7 +755,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/tac/" class="md-nav__link">
+      <a href="../tac/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -652,7 +775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/codigo_final/" class="md-nav__link">
+      <a href="../codigo_final/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -700,6 +823,127 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Metodologia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-estrutura-de-dados-asth" class="md-nav__link">
+    2.1. Estrutura de Dados (ast.h)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-criacao-de-nos" class="md-nav__link">
+    2.2. Criação de Nós
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-da-ast-no-compilador" class="md-nav__link">
+    3. Papel da AST no Compilador
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Papel da AST no Compilador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-analise-semantica-integrada" class="md-nav__link">
+    3.1. Análise Semântica Integrada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-facilitacao-da-geracao-de-codigo" class="md-nav__link">
+    3.2. Facilitação da Geração de Código
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-codigo" class="md-nav__link">
+    4.1. Código
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1. Código">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gerenciamento-e-debug" class="md-nav__link">
+    Gerenciamento e Debug
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#funcoes-de-semantica-integrada" class="md-nav__link">
+    Funções de Semântica Integrada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Execução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-codigo-fonte" class="md-nav__link">
+    5.1. Código Fonte
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     Histórico de Versões
   </a>
@@ -724,8 +968,111 @@
   
 
 
-<h1 id="dificuldades">Dificuldades</h1>
-<p>No início, foi desafiador transformar conceitos tão abstratos em passos concretos e compreender a linguagem tanto sintática quanto lexicalmente. O lexer trouxe menos desafios, embora ele tenha sido refeito diversas vezes ao trabalhar no parser, principalmente para estruturar a gramática e entender como as regras se conectam. O parser foi feito do zero no mínimo 5 vezes, foi extremamente desafiador fazer com que nada tivesse conflito. Apesar de o compilador estar completo, ele ainda assombrará nossas vidas ao olhar para uma TAC.</p>
+<h1 id="ast-arvore-de-sintaxe-abstrata">AST - Árvore de Sintaxe Abstrata</h1>
+<h2 id="1-introducao">1. Introdução</h2>
+<p>A <strong>Árvore de Sintaxe Abstrata (AST - Abstract Syntax Tree)</strong> é a representação intermediária fundamental gerada pelo Analisador Sintático (<strong>Parser</strong>) após a validação da gramática do código-fonte.</p>
+<p>Diferentemente da árvore de análise sintática (parse tree), a AST é uma representação <strong>abstrata e simplificada</strong> da estrutura hierárquica do código. Ela elimina detalhes sintáticos desnecessários (como parênteses, vírgulas e a chave de indentação do Python) e retém apenas os elementos essenciais para a análise semântica e a geração de código.</p>
+<p>A AST serve como a <strong>entrada principal</strong> para as fases posteriores do compilador, incluindo a <strong>Análise Semântica</strong> e a <strong>Geração do Código Intermediário (TAC)</strong>.</p>
+<hr />
+<h2 id="2-metodologia">2. Metodologia</h2>
+<p>A construção da AST é realizada pelas <strong>Ações Semânticas</strong> integradas ao parser (Bison). Para cada regra gramatical reconhecida, funções específicas em <code>ast.c</code> são chamadas para alocar e conectar nós, construindo a estrutura hierárquica em memória.</p>
+<h3 id="21-estrutura-de-dados-asth">2.1. Estrutura de Dados (<code>ast.h</code>)</h3>
+<p>O nó principal da AST é a <code>struct NoAST</code>, que é uma união de dados que permite representar diversas construções da linguagem em uma estrutura uniforme:</p>
+<ul>
+<li><strong><code>TipoNo tipo</code> (Enumeração):</strong> Identifica o tipo de construção sintática que o nó representa (ex: <code>NO_NUM</code>, <code>NO_ATRIBUICAO</code>, <code>NO_FUNCAO</code>, <code>NO_WHILE</code>).</li>
+<li><strong>Dados:</strong> Campos como <code>valor_int</code>, <code>valor_double</code>, <code>valor_string</code> e <code>operador</code> armazenam os valores literais e símbolos dos nós folha.</li>
+<li><strong>Conexões:</strong><ul>
+<li><strong>Filhos (<code>filho1</code>, <code>filho2</code>, <code>filho3</code>):</strong> Usados para representar a estrutura hierárquica (ex: <code>filho1</code> é a condição, <code>filho2</code> é o bloco THEN em um <code>NO_IF</code>).</li>
+<li><strong>Próximo (<code>proximo</code>):</strong> Usado para encadear nós que pertencem à mesma lista (ex: comandos em um bloco, argumentos em uma chamada de função).</li>
+</ul>
+</li>
+</ul>
+<h3 id="22-criacao-de-nos">2.2. Criação de Nós</h3>
+<p>A metodologia emprega funções dedicadas para a criação de cada tipo de nó, garantindo a inicialização segura e a correta alocação de memória:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Função Exemplo</th>
+<th style="text-align: left;">Tipo de Nó</th>
+<th style="text-align: left;">Finalidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>criarNoNum(int valor)</code></td>
+<td style="text-align: left;"><code>NO_NUM</code></td>
+<td style="text-align: left;">Cria nós para literais inteiros.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>criarNoId(char *nome)</code></td>
+<td style="text-align: left;"><code>NO_ID</code></td>
+<td style="text-align: left;">Cria nós para identificadores de variáveis e funções, alocando a <em>string</em> do nome.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>criarNoOp(char op, NoAST *esq, NoAST *dir)</code></td>
+<td style="text-align: left;"><code>NO_OP_BINARIA</code></td>
+<td style="text-align: left;">Conecta os operandos (<code>esq</code> e <code>dir</code>) sob o nó do operador.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>criarNoListaComandos(...)</code></td>
+<td style="text-align: left;"><code>NO_LISTA_COMANDOS</code></td>
+<td style="text-align: left;">Constrói blocos de código (encadeamento de comandos com <code>proximo</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>criarNoChamadaFuncao(...)</code></td>
+<td style="text-align: left;"><code>NO_CHAMADA_FUNCAO</code></td>
+<td style="text-align: left;">Conecta o nome da função (<code>filho1</code>) à lista de argumentos (<code>filho2</code>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-papel-da-ast-no-compilador">3. Papel da AST no Compilador</h2>
+<p>A AST é o ponto central que conecta a fase de análise com as fases de processamento do código.</p>
+<h3 id="31-analise-semantica-integrada">3.1. Análise Semântica Integrada</h3>
+<p>Enquanto a AST é construída, o parser executa ações semânticas críticas, utilizando a <strong>Tabela de Símbolos (<code>st.h</code>)</strong>:</p>
+<ul>
+<li><strong>Registro e Escopo:</strong> Variáveis e funções são registradas na tabela, e o controle de escopo (ex: em definições de função) é gerenciado.</li>
+<li><strong>Inferência de Tipos:</strong> A função <code>Tipo inferirTipo(NoAST *no)</code> percorre o nó para determinar o tipo de dado resultante (necessário para a correta emissão de opcodes no TAC, como <code>TAC_SOMA</code> vs <code>TAC_SOMA_F</code>).</li>
+<li><strong>Avaliação Constante:</strong> A função <code>int avaliarExpressao(NoAST *expr)</code> avalia expressões compostas apenas por literais e constantes conhecidas em tempo de compilação, otimizando o código antes da geração do TAC.</li>
+</ul>
+<h3 id="32-facilitacao-da-geracao-de-codigo">3.2. Facilitação da Geração de Código</h3>
+<p>O formato estruturado da AST simplifica o processo de Geração de Código de Três Endereços (TAC), permitindo que a função <strong><code>processar_no</code></strong> do TAC se concentre apenas na tradução sequencial, sem se preocupar com a análise sintática.</p>
+<ul>
+<li>A estrutura hierárquica (pais e filhos) da AST dita a <strong>ordem correta de avaliação</strong> das expressões, garantindo que as operações sejam traduzidas na sequência lógica.</li>
+</ul>
+<hr />
+<h2 id="4-implementacao">4. Implementação</h2>
+<h3 id="41-codigo">4.1. Código</h3>
+<p>O arquivo <strong><code>ast.c</code></strong> contém as funções que gerenciam a alocação, a construção, a impressão e a liberação da AST.</p>
+<h4 id="gerenciamento-e-debug">Gerenciamento e Debug</h4>
+<ul>
+<li><strong><code>imprimirAST(const NoAST *raiz, int indent)</code>:</strong> Função recursiva essencial para o <em>debug</em>, que percorre a árvore e imprime a estrutura hierárquica no console usando indentação para visualizar o aninhamento.</li>
+<li><strong><code>liberarAST(NoAST *raiz)</code>:</strong> Função recursiva que garante a desalocação completa de todos os nós da árvore, incluindo as <em>strings</em> alocadas (ex: nomes de <code>NO_ID</code> e <code>NO_STRING</code>), prevenindo vazamentos de memória.</li>
+</ul>
+<h4 id="funcoes-de-semantica-integrada">Funções de Semântica Integrada</h4>
+<ul>
+<li><strong><code>registrarParametros(NoAST *parametros)</code>:</strong> Percorre a lista de parâmetros de uma função e os insere imediatamente na Tabela de Símbolos para o escopo atual, marcando-os como inicializados.</li>
+<li><strong><code>executarAtribuicao(NoAST *no)</code>:</strong> Implementa a lógica de tempo de execução para atribuições, incluindo a manipulação de vetores indexados, e atualiza a Tabela de Símbolos com os valores e tipos.</li>
+</ul>
+<hr />
+<h2 id="5-execucao">5. Execução</h2>
+<h3 id="51-codigo-fonte">5.1. Código Fonte</h3>
+<p>O código de teste utilizado (<code>ok_03_chamadaFuncao.py</code>) define duas variáveis e duas funções de soma, chamando a primeira função com variáveis e a segunda com constantes:</p>
+<pre><code class="language-python">a = 2
+b = 2
+
+def soma(a, b):
+    return a + b
+
+print(soma(a, b))
+
+def soma2(c, d):
+    return c + d
+
+print(soma(1, 2)) 
+</code></pre>
+<p>Resultado da AST gerada pelo código de teste mencionado:</p>
+<p><img alt="AST gerada" src="../../assets/desenvolvimento/ast.png" /></p>
 <h2 id="historico-de-versoes">Histórico de Versões</h2>
 <table>
 <thead>
@@ -740,15 +1087,8 @@
 <tbody>
 <tr>
 <td style="text-align: center;">1.0</td>
-<td style="text-align: center;">Criação do documento</td>
-<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
-<td style="text-align: center;">01/09/2025</td>
-<td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
-</tr>
-<tr>
-<td style="text-align: center;">1.1</td>
-<td style="text-align: center;">Atualização do documento</td>
-<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
+<td style="text-align: center;">Criação do Documento</td>
+<td style="text-align: center;"><a href="https://github.com/RafaelSchadt">Rafael Schadt</a></td>
 <td style="text-align: center;">26/11/2025</td>
 <td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
 </tr>

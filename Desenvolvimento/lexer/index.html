@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Dificuldades/dificuldades/">
+        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/lexer/">
       
       
-        <link rel="prev" href="../../Escopo/escopo/">
+        <link rel="prev" href="../../Dificuldades/dificuldades/">
       
       
-        <link rel="next" href="../../Desenvolvimento/lexer/">
+        <link rel="next" href="../parser/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Dificuldades - Compiladores - Grupo 2</title>
+        <title>Lexer - Compiladores - Grupo 2</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dificuldades" class="md-skip">
+        <a href="#lexer-analise-lexica" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dificuldades
+              Lexer
             
           </span>
         </div>
@@ -291,11 +291,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../../Dificuldades/dificuldades/" class="md-tabs__link">
         
   
     
@@ -310,11 +308,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../Desenvolvimento/lexer/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   Desenvolvimento
@@ -450,6 +450,61 @@
       
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../Dificuldades/dificuldades/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dificuldades
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Desenvolvimento
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Desenvolvimento
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
     
   
   
@@ -465,7 +520,7 @@
           
   
   <span class="md-ellipsis">
-    Dificuldades
+    Lexer
   </span>
   
 
@@ -476,7 +531,7 @@
         
   
   <span class="md-ellipsis">
-    Dificuldades
+    Lexer
   </span>
   
 
@@ -498,6 +553,102 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-do-lexer-no-compilador" class="md-nav__link">
+    3. Papel do Lexer no Compilador
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-estrutura-do-arquivo-lexerl" class="md-nav__link">
+    4.1. Estrutura do Arquivo lexer.l
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1. Estrutura do Arquivo lexer.l">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-secao-de-definicoes-em-c" class="md-nav__link">
+    4.1.1. Seção de Definições em C
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-secao-de-definicoes-de-regex-e-regras" class="md-nav__link">
+    4.1.2 Seção de Definições de Regex e Regras
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413-tratamento-da-indentacao" class="md-nav__link">
+    4.1.3. Tratamento da Indentação
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-tokens-e-expressoes-regulares-implementadas" class="md-nav__link">
+    4.2. Tokens e Expressões Regulares Implementadas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-caso-a-analise-lexica-seja-bem-sucedida" class="md-nav__link">
+    5.1. Caso a análise léxica seja bem-sucedida
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-caso-a-analise-lexica-encontre-erro" class="md-nav__link">
+    5.2. Caso a análise léxica encontre erro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     Histórico de Versões
   </a>
@@ -511,59 +662,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Desenvolvimento
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            Desenvolvimento
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Desenvolvimento/lexer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lexer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -572,7 +670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/parser/" class="md-nav__link">
+      <a href="../parser/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -592,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/ast/" class="md-nav__link">
+      <a href="../ast/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -612,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/st/" class="md-nav__link">
+      <a href="../st/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -632,7 +730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/tac/" class="md-nav__link">
+      <a href="../tac/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -652,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/codigo_final/" class="md-nav__link">
+      <a href="../codigo_final/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -700,6 +798,102 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-do-lexer-no-compilador" class="md-nav__link">
+    3. Papel do Lexer no Compilador
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-estrutura-do-arquivo-lexerl" class="md-nav__link">
+    4.1. Estrutura do Arquivo lexer.l
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1. Estrutura do Arquivo lexer.l">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-secao-de-definicoes-em-c" class="md-nav__link">
+    4.1.1. Seção de Definições em C
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#412-secao-de-definicoes-de-regex-e-regras" class="md-nav__link">
+    4.1.2 Seção de Definições de Regex e Regras
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#413-tratamento-da-indentacao" class="md-nav__link">
+    4.1.3. Tratamento da Indentação
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-tokens-e-expressoes-regulares-implementadas" class="md-nav__link">
+    4.2. Tokens e Expressões Regulares Implementadas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-caso-a-analise-lexica-seja-bem-sucedida" class="md-nav__link">
+    5.1. Caso a análise léxica seja bem-sucedida
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-caso-a-analise-lexica-encontre-erro" class="md-nav__link">
+    5.2. Caso a análise léxica encontre erro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     Histórico de Versões
   </a>
@@ -724,8 +918,209 @@
   
 
 
-<h1 id="dificuldades">Dificuldades</h1>
-<p>No início, foi desafiador transformar conceitos tão abstratos em passos concretos e compreender a linguagem tanto sintática quanto lexicalmente. O lexer trouxe menos desafios, embora ele tenha sido refeito diversas vezes ao trabalhar no parser, principalmente para estruturar a gramática e entender como as regras se conectam. O parser foi feito do zero no mínimo 5 vezes, foi extremamente desafiador fazer com que nada tivesse conflito. Apesar de o compilador estar completo, ele ainda assombrará nossas vidas ao olhar para uma TAC.</p>
+<h1 id="lexer-analise-lexica">Lexer - Análise Léxica</h1>
+<h2 id="1-introducao">1. Introdução</h2>
+<p>O <strong>lexer (analisador léxico)</strong> tem como objetivo ler o código-fonte Python caractere por caractere e agrupá-los em sequências significativas chamadas <strong>tokens</strong>. Esses <em>tokens</em> representam as unidades atômicas (palavras-chave, identificadores, operadores, etc.) da linguagem e formam a entrada para a próxima fase: o analisador sintático (Parser).</p>
+<p>Este compilador implementa o léxico de um subconjunto de Python, com foco, no momento, em:</p>
+<ul>
+<li><strong>Tokens Essenciais:</strong> Palavras-chave, identificadores, literais (inteiros, floats, strings).</li>
+<li><strong>Operadores Comuns:</strong> Aritméticos e de comparação.</li>
+<li><strong>Delimitadores:</strong> Parênteses, vírgulas, dois-pontos, etc.</li>
+<li><strong>Tratamento de Indentação:</strong> Gera os tokens especiais <strong><code>INDENT</code></strong> e <strong><code>DEDENT</code></strong>, essenciais para a sintaxe Python.</li>
+</ul>
+<p>A ferramenta utilizada para a construção do analisador léxico é o <strong>Flex (Fast Lexical Analyzer Generator)</strong>.</p>
+<h2 id="2-metodologia">2. Metodologia</h2>
+<p>O desenvolvimento do lexer começou logo após termos a estrutura base do parser definida, para garantir que ambos trabalhassem de forma integrada. A implementação foi feita de maneira incremental:</p>
+<ul>
+<li>Primeiro foram criados os <em>tokens</em> fundamentais (identificadores, números, operadores simples).</li>
+<li>Em seguida, adicionamos palavras-chave, delimitadores e padrões mais complexos, como floats e strings.</li>
+<li>Depois estruturamos o arquivo <code>lexer/lexer.l</code> com regex nomeadas para manter o código mais limpo e organizado.</li>
+<li>O tratamento de indentação foi incorporado cedo, já que a linguagem exige blocos definidos por recuo. Implementamos uma pilha de níveis e regras específicas para gerar <code>INDENT</code> e <code>DEDENT</code>.</li>
+<li>Por fim, ajustamos as regras para ignorar comentários e espaços irrelevantes e validamos tudo com testes simples para verificar o reconhecimento dos <em>tokens</em> e a detecção de erros.</li>
+</ul>
+<p>Essa abordagem permitiu que o lexer evoluísse junto do parser, garantindo compatibilidade e facilitando o avanço das próximas etapas do compilador.</p>
+<h2 id="3-papel-do-lexer-no-compilador">3. Papel do Lexer no Compilador</h2>
+<p>O pipeline geral do compilador é:</p>
+<p><strong><em>Código Python -&gt; Análise Léxica (Flex) -&gt; Análise Sintática (Bison) -&gt; Representação Intermediária / AST -&gt; Geração de Código C -&gt; Código C resultante</em></strong></p>
+<p>A função do lexer é, portanto:</p>
+<ul>
+<li><strong>Converter a sequência de caracteres</strong> do código-fonte em uma <strong>sequência de tokens</strong>.</li>
+<li><strong>Descartar</strong> elementos irrelevantes, como <strong>espaços em branco</strong> (dentro das linhas) e <strong>comentários</strong> (<code>#</code>).</li>
+<li><strong>Detectar e reportar</strong> caracteres inválidos.</li>
+<li><strong>Gerenciar o estado de indentação</strong> para produzir <em>tokens</em> de <code>INDENT</code> e <code>DEDENT</code>.</li>
+</ul>
+<h2 id="4-implementacao">4. Implementação</h2>
+<h3 id="41-estrutura-do-arquivo-lexerl">4.1. Estrutura do Arquivo lexer.l</h3>
+<p>O arquivo <code>lexer/lexer.l</code> é dividido nas seguintes seções:</p>
+<h4 id="411-secao-de-definicoes-em-c">4.1.1. Seção de Definições em C</h4>
+<p>Contém código C necessário para o funcionamento do lexer e sua comunicação com o parser:</p>
+<ul>
+<li><strong>Inclusões:</strong> <code>stdio.h</code>, <code>string.h</code> e o arquivo gerado pelo Bison (<code>../parser/parser.tab.h</code>) para acessar as definições dos <em>tokens</em>.</li>
+<li><strong>Gerenciamento de Indentação:</strong> Declaração da pilha <code>indent_stack</code> e das funções auxiliares (<code>push_indent()</code>, <code>pop_indent()</code>, <code>top_indent()</code>) usadas para simular o comportamento de blocos do Python.</li>
+<li><strong>Valor do <em>Token</em>:</strong> A variável global <code>yytoken_value</code> é usada para armazenar o lexema (o valor literal) de identificadores e literais.</li>
+</ul>
+<h4 id="412-secao-de-definicoes-de-regex-e-regras">4.1.2 Seção de Definições de Regex e Regras</h4>
+<p>Esta seção define os padrões (expressões regulares) e as ações correspondentes:</p>
+<ul>
+<li><strong>Regex Nomeadas:</strong> Definições como <code>DIGITO</code>, <code>LETRA</code> e <code>ID</code> são usadas para simplificar as regras.</li>
+<li><strong>Prioridade das Regras:</strong> As palavras-chave (<code>"if"</code>, <code>"else"</code>, etc.) são listadas antes do padrão genérico de identificador (<code>{ID}</code>) para garantir que sejam reconhecidas corretamente.</li>
+<li><strong>Ações:</strong> O código C associado a um padrão retorna o código <strong><code>TOKEN_*</code></strong> correspondente ao parser.</li>
+</ul>
+<h4 id="413-tratamento-da-indentacao">4.1.3. Tratamento da Indentação</h4>
+<p>O tratamento de indentação é realizado pela regra <code>^[ \t]*</code> e pelo código C nas ações:</p>
+<ol>
+<li>O padrão casa com espaços ou tabs <strong>apenas no início da linha</strong>.</li>
+<li>O comprimento do recuo (<code>yyleng</code>) é comparado com o nível atual (<code>top_indent()</code>).</li>
+<li>Se a indentação aumentar, <strong><code>TOKEN_INDENT</code></strong> é retornado.</li>
+<li>Se a indentação diminuir, um ou mais <strong><code>TOKEN_DEDENT</code></strong> são retornados até que o nível correto seja atingido.</li>
+</ol>
+<h3 id="42-tokens-e-expressoes-regulares-implementadas">4.2. <em>Tokens</em> e Expressões Regulares Implementadas</h3>
+<p>A tabela a seguir lista os principais padrões de código Python reconhecidos:</p>
+<table>
+<thead>
+<tr>
+<th>Padrão (Regex/Literal)</th>
+<th>Token Gerado</th>
+<th>Descrição</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"if"</code>, <code>"else"</code>, <code>"while"</code>, <code>"for"</code>, <code>"def"</code>, <code>"return"</code>, <code>"in"</code>, <code>"True"</code>, <code>"False"</code></td>
+<td><code>TOKEN_PALAVRA_CHAVE_*</code></td>
+<td>Palavras-chave reservadas.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>{ID}</code></td>
+<td><code>TOKEN_IDENTIFICADOR</code></td>
+<td>Identificadores: nomes de variáveis e funções.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>{DIGITO}+</code></td>
+<td><code>TOKEN_INTEIRO</code></td>
+<td>Números inteiros.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>{DIGITO}+\.({DIGITO}+)?([eE][+-]?{DIGITO}+)?</code></td>
+<td><code>TOKEN_FLOAT</code></td>
+<td>Números de ponto flutuante, com suporte a notação científica.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>\"[^\"]*\"</code>, <code>\'[^\']*\'</code></td>
+<td><code>TOKEN_STRING</code></td>
+<td>Strings literais comuns.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>[fF]"([^"\]                                                                                     | \.)*"</code>, <code>[fF]'([^'\]             | \.)*'</code></td>
+<td><code>TOKEN_STRING</code></td>
+<td><em>F-strings</em> (strings formatadas).</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+<td><code>TOKEN_OPERADOR_*</code></td>
+<td>Operadores de comparação.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>=</code>, <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code></td>
+<td><code>TOKEN_OPERADOR_*</code></td>
+<td>Operadores aritméticos e de atribuição.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>"and"</code>, <code>"or"</code>, <code>"not"</code></td>
+<td><code>TOKEN_OPERADOR_LOGICO_*</code></td>
+<td>Operadores lógicos.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>:</code>, <code>,</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>{</code>, <code>}</code></td>
+<td><code>TOKEN_DELIMITADOR_*</code></td>
+<td>Símbolos estruturais.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td><code>TOKEN_NEWLINE</code></td>
+<td>Quebra de linha.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Indentação no início da linha (conta espaços/tabs)</td>
+<td><code>TOKEN_INDENT</code> ou <code>TOKEN_DEDENT</code></td>
+<td>Controle de blocos por indentação.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>[ \t]+</code></td>
+<td><em>(Ignorado)</em></td>
+<td>Espaços e tabs dentro da linha.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>#.*</code></td>
+<td><em>(Ignorado)</em></td>
+<td>Comentários de linha.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td><code>TOKEN_DESCONHECIDO</code></td>
+<td>Símbolos inválidos.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-execucao">5. Execução</h2>
+<p>Ao executar uma análise léxica , há dois resultados possíveis, dependendo se todos os caracteres da entrada formam <em>tokens</em> válidos segundo as regras definidas no arquivo lexer.l.</p>
+<h2 id="51-caso-a-analise-lexica-seja-bem-sucedida">5.1. Caso a análise léxica seja bem-sucedida</h2>
+<p>Quando toda a entrada é formada apenas por <em>tokens</em> válidos , o analisador léxico processa corretamente cada lexema e imprime uma lista de <em>tokens</em> reconhecidos, um por linha, ou o formato definido no seu lexer_main.c.</p>
+<p>Exemplo de impressao em caso de  a análise léxica seja bem-sucedida:</p>
+<pre><code class="language-text">TOKEN_ID (variavel)
+TOKEN_NUM (123)
+TOKEN_OP_SOMA (+)
+</code></pre>
+<p>Esse resultado indica que:</p>
+<ul>
+<li>
+<p>Todos os caracteres foram lidos e convertidos corretamente em <em>tokens</em>;</p>
+</li>
+<li>
+<p>Nenhum lexema inválido foi encontrado;</p>
+</li>
+<li>
+<p>O fluxo da entrada está lexicalmente correto.</p>
+</li>
+</ul>
+<p>Nenhuma mensagem de erro é exibida nesse caso, apenas a listagem dos <em>tokens</em>.</p>
+<h2 id="52-caso-a-analise-lexica-encontre-erro">5.2. Caso a análise léxica encontre erro</h2>
+<p>Se a entrada contiver um caractere ou sequência que não corresponda a nenhum <em>token</em> definido , o analisador léxico interrompeu o processamento e apresenta uma mensagem de erro</p>
+<pre><code class="language-text">ERRO LÉXICO (linha X): símbolo inválido encontrado: @
+</code></pre>
+<p>Após o erro, a análise é encerrada imediatamente e a saída do programa contém somente as mensagens até o ponto da falha.</p>
 <h2 id="historico-de-versoes">Histórico de Versões</h2>
 <table>
 <thead>
@@ -740,17 +1135,17 @@
 <tbody>
 <tr>
 <td style="text-align: center;">1.0</td>
-<td style="text-align: center;">Criação do documento</td>
-<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
-<td style="text-align: center;">01/09/2025</td>
-<td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
+<td style="text-align: center;">Criação da v1 da documentação do lexer</td>
+<td style="text-align: center;"><a href="https://github.com/RafaelSchadt">Rafael Schadt</a></td>
+<td style="text-align: center;">01/10/2025</td>
+<td style="text-align: center;">-</td>
 </tr>
 <tr>
-<td style="text-align: center;">1.1</td>
+<td style="text-align: center;">2.0</td>
 <td style="text-align: center;">Atualização do documento</td>
-<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
-<td style="text-align: center;">26/11/2025</td>
-<td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
+<td style="text-align: center;"><a href="https://github.com/felixlaryssa">Laryssa Felix</a></td>
+<td style="text-align: center;">01/10/2025</td>
+<td style="text-align: center;"><a href="https://github.com/caioduart3">Caio Duarte</a></td>
 </tr>
 </tbody>
 </table>

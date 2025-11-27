@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Dificuldades/dificuldades/">
+        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/parser/">
       
       
-        <link rel="prev" href="../../Escopo/escopo/">
+        <link rel="prev" href="../lexer/">
       
       
-        <link rel="next" href="../../Desenvolvimento/lexer/">
+        <link rel="next" href="../ast/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Dificuldades - Compiladores - Grupo 2</title>
+        <title>Parser - Compiladores - Grupo 2</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dificuldades" class="md-skip">
+        <a href="#parser-analise-sintatica" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dificuldades
+              Parser
             
           </span>
         </div>
@@ -291,11 +291,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../../Dificuldades/dificuldades/" class="md-tabs__link">
         
   
     
@@ -310,11 +308,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../Desenvolvimento/lexer/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lexer/" class="md-tabs__link">
           
   
   Desenvolvimento
@@ -450,6 +450,81 @@
       
   
   
+  
+    <li class="md-nav__item">
+      <a href="../../Dificuldades/dificuldades/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dificuldades
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Desenvolvimento
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Desenvolvimento
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lexer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lexer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -465,7 +540,7 @@
           
   
   <span class="md-ellipsis">
-    Dificuldades
+    Parser
   </span>
   
 
@@ -476,7 +551,7 @@
         
   
   <span class="md-ellipsis">
-    Dificuldades
+    Parser
   </span>
   
 
@@ -498,6 +573,110 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-do-parser-no-compilador" class="md-nav__link">
+    3. Papel do Parser no Compilador
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cabecalho-em-c" class="md-nav__link">
+    4.1 Cabeçalho em C (%{ ... %})
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-definicoes-do-bison" class="md-nav__link">
+    4.2 Definições do Bison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-tokens" class="md-nav__link">
+    4.3 Tokens
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-regras-de-precedencia" class="md-nav__link">
+    4.4 Regras de Precedência
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-gramatica" class="md-nav__link">
+    4.5 Gramática
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-integracao-com-tabela-de-simbolos" class="md-nav__link">
+    4.6 Integração com Tabela de Símbolos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-tratamento-de-erros" class="md-nav__link">
+    4.7 Tratamento de Erros
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-caso-a-analise-sintatica-seja-bem-sucedida" class="md-nav__link">
+    5.1. Caso a análise sintática seja bem-sucedida
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-caso-a-analise-sintatica-encontre-erro" class="md-nav__link">
+    5.2. Caso a análise sintática encontre erro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     Histórico de Versões
   </a>
@@ -511,59 +690,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Desenvolvimento
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            Desenvolvimento
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Desenvolvimento/lexer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lexer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -572,27 +698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/parser/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Parser
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../Desenvolvimento/ast/" class="md-nav__link">
+      <a href="../ast/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -612,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/st/" class="md-nav__link">
+      <a href="../st/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -632,7 +738,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/tac/" class="md-nav__link">
+      <a href="../tac/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -652,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Desenvolvimento/codigo_final/" class="md-nav__link">
+      <a href="../codigo_final/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -700,6 +806,110 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-do-parser-no-compilador" class="md-nav__link">
+    3. Papel do Parser no Compilador
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cabecalho-em-c" class="md-nav__link">
+    4.1 Cabeçalho em C (%{ ... %})
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-definicoes-do-bison" class="md-nav__link">
+    4.2 Definições do Bison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-tokens" class="md-nav__link">
+    4.3 Tokens
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-regras-de-precedencia" class="md-nav__link">
+    4.4 Regras de Precedência
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-gramatica" class="md-nav__link">
+    4.5 Gramática
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-integracao-com-tabela-de-simbolos" class="md-nav__link">
+    4.6 Integração com Tabela de Símbolos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-tratamento-de-erros" class="md-nav__link">
+    4.7 Tratamento de Erros
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-caso-a-analise-sintatica-seja-bem-sucedida" class="md-nav__link">
+    5.1. Caso a análise sintática seja bem-sucedida
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-caso-a-analise-sintatica-encontre-erro" class="md-nav__link">
+    5.2. Caso a análise sintática encontre erro
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#historico-de-versoes" class="md-nav__link">
     Histórico de Versões
   </a>
@@ -724,8 +934,174 @@
   
 
 
-<h1 id="dificuldades">Dificuldades</h1>
-<p>No início, foi desafiador transformar conceitos tão abstratos em passos concretos e compreender a linguagem tanto sintática quanto lexicalmente. O lexer trouxe menos desafios, embora ele tenha sido refeito diversas vezes ao trabalhar no parser, principalmente para estruturar a gramática e entender como as regras se conectam. O parser foi feito do zero no mínimo 5 vezes, foi extremamente desafiador fazer com que nada tivesse conflito. Apesar de o compilador estar completo, ele ainda assombrará nossas vidas ao olhar para uma TAC.</p>
+<h1 id="parser-analise-sintatica">Parser - Análise Sintática</h1>
+<h2 id="1-introducao">1. Introdução</h2>
+<p>O parser (analisador sintático) é responsável por verificar se a sequência de <em>tokens</em> produzida pelo analisador léxico segue as regras definidas pela gramática da linguagem-alvo, que, neste caso, é um subconjunto de Python implementado para o compilador Python -&gt; C.
+Além de validar a estrutura sintática, o parser constrói a base para a geração da <em>Abstract Syntax Tree</em> (AST), que será usada posteriormente na tradução para código C.</p>
+<p>Este compilador suporta:</p>
+<ul>
+<li>Atribuições (simples, múltiplas, encadeadas e indexadas);</li>
+<li>Expressões aritméticas e lógicas;</li>
+<li>Chamadas de funções;</li>
+<li>Listas e indexações;</li>
+<li>Estruturas condicionais (<code>if</code>, <code>elif</code>, <code>else</code>);</li>
+<li>Laços (<code>while</code>, <code>for</code>);</li>
+<li>Declarações de função e instruções de retorno;</li>
+<li>Blocos estruturados por indentação, assim como em Python.</li>
+</ul>
+<h2 id="2-metodologia">2. Metodologia</h2>
+<p>O parser foi implementado utilizando Bison, seguindo o padrão clássico de compiladores baseados em gramáticas livres de contexto. A metodologia adotada inclui:</p>
+<p><strong>Integração com o Analisador Léxico</strong></p>
+<p>O parser consome <em>tokens</em> produzidos pelo Flex, incluindo informações sobre valores e localização (<code>%locations</code>), permitindo melhor rastreamento de erros.</p>
+<p><strong>Implementação das Primeiras Regras</strong></p>
+<p>A implementação inicial do Parser concentrou-se nas regras gramaticais fundamentais, como expressões aritméticas, atribuições e chamadas de função. Essas primeiras definições foram essenciais para que o grupo adquirisse domínio sobre a ferramenta de geração de analisadores e compreendesse, na prática, como estruturar a gramática, integrar ações semânticas e lidar com potenciais conflitos de análise. Esse alicerce tornou possível, posteriormente, a expansão da linguagem com construções mais complexas e dependentes de escopo.</p>
+<p><strong>Tratamento de Blocos com Indentação</strong></p>
+<p>A implementação dos tokens <code>INDENT</code> e <code>DEDENT</code> foi fundamental para reproduzir o comportamento de blocos estruturais do Python, onde a delimitação de escopos depende exclusivamente da identação. Essa etapa exigiu atenção especial do grupo, pois o tratamento correto desses <em>tokens</em> é pré-requisito para o funcionamento de estruturas como <code>if/else</code>, <code>for</code>, <code>while</code> e <code>def</code>.</p>
+<p>A complexidade surgiu principalmente da necessidade de sincronizar o analisador léxico com o parser, garantindo que cada mudança no nível de indentação fosse refletida com precisão na gramática. Esse mecanismo não apenas define os escopos corretamente, mas também permite a construção consistente dos blocos na AST, evitando ambiguidades e garantindo que o compilador reconheça a hierarquia entre instruções.</p>
+<p><strong>Uso de AST como Representação Intermediária</strong></p>
+<p>O parser opera em integração direta com o módulo de AST, construindo a árvore sintática abstrata à medida que cada regra gramatical é reconhecida. Para cada produção válida, ações semânticas específicas criam e conectam nós definidos em <code>ast.h</code>, garantindo que a estrutura sintática e semântica do programa seja representada fielmente desde os primeiros estágios da análise.</p>
+<p><strong>Tabela de Símbolos</strong></p>
+<p>Durante a análise, o parser utiliza e atualiza a Tabela de Símbolos (<code>st.h</code>) para:</p>
+<ul>
+<li>Registrar variáveis e funções;</li>
+<li>Verificar uso antes da definição;</li>
+<li>Inferir tipos;</li>
+<li>Armazenar valores e tamanhos de vetores.</li>
+</ul>
+<p><strong>Ações semânticas integradas</strong></p>
+<p>Além de construir a AST, o parser já resolve:</p>
+<ul>
+<li>Inferência de tipos;</li>
+<li>Avaliação constante de expressões simples;</li>
+<li>Registro de parâmetros de função;</li>
+<li>Verificação de escopo com funções como openScope() e closeScope().</li>
+</ul>
+<h2 id="3-papel-do-parser-no-compilador">3. Papel do Parser no Compilador</h2>
+<p>O compilador segue o pipeline:</p>
+<p><strong>Código Python -&gt; Lexer (Flex) -&gt; Parser (Bison) -&gt; AST/TAC -&gt; Gerador de Código Final -&gt; Código C</strong></p>
+<p>O parser cumpre as seguintes funções essenciais:</p>
+<p><strong>Detecção de Erros Sintáticos</strong></p>
+<p>Mensagens detalhadas, indicando <em>token</em> problemático, linha e tipo de erro.</p>
+<p><strong>Construção da Estrutura Sintática</strong></p>
+<p>Cada construção Python é convertida em um nó semântico representando elementos como:</p>
+<ul>
+<li>Atribuições;</li>
+<li>Condicionais;</li>
+<li>Laços;</li>
+<li>Chamada de funções;</li>
+<li>Operações aritméticas e lógicas.</li>
+</ul>
+<p><strong>Interação com Demais Módulos</strong></p>
+<p>Durante a análise, o parser:</p>
+<ul>
+<li>Atualiza a Tabela de Símbolos;</li>
+<li>Constrói a AST;</li>
+<li>Prepara dados para geração de código intermediário (TAC) e final (C);</li>
+<li>Marca variáveis como inicializadas ou vetores quando necessário.</li>
+</ul>
+<h2 id="4-implementacao">4. Implementação</h2>
+<p>A implementação do parser está localizada em <code>parser/parser.y</code></p>
+<p>Ele é dividido nas seguintes seções:</p>
+<h3 id="41-cabecalho-em-c">4.1 Cabeçalho em C (<code>%{ ... %}</code>)</h3>
+<p>Inclui:</p>
+<ul>
+<li>Bibliotecas padrão (<code>stdio.h</code>, <code>stdlib.h</code>, <code>string.h</code>);</li>
+<li>Módulos internos do compilador:</li>
+<li>Tabela de Símbolos (<code>st.h</code>);</li>
+<li>AST (<code>ast.h</code>);</li>
+<li>Código Intermediário (TAC) (<code>tac.h</code>);</li>
+<li>Gerador de código final (<code>gerador_codigo_final.h</code>);</li>
+<li>Declarações de <code>yylex()</code> e <code>yyerror()</code>;</li>
+<li>Variável global <code>raizAST</code>, que guarda a árvore gerada.</li>
+</ul>
+<h3 id="42-definicoes-do-bison">4.2 Definições do Bison</h3>
+<p>Incluindo:</p>
+<ul>
+<li><code>%define parse.error verbose</code>: mensagens de erro detalhadas;</li>
+<li><code>%define parse.trace</code>: rastreamento opcional do parser;</li>
+<li><code>%locations</code>: suporte a linha/coluna;</li>
+</ul>
+<p>Definição da union que armazena inteiros, floats, strings e ponteiros para nós AST.</p>
+<h3 id="43-tokens">4.3 <em>Tokens</em></h3>
+<p>O parser reconhece:</p>
+<ul>
+<li>Identificadores, inteiros, floats, strings;</li>
+<li>Palavras-chave (<code>if</code>, <code>while</code>, <code>for</code>, <code>return</code>, <code>def</code>, etc.);</li>
+<li>Operadores aritméticos, lógicos e relacionais;</li>
+<li>Delimitadores e símbolos de estrutura;</li>
+<li><em>Tokens</em> estruturais: <code>INDENT</code>, <code>DEDENT</code>, <code>NEWLINE</code>.</li>
+</ul>
+<h3 id="44-regras-de-precedencia">4.4 Regras de Precedência</h3>
+<p>Definidas para evitar ambiguidades, incluindo:</p>
+<ul>
+<li>Atribuições (right associative);</li>
+<li>Operadores lógicos (<code>and</code>, <code>or</code>, <code>not</code>);</li>
+<li>Comparações;</li>
+<li>Operadores aritméticos.</li>
+</ul>
+<h3 id="45-gramatica">4.5 Gramática</h3>
+<p>Cobre:</p>
+<ul>
+<li>Programa com lista de comandos;</li>
+<li>Blocos indentados;</li>
+<li><code>if</code> / <code>elif</code> / <code>else</code>;</li>
+<li>Laços <code>while</code> e <code>for</code>;</li>
+<li>Atribuições (simples, múltipla, encadeada, indexada);</li>
+<li>Chamadas de função;</li>
+<li>Declaração de funções com parâmetros;</li>
+<li>Retorno de função;</li>
+<li>Expressões aritméticas, lógicas e relacionais;</li>
+<li>Literais: inteiros, floats, booleanos, strings, listas;</li>
+<li>Indexações.</li>
+</ul>
+<p>Ações semânticas constroem nós AST com funções como:</p>
+<ul>
+<li><code>criarNoAtribuicao</code></li>
+<li><code>criarNoOp</code></li>
+<li><code>criarNoBool</code></li>
+<li><code>criarNoChamadaFuncao</code></li>
+<li><code>criarNoLista</code></li>
+<li><code>criarNoIndex</code></li>
+</ul>
+<p>Entre outras</p>
+<h3 id="46-integracao-com-tabela-de-simbolos">4.6 Integração com Tabela de Símbolos</h3>
+<p>Em regras como atribuição simples:</p>
+<ul>
+<li>A variável é registrada caso ainda não exista;</li>
+<li>Tipo é inferido a partir da expressão;</li>
+<li>Valores são avaliados para constantes;</li>
+<li>Vetores têm tamanho inferido automaticamente.</li>
+</ul>
+<h3 id="47-tratamento-de-erros">4.7 Tratamento de Erros</h3>
+<p><code>yyerror()</code> gera mensagens como:</p>
+<pre><code class="language-text">ERRO (linha X): syntax error próximo de '...'
+</code></pre>
+<p>Além disso, erros semânticos como uso de variável não declarada também são reportados.</p>
+<h2 id="5-execucao">5. Execução</h2>
+<p>Ao executar a análise léxica, há dois resultados possíveis:</p>
+<h2 id="51-caso-a-analise-sintatica-seja-bem-sucedida">5.1. Caso a análise sintática seja bem-sucedida</h2>
+<p>Quando a entrada está de acordo com as regras gramaticais, o parser imprime:</p>
+<pre><code class="language-text">Parsing concluído com sucesso!
+</code></pre>
+<p>Essa mensagem indica que:</p>
+<ul>
+<li>todos os <em>tokens</em> foram consumidos corretamente;</li>
+<li>não houve violação de nenhuma regra da gramática;</li>
+<li>a estrutura do programa é sintaticamente válida.</li>
+</ul>
+<p>Nenhum detalhe adicional é mostrado pelo parser nessa etapa, apenas a confirmação de sucesso.</p>
+<h2 id="52-caso-a-analise-sintatica-encontre-erro">5.2. Caso a análise sintática encontre erro</h2>
+<p>Quando ocorre qualquer inconsistência gramatical, o parser interrompe a análise e apresenta uma mensagem de erro como:</p>
+<pre><code class="language-text">ERRO SINTÁTICO (linha X): syntax error, unexpected TOKEN_X, expecting Y
+Parsing interrompido por erro sintático.
+</code></pre>
+<p>Essa apresentação sempre inclui:</p>
+<ul>
+<li>a linha onde o erro foi detectado,</li>
+<li>o <em>token</em> inesperado que causou a falha,</li>
+<li>o que era esperado naquele ponto,</li>
+<li>e a mensagem final informando a interrupção da análise.</li>
+</ul>
 <h2 id="historico-de-versoes">Histórico de Versões</h2>
 <table>
 <thead>
@@ -740,17 +1116,17 @@
 <tbody>
 <tr>
 <td style="text-align: center;">1.0</td>
-<td style="text-align: center;">Criação do documento</td>
-<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
-<td style="text-align: center;">01/09/2025</td>
+<td style="text-align: center;">Criação da v1 da documentação do parser</td>
 <td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
+<td style="text-align: center;">01/10/2025</td>
+<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
 </tr>
 <tr>
-<td style="text-align: center;">1.1</td>
-<td style="text-align: center;">Atualização do documento</td>
-<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
-<td style="text-align: center;">26/11/2025</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">Criação da versão final da documentação do parser</td>
 <td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
+<td style="text-align: center;">26/11/2025</td>
+<td style="text-align: center;"><a href="https://github.com/isaqzin">Isaque Camargos</a></td>
 </tr>
 </tbody>
 </table>

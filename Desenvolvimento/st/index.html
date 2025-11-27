@@ -8,22 +8,28 @@
       
       
       
+        <link rel="canonical" href="https://github.com/CaioDuart3/G2_compiladores/Desenvolvimento/st/">
       
       
+        <link rel="prev" href="../ast/">
       
-      <link rel="icon" href="/CaioDuart3/G2_compiladores/assets/images/favicon.png">
+      
+        <link rel="next" href="../tac/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.0">
     
     
       
-        <title>Compiladores - Grupo 2</title>
+        <title>ST - Compiladores - Grupo 2</title>
       
     
     
-      <link rel="stylesheet" href="/CaioDuart3/G2_compiladores/assets/stylesheets/main.9f615399.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9f615399.min.css">
       
         
-        <link rel="stylesheet" href="/CaioDuart3/G2_compiladores/assets/stylesheets/palette.649f08f9.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.649f08f9.min.css">
       
       
 
@@ -42,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("/CaioDuart3/G2_compiladores/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -70,6 +76,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#st-symbol-table-tabela-de-simbolos" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -80,7 +91,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/CaioDuart3/G2_compiladores/." title="Compiladores - Grupo 2" class="md-header__button md-logo" aria-label="Compiladores - Grupo 2" data-md-component="logo">
+    <a href="../.." title="Compiladores - Grupo 2" class="md-header__button md-logo" aria-label="Compiladores - Grupo 2" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -100,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              ST
             
           </span>
         </div>
@@ -214,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="/CaioDuart3/G2_compiladores/." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
     
@@ -231,7 +242,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="/CaioDuart3/G2_compiladores/Planejamento/planejamento/" class="md-tabs__link">
+      <a href="../../Planejamento/planejamento/" class="md-tabs__link">
         
   
     
@@ -248,7 +259,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="/CaioDuart3/G2_compiladores/Metodologia/metodologia/" class="md-tabs__link">
+      <a href="../../Metodologia/metodologia/" class="md-tabs__link">
         
   
     
@@ -265,7 +276,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="/CaioDuart3/G2_compiladores/Escopo/escopo/" class="md-tabs__link">
+      <a href="../../Escopo/escopo/" class="md-tabs__link">
         
   
     
@@ -282,7 +293,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="/CaioDuart3/G2_compiladores/Dificuldades/dificuldades/" class="md-tabs__link">
+      <a href="../../Dificuldades/dificuldades/" class="md-tabs__link">
         
   
     
@@ -297,11 +308,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/lexer/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lexer/" class="md-tabs__link">
           
   
   Desenvolvimento
@@ -334,7 +347,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/CaioDuart3/G2_compiladores/." title="Compiladores - Grupo 2" class="md-nav__button md-logo" aria-label="Compiladores - Grupo 2" data-md-component="logo">
+    <a href="../.." title="Compiladores - Grupo 2" class="md-nav__button md-logo" aria-label="Compiladores - Grupo 2" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -363,7 +376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -382,7 +395,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Planejamento/planejamento/" class="md-nav__link">
+      <a href="../../Planejamento/planejamento/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -401,7 +414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Metodologia/metodologia/" class="md-nav__link">
+      <a href="../../Metodologia/metodologia/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -420,7 +433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Escopo/escopo/" class="md-nav__link">
+      <a href="../../Escopo/escopo/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -439,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Dificuldades/dificuldades/" class="md-nav__link">
+      <a href="../../Dificuldades/dificuldades/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -456,17 +469,19 @@
       
   
   
+    
+  
   
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
@@ -479,7 +494,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Desenvolvimento
@@ -492,7 +507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/lexer/" class="md-nav__link">
+      <a href="../lexer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -512,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/parser/" class="md-nav__link">
+      <a href="../parser/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -532,7 +547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/ast/" class="md-nav__link">
+      <a href="../ast/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -550,9 +565,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/st/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ST
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -561,6 +596,136 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-da-st-no-compilador" class="md-nav__link">
+    3. Papel da ST no Compilador
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-estrutura-de-hash" class="md-nav__link">
+    4.1 Estrutura de Hash
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-insercao" class="md-nav__link">
+    4.2 Inserção
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-busca" class="md-nav__link">
+    4.3 Busca
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-controle-de-escopo" class="md-nav__link">
+    4.4 Controle de Escopo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-impressao" class="md-nav__link">
+    4.5 Impressão
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-liberacao-de-memoria" class="md-nav__link">
+    4.6 Liberação de Memória
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Execução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-quando-o-programa-contem-declaracoes-validas" class="md-nav__link">
+    5.1. Quando o programa contém declarações válidas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-quando-ocorre-erro-semantico-envolvendo-simbolos" class="md-nav__link">
+    5.2. Quando ocorre erro semântico envolvendo símbolos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    Histórico de Versões
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -572,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/tac/" class="md-nav__link">
+      <a href="../tac/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -592,7 +757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/CaioDuart3/G2_compiladores/Desenvolvimento/codigo_final/" class="md-nav__link">
+      <a href="../codigo_final/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -630,6 +795,126 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-introducao" class="md-nav__link">
+    1. Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-metodologia" class="md-nav__link">
+    2. Metodologia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-papel-da-st-no-compilador" class="md-nav__link">
+    3. Papel da ST no Compilador
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-implementacao" class="md-nav__link">
+    4. Implementação
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Implementação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-estrutura-de-hash" class="md-nav__link">
+    4.1 Estrutura de Hash
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-insercao" class="md-nav__link">
+    4.2 Inserção
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-busca" class="md-nav__link">
+    4.3 Busca
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-controle-de-escopo" class="md-nav__link">
+    4.4 Controle de Escopo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-impressao" class="md-nav__link">
+    4.5 Impressão
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-liberacao-de-memoria" class="md-nav__link">
+    4.6 Liberação de Memória
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-execucao" class="md-nav__link">
+    5. Execução
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Execução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-quando-o-programa-contem-declaracoes-validas" class="md-nav__link">
+    5.1. Quando o programa contém declarações válidas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-quando-ocorre-erro-semantico-envolvendo-simbolos" class="md-nav__link">
+    5.2. Quando ocorre erro semântico envolvendo símbolos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    Histórico de Versões
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -641,8 +926,140 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+  
+  
+
+
+<h1 id="st-symbol-table-tabela-de-simbolos">ST - Symbol Table (Tabela de Símbolos)</h1>
+<h2 id="1-introducao">1. Introdução</h2>
+<p>A Tabela de Símbolos (<em>Symbol Table - ST</em>) é uma das estruturas fundamentais do compilador, responsável por registrar e gerenciar informações sobre identificadores durante a análise semântica. Toda variável, função ou vetor declarado no código-fonte deve ser armazenado na ST, para permitir verificações como: uso antes da declaração, tipos incompatíveis, escopo válido e inicialização.</p>
+<p>Na linguagem do projeto, a ST também oferece suporte a vetores, aos tipos básicos e ao controle explícito de escopos, permitindo uma análise semântica mais completa e segura.</p>
+<h2 id="2-metodologia">2. Metodologia</h2>
+<p>A implementação da Tabela de Símbolos (ST) foi iniciada assim que o parser alcançou uma estrutura básica estável, permitindo reconhecer declarações, blocos e início de escopos. Com essa fundação, tornou-se possível integrar a ST ao processo de análise sintática para registrar identificadores conforme apareciam no código-fonte.</p>
+<p>A metodologia adotada seguiu os seguintes princípios:</p>
+<ul>
+<li>Uso de uma tabela hash estática, de tamanho fixo (<code>TAM = 227</code>), escolhida para minimizar colisões sem exigir realocação dinâmica.</li>
+<li>Tratamento de colisões via encadeamento externo, mantendo listas ligadas em cada posição da tabela.</li>
+<li>Gerenciamento explícito de escopos, através do contador escopo_atual, permitindo diferenciar símbolos declarados em blocos distintos.</li>
+<li>
+<p>Estrutura de nó de símbolo bem definida, contendo:</p>
+<ul>
+<li>nome do identificador,</li>
+<li>tipo,</li>
+<li>escopo onde foi declarado,</li>
+<li>valor (quando inicializado),</li>
+<li>informações extras para vetores,</li>
+<li>ponteiro para o próximo símbolo da lista no caso de colisão.</li>
+</ul>
+</li>
+</ul>
+<p>Essa abordagem permitiu ao grupo evoluir gradualmente o compilador: primeiro garantindo uma análise sintática estável, e em seguida adicionando a lógica de armazenamento e controle de identificadores de forma consistente com os escopos definidos pela linguagem.</p>
+<h2 id="3-papel-da-st-no-compilador">3. Papel da ST no Compilador</h2>
+<p>A ST é utilizada durante:</p>
+<ul>
+<li>declaração de variáveis: é realizada inserção na tabela;</li>
+<li>uso de variáveis: é feita busca para validar existência e tipo;</li>
+<li>atribuições: há verificação de inicialização e compatibilidade de tipos;</li>
+<li>controle de escopos: entrada e saída de blocos com remoção automática dos símbolos daquele nível;</li>
+<li>operações com vetores: verificação de existência e acesso seguro.</li>
+</ul>
+<p>Assim, ela atua como o núcleo da análise semântica, garantindo que o programa seja consistente e evitando que o compilador aceite operações inválidas.</p>
+<h2 id="4-implementacao">4. Implementação</h2>
+<p>A implementação está concentrada nos seguintes componentes:</p>
+<h3 id="41-estrutura-de-hash">4.1 Estrutura de Hash</h3>
+<p>A função <code>hash()</code> mapeia strings para índices dentro de <code>TAM</code>, utilizando uma combinação simples mas eficiente (<code>h * 32 + caractere</code>).</p>
+<h3 id="42-insercao">4.2 Inserção</h3>
+<p>A função <code>insertST()</code>:</p>
+<ul>
+<li>cria um novo símbolo,</li>
+<li>inicializa seu valor padrão,</li>
+<li>atribui o escopo atual,</li>
+<li>o insere no início da lista ligada do bucket correspondente.</li>
+</ul>
+<h3 id="43-busca">4.3 Busca</h3>
+<p>A função <code>searchST()</code> percorre a lista do bucket associado ao hash do nome, retornando o símbolo encontrado.</p>
+<h3 id="44-controle-de-escopo">4.4 Controle de Escopo</h3>
+<ul>
+<li><code>openScope()</code> incrementa o escopo e inicia um novo nível.</li>
+<li><code>closeScope()</code> remove todos os símbolos pertencentes ao escopo atual.</li>
+<li><code>getScope()</code> retorna o nível atual.</li>
+</ul>
+<p>Essa estratégia garante que variáveis locais desapareçam ao final de blocos.</p>
+<h3 id="45-impressao">4.5 Impressão</h3>
+<p><code>showST()</code> exibe:</p>
+<ul>
+<li>nome,</li>
+<li>tipo,</li>
+<li>escopo,</li>
+<li>se foi inicializada,</li>
+<li>valor atual ou elementos do vetor.</li>
+</ul>
+<h3 id="46-liberacao-de-memoria">4.6 Liberação de Memória</h3>
+<p><code>freeST()</code> percorre toda a tabela e libera:</p>
+<ul>
+<li>vetores alocados,</li>
+<li>strings,</li>
+<li>nós de símbolos.</li>
+</ul>
+<h2 id="5-execucao">5. Execução</h2>
+<p>Durante a execução do compilador, o comportamento da Tabela de Símbolos se apresenta da seguinte forma:</p>
+<h3 id="51-quando-o-programa-contem-declaracoes-validas">5.1. Quando o programa contém declarações válidas</h3>
+<p>Os símbolos são registrados com sucesso, e a tabela pode ser exibida ao final com <code>showST()</code>, apresentando:</p>
+<ul>
+<li>tipos,</li>
+<li>escopos,</li>
+<li>estado de inicialização,</li>
+<li>valores atribuídos.</li>
+</ul>
+<p>Exemplo típico de entrada válida:</p>
+<pre><code class="language-text">===== TABELA DE SÍMBOLOS =====
+Nome: soma       | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 3
+Nome: c          | Tipo: BOOL    | Escopo: 0 | Inicializado: SIM | Valor: FALSE
+Nome: d          | Tipo: STRING  | Escopo: 0 | Inicializado: SIM | Valor: &quot;ola mundo&quot;
+Nome: f          | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 3.140000
+Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2, 3, 4]
+===============================
+</code></pre>
+<h3 id="52-quando-ocorre-erro-semantico-envolvendo-simbolos">5.2. Quando ocorre erro semântico envolvendo símbolos</h3>
+<p>A ST fornece mensagens como:</p>
+<ul>
+<li>uso de variável não existente,</li>
+<li>acesso a vetor não inicializado,</li>
+<li>consulta a identificador inexistente.</li>
+</ul>
+<p>Exemplos:</p>
+<pre><code class="language-text">Erro: vetor 'a' não existe na tabela de símbolos.
+Erro: vetor 'x' não foi inicializado.
+</code></pre>
+<h2 id="historico-de-versoes">Histórico de Versões</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: center;">Descrição</th>
+<th style="text-align: center;">Autor</th>
+<th style="text-align: center;">Data</th>
+<th style="text-align: center;">Revisor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">Criação da v1 da documentação da st</td>
+<td style="text-align: center;"><a href="https://github.com/ludmilaaysha">Ludmila Nunes</a></td>
+<td style="text-align: center;">26/11/2025</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -695,10 +1112,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "/CaioDuart3/G2_compiladores/", "features": ["navigation.tabs", "content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.top"], "search": "/CaioDuart3/G2_compiladores/assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "content.code.copy", "navigation.instant", "navigation.instant.progress", "navigation.top"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="/CaioDuart3/G2_compiladores/assets/javascripts/bundle.4e0fa4ba.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4e0fa4ba.min.js"></script>
       
     
   </body>
