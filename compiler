@@ -5,41 +5,64 @@ EXEC="$ROOT_DIR/compilador"
 
 DEBUG=0
 
+# Se o primeiro argumento for -d, ativar debug e mover os parâmetros
 if [ "$1" = "-d" ]; then
     DEBUG=1
     shift
 fi
 
-# Executa o compilador
-if [ -n "$1" ] && [ -f "$1" ]; then
-    RAW=$("$EXEC" < "$1" 2>&1)
-    STATUS=$?
-else
-    RAW=$("$EXEC" 2>&1)
-    STATUS=$?
+INPUT_FILE="$1"
+OUTPUT_C="$2"
+
+if [ -z "$INPUT_FILE" ]; then
+    echo "Uso:"
+    echo "  ./compiler <entrada.py> [saida.c]"
+    echo "  ./compiler -d <entrada.py> [saida.c]"
+    exit 1
 fi
 
-# Remove caracteres UTF-8 inválidos e sequências ANSI
+# Executa compilador
+RAW=$("$EXEC" < "$INPUT_FILE" 2>&1)
+STATUS=$?
+
+# Remove caracteres inválidos + ANSI
 CLEAN=$(echo "$RAW" \
     | iconv -f utf-8 -t utf-8 -c \
     | sed -r "s/\x1B\[[0-9;]*[A-Za-z]//g"
 )
 
-# Debug: mostra tudo limpo
+# ===== DEBUG: mostra tudo =====
 if [ $DEBUG -eq 1 ]; then
     echo "$CLEAN"
+
+    # Mesmo no debug, se gerar arquivo C precisamos renomear
+    if [ -f "programa_gerado.c" ]; then
+        if [ -n "$OUTPUT_C" ]; then
+            mv "programa_gerado.c" "$OUTPUT_C"
+            echo "Arquivo C gerado: $OUTPUT_C"
+        else
+            echo "Arquivo C gerado: programa_gerado.c"
+        fi
+    fi
+
     exit $STATUS
 fi
 
-# Filtra por erro ou warning
+# ===== MODO NORMAL (somente erros/warnings) =====
 FILTERED=$(echo "$CLEAN" | grep -Ei "erro|warning")
 
-# Se não houve erros ou warnings → silêncio total
-if [ -z "$FILTERED" ]; then
-    exit 0
+if [ -n "$FILTERED" ]; then
+    echo "$FILTERED"
 fi
 
-# Mostra apenas as mensagens relevantes
-echo "$FILTERED"
+# ===== RENOMEAR SAÍDA C SE EXISTIR =====
+if [ -f "programa_gerado.c" ]; then
+    if [ -n "$OUTPUT_C" ]; then
+        mv "programa_gerado.c" "$OUTPUT_C"
+        echo "Arquivo C gerado: $OUTPUT_C"
+    else
+        echo "Arquivo C gerado: programa_gerado.c"
+    fi
+fi
 
 exit $STATUS
