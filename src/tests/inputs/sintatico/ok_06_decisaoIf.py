@@ -1,20 +1,15 @@
-a =1
-b =1
-
-y=0
-x=0
-
-def soma(x, y):
-    return x + y
-
-if a and b: #verdade
-    b = b +1 #2
-    if b or a: #verdade
-        a = a +1 #2
-    b = 1
-    x = soma(a, b) #4
-    
-    if soma(a, b) > 10: #falso
-        a = a + 2 #4
+def testar_condicionais(a, b, c):
+    if a == b:
+        print("a é igual a b (==)")
     else:
-        print("acabou")
+        if a != b and b < c:
+            print("a é diferente de b (!=) E b é menor que c (<)")
+        else:
+            if a > b or c <= b:
+                print("a é maior que b (>) OU c é menor ou igual a b (<=)")
+            else:
+                print("Nenhuma condição anterior satisfeita")
+
+
+
+testar_condicionais(5, 3, 10)

@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_RAFAELSCHADT_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
-# define YY_YY_HOME_RAFAELSCHADT_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_PARSER_TAB_H_INCLUDED
+# define YY_YY_PARSER_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -103,14 +103,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "/home/rafaelschadt/G2_compiladores/src/parser/parser.y"
+#line 28 "parser/parser.y"
 
     int ival;            
     double dval;         
     char *sval;          
     struct NoAST *no;    
 
-#line 114 "/home/rafaelschadt/G2_compiladores/src/parser/parser.tab.h"
+#line 114 "parser/parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -139,4 +139,4 @@ extern YYLTYPE yylloc;
 int yyparse (void);
 
 
-#endif /* !YY_YY_HOME_RAFAELSCHADT_G2_COMPILADORES_SRC_PARSER_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_PARSER_TAB_H_INCLUDED  */

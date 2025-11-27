@@ -1,3 +1,5 @@
+# retirado do escopo do projeto
+
 # dados = [5, 100]
 # maior = 0
 # status = 0

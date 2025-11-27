@@ -13,7 +13,7 @@ LEXER: Token QUEBRA-DE-LINHA (\n)
 LEXER: INDENT (nível 1)
 LEXER: Token IDENTIFICADOR (print)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token F-STRING (f"i: {i}")
+LEXER: Token IDENTIFICADOR (i)
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 LEXER: DEDENT (nível 0)
 Parsing concluído com sucesso!
@@ -34,7 +34,7 @@ FOR:
       FUNC:
         ID: print
       ARGS:
-        STRING: ""i: {i}"
+        ID: i
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -51,7 +51,7 @@ Nome: i          | Tipo: NONE    | Escopo: 0 | Inicializado: NAO | Valor: NAO AT
 L0:
   t0 = i < 5
   if_false t0 goto L1
-  arg ""i: {i}"
+  arg i
   t1 = call print
   t2 = i + 1
   i = t2
@@ -59,5 +59,4 @@ L0:
 L1:
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

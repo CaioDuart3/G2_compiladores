@@ -7,6 +7,7 @@
     int b = 1;
     int c = 1;
     int d = 20;
+    int e = 1;
 
 
 int main() {
@@ -14,5 +15,6 @@ int main() {
   c = 1;
   a = (((6 + 2) / 2) * 4);
   d = (a + ((b + c) * 2));
+  e = (2 / 2);
     return 0;
 }

@@ -1,3 +1,5 @@
+# retirado do escopo do projeto
+
 # numeros = [1, 2, 3, 4, 5]
 # total = 0
 # contagem = 0

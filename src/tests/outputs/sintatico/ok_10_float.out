@@ -97,5 +97,4 @@ Nome: flutuante  | Tipo: FLOAT   | Escopo: 0 | Inicializado: SIM | Valor: 2.0000
 L0:
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

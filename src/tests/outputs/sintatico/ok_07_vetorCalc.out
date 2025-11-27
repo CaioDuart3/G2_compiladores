@@ -64,5 +64,4 @@ Nome: v          | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [10, 2
   v[2] = 50
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

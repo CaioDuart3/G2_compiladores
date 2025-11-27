@@ -5,5 +5,4 @@ def soma(a ,b):
 print(soma(a,b))
 
 def soma2(c ,d):
-    return c+d
-print(soma(1,2))
+    print(c+d)

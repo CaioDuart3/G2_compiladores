@@ -155,5 +155,4 @@ Nome: vetor_int  | Tipo: VETOR   | Escopo: 0 | Inicializado: SIM | Valor: [0, 2,
 L0:
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

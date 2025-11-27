@@ -1,5 +1,8 @@
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
+
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: Token QUEBRA-DE-LINHA (\n)
@@ -34,5 +37,4 @@ Parsing concluído com sucesso!
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

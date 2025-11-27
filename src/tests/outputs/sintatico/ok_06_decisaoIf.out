@@ -1,110 +1,28 @@
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token IDENTIFICADOR (b)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-
-LEXER: Token IDENTIFICADOR (y)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (0)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token IDENTIFICADOR (x)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (0)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-
 LEXER: Token PALAVRA_CHAVE_DEF (def)
-LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token IDENTIFICADOR (testar_condicionais)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token IDENTIFICADOR (x)
+LEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token IDENTIFICADOR (y)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token IDENTIFICADOR (c)
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: INDENT (nível 1)
-LEXER: Token PALAVRA_CHAVE_RETURN (return)
-LEXER: Token IDENTIFICADOR (x)
-LEXER: Token OPERADOR_MAIS (+)
-LEXER: Token IDENTIFICADOR (y)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-
-LEXER: DEDENT (nível 0)
 LEXER: Token PALAVRA_CHAVE_IF (if)
 LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_LOGICO_AND (and)
+LEXER: Token OPERADOR_IGUAL (==)
 LEXER: Token IDENTIFICADOR (b)
-LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: INDENT (nível 1)
-LEXER: Token IDENTIFICADOR (b)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token IDENTIFICADOR (b)
-LEXER: Token OPERADOR_MAIS (+)
-LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token PALAVRA_CHAVE_IF (if)
-LEXER: Token IDENTIFICADOR (b)
-LEXER: Token OPERADOR_LOGICO_OR (or)
-LEXER: Token IDENTIFICADOR (a)
 LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: INDENT (nível 2)
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_MAIS (+)
-LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: DEDENT (nível 1)
-LEXER: Token IDENTIFICADOR (b)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token INTEIRO (1)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token IDENTIFICADOR (x)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token IDENTIFICADOR (soma)
+LEXER: Token IDENTIFICADOR (print)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token IDENTIFICADOR (b)
+LEXER: Token STRING ("a é igual a b (==)")
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: Token PALAVRA_CHAVE_IF (if)
-LEXER: Token IDENTIFICADOR (soma)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token IDENTIFICADOR (b)
-LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
-LEXER: Token OPERADOR_MAIOR (>)
-LEXER: Token INTEIRO (10)
-LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
-LEXER: Token QUEBRA-DE-LINHA (\n)
-
-LEXER: INDENT (nível 2)
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_ATRIBUICAO (=)
-LEXER: Token IDENTIFICADOR (a)
-LEXER: Token OPERADOR_MAIS (+)
-LEXER: Token INTEIRO (2)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: DEDENT (nível 1)
@@ -113,91 +31,142 @@ LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: INDENT (nível 2)
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_DIFERENTE (!=)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_LOGICO_AND (and)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_MENOR (<)
+LEXER: Token IDENTIFICADOR (c)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 3)
 LEXER: Token IDENTIFICADOR (print)
 LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token STRING ("acabou")
+LEXER: Token STRING ("a é diferente de b (!=) E b é menor que c (<)")
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: DEDENT (nível 2)
+LEXER: Token PALAVRA_CHAVE_ELSE (else)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 3)
+LEXER: Token PALAVRA_CHAVE_IF (if)
+LEXER: Token IDENTIFICADOR (a)
+LEXER: Token OPERADOR_MAIOR (>)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token OPERADOR_LOGICO_OR (or)
+LEXER: Token IDENTIFICADOR (c)
+LEXER: Token OPERADOR_MENOR_IGUAL (<=)
+LEXER: Token IDENTIFICADOR (b)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 4)
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token STRING ("a é maior que b (>) OU c é menor ou igual a b (<=)")
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: DEDENT (nível 3)
+LEXER: Token PALAVRA_CHAVE_ELSE (else)
+LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: INDENT (nível 4)
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token STRING ("Nenhuma condição anterior satisfeita")
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+
+
+
+LEXER: DEDENT (nível 3)
+LEXER: Token IDENTIFICADOR (testar_condicionais)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
+LEXER: Token INTEIRO (5)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (3)
+LEXER: Token DELIMITADOR_VIRGULA (,)
+LEXER: Token INTEIRO (10)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: DEDENT (nível 2)
 LEXER: DEDENT (nível 1)
 LEXER: DEDENT (nível 0)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
-ATTR:
-  ID: a
-  NUM: 1
-ATTR:
-  ID: b
-  NUM: 1
-ATTR:
-  ID: y
-  NUM: 0
-ATTR:
-  ID: x
-  NUM: 0
-DEF: soma
+DEF: testar_condicionais
   PARAMS:
-    ID: x
-    ID: y
+    ID: a
+    ID: b
+    ID: c
   BODY:
-    RETURN:
-      OP: +
-        ID: x
-        ID: y
-IF:
-  COND:
-    OP: AND
-      ID: a
-      ID: b
-  THEN:
-    ATTR:
-      ID: b
-      OP: +
-        ID: b
-        NUM: 1
     IF:
       COND:
-        OP: OR
-          ID: b
-          ID: a
-      THEN:
-        ATTR:
-          ID: a
-          OP: +
-            ID: a
-            NUM: 1
-    ATTR:
-      ID: b
-      NUM: 1
-    ATTR:
-      ID: x
-      CALL:
-        FUNC:
-          ID: soma
-        ARGS:
+        OP: =
           ID: a
           ID: b
-    IF:
-      COND:
-        OP: >
-          CALL:
-            FUNC:
-              ID: soma
-            ARGS:
-              ID: a
-              ID: b
-          NUM: 10
       THEN:
-        ATTR:
-          ID: a
-          OP: +
-            ID: a
-            NUM: 2
-      ELSE:
         CALL:
           FUNC:
             ID: print
           ARGS:
-            STRING: "acabou"
+            STRING: "a é igual a b (==)"
+      ELSE:
+        IF:
+          COND:
+            OP: AND
+              OP: !
+                ID: a
+                ID: b
+              OP: <
+                ID: b
+                ID: c
+          THEN:
+            CALL:
+              FUNC:
+                ID: print
+              ARGS:
+                STRING: "a é diferente de b (!=) E b é menor que c (<)"
+          ELSE:
+            IF:
+              COND:
+                OP: OR
+                  OP: >
+                    ID: a
+                    ID: b
+                  OP: l
+                    ID: c
+                    ID: b
+              THEN:
+                CALL:
+                  FUNC:
+                    ID: print
+                  ARGS:
+                    STRING: "a é maior que b (>) OU c é menor ou igual a b (<=)"
+              ELSE:
+                CALL:
+                  FUNC:
+                    ID: print
+                  ARGS:
+                    STRING: "Nenhuma condição anterior satisfeita"
+            CALL:
+              FUNC:
+                ID: testar_condicionais
+              ARGS:
+                NUM: 5
+                NUM: 3
+                NUM: 10
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -205,64 +174,58 @@ IF:
 --- TABELA DE SÍMBOLOS ---
 
 ===== TABELA DE SÍMBOLOS =====
-Nome: soma       | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
-Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 2
-Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
-Nome: x          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
-Nome: y          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 0
+Nome: testar_condicionais | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO ATRIBUIDO
 ===============================
 ===============================
 
 --- CÓDIGO INTERMEDIÁRIO (TAC) ---
-  a = 1
-  b = 1
-  y = 0
-  x = 0
 
---- Início Função: soma ---
-  param x
-  param y
-  t0 = x + y
-  return t0
---- Fim Função: soma ---
-  if_false a goto L2
-  t1 = b
+--- Início Função: testar_condicionais ---
+  param a
+  param b
+  param c
+  t0 = a == b
+  if_false t0 goto L0
+  arg "a é igual a b (==)"
+  t1 = call print
+  goto L1
+L0:
+  t3 = a != b
+  if_false t3 goto L4
+  t4 = b < c
+  t2 = t4
+  goto L5
+L4:
+  t2 = 0
+L5:
+  if_false t2 goto L2
+  arg "a é diferente de b (!=) E b é menor que c (<)"
+  t5 = call print
   goto L3
 L2:
-  t1 = 0
-L3:
-  if_false t1 goto L0
-  t2 = b + 1
-  b = t2
-  if_false b goto L6
-  t3 = 1
-  goto L7
-L6:
-  t3 = a
-L7:
-  if_false t3 goto L4
-  t4 = a + 1
-  a = t4
-L4:
-  b = 1
-  arg a
-  arg b
-  t5 = call soma
-  x = t5
-  arg a
-  arg b
-  t6 = call soma
-  t7 = t6 > 10
+  t7 = a > b
   if_false t7 goto L8
-  t8 = a + 2
-  a = t8
+  t6 = 1
   goto L9
 L8:
-  arg "acabou"
-  t9 = call print
+  t8 = c <= b
+  t6 = t8
 L9:
-L0:
+  if_false t6 goto L6
+  arg "a é maior que b (>) OU c é menor ou igual a b (<=)"
+  t9 = call print
+  goto L7
+L6:
+  arg "Nenhuma condição anterior satisfeita"
+  t10 = call print
+L7:
+  arg 5
+  arg 3
+  arg 10
+  t11 = call testar_condicionais
+L3:
+L1:
+--- Fim Função: testar_condicionais ---
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

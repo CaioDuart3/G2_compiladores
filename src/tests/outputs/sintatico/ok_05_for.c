@@ -6,9 +6,8 @@
 
 
 int main() {
-  for (int __i = 0; __i < 5; __i++) {
-    i = __i;
-    printf(""i: {i}");
+  for (int i = 0; i < 5; i++) {
+    printf("%d", i);
   }
     return 0;
 }

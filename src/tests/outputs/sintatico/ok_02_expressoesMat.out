@@ -32,6 +32,13 @@ LEXER: Token IDENTIFICADOR (c)
 LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 LEXER: Token OPERADOR_MULTIPLICACAO (*)
 LEXER: Token INTEIRO (2)
+LEXER: Token QUEBRA-DE-LINHA (\n)
+
+LEXER: Token IDENTIFICADOR (e)
+LEXER: Token OPERADOR_ATRIBUICAO (=)
+LEXER: Token INTEIRO (2)
+LEXER: Token OPERADOR_DIVISAO (/)
+LEXER: Token INTEIRO (2)
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
@@ -59,6 +66,11 @@ ATTR:
         ID: b
         ID: c
       NUM: 2
+ATTR:
+  ID: e
+  OP: /
+    NUM: 2
+    NUM: 2
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -70,6 +82,7 @@ Nome: a          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 16
 Nome: b          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: c          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
+Nome: e          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 1
 ===============================
 ===============================
 
@@ -84,7 +97,8 @@ Nome: d          | Tipo: INT     | Escopo: 0 | Inicializado: SIM | Valor: 20
   t4 = t3 * 2
   t5 = a + t4
   d = t5
+  t6 = 2 / 2
+  e = t6
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

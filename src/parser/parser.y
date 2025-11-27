@@ -401,7 +401,7 @@ int main(int argc, char *argv[]) {
                 if (out) {
                     gerar_codigo_final(codigo, out);
                     fclose(out);
-                    printf("[INFO] Código C gerado em 'programa_gerado.c'.\n");
+
                 } else {
                     fprintf(stderr, "[ERRO] Não foi possível criar 'programa_gerado.c'.\n");
                 }

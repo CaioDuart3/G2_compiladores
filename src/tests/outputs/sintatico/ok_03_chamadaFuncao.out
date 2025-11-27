@@ -49,22 +49,15 @@ LEXER: Token DELIMITADOR_DOIS_PONTOS (:)
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: INDENT (nível 1)
-LEXER: Token PALAVRA_CHAVE_RETURN (return)
+LEXER: Token IDENTIFICADOR (print)
+LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
 LEXER: Token IDENTIFICADOR (c)
 LEXER: Token OPERADOR_MAIS (+)
 LEXER: Token IDENTIFICADOR (d)
+LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 LEXER: Token QUEBRA-DE-LINHA (\n)
 
 LEXER: DEDENT (nível 0)
-LEXER: Token IDENTIFICADOR (print)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token IDENTIFICADOR (soma)
-LEXER: Token DELIMITADOR_ABRE_PARENTESES (()
-LEXER: Token INTEIRO (1)
-LEXER: Token DELIMITADOR_VIRGULA (,)
-LEXER: Token INTEIRO (2)
-LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
-LEXER: Token DELIMITADOR_FECHA_PARENTESES ())
 Parsing concluído com sucesso!
 
 --- ÁRVORE SINTÁTICA ABSTRATA (AST) ---
@@ -98,20 +91,13 @@ DEF: soma2
     ID: c
     ID: d
   BODY:
-    RETURN:
-      OP: +
-        ID: c
-        ID: d
-CALL:
-  FUNC:
-    ID: print
-  ARGS:
     CALL:
       FUNC:
-        ID: soma
+        ID: print
       ARGS:
-        NUM: 1
-        NUM: 2
+        OP: +
+          ID: c
+          ID: d
 ---------------------------------------
 
 --- EXECUÇÃO DA AST ---
@@ -146,14 +132,9 @@ Nome: soma2      | Tipo: FUNCAO  | Escopo: 0 | Inicializado: NAO | Valor: NAO AT
   param c
   param d
   t3 = c + d
-  return t3
+  arg t3
+  t4 = call print
 --- Fim Função: soma2 ---
-  arg 1
-  arg 2
-  t4 = call soma
-  arg t4
-  t5 = call print
 
 --- GERAÇÃO DE CÓDIGO FINAL ---
-[INFO] Código C gerado em 'programa_gerado.c'.
 -----------------------------------

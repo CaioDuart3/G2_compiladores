@@ -12,13 +12,12 @@ int soma(int a, int b) {
 }
 
 int soma2(int c, int d) {
-  return (c + d);
+  printf("%d", (c + d));
 }
 
 int main() {
   a = 2;
   b = 2;
   printf("%d", soma(a, b));
-  printf("%d", soma(1, 2));
     return 0;
 }
