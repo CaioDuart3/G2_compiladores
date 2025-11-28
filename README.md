@@ -11,23 +11,25 @@ O sistema é desenvolvido pela equipe **Runtime Terrors** e tem como objetivo cr
 
 ```
             
-├── docs                  
+├── docs                 // Documentação          
 │   ├── Desenvolvimento   
 │   ├── Dificuldades      
 │   ├── Escopo            
 │   ├── Metodologia       
 │   └── Planejamento      
-├── site                  
-├── src                   
+├── site                 // Interface da documentação pelo MKdocs
+├── src                  // código-fonte do compilador de Python para C  
 │   ├── lexer           
-│   ├── parser            
+│   ├── parser           
 │   ├── ast               
 │   ├── st                
 │   ├── tac               
 │   ├── codigo_final     
 │   └── tests             
-├── run_tests.sh          
-├── README.md
+├── run_tests.sh
+├── compilador          // executável do compilador
+├── compiler            // script bash para utilizar o compilador
+├── README.md 
 └── mkdocs.yml
 ```
 
