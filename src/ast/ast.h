@@ -53,7 +53,6 @@ typedef struct NoAST {
 
 } NoAST;
 
-// --- Funções de Criação de Nós ---
 
 NoAST *criarNoIndex(NoAST *lista, NoAST *indice);
 NoAST *criarNoNum(int valor);
@@ -72,10 +71,9 @@ NoAST *criarNoIf(NoAST *cond, NoAST *blocoThen, NoAST *blocoElse);
 NoAST *criarNoWhile(NoAST *condicao, NoAST *bloco);
 NoAST *criarNoFor(NoAST *var, NoAST *iterable, NoAST *bloco);
 
-// --- AQUI ESTÁ A MUDANÇA ---
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista);          // Para vetores
 NoAST *criarNoListaComandos(NoAST *comando, NoAST *proximo);       // Para blocos de código
-// ---------------------------
+
 
 NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo);
 NoAST *criarNoReturn(NoAST *expr);
@@ -93,7 +91,6 @@ NoAST *criarNoChamadaFuncao(NoAST *id, NoAST *args);
 Tipo inferirTipo(NoAST *no);
 void registrarParametros(NoAST *parametros);
 
-// --- Funções de Gerenciamento ---
 void imprimirAST(const NoAST *raiz, int indent);
 void liberarAST(NoAST *raiz);
 

@@ -96,7 +96,6 @@ lista_comandos_opt:
   | lista_comandos    { $$ = $1; }
   ;
 
-/* --- REGRA CORRIGIDA --- */
 lista_comandos:
     comando
         { $$ = criarNoListaComandos($1, NULL); }
@@ -108,7 +107,7 @@ lista_comandos:
                 $$ = $1;
         }
   ;
-/* ----------------------- */
+
 
 comando:
     atribuicao           { $$ = $1; }

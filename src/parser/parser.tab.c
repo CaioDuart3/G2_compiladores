@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 1 "parser/parser.y"
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -88,7 +88,7 @@
   /* Variável global que guardará a raiz da árvore */
   NoAST *raizAST = NULL;
 
-#line 92 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 92 "parser/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -1675,134 +1675,134 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: lista_comandos_opt newlines_opt  */
-#line 83 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 83 "parser/parser.y"
     { 
         raizAST = (yyvsp[-1].no); 
         (yyval.no) = (yyvsp[-1].no);
     }
-#line 1684 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1684 "parser/parser.tab.c"
     break;
 
   case 5: /* lista_comandos_opt: %empty  */
-#line 95 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 95 "parser/parser.y"
                         { (yyval.no) = NULL; }
-#line 1690 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1690 "parser/parser.tab.c"
     break;
 
   case 6: /* lista_comandos_opt: lista_comandos  */
-#line 96 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 96 "parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 1696 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1696 "parser/parser.tab.c"
     break;
 
   case 7: /* lista_comandos: comando  */
-#line 102 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 102 "parser/parser.y"
         { (yyval.no) = criarNoListaComandos((yyvsp[0].no), NULL); }
-#line 1702 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1702 "parser/parser.tab.c"
     break;
 
   case 8: /* lista_comandos: lista_comandos comando  */
-#line 104 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 104 "parser/parser.y"
         {
             if ((yyvsp[0].no) != NULL)
                 (yyval.no) = criarNoListaComandos((yyvsp[-1].no), (yyvsp[0].no));
             else
                 (yyval.no) = (yyvsp[-1].no);
         }
-#line 1713 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1713 "parser/parser.tab.c"
     break;
 
   case 9: /* comando: atribuicao  */
-#line 114 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 114 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1719 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1719 "parser/parser.tab.c"
     break;
 
   case 10: /* comando: expressao  */
-#line 115 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 115 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1725 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1725 "parser/parser.tab.c"
     break;
 
   case 11: /* comando: if_stmt  */
-#line 116 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 116 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1731 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1731 "parser/parser.tab.c"
     break;
 
   case 12: /* comando: while_stmt  */
-#line 117 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 117 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1737 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1737 "parser/parser.tab.c"
     break;
 
   case 13: /* comando: for_stmt  */
-#line 118 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 118 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1743 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1743 "parser/parser.tab.c"
     break;
 
   case 14: /* comando: TOKEN_NEWLINE  */
-#line 119 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 119 "parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 1749 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1749 "parser/parser.tab.c"
     break;
 
   case 15: /* comando: bloco  */
-#line 120 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 120 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1755 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1755 "parser/parser.tab.c"
     break;
 
   case 16: /* comando: declaracao_funcao  */
-#line 121 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 121 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1761 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1761 "parser/parser.tab.c"
     break;
 
   case 17: /* comando: retorno  */
-#line 122 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 122 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 1767 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1767 "parser/parser.tab.c"
     break;
 
   case 18: /* $@1: %empty  */
-#line 127 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 127 "parser/parser.y"
     {
         openScope();
         registrarParametros((yyvsp[-2].no)); 
     }
-#line 1776 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1776 "parser/parser.tab.c"
     break;
 
   case 19: /* declaracao_funcao: TOKEN_PALAVRA_CHAVE_DEF TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_identificadores TOKEN_DELIMITADOR_FECHA_PARENTESES TOKEN_DELIMITADOR_DOIS_PONTOS $@1 bloco  */
-#line 132 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 132 "parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFuncao((yyvsp[-6].sval), (yyvsp[-4].no), (yyvsp[0].no));
         insertST((yyvsp[-6].sval), FUNCAO);
     }
-#line 1786 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1786 "parser/parser.tab.c"
     break;
 
   case 20: /* retorno: TOKEN_PALAVRA_CHAVE_RETURN expressao  */
-#line 141 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 141 "parser/parser.y"
     { (yyval.no) = criarNoReturn((yyvsp[0].no)); }
-#line 1792 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1792 "parser/parser.tab.c"
     break;
 
   case 25: /* atribuicao_indexacao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 153 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 153 "parser/parser.y"
     {
         NoAST *no_index = criarNoIndex(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no));
         (yyval.no) = criarNoAtribuicao(no_index, (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 1802 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1802 "parser/parser.tab.c"
     break;
 
   case 26: /* atribuicao_simples: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO expressao  */
-#line 162 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 162 "parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
     Simbolo *s = searchST((yyvsp[-2].sval));
@@ -1847,17 +1847,17 @@ yyreduce:
     }
     free((yyvsp[-2].sval));
 }
-#line 1851 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1851 "parser/parser.tab.c"
     break;
 
   case 27: /* atribuicao_multipla: lista_identificadores TOKEN_OPERADOR_ATRIBUICAO lista_expressoes  */
-#line 210 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 210 "parser/parser.y"
       { (yyval.no) = criarNoAtribuicaoMultipla((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1857 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1857 "parser/parser.tab.c"
     break;
 
   case 28: /* atribuicao_encadeada: TOKEN_IDENTIFICADOR TOKEN_OPERADOR_ATRIBUICAO atribuicao  */
-#line 215 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 215 "parser/parser.y"
 {
     (yyval.no) = criarNoAtribuicao(criarNoId((yyvsp[-2].sval)), (yyvsp[0].no));
     NoAST *rhs = (yyvsp[0].no);
@@ -1876,165 +1876,165 @@ yyreduce:
     }
     free((yyvsp[-2].sval));
 }
-#line 1880 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1880 "parser/parser.tab.c"
     break;
 
   case 29: /* lista_identificadores: TOKEN_IDENTIFICADOR  */
-#line 237 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 237 "parser/parser.y"
       { (yyval.no) = criarListaIds((yyvsp[0].sval)); }
-#line 1886 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1886 "parser/parser.tab.c"
     break;
 
   case 30: /* lista_identificadores: lista_identificadores TOKEN_DELIMITADOR_VIRGULA TOKEN_IDENTIFICADOR  */
-#line 239 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 239 "parser/parser.y"
       { (yyval.no) = adicionaIdNaLista((yyvsp[-2].no), (yyvsp[0].sval)); }
-#line 1892 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1892 "parser/parser.tab.c"
     break;
 
   case 31: /* lista_expressoes: expressao  */
-#line 244 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 244 "parser/parser.y"
       { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1898 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1898 "parser/parser.tab.c"
     break;
 
   case 32: /* lista_expressoes: lista_expressoes TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 246 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 246 "parser/parser.y"
       { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1904 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1904 "parser/parser.tab.c"
     break;
 
   case 33: /* lista_argumentos: %empty  */
-#line 250 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 250 "parser/parser.y"
                   { (yyval.no) = NULL; }
-#line 1910 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1910 "parser/parser.tab.c"
     break;
 
   case 34: /* lista_argumentos: expressao  */
-#line 251 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 251 "parser/parser.y"
                   { (yyval.no) = criarListaExp((yyvsp[0].no)); }
-#line 1916 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1916 "parser/parser.tab.c"
     break;
 
   case 35: /* lista_argumentos: lista_argumentos TOKEN_DELIMITADOR_VIRGULA expressao  */
-#line 253 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 253 "parser/parser.y"
         { (yyval.no) = adicionaExpNaLista((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1922 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1922 "parser/parser.tab.c"
     break;
 
   case 36: /* chamada_funcao: TOKEN_IDENTIFICADOR TOKEN_DELIMITADOR_ABRE_PARENTESES lista_argumentos TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 258 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 258 "parser/parser.y"
         {
             NoAST *id = criarNoId((yyvsp[-3].sval));
             (yyval.no) = criarNoChamadaFuncao(id, (yyvsp[-1].no));
             free((yyvsp[-3].sval));
         }
-#line 1932 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1932 "parser/parser.tab.c"
     break;
 
   case 37: /* expressao: expressao TOKEN_OPERADOR_MAIS expressao  */
-#line 266 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 266 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('+', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1938 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1938 "parser/parser.tab.c"
     break;
 
   case 38: /* expressao: expressao TOKEN_OPERADOR_MENOS expressao  */
-#line 267 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 267 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('-', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1944 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1944 "parser/parser.tab.c"
     break;
 
   case 39: /* expressao: expressao TOKEN_OPERADOR_MULTIPLICACAO expressao  */
-#line 268 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 268 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('*', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1950 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1950 "parser/parser.tab.c"
     break;
 
   case 40: /* expressao: expressao TOKEN_OPERADOR_DIVISAO expressao  */
-#line 269 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 269 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('/', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1956 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1956 "parser/parser.tab.c"
     break;
 
   case 41: /* expressao: expressao TOKEN_OPERADOR_IGUAL expressao  */
-#line 270 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 270 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('=', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1962 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1962 "parser/parser.tab.c"
     break;
 
   case 42: /* expressao: expressao TOKEN_OPERADOR_DIFERENTE expressao  */
-#line 271 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 271 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('!', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1968 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1968 "parser/parser.tab.c"
     break;
 
   case 43: /* expressao: expressao TOKEN_OPERADOR_MENOR expressao  */
-#line 272 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 272 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('<', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1974 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1974 "parser/parser.tab.c"
     break;
 
   case 44: /* expressao: expressao TOKEN_OPERADOR_MENOR_IGUAL expressao  */
-#line 273 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 273 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('l', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1980 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1980 "parser/parser.tab.c"
     break;
 
   case 45: /* expressao: expressao TOKEN_OPERADOR_MAIOR expressao  */
-#line 274 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 274 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('>', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1986 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1986 "parser/parser.tab.c"
     break;
 
   case 46: /* expressao: expressao TOKEN_OPERADOR_MAIOR_IGUAL expressao  */
-#line 275 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 275 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('g', (yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1992 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1992 "parser/parser.tab.c"
     break;
 
   case 47: /* expressao: expressao TOKEN_OPERADOR_LOGICO_AND expressao  */
-#line 276 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 276 "parser/parser.y"
                                                         { (yyval.no) = criarNoOpLogicaAnd((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 1998 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 1998 "parser/parser.tab.c"
     break;
 
   case 48: /* expressao: expressao TOKEN_OPERADOR_LOGICO_OR expressao  */
-#line 277 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 277 "parser/parser.y"
                                                         { (yyval.no) = criarNoOpLogicaOr((yyvsp[-2].no), (yyvsp[0].no)); }
-#line 2004 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2004 "parser/parser.tab.c"
     break;
 
   case 49: /* expressao: TOKEN_OPERADOR_LOGICO_NOT expressao  */
-#line 278 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 278 "parser/parser.y"
                                                         { (yyval.no) = criarNoOp('N', (yyvsp[0].no), NULL); }
-#line 2010 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2010 "parser/parser.tab.c"
     break;
 
   case 50: /* expressao: atomo  */
-#line 279 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 279 "parser/parser.y"
                                                         { (yyval.no) = (yyvsp[0].no); }
-#line 2016 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2016 "parser/parser.tab.c"
     break;
 
   case 51: /* atomo: TOKEN_DELIMITADOR_ABRE_PARENTESES expressao TOKEN_DELIMITADOR_FECHA_PARENTESES  */
-#line 283 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 283 "parser/parser.y"
                                                                                      { (yyval.no) = (yyvsp[-1].no); }
-#line 2022 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2022 "parser/parser.tab.c"
     break;
 
   case 52: /* atomo: TOKEN_INTEIRO  */
-#line 284 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 284 "parser/parser.y"
                               { (yyval.no) = criarNoNum((yyvsp[0].ival)); }
-#line 2028 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2028 "parser/parser.tab.c"
     break;
 
   case 53: /* atomo: TOKEN_FLOAT  */
-#line 285 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 285 "parser/parser.y"
                               { (yyval.no) = criarNoFloat((yyvsp[0].dval)); }
-#line 2034 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2034 "parser/parser.tab.c"
     break;
 
   case 54: /* atomo: TOKEN_IDENTIFICADOR  */
-#line 287 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 287 "parser/parser.y"
         {
             (yyval.no) = criarNoId((yyvsp[0].sval));
             Simbolo *s = searchST((yyvsp[0].sval));
@@ -2044,138 +2044,138 @@ yyreduce:
             }
             free((yyvsp[0].sval));
         }
-#line 2048 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2048 "parser/parser.tab.c"
     break;
 
   case 55: /* atomo: TOKEN_STRING  */
-#line 296 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 296 "parser/parser.y"
                               { (yyval.no) = criarNoString((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 2054 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2054 "parser/parser.tab.c"
     break;
 
   case 56: /* atomo: TOKEN_PALAVRA_CHAVE_TRUE  */
-#line 297 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 297 "parser/parser.y"
                                 { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2060 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2060 "parser/parser.tab.c"
     break;
 
   case 57: /* atomo: TOKEN_PALAVRA_CHAVE_FALSE  */
-#line 298 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 298 "parser/parser.y"
                                 { (yyval.no) = criarNoBool((yyvsp[0].ival)); }
-#line 2066 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2066 "parser/parser.tab.c"
     break;
 
   case 58: /* atomo: TOKEN_DELIMITADOR_ABRE_COLCHETES lista_valores TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 300 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 300 "parser/parser.y"
         {
             /* Aqui continua sendo lista de vetor, então mantemos criarNoLista */
             (yyval.no) = criarNoLista((yyvsp[-1].no), NULL);
         }
-#line 2075 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2075 "parser/parser.tab.c"
     break;
 
   case 59: /* atomo: chamada_index  */
-#line 304 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 304 "parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 2081 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2081 "parser/parser.tab.c"
     break;
 
   case 60: /* atomo: chamada_funcao  */
-#line 305 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 305 "parser/parser.y"
                       { (yyval.no) = (yyvsp[0].no); }
-#line 2087 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2087 "parser/parser.tab.c"
     break;
 
   case 61: /* lista_valores: %empty  */
-#line 309 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 309 "parser/parser.y"
                          { (yyval.no) = NULL; }
-#line 2093 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2093 "parser/parser.tab.c"
     break;
 
   case 62: /* lista_valores: lista_expressoes  */
-#line 310 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 310 "parser/parser.y"
                          { (yyval.no) = (yyvsp[0].no); }
-#line 2099 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2099 "parser/parser.tab.c"
     break;
 
   case 63: /* chamada_index: atomo TOKEN_DELIMITADOR_ABRE_COLCHETES expressao TOKEN_DELIMITADOR_FECHA_COLCHETES  */
-#line 315 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 315 "parser/parser.y"
         { (yyval.no) = criarNoIndex((yyvsp[-3].no), (yyvsp[-1].no)); }
-#line 2105 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2105 "parser/parser.tab.c"
     break;
 
   case 64: /* bloco: TOKEN_NEWLINE TOKEN_INDENT lista_comandos TOKEN_DEDENT  */
-#line 320 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 320 "parser/parser.y"
     { (yyval.no) = (yyvsp[-1].no); }
-#line 2111 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2111 "parser/parser.tab.c"
     break;
 
   case 65: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 325 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 325 "parser/parser.y"
     { (yyval.no) = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL); }
-#line 2117 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2117 "parser/parser.tab.c"
     break;
 
   case 66: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 327 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 327 "parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-2].no), (yyvsp[0].no), NULL);
         (yyval.no) = criarNoIf((yyvsp[-6].no), (yyvsp[-4].no), elif_if);
     }
-#line 2126 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2126 "parser/parser.tab.c"
     break;
 
   case 67: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELIF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 332 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 332 "parser/parser.y"
     {
         NoAST *elif_if = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no));
         (yyval.no) = criarNoIf((yyvsp[-9].no), (yyvsp[-7].no), elif_if);
     }
-#line 2135 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2135 "parser/parser.tab.c"
     break;
 
   case 68: /* if_stmt: TOKEN_PALAVRA_CHAVE_IF expressao TOKEN_DELIMITADOR_DOIS_PONTOS bloco TOKEN_PALAVRA_CHAVE_ELSE TOKEN_DELIMITADOR_DOIS_PONTOS bloco  */
-#line 337 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 337 "parser/parser.y"
     { (yyval.no) = criarNoIf((yyvsp[-5].no), (yyvsp[-3].no), (yyvsp[0].no)); }
-#line 2141 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2141 "parser/parser.tab.c"
     break;
 
   case 69: /* $@2: %empty  */
-#line 342 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 342 "parser/parser.y"
     { openScope(); }
-#line 2147 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2147 "parser/parser.tab.c"
     break;
 
   case 70: /* while_stmt: TOKEN_PALAVRA_CHAVE_WHILE expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@2 bloco  */
-#line 344 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 344 "parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoWhile((yyvsp[-3].no), (yyvsp[0].no));
     }
-#line 2156 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2156 "parser/parser.tab.c"
     break;
 
   case 71: /* $@3: %empty  */
-#line 352 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 352 "parser/parser.y"
     {
         openScope();
         if (!searchST((yyvsp[-3].sval))) insertST((yyvsp[-3].sval), INT);
     }
-#line 2165 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2165 "parser/parser.tab.c"
     break;
 
   case 72: /* for_stmt: TOKEN_PALAVRA_CHAVE_FOR TOKEN_IDENTIFICADOR TOKEN_PALAVRA_CHAVE_IN expressao TOKEN_DELIMITADOR_DOIS_PONTOS $@3 bloco  */
-#line 357 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 357 "parser/parser.y"
     {
         closeScope();
         (yyval.no) = criarNoFor(criarNoId((yyvsp[-5].sval)), (yyvsp[-3].no), (yyvsp[0].no));
         free((yyvsp[-5].sval));
     }
-#line 2175 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2175 "parser/parser.tab.c"
     break;
 
 
-#line 2179 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.tab.c"
+#line 2179 "parser/parser.tab.c"
 
       default: break;
     }
@@ -2404,7 +2404,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 363 "/home/caioduart3/Workspace/6SEMESTRE/COMPI/G2_compiladores/src/parser/parser.y"
+#line 363 "parser/parser.y"
 
 
 void yyerror(const char *s) {

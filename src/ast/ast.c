@@ -157,9 +157,7 @@ NoAST *criarNoFor(NoAST *id, NoAST *iteravel, NoAST *bloco) {
     return no;
 }
 
-// --- MUDANÇAS AQUI ---
 
-// Função antiga corrigida: Cria estritamente VETORES (NO_LISTA)
 NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
     NoAST *novo = alocarNo(NO_LISTA); // Aloca tipo NO_LISTA
     novo->tipo = NO_LISTA;            // Reforça
@@ -168,7 +166,7 @@ NoAST *criarNoLista(NoAST *comando, NoAST *proximaLista) {
     return novo;
 }
 
-// Nova função: Cria BLOCOS DE CÓDIGO (NO_LISTA_COMANDOS)
+
 NoAST *criarNoListaComandos(NoAST *comando, NoAST *proximo) {
     NoAST *novo = alocarNo(NO_LISTA_COMANDOS); // Aloca tipo NO_LISTA_COMANDOS
     novo->tipo = NO_LISTA_COMANDOS;            // Reforça
@@ -176,7 +174,7 @@ NoAST *criarNoListaComandos(NoAST *comando, NoAST *proximo) {
     novo->proximo = proximo;
     return novo;
 }
-// ---------------------
+
 
 NoAST *criarNoFuncao(char *nome, NoAST *params, NoAST *corpo) {
     NoAST *novo = alocarNo(NO_FUNCAO);
