@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="Planejamento/planejamento/">
+        <link rel="next" href="Metodologia/metodologia/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#apresentacao-do-projeto" class="md-skip">
+        <a href="#apresentacao" class="md-skip">
           Skip to content
         </a>
       
@@ -236,25 +236,6 @@
     
   
   Apresentação
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="Planejamento/planejamento/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Planejamento
 
       </a>
     </li>
@@ -497,15 +478,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#como-compilar-o-projeto" class="md-nav__link">
-    <span class="md-ellipsis">
-      Como Compilar o Projeto
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#como-executar-o-compilador-python-para-c" class="md-nav__link">
     <span class="md-ellipsis">
       Como Executar o Compilador (Python para C)
@@ -545,28 +517,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Planejamento/planejamento/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Planejamento
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -655,10 +605,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -671,8 +621,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Desenvolvimento
           </label>
@@ -907,15 +857,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#como-compilar-o-projeto" class="md-nav__link">
-    <span class="md-ellipsis">
-      Como Compilar o Projeto
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#como-executar-o-compilador-python-para-c" class="md-nav__link">
     <span class="md-ellipsis">
       Como Executar o Compilador (Python para C)
@@ -970,29 +911,30 @@
   
 
 
-<h1 id="apresentacao-do-projeto">Apresentação do projeto</h1>
+<h1 id="apresentacao">Apresentação</h1>
 <p>Projeto de um compilador Python para C elaborado como parte da disciplina <strong>"Compiladores"</strong>, ministrada pelo professor Sergio Freitas.<br />
 O sistema é desenvolvido pela equipe <strong>Runtime Terrors</strong> e tem como objetivo criar um compilador utilizando as ferramentas <strong>Flex</strong> e <strong>Bison</strong>.</p>
-<hr />
 <h2 id="estrutura-do-projeto">Estrutura do Projeto</h2>
 <pre><code>
-├── docs                  
+├── docs                 // Documentação          
 │   ├── Desenvolvimento   
 │   ├── Dificuldades      
 │   ├── Escopo            
 │   ├── Metodologia       
 │   └── Planejamento      
-├── site                  
-├── src                   
+├── site                 // Interface da documentação pelo MKdocs
+├── src                  // código-fonte do compilador de Python para C  
 │   ├── lexer           
-│   ├── parser            
+│   ├── parser           
 │   ├── ast               
 │   ├── st                
 │   ├── tac               
 │   ├── codigo_final     
 │   └── tests             
-├── run_tests.sh          
-├── README.md
+├── run_tests.sh
+├── compilador          // executável do compilador
+├── compiler            // script bash para utilizar o compilador
+├── README.md 
 └── mkdocs.yml
 </code></pre>
 <h2 id="como-executar-o-projeto">Como Executar o Projeto</h2>
@@ -1000,8 +942,8 @@ O sistema é desenvolvido pela equipe <strong>Runtime Terrors</strong> e tem com
 <p>Antes de iniciar, certifique-se de ter instalado:</p>
 <ul>
 <li><strong>Python 3.8+</strong></li>
-<li><strong>Flex</strong> </li>
-<li><strong>Bison</strong> </li>
+<li><strong>Flex</strong> – Gerador de analisadores léxicos</li>
+<li><strong>Bison</strong> – Gerador de analisadores sintáticos</li>
 <li><strong>GCC</strong> ou outro compilador C</li>
 <li><strong>Make</strong> </li>
 </ul>
@@ -1012,29 +954,21 @@ sudo apt install flex bison build-essential
 <h4 id="instalacao-no-macos">Instalação no macOS</h4>
 <pre><code class="language-bash">brew install flex bison
 </code></pre>
-<h2 id="como-compilar-o-projeto">Como Compilar o Projeto</h2>
-<p>Dentro da pasta <code>src/</code>:</p>
-<pre><code class="language-bash">cd src
-make clean &amp;&amp; make
-</code></pre>
-<p>Isso irá gerar o binário <code>compiler</code> dentro da pasta <code>src/</code>.</p>
 <h2 id="como-executar-o-compilador-python-para-c">Como Executar o Compilador (Python para C)</h2>
 <p>Após compilar o projeto, volte para a raiz do repositório.</p>
 <ol>
-<li>Coloque seu arquivo Python na raiz</li>
+<li>Insira seu arquivo Python na raiz do projeto</li>
 </ol>
-<p>Caso esteja em <code>src/</code> volte à raiz com</p>
-<pre><code class="language-bash">cd ..
-</code></pre>
-<p>Insira o arquivo. Por exemplo: <code>seu_codigo.py</code></p>
-<p>Caso queira criar um novo arquivo, você pode usar o comando abaixo</p>
+<p>você pode usar o comando abaixo para criar um arquivo Python</p>
 <pre><code class="language-bash">touch seu_codigo.py
 </code></pre>
+<p>em seguida insira o seu código python no arquivo criado.</p>
 <ol>
 <li>Torne o compilador executável (somente na primeira execução)</li>
 </ol>
 <pre><code class="language-bash">chmod +x compiler
 </code></pre>
+<p>Obs: <code>compiler</code> é um script bash utilizado para executar o compilador.</p>
 <ol>
 <li>Rodar o compilador</li>
 </ol>
