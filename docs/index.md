@@ -1,43 +1,44 @@
-# Apresentação do projeto
+# Apresentação
 
 Projeto de um compilador Python para C elaborado como parte da disciplina **"Compiladores"**, ministrada pelo professor Sergio Freitas.  
 O sistema é desenvolvido pela equipe **Runtime Terrors** e tem como objetivo criar um compilador utilizando as ferramentas **Flex** e **Bison**.
-
----
 
 ## Estrutura do Projeto
 
 ```
             
-├── docs                  
+├── docs                 // Documentação          
 │   ├── Desenvolvimento   
 │   ├── Dificuldades      
 │   ├── Escopo            
 │   ├── Metodologia       
 │   └── Planejamento      
-├── site                  
-├── src                   
+├── site                 // Interface da documentação pelo MKdocs
+├── src                  // código-fonte do compilador de Python para C  
 │   ├── lexer           
-│   ├── parser            
+│   ├── parser           
 │   ├── ast               
 │   ├── st                
 │   ├── tac               
 │   ├── codigo_final     
 │   └── tests             
-├── run_tests.sh          
-├── README.md
+├── run_tests.sh
+├── compilador          // executável do compilador
+├── compiler            // script bash para utilizar o compilador
+├── README.md 
 └── mkdocs.yml
 ```
 
 ## Como Executar o Projeto
+
 
 ### Pré-requisitos
 
 Antes de iniciar, certifique-se de ter instalado:
 
 - **Python 3.8+**
-- **Flex** 
-- **Bison** 
+- **Flex** – Gerador de analisadores léxicos
+- **Bison** – Gerador de analisadores sintáticos
 - **GCC** ou outro compilador C
 - **Make** 
 
@@ -54,41 +55,27 @@ sudo apt install flex bison build-essential
 brew install flex bison
 ```
 
-## Como Compilar o Projeto
-
-Dentro da pasta `src/`:
-
-```bash
-cd src
-make clean && make
-```
-Isso irá gerar o binário `compiler` dentro da pasta `src/`.
-
 ## Como Executar o Compilador (Python para C)
 
 Após compilar o projeto, volte para a raiz do repositório.
 
-1. Coloque seu arquivo Python na raiz
+1. Insira seu arquivo Python na raiz do projeto
 
-Caso esteja em `src/` volte à raiz com
-
-```bash
-cd ..
-```
-
-Insira o arquivo. Por exemplo: `seu_codigo.py`
-
-Caso queira criar um novo arquivo, você pode usar o comando abaixo
+você pode usar o comando abaixo para criar um arquivo Python
 
 ```bash
 touch seu_codigo.py
 ```
+
+em seguida insira o seu código python no arquivo criado.
 
 2. Torne o compilador executável (somente na primeira execução)
 
 ```bash
 chmod +x compiler
 ```
+
+Obs: `compiler` é um script bash utilizado para executar o compilador.
 
 3. Rodar o compilador
 
@@ -128,6 +115,7 @@ O script irá:
 - Executar os arquivos de teste em `src/tests/inputs/`
 - Passar cada arquivo pelo compilador
 - Gerar saídas em `src/tests/outputs/`
+
 ---
 
 ## Integrantes

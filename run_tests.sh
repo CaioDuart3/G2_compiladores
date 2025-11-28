@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# --- Configuração de Caminhos ---
+# Configuração de Caminhos
 ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC_DIR="$ROOT_DIR/src"
 
@@ -29,13 +29,13 @@ CODEGEN_DIR="$SRC_DIR/codigo_final"
 CODEGEN_C="$CODEGEN_DIR/gerador_codigo_final.c"
 CODEGEN_H="$CODEGEN_DIR/gerador_codigo_final.h"
 
-# --- Executáveis ---
+#  Executáveis 
 COMPILADOR="$ROOT_DIR/compilador"
 
 TESTS_DIR="$SRC_DIR/tests/inputs"
 OUTPUTS_DIR="$SRC_DIR/tests/outputs"
 
-# --- Função de Compilação ---
+#  Função de Compilação 
 compile_all() {
     echo "--------------------------------------------------"
     echo "Iniciando Compilação..."
@@ -70,7 +70,7 @@ compile_all() {
     echo "--------------------------------------------------"
 }
 
-# --- Checagem de Recompilação ---
+# Checagem de Recompilação
 if [ ! -x "$COMPILADOR" ] || \
    [ "$PARSER_SRC" -nt "$COMPILADOR" ] || [ "$LEXER_SRC" -nt "$COMPILADOR" ] || \
    [ "$AST_C" -nt "$COMPILADOR" ] || [ "$AST_H" -nt "$COMPILADOR" ] || \

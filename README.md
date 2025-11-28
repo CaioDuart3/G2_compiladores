@@ -59,42 +59,27 @@ sudo apt install flex bison build-essential
 brew install flex bison
 ```
 
-## Como Compilar o Projeto
-
-Dentro da pasta `src/`:
-
-```bash
-cd src
-make clean && make
-```
-
-Isso irá gerar o binário `compiler` dentro da pasta `src/`.
-
 ## Como Executar o Compilador (Python para C)
 
 Após compilar o projeto, volte para a raiz do repositório.
 
-1. Coloque seu arquivo Python na raiz
+1. Insira seu arquivo Python na raiz do projeto
 
-Caso esteja em `src/` volte à raiz com
-
-```bash
-cd ..
-```
-
-Insira o arquivo. Por exemplo: `seu_codigo.py`
-
-Caso queira criar um novo arquivo, você pode usar o comando abaixo
+você pode usar o comando abaixo para criar um arquivo Python
 
 ```bash
 touch seu_codigo.py
 ```
+
+em seguida insira o seu código python no arquivo criado.
 
 2. Torne o compilador executável (somente na primeira execução)
 
 ```bash
 chmod +x compiler
 ```
+
+Obs: `compiler` é um script bash utilizado para executar o compilador.
 
 3. Rodar o compilador
 
