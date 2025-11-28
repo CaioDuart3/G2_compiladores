@@ -61,8 +61,6 @@ brew install flex bison
 
 ## Como Executar o Compilador (Python para C)
 
-Após compilar o projeto, volte para a raiz do repositório.
-
 1. Insira seu arquivo Python na raiz do projeto
 
 você pode usar o comando abaixo para criar um arquivo Python
